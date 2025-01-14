@@ -44,4 +44,10 @@ public class Player : MonoBehaviour {
             weaponManager.FireWeapon(currentWeapon, transform);
         }
     }
+
+    private void OnMove() {
+        if (turnManager != null && SceneManager.GetActiveScene().name.Contains("Game") && turnManager.CurrentPlayerTurn == this) {
+            
+        }
+    }
 }

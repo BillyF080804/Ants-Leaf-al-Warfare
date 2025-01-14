@@ -7,6 +7,7 @@ public class BaseWeaponSO : ScriptableObject {
     public GameObject weaponPrefab = null;
 
     [Header("Weapon Stats")]
+    public float baseDamage = 20.0f;
     public float weaponSpeed = 25.0f;
     public bool useGravity = true;
     public bool explosive = false;    

@@ -13,7 +13,9 @@ public class WeaponManager : MonoBehaviour {
     public void FireWeapon(BaseWeaponSO weaponInfo, Transform playerPosition) {
         GameObject newWeapon = Instantiate(weaponInfo.weaponPrefab, playerPosition.position, Quaternion.identity);
         Rigidbody rb = newWeapon.GetComponent<Rigidbody>();
+        WeaponScript weaponScript = newWeapon.GetComponent<WeaponScript>();
 
+        //Calculate virtual mouse position in world space
         float distance;
         Vector3 mousePosInWorldSpace = Vector3.one;
         Ray ray = Camera.main.ScreenPointToRay(mouseInput.cursorTransform.position);
@@ -36,6 +38,11 @@ public class WeaponManager : MonoBehaviour {
 
         //Set weapon values
         rb.useGravity = weaponInfo.useGravity;
+        weaponScript.weaponInfo = weaponInfo;
+        
+        if (weaponInfo.explosive && !weaponInfo.explodeOnImpact) {
+            weaponScript.StartFuse();
+        }
     }
 
     //Code to ensure the aiming reticle stays inside the screen
