@@ -10,11 +10,11 @@ public class BaseWeaponSO : ScriptableObject {
     public float baseDamage = 20.0f;
     public float weaponSpeed = 25.0f;
     public bool useGravity = true;
-    public bool explosive = false;    
+    public bool explosive = false;
 
     [HideInInspector] public bool explodeOnImpact = true;
     [HideInInspector] public float explosionRange = 5.0f;
-    [HideInInspector] public float explosionPower = 1.0f;
+    [HideInInspector] public float explosionPower = 5.0f;
     [HideInInspector] public float fuseTimer = 5.0f;
 }
 

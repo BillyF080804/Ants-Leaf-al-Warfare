@@ -26,9 +26,15 @@ public class WeaponScript : MonoBehaviour {
 
         foreach (Collider collider in colliders) {
             Debug.Log(collider.name + " damage dealt = " + weaponInfo.baseDamage);
-            collider.GetComponent<Rigidbody>().AddExplosionForce(weaponInfo.explosionPower, transform.position, weaponInfo.explosionRange, 2, ForceMode.Impulse);
+            collider.GetComponent<Rigidbody>().AddExplosionForce(weaponInfo.explosionPower, transform.position, weaponInfo.explosionRange, 3, ForceMode.Impulse);
         }
 
         Destroy(gameObject);
+    }
+
+    private void OnCollisionEnter(Collision collision) {
+        if (weaponInfo.explosive && weaponInfo.explodeOnImpact) {
+            Explode();
+        }
     }
 }
