@@ -9,9 +9,13 @@ public class TurnManager : MonoBehaviour {
     [SerializeField] private int numOfRounds;
     [SerializeField] private int maxTurnTime;
 
+    [Header("Ant Prefabs")]
+    [SerializeField] private GameObject antPrefab;
+
     [Header("UI")]
     [SerializeField] private GameObject levelNameText;
 
+    private int numOfAnts = 2;
     private float currentTurnTime;
     private bool currentTurnEnded = false;
 
@@ -22,9 +26,24 @@ public class TurnManager : MonoBehaviour {
     private List<Player> playerList = new List<Player>();
 
     private void Start() {
+        numOfAnts = LoadingData.numOfAnts;
         playerList = LoadingData.playerList;
         dropSystem = FindFirstObjectByType<WeaponDropSystem>();
+        SpawnAnts();
         StartCoroutine(LevelTextCoroutine());
+    }
+
+    private void SpawnAnts() {
+        for (int i = 0; i < playerList.Count; i++) {
+            for (int j = 0; j < numOfAnts; j++) { 
+                GameObject newAnt = Instantiate(antPrefab, GetAntSpawnPoint(), Quaternion.identity);
+                playerList[i].AddNewAnt(newAnt);
+            }
+        }
+    }
+
+    private Vector3 GetAntSpawnPoint() {
+        return new Vector3(Random.Range(-10f, 10f), 1, 0);
     }
 
     private IEnumerator LevelTextCoroutine() {

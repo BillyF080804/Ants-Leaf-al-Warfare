@@ -18,6 +18,7 @@ public class PlayerManager : MonoBehaviour {
     [SerializeField] private GameObject errorText;
 
     private int expectedPlayerCount = 0;
+    private int numOfAnts = 2;
     private List<PlayerCardInfo> playerCardList = new List<PlayerCardInfo>();
     private List<Player> playerList = new List<Player>();
 
@@ -85,6 +86,10 @@ public class PlayerManager : MonoBehaviour {
         }
     }
 
+    public void UpdateAntCount(int _numOfAnts) {
+        numOfAnts = _numOfAnts;
+    }
+
     public void StartGame() {
         if (playerList.Count() != expectedPlayerCount) {
             errorText.SetActive(true);
@@ -94,6 +99,7 @@ public class PlayerManager : MonoBehaviour {
             errorText.SetActive(false);
             LoadingData.sceneToLoad = "GameScene";
             LoadingData.playerList = playerList;
+            LoadingData.numOfAnts = numOfAnts;
             SceneManager.LoadScene("LoadingScene");
         }
     }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,6 +13,8 @@ public class Player : MonoBehaviour {
     private TurnManager turnManager;
     private WeaponManager weaponManager;
 
+    private List<GameObject> antList = new List<GameObject>();
+
     private void Awake() {
         playerManager = FindFirstObjectByType<PlayerManager>();    
         SceneManager.activeSceneChanged += ActiveSceneChanged;
@@ -24,6 +27,10 @@ public class Player : MonoBehaviour {
             turnManager = FindFirstObjectByType<TurnManager>();
             weaponManager = FindFirstObjectByType<WeaponManager>();
         }
+    }
+
+    public void AddNewAnt(GameObject newAnt) {
+        antList.Add(newAnt);
     }
 
     private void OnSkipTurn() {
