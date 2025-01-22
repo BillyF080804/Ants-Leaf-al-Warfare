@@ -14,11 +14,16 @@ public class TurnManager : MonoBehaviour {
 
     private float currentTurnTime;
     private bool currentTurnEnded = false;
+
+    public int CurrentRound { get; private set; } = 1;
     public Player CurrentPlayerTurn { get; private set; } = null;
+
+    private WeaponDropSystem dropSystem;
     private List<Player> playerList = new List<Player>();
 
     private void Start() {
         playerList = LoadingData.playerList;
+        dropSystem = FindFirstObjectByType<WeaponDropSystem>();
         StartCoroutine(LevelTextCoroutine());
     }
 
@@ -55,6 +60,12 @@ public class TurnManager : MonoBehaviour {
 
     public void EndTurn() {
         StopCoroutine(nameof(TurnTimer));
+
+        if (CurrentPlayerTurn == playerList[playerList.Count - 1]) {
+            CurrentRound++;
+            dropSystem.CheckDrop();
+        }
+
         currentTurnEnded = true;
         currentTurnTime = 0.0f;
         CurrentPlayerTurn = null;
