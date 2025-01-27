@@ -72,7 +72,7 @@ public class QueenAntScript : MonoBehaviour {
 
 	private void OnJump() {
 		if (canJump) {
-			Vector2 Force = new Vector2(0, antInfo.jumpHeight);
+			Vector2 Force = new Vector2(0, queenAntInfo.jumpHeight);
 			GetComponent<Rigidbody>().AddForce(Force, ForceMode.Impulse);
 			canJump = false;
 		}
