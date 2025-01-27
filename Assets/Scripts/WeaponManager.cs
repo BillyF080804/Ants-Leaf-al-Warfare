@@ -1,13 +1,17 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.InputSystem.UI;
 
 public class WeaponManager : MonoBehaviour {
     private VirtualMouseInput mouseInput;
-    Plane plane = new Plane(Vector3.forward, 0);
+    private Plane plane = new Plane(Vector3.forward, 0);
+    private List<BaseWeaponSO> allWeapons = new List<BaseWeaponSO>();
 
     private void Start() { 
         mouseInput = FindFirstObjectByType<VirtualMouseInput>();
+        allWeapons = Resources.LoadAll<BaseWeaponSO>("").ToList();
     }
 
     public void FireWeapon(BaseWeaponSO weaponInfo, Transform playerPosition) {
@@ -52,5 +56,9 @@ public class WeaponManager : MonoBehaviour {
         virtualMousePos.x = Mathf.Clamp(virtualMousePos.x, 0f, Screen.width);
         virtualMousePos.y = Mathf.Clamp(virtualMousePos.y, 0f, Screen.height);
         InputState.Change(mouseInput.virtualMouse.position, virtualMousePos);
+    }
+
+    private List<BaseWeaponSO> GetAllWeapons() {
+        return allWeapons;
     }
 }

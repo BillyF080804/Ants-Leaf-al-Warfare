@@ -14,6 +14,7 @@ public class Player : MonoBehaviour {
     private WeaponManager weaponManager;
 
     private List<GameObject> antList = new List<GameObject>();
+    private List<BaseWeaponSO> currentWeapons = new List<BaseWeaponSO>();
 
     private void Awake() {
         playerManager = FindFirstObjectByType<PlayerManager>();    
