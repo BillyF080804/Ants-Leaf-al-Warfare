@@ -22,7 +22,7 @@ public class BaseQueenAntSO : ScriptableObject {
 	public QueenType queenType;
 	public int Health = 150;
 	public int Damage = 1;
-	public int moveSpeed = 1;
+	public int moveSpeed = 3;
 	public int jumpHeight = 2;
 
 

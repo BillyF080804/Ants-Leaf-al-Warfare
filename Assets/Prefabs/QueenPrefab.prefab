@@ -177,6 +177,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 297f68be2c4a111439bc4dc076f9f46a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  queenAntInfo: {fileID: 0}
+  queenAntInfo: {fileID: 11400000, guid: 311a979bdc74abf479bd34043279137d, type: 2}
   ownedPlayer: 0
   attackLevel: 0

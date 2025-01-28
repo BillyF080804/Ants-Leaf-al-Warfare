@@ -94,4 +94,7 @@ public class QueenAntScript : MonoBehaviour {
 			canJump = true;
 		}
 	}
+	private void Update() {
+		transform.Translate(queenAntInfo.moveSpeed * Time.deltaTime * moveVector);
+	}
 }
