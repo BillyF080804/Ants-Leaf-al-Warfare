@@ -49,7 +49,7 @@ public class WeaponManager : MonoBehaviour {
         }
     }
 
-    //Code to ensure the aiming reticle stays inside the screen
+    //Code to ensure the aiming reticle stays inside the screen.
     //Will get changed to a different way of doing this. I hope.
     private void LateUpdate() {
         Vector2 virtualMousePos = mouseInput.virtualMouse.position.value;
