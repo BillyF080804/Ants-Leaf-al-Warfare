@@ -11,6 +11,7 @@ public class TurnManager : MonoBehaviour {
 
     [Header("Ant Prefabs")]
     [SerializeField] private GameObject antPrefab;
+    [SerializeField] private GameObject queenPrefab;
 
     [Header("UI")]
     [SerializeField] private GameObject levelNameText;
@@ -34,7 +35,9 @@ public class TurnManager : MonoBehaviour {
         playerList = LoadingData.playerList;
         dropSystem = FindFirstObjectByType<WeaponDropSystem>();
         SpawnAnts();
-        StartCoroutine(LevelTextCoroutine());
+        SpawnQueen();
+
+		StartCoroutine(LevelTextCoroutine());
     }
 
     private void SpawnAnts() {
@@ -44,6 +47,13 @@ public class TurnManager : MonoBehaviour {
                 playerList[i].AddNewAnt(newAnt);
                 newAnt.GetComponent<AntScript>().ownedPlayer = (AntScript.PlayerList)i;  
             }
+        }
+    }
+
+    private void SpawnQueen() {
+        for (int i = 0; i < playerList.Count; i++) {
+            GameObject newQueen = Instantiate(queenPrefab, GetAntSpawnPoint() , Quaternion.identity);
+            playerList[i].AddQueen(newQueen);
         }
     }
 

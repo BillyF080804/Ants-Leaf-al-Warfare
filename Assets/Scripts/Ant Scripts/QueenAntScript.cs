@@ -70,6 +70,10 @@ public class QueenAntScript : MonoBehaviour {
 	}
 
 
+	public int GetHealth() {
+		return queenAntInfo.Health;
+	}
+
 
 	private void OnMove(InputValue value) {
 		Vector2 movement = value.Get<Vector2>();

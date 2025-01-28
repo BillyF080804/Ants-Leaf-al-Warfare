@@ -14,6 +14,7 @@ public class Player : MonoBehaviour {
     private WeaponManager weaponManager;
 
     private List<GameObject> antList = new List<GameObject>();
+    private GameObject queenAnt;
     private List<BaseWeaponSO> currentWeapons = new List<BaseWeaponSO>();
 
     private void Awake() {
@@ -32,6 +33,10 @@ public class Player : MonoBehaviour {
 
     public void AddNewAnt(GameObject newAnt) {
         antList.Add(newAnt);
+    }
+
+    public void AddQueen(GameObject newQueen) {
+        queenAnt = newQueen;
     }
 
     private void OnSkipTurn() {
@@ -83,7 +88,6 @@ public class Player : MonoBehaviour {
     }
 
     public void ResetAnts() {
-		Debug.Log("hi");
 		for (int i = 0;i < antList.Count;i++) {
             antList[i].GetComponent<AntScript>().hasHadTurn = false;
         }
