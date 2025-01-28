@@ -3,9 +3,15 @@ using System.Collections.Generic;
 using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static AntScript;
 
 public class QueenAntScript : MonoBehaviour {
+
+	[Header("Queen Info")]
 	public BaseQueenAntSO queenAntInfo;
+
+	[Header("Game Info")]
+	public PlayerList ownedPlayer;
 	Vector3 moveVector = Vector3.zero;
 	bool canJump = true;
 	public int attackLevel = 0;

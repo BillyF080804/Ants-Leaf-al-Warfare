@@ -4,22 +4,48 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class AntScript : MonoBehaviour {
+
+	public enum PlayerList {
+		Player1 = 0,
+		Player2 = 1,
+		Player3 = 2,
+		Player4 = 3,
+	}
+
+	[Header("Ant Info")]
 	public BaseAntSO antInfo;
-	Vector3 moveVector = Vector3.zero;
+
+	[Header("Game Info")]
+	public PlayerList ownedPlayer;
+
+	public Vector3 moveVector = Vector3.zero;
 	bool canJump = true;
-	bool isTurn = false;
+
+	public bool hasHadTurn = false;
+	private TurnManager turnManager;
+
+	private void Start() {
+		turnManager = FindFirstObjectByType<TurnManager>();
+	}
+
 
 	private void OnMove(InputValue value) {
-		Vector2 movement = value.Get<Vector2>();
-		moveVector = new Vector3(movement.x, 0, 0);
+		if (turnManager.currentAntTurn == this) {
+			Vector2 movement = value.Get<Vector2>();
+			moveVector = new Vector3(movement.x, 0, 0);
+		}
+
 	}
 
 	private void OnJump() {
-		if (canJump) {
-			Vector2 Force = new Vector2(0, antInfo.jumpHeight);
-			GetComponent<Rigidbody>().AddForce(Force, ForceMode.Impulse);
-			canJump = false;
+		if (turnManager.currentAntTurn == this) {
+			if (canJump) {
+				Vector2 Force = new Vector2(0, antInfo.jumpHeight);
+				GetComponent<Rigidbody>().AddForce(Force, ForceMode.Impulse);
+				canJump = false;
+			}
 		}
+
 	}
 
 	void TakeDamage(int Damage) {

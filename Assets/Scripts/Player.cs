@@ -58,4 +58,34 @@ public class Player : MonoBehaviour {
             
         }
     }
+
+    public AntScript GetAnt(AntScript currentAnt) {
+        if(currentAnt != null) {
+			currentAnt.moveVector = Vector3.zero;
+		}
+       
+
+        List<AntScript> possibleAnts = new List<AntScript>();
+        for(int i = 0; i < antList.Count; i++) {
+            AntScript nextAnt = antList[i].GetComponent<AntScript>();
+			if (nextAnt.hasHadTurn == false) {
+                possibleAnts.Add(nextAnt);
+            }
+        }
+
+        if(possibleAnts.Count > 0) {
+			int nextAntIndex = Random.Range(0, possibleAnts.Count);
+			return possibleAnts[nextAntIndex];
+		}
+        else { 
+            return null; 
+        }
+    }
+
+    public void ResetAnts() {
+		Debug.Log("hi");
+		for (int i = 0;i < antList.Count;i++) {
+            antList[i].GetComponent<AntScript>().hasHadTurn = false;
+        }
+    }
 }
