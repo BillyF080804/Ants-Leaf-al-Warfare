@@ -43,52 +43,62 @@ public class Player : MonoBehaviour {
         queenAnt = newQueen;
     }
 
+    //Function called when the player presses the change color button
+    private void OnChangeColor() {
+        if (playerManager != null && SceneManager.GetActiveScene().name.Contains("Menu")) {
+            playerManager.ChangeColor(playerInfo.playerNum); //Only works in the menu
+        }
+    }
+
+    //Function called when the player presses the skip turn button
     private void OnSkipTurn() {
         if (turnManager != null && SceneManager.GetActiveScene().name.Contains("Game") && turnManager.CurrentPlayerTurn == this) {
-            Debug.Log(playerInfo.playerNum + " skipping turn");
             turnManager.EndTurn();
         }
     }
 
-    private void OnChangeColor() {
-        if (playerManager != null && SceneManager.GetActiveScene().name.Contains("Menu")) {
-            playerManager.ChangeColor(playerInfo.playerNum);
-        }
-    }
-
+    //Function called when the player presses the fire weapon button
     private void OnFireWeapon() {
         if (turnManager != null && SceneManager.GetActiveScene().name.Contains("Game") && turnManager.CurrentPlayerTurn == this) {
             weaponManager.FireWeapon(currentWeapon, transform);
         }
     }
 
+    //Function called when the player presses the move button
     private void OnMove(InputValue value) {
         if (turnManager != null && SceneManager.GetActiveScene().name.Contains("Game") && turnManager.CurrentPlayerTurn == this) { 
             if (turnManager.CurrentAntTurn != null) {
-                antList.Where(x => turnManager.CurrentAntTurn == x.GetComponent<AntScript>()).First().GetComponent<AntScript>().OnMove(value);
+                antList.Where(x => turnManager.CurrentAntTurn == x.GetComponent<AntScript>()).First().GetComponent<AntScript>().OnMove(value); //Move for normal ants
             }
             else {
-                queenAnt.GetComponent<QueenAntScript>().OnMove(value);
+                queenAnt.GetComponent<QueenAntScript>().OnMove(value); //Move for queen ants
             }
         }
     }
 
+    //Function called when the player presses the jump button
     private void OnJump() {
         if (turnManager != null && SceneManager.GetActiveScene().name.Contains("Game") && turnManager.CurrentPlayerTurn == this) {
             if (turnManager.CurrentAntTurn != null) {
-                antList.Where(x => turnManager.CurrentAntTurn == x.GetComponent<AntScript>()).First().GetComponent<AntScript>().OnJump();
+                antList.Where(x => turnManager.CurrentAntTurn == x.GetComponent<AntScript>()).First().GetComponent<AntScript>().OnJump(); //Jump for normal ants
             }
             else {
-                queenAnt.GetComponent<QueenAntScript>().OnJump();
+                queenAnt.GetComponent<QueenAntScript>().OnJump(); //Jump for queen ants
             }
+        }
+    }
+
+    //Function called when the player presses the open weapon menu button
+    private void OnWeaponMenu() {
+        if (turnManager != null && SceneManager.GetActiveScene().name.Contains("Game") && turnManager.CurrentPlayerTurn == this) {
+            weaponManager.WeaponMenu();
         }
     }
 
     public AntScript GetAnt(AntScript currentAnt) {
         if(currentAnt != null) {
 			currentAnt.moveVector = Vector3.zero;
-		}
-       
+		}    
 
         List<AntScript> possibleAnts = new List<AntScript>();
         for(int i = 0; i < antList.Count; i++) {

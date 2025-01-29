@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -5,6 +6,11 @@ using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.InputSystem.UI;
 
 public class WeaponManager : MonoBehaviour {
+    [Header("UI")]
+    [SerializeField] private GameObject weaponMenuUI;
+
+    public bool WeaponMenuOpen { get; private set; } = false;
+    private bool uiMoving = false;
     private VirtualMouseInput mouseInput;
     private Plane plane = new Plane(Vector3.forward, 0);
     private List<BaseWeaponSO> allWeapons = new List<BaseWeaponSO>();
@@ -58,7 +64,51 @@ public class WeaponManager : MonoBehaviour {
         InputState.Change(mouseInput.virtualMouse.position, virtualMousePos);
     }
 
-    private List<BaseWeaponSO> GetAllWeapons() {
-        return allWeapons;
+    public void WeaponMenu() {
+        if (WeaponMenuOpen == true && uiMoving == false) {
+            uiMoving = true;
+            StartCoroutine(CloseWeaponMenuCoroutine());
+        }
+        else if (WeaponMenuOpen == false && uiMoving == false) {
+            uiMoving = true;
+            StartCoroutine(OpenWeaponMenuCoroutine());
+        }
+    }
+
+    public void ForceCloseWeaponMenu() {
+        StartCoroutine(ForceCloseWeaponMenuCoroutine());
+    }
+
+    private IEnumerator ForceCloseWeaponMenuCoroutine() {
+        if (uiMoving == true) {
+            yield return new WaitUntil(() => uiMoving == false);
+        }
+
+        if (WeaponMenuOpen == true) {
+            StartCoroutine(CloseWeaponMenuCoroutine());
+        }
+    }
+
+    private IEnumerator OpenWeaponMenuCoroutine() {
+        //Queen ant health UI needs to be hidden. Once added.
+
+        WeaponMenuOpen = true;
+        weaponMenuUI.SetActive(true);
+        weaponMenuUI.GetComponent<MoveUI>().StartMoveUI(LerpType.OutBack, weaponMenuUI, new Vector2(-500, 50), new Vector2(50, 50), 1.0f);
+
+        yield return new WaitUntil(() => weaponMenuUI.GetComponent<RectTransform>().anchoredPosition == new Vector2(50, 50));
+        uiMoving = false;
+    }
+
+    private IEnumerator CloseWeaponMenuCoroutine() {
+        weaponMenuUI.GetComponent<MoveUI>().StartMoveUI(LerpType.InBack, weaponMenuUI, new Vector2(50, 50), new Vector2(-500, 50), 1.0f);
+
+        yield return new WaitUntil(() => weaponMenuUI.GetComponent<RectTransform>().anchoredPosition == new Vector2(-500, 50));
+        weaponMenuUI.SetActive(false);
+        WeaponMenuOpen = false;
+
+        //Queen ant health UI needs to be shown. Once added.
+
+        uiMoving = false;
     }
 }

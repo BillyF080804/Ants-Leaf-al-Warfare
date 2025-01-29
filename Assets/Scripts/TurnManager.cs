@@ -27,6 +27,7 @@ public class TurnManager : MonoBehaviour {
     public AntScript CurrentAntTurn { get; private set; } = null;
     public bool allAntsMoved = false;
 
+    private WeaponManager weaponManager;
 	private WeaponDropSystem dropSystem;
     private List<Player> playerList = new List<Player>();
 
@@ -34,6 +35,7 @@ public class TurnManager : MonoBehaviour {
         numOfAnts = LoadingData.numOfAnts;
         playerList = LoadingData.playerList;
         dropSystem = FindFirstObjectByType<WeaponDropSystem>();
+        weaponManager = FindFirstObjectByType<WeaponManager>();
         SpawnAnts();
         SpawnQueen();
 
@@ -96,14 +98,21 @@ public class TurnManager : MonoBehaviour {
     }
 
     public void EndTurn() {
+        StartCoroutine(EndTurnCoroutine());
+	}
+
+    private IEnumerator EndTurnCoroutine() {
         StopCoroutine(nameof(TurnTimer));
+        CurrentPlayerTurn = null;
+        weaponManager.ForceCloseWeaponMenu();
+        yield return new WaitUntil(() => weaponManager.WeaponMenuOpen == false);
 
         if (CurrentPlayerTurn == playerList[playerList.Count - 1] && allAntsMoved) {
             allAntsMoved = false; // ensures the round doesnt end until all ants have moved
 
-            for (int i = 0;i < playerList.Count;i++) {
+            for (int i = 0; i < playerList.Count; i++) {
                 playerList[i].ResetAnts();// sets all the ants back to not having moved
-			}
+            }
 
             CurrentRound++;
             dropSystem.CheckDrop();
@@ -111,11 +120,10 @@ public class TurnManager : MonoBehaviour {
 
         currentTurnEnded = true;
         currentTurnTime = 0.0f;
-        CurrentPlayerTurn = null;
-	}
+    }
 
     //Decides which ant to use
-	void PickAntTurn() {
+	private void PickAntTurn() {
         CurrentAntTurn = CurrentPlayerTurn.GetAnt(CurrentAntTurn);
 
         if (CurrentAntTurn != null) {
