@@ -1,6 +1,10 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public class Player : MonoBehaviour {
     [Header("Player Info")]
@@ -58,9 +62,25 @@ public class Player : MonoBehaviour {
         }
     }
 
-    private void OnMove() {
+    private void OnMove(InputValue value) {
+        if (turnManager != null && SceneManager.GetActiveScene().name.Contains("Game") && turnManager.CurrentPlayerTurn == this) { 
+            if (turnManager.CurrentAntTurn != null) {
+                antList.Where(x => turnManager.CurrentAntTurn == x.GetComponent<AntScript>()).First().GetComponent<AntScript>().OnMove(value);
+            }
+            else {
+                queenAnt.GetComponent<QueenAntScript>().OnMove(value);
+            }
+        }
+    }
+
+    private void OnJump() {
         if (turnManager != null && SceneManager.GetActiveScene().name.Contains("Game") && turnManager.CurrentPlayerTurn == this) {
-            
+            if (turnManager.CurrentAntTurn != null) {
+                antList.Where(x => turnManager.CurrentAntTurn == x.GetComponent<AntScript>()).First().GetComponent<AntScript>().OnJump();
+            }
+            else {
+                queenAnt.GetComponent<QueenAntScript>().OnJump();
+            }
         }
     }
 

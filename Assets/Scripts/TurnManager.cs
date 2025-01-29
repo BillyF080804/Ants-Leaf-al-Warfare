@@ -24,7 +24,7 @@ public class TurnManager : MonoBehaviour {
     public Player CurrentPlayerTurn { get; private set; } = null;
 
     //Tracks which ant's turn it currently is
-    public AntScript currentAntTurn { get; private set; } = null;
+    public AntScript CurrentAntTurn { get; private set; } = null;
     public bool allAntsMoved = false;
 
 	private WeaponDropSystem dropSystem;
@@ -45,7 +45,8 @@ public class TurnManager : MonoBehaviour {
             for (int j = 0; j < numOfAnts; j++) { 
                 GameObject newAnt = Instantiate(antPrefab, GetAntSpawnPoint(), Quaternion.identity);
                 playerList[i].AddNewAnt(newAnt);
-                newAnt.GetComponent<AntScript>().ownedPlayer = (AntScript.PlayerList)i;  
+                newAnt.GetComponent<AntScript>().ownedPlayer = (AntScript.PlayerList)i;
+                newAnt.GetComponent<MeshRenderer>().material.color = playerList[i].playerInfo.playerColor;
             }
         }
     }
@@ -83,10 +84,9 @@ public class TurnManager : MonoBehaviour {
         }
     }
 
-
-
 	private IEnumerator TurnTimer() {
 		PickAntTurn();
+
 		while (currentTurnTime < maxTurnTime) {
             currentTurnTime += Time.deltaTime;
             yield return null;
@@ -100,9 +100,11 @@ public class TurnManager : MonoBehaviour {
 
         if (CurrentPlayerTurn == playerList[playerList.Count - 1] && allAntsMoved) {
             allAntsMoved = false; // ensures the round doesnt end until all ants have moved
-            for(int i = 0;i < playerList.Count;i++) {
+
+            for (int i = 0;i < playerList.Count;i++) {
                 playerList[i].ResetAnts();// sets all the ants back to not having moved
 			}
+
             CurrentRound++;
             dropSystem.CheckDrop();
         }
@@ -114,10 +116,12 @@ public class TurnManager : MonoBehaviour {
 
     //Decides which ant to use
 	void PickAntTurn() {
-        currentAntTurn = CurrentPlayerTurn.GetAnt(currentAntTurn);
-        if(currentAntTurn != null) {
-			currentAntTurn.hasHadTurn = true;
-        } else {
+        CurrentAntTurn = CurrentPlayerTurn.GetAnt(CurrentAntTurn);
+
+        if (CurrentAntTurn != null) {
+            CurrentAntTurn.hasHadTurn = true;
+        } 
+        else {
             allAntsMoved = true;
         }
 	}

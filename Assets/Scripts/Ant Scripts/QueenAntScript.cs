@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 using static AntScript;
 
 public class QueenAntScript : MonoBehaviour {
-
 	[Header("Queen Info")]
 	public BaseQueenAntSO queenAntInfo;
 
@@ -69,18 +68,16 @@ public class QueenAntScript : MonoBehaviour {
 		int damageToDeal = queenAntInfo.Damage * attackLevel;
 	}
 
-
 	public int GetHealth() {
 		return queenAntInfo.Health;
 	}
 
-
-	private void OnMove(InputValue value) {
+	public void OnMove(InputValue value) {
 		Vector2 movement = value.Get<Vector2>();
 		moveVector = new Vector3(movement.x, 0, 0);
 	}
 
-	private void OnJump() {
+	public void OnJump() {
 		if (canJump) {
 			Vector2 Force = new Vector2(0, queenAntInfo.jumpHeight);
 			GetComponent<Rigidbody>().AddForce(Force, ForceMode.Impulse);
@@ -88,12 +85,12 @@ public class QueenAntScript : MonoBehaviour {
 		}
 	}
 
-
 	private void OnCollisionEnter(Collision collision) {
 		if (collision.gameObject.transform.position.y < gameObject.transform.position.y) {
 			canJump = true;
 		}
 	}
+
 	private void Update() {
 		transform.Translate(queenAntInfo.moveSpeed * Time.deltaTime * moveVector);
 	}

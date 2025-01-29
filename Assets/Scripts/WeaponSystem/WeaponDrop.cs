@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponDrop : MonoBehaviour {
@@ -7,11 +5,16 @@ public class WeaponDrop : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.CompareTag("Player")) {
-            Debug.Log(dropType);
+            CollectDrop();
         }
     }
 
     public void SetDropType(string _dropType) {
         dropType = _dropType;
+    }
+
+    private void CollectDrop() {
+        Debug.Log(dropType);
+        Destroy(gameObject);
     }
 }
