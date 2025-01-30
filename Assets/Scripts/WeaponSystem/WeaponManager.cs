@@ -66,6 +66,7 @@ public class WeaponManager : MonoBehaviour {
         InputState.Change(mouseInput.virtualMouse.position, virtualMousePos);
     }
 
+    //Used to either open or close the weapon menu
     public void WeaponMenu() {
         if (WeaponMenuOpen == true && uiMoving == false) {
             uiMoving = true;
@@ -81,6 +82,7 @@ public class WeaponManager : MonoBehaviour {
         StartCoroutine(ForceCloseWeaponMenuCoroutine());
     }
 
+    //Called at the end of a turn. Forces the weapon menu to close.
     private IEnumerator ForceCloseWeaponMenuCoroutine() {
         if (uiMoving == true) {
             yield return new WaitUntil(() => uiMoving == false);
@@ -91,6 +93,7 @@ public class WeaponManager : MonoBehaviour {
         }
     }
 
+    //Closes the queen ant health ui and opens the weapons menu
     private IEnumerator OpenWeaponMenuCoroutine() {
         foreach (GameObject queenAntHealthUI in turnManager.QueenHealthUI) {
             RectTransform rect = queenAntHealthUI.GetComponent<RectTransform>();
@@ -117,6 +120,7 @@ public class WeaponManager : MonoBehaviour {
         uiMoving = false;
     }
 
+    //Closes the weapons menu and opens the queen ant health UI
     private IEnumerator CloseWeaponMenuCoroutine() {
         weaponMenuUI.GetComponent<MoveUI>().StartMoveUI(LerpType.InBack, weaponMenuUI, new Vector2(50, 50), new Vector2(-500, 50), 1.0f);
 

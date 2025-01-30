@@ -39,6 +39,32 @@ public class TurnManager : MonoBehaviour {
         dropSystem = FindFirstObjectByType<WeaponDropSystem>();
         weaponManager = FindFirstObjectByType<WeaponManager>();
 
+        SpawnQueenAntHealthUI();
+        SpawnAnts();
+        SpawnQueen();
+
+		StartCoroutine(LevelTextCoroutine());
+    }
+
+    private void SpawnAnts() {
+        for (int i = 0; i < playerList.Count; i++) {
+            for (int j = 0; j < numOfAnts; j++) { 
+                GameObject newAnt = Instantiate(antPrefab, GetAntSpawnPoint(), Quaternion.identity);
+                playerList[i].AddNewAnt(newAnt);
+                newAnt.GetComponent<AntScript>().ownedPlayer = (AntScript.PlayerList)i;
+                newAnt.GetComponent<MeshRenderer>().material.color = playerList[i].playerInfo.playerColor;
+            }
+        }
+    }
+
+    private void SpawnQueen() {
+        for (int i = 0; i < playerList.Count; i++) {
+            GameObject newQueen = Instantiate(queenPrefab, GetAntSpawnPoint() , Quaternion.identity);
+            playerList[i].AddQueen(newQueen);
+        }
+    }
+
+    private void SpawnQueenAntHealthUI() {
         for (int i = 0; i < playerList.Count; i++) {
             Canvas canvas = FindFirstObjectByType<Canvas>();
 
@@ -63,29 +89,6 @@ public class TurnManager : MonoBehaviour {
                     newHealthUI.GetComponentInChildren<TMP_Text>().text = "Player 4 Queen Ant Health: 100";
                     break;
             }
-        }
-
-        SpawnAnts();
-        SpawnQueen();
-
-		StartCoroutine(LevelTextCoroutine());
-    }
-
-    private void SpawnAnts() {
-        for (int i = 0; i < playerList.Count; i++) {
-            for (int j = 0; j < numOfAnts; j++) { 
-                GameObject newAnt = Instantiate(antPrefab, GetAntSpawnPoint(), Quaternion.identity);
-                playerList[i].AddNewAnt(newAnt);
-                newAnt.GetComponent<AntScript>().ownedPlayer = (AntScript.PlayerList)i;
-                newAnt.GetComponent<MeshRenderer>().material.color = playerList[i].playerInfo.playerColor;
-            }
-        }
-    }
-
-    private void SpawnQueen() {
-        for (int i = 0; i < playerList.Count; i++) {
-            GameObject newQueen = Instantiate(queenPrefab, GetAntSpawnPoint() , Quaternion.identity);
-            playerList[i].AddQueen(newQueen);
         }
     }
 

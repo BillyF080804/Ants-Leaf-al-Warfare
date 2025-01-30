@@ -26,6 +26,7 @@ public class PlayerManager : MonoBehaviour {
         UpdatePlayerCount(0);
     }
 
+    //Called when a player changes the number of players in the game
     public void UpdatePlayerCount(int value) {
         if (value == 0) {
             expectedPlayerCount = 2;
@@ -71,6 +72,7 @@ public class PlayerManager : MonoBehaviour {
         }
     }
 
+    //Called when a player presses the join button on their controller
     public void OnPlayerJoined(PlayerInput input) {
         if (playerList.Count < expectedPlayerCount) {
             playerList.Add(input.gameObject.GetComponent<Player>());
@@ -90,6 +92,7 @@ public class PlayerManager : MonoBehaviour {
         numOfAnts = _numOfAnts;
     }
 
+    //Loads players into the game
     public void StartGame() {
         if (playerList.Count() != expectedPlayerCount) {
             errorText.SetActive(true);
@@ -104,14 +107,13 @@ public class PlayerManager : MonoBehaviour {
         }
     }
 
+    //Helper function to return a random color
     private Color ChooseNewColor() {
-        int color = Random.Range(1, 9);
+        int color = Random.Range(1, 8);
 
         switch (color) {
             case 1:
                 return Color.red;
-            case 2:
-                return Color.white;
             case 3:
                 return Color.black;
             case 4:
@@ -129,6 +131,7 @@ public class PlayerManager : MonoBehaviour {
         }
     }
 
+    //Called when a user presses the change color button
     public void ChangeColor(int playerNum) {
         Color newColor = ChooseNewColor();
         List<Color> cardColors = new List<Color>();
