@@ -15,6 +15,8 @@ public class TurnManager : MonoBehaviour {
 
     [Header("UI")]
     [SerializeField] private GameObject levelNameText;
+    [SerializeField] private GameObject queenHealthUIPrefab;
+    [field: SerializeField] public List<GameObject> QueenHealthUI { get; private set; }
 
     private int numOfAnts = 2;
     private float currentTurnTime;
@@ -36,6 +38,33 @@ public class TurnManager : MonoBehaviour {
         playerList = LoadingData.playerList;
         dropSystem = FindFirstObjectByType<WeaponDropSystem>();
         weaponManager = FindFirstObjectByType<WeaponManager>();
+
+        for (int i = 0; i < playerList.Count; i++) {
+            Canvas canvas = FindFirstObjectByType<Canvas>();
+
+            GameObject newHealthUI = Instantiate(queenHealthUIPrefab, canvas.transform);
+            QueenHealthUI.Add(newHealthUI);
+
+            switch (i) {
+                case 0:
+                    newHealthUI.GetComponent<RectTransform>().localPosition = new Vector2(-785, 415);
+                    newHealthUI.GetComponentInChildren<TMP_Text>().text = "Player 1 Queen Ant Health: 100";
+                    break;
+                case 1:
+                    newHealthUI.GetComponent<RectTransform>().localPosition = new Vector2(785, 415);
+                    newHealthUI.GetComponentInChildren<TMP_Text>().text = "Player 2 Queen Ant Health: 100";
+                    break;
+                case 2:
+                    newHealthUI.GetComponent<RectTransform>().localPosition = new Vector2(-785, -415);
+                    newHealthUI.GetComponentInChildren<TMP_Text>().text = "Player 3 Queen Ant Health: 100";
+                    break;
+                case 3:
+                    newHealthUI.GetComponent<RectTransform>().localPosition = new Vector2(785, -415);
+                    newHealthUI.GetComponentInChildren<TMP_Text>().text = "Player 4 Queen Ant Health: 100";
+                    break;
+            }
+        }
+
         SpawnAnts();
         SpawnQueen();
 

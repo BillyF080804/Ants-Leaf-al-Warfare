@@ -11,11 +11,14 @@ public class WeaponManager : MonoBehaviour {
 
     public bool WeaponMenuOpen { get; private set; } = false;
     private bool uiMoving = false;
-    private VirtualMouseInput mouseInput;
+
     private Plane plane = new Plane(Vector3.forward, 0);
+    private TurnManager turnManager;
+    private VirtualMouseInput mouseInput;
     private List<BaseWeaponSO> allWeapons = new List<BaseWeaponSO>();
 
     private void Start() { 
+        turnManager = FindFirstObjectByType<TurnManager>();
         mouseInput = FindFirstObjectByType<VirtualMouseInput>();
         allWeapons = Resources.LoadAll<BaseWeaponSO>("").ToList();
     }
@@ -26,11 +29,10 @@ public class WeaponManager : MonoBehaviour {
         WeaponScript weaponScript = newWeapon.GetComponent<WeaponScript>();
 
         //Calculate virtual mouse position in world space
-        float distance;
         Vector3 mousePosInWorldSpace = Vector3.one;
         Ray ray = Camera.main.ScreenPointToRay(mouseInput.cursorTransform.position);
 
-        if (plane.Raycast(ray, out distance)) {
+        if (plane.Raycast(ray, out float distance)) {
             mousePosInWorldSpace = ray.GetPoint(distance);
         }
 
@@ -90,7 +92,22 @@ public class WeaponManager : MonoBehaviour {
     }
 
     private IEnumerator OpenWeaponMenuCoroutine() {
-        //Queen ant health UI needs to be hidden. Once added.
+        foreach (GameObject queenAntHealthUI in turnManager.QueenHealthUI) {
+            RectTransform rect = queenAntHealthUI.GetComponent<RectTransform>();
+
+            if (rect.localPosition.y > 0) {
+                queenAntHealthUI.GetComponent<MoveUI>().StartMoveUI(LerpType.InBack, queenAntHealthUI, new Vector2(rect.localPosition.x, rect.localPosition.y), new Vector2(rect.localPosition.x, 650), 1.0f);
+            }
+            else {
+                queenAntHealthUI.GetComponent<MoveUI>().StartMoveUI(LerpType.InBack, queenAntHealthUI, new Vector2(rect.localPosition.x, rect.localPosition.y), new Vector2(rect.localPosition.x, -650), 1.0f);
+            }
+        }
+
+        yield return new WaitUntil(() => turnManager.QueenHealthUI[0].GetComponent<RectTransform>().localPosition.y > 640);
+
+        foreach (GameObject queenHealthUI in turnManager.QueenHealthUI) {
+            queenHealthUI.SetActive(false);
+        }
 
         WeaponMenuOpen = true;
         weaponMenuUI.SetActive(true);
@@ -107,7 +124,17 @@ public class WeaponManager : MonoBehaviour {
         weaponMenuUI.SetActive(false);
         WeaponMenuOpen = false;
 
-        //Queen ant health UI needs to be shown. Once added.
+        foreach (GameObject queenAntHealthUI in turnManager.QueenHealthUI) {
+            RectTransform rect = queenAntHealthUI.GetComponent<RectTransform>();
+            queenAntHealthUI.SetActive(true);
+
+            if (rect.localPosition.y > 0) {
+                queenAntHealthUI.GetComponent<MoveUI>().StartMoveUI(LerpType.OutBack, queenAntHealthUI, new Vector2(rect.localPosition.x, rect.localPosition.y), new Vector2(rect.localPosition.x, 415), 1.0f);
+            }
+            else {
+                queenAntHealthUI.GetComponent<MoveUI>().StartMoveUI(LerpType.OutBack, queenAntHealthUI, new Vector2(rect.localPosition.x, rect.localPosition.y), new Vector2(rect.localPosition.x, -415), 1.0f);
+            }
+        }
 
         uiMoving = false;
     }
