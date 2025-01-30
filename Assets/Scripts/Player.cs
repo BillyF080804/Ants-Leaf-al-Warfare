@@ -13,7 +13,7 @@ public class Player : MonoBehaviour {
     [Header("Game Info")]
     [SerializeField] private BaseWeaponSO currentWeapon;
     
-    private PlayerManager playerManager;
+    private LobbyManager lobbyManager;
     private TurnManager turnManager;
     private WeaponManager weaponManager;
 
@@ -22,7 +22,7 @@ public class Player : MonoBehaviour {
     private List<BaseWeaponSO> currentWeapons = new List<BaseWeaponSO>();
 
     private void Awake() {
-        playerManager = FindFirstObjectByType<PlayerManager>();    
+        lobbyManager = FindFirstObjectByType<LobbyManager>();    
         SceneManager.activeSceneChanged += ActiveSceneChanged;
 
         DontDestroyOnLoad(gameObject);
@@ -45,8 +45,8 @@ public class Player : MonoBehaviour {
 
     //Function called when the player presses the change color button
     private void OnChangeColor() {
-        if (playerManager != null && SceneManager.GetActiveScene().name.Contains("Menu")) {
-            playerManager.ChangeColor(playerInfo.playerNum); //Only works in the menu
+        if (lobbyManager != null && SceneManager.GetActiveScene().name.Contains("Menu")) {
+            lobbyManager.ChangeColor(playerInfo.playerNum); //Only works in the menu
         }
     }
 

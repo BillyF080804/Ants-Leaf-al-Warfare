@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class PlayerManager : MonoBehaviour {
+public class LobbyManager : MonoBehaviour {
     [Header("Settings")]
     [SerializeField] private PlayerInputManager inputManager;
 
@@ -17,13 +18,25 @@ public class PlayerManager : MonoBehaviour {
     [Header("Other UI")]
     [SerializeField] private GameObject errorText;
 
+    [Header("Scene Info")]
+    [SerializeField] private List<SceneAsset> availableScenes;
+    [SerializeField] private TMP_Dropdown sceneDropdown;
+
+    private string sceneToLoad;
     private int expectedPlayerCount = 0;
     private int numOfAnts = 2;
     private List<PlayerCardInfo> playerCardList = new List<PlayerCardInfo>();
     private List<Player> playerList = new List<Player>();
 
     private void Start() {
+        List<string> sceneNames = new List<string>();
+        foreach (SceneAsset scene in availableScenes) {
+            sceneNames.Add(scene.name);
+        }
+        sceneDropdown.AddOptions(sceneNames);
+
         UpdatePlayerCount(0);
+        UpdateSceneToLoad(0);
     }
 
     //Called when a player changes the number of players in the game
@@ -92,6 +105,10 @@ public class PlayerManager : MonoBehaviour {
         numOfAnts = _numOfAnts;
     }
 
+    public void UpdateSceneToLoad(int _sceneToLoad) {
+        sceneToLoad = sceneDropdown.options[_sceneToLoad].text;
+    }
+
     //Loads players into the game
     public void StartGame() {
         if (playerList.Count() != expectedPlayerCount) {
@@ -100,7 +117,7 @@ public class PlayerManager : MonoBehaviour {
         }
         else {
             errorText.SetActive(false);
-            LoadingData.sceneToLoad = "GameScene";
+            LoadingData.sceneToLoad = sceneToLoad;
             LoadingData.playerList = playerList;
             LoadingData.numOfAnts = numOfAnts;
             SceneManager.LoadScene("LoadingScene");
