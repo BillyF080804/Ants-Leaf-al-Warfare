@@ -1184,7 +1184,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: Garden Level
   numOfRounds: 5
-  maxTurnTime: 5
+  maxTurnTime: 20
   antPrefab: {fileID: 7419841320288824830, guid: d3f6b0f801636df4fa3ef21689ebf309, type: 3}
   queenPrefab: {fileID: 7419841320288824830, guid: f2ffe306220e9534ea2e2a710635ff87, type: 3}
   levelNameText: {fileID: 456278869}
@@ -1281,6 +1281,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponMenuUI: {fileID: 24696138}
+  weaponMenuUIGridArea: {fileID: 434914527188360344}
+  weaponIconPrefab: {fileID: 7693498855874816613, guid: 91fec71c883a27c4283dd0024acd5cde, type: 3}
+  defaultPlayerWeapons:
+  - {fileID: 11400000, guid: 947a95e99563245478c83ee52364e4fd, type: 2}
 --- !u!4 &2060376111
 Transform:
   m_ObjectHideFlags: 0
@@ -1412,6 +1416,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ddb3859fac9866743ad7fdfc2431cacb, type: 3}
+--- !u!224 &434914527188360344 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6946506519818548555, guid: ddb3859fac9866743ad7fdfc2431cacb, type: 3}
+  m_PrefabInstance: {fileID: 434914527188360343}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &526959597121975348
 RectTransform:
   m_ObjectHideFlags: 0

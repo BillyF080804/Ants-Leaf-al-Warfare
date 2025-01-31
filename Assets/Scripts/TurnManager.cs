@@ -30,16 +30,17 @@ public class TurnManager : MonoBehaviour {
     public bool allAntsMoved = false;
     int queensMoved = 0;
 
+    private Coroutine turnTimerCoroutine;
     private WeaponManager weaponManager;
 	private WeaponDropSystem dropSystem;
-    private List<Player> playerList = new List<Player>();
+    public List<Player> PlayerList { get; private set; } = new List<Player>();
 
 
     [SerializeField] TextMeshProUGUI tempText;
 
     private void Start() {
         numOfAnts = LoadingData.numOfAnts;
-        playerList = LoadingData.playerList;
+        PlayerList = LoadingData.playerList;
         dropSystem = FindFirstObjectByType<WeaponDropSystem>();
         weaponManager = FindFirstObjectByType<WeaponManager>();
 
@@ -51,25 +52,25 @@ public class TurnManager : MonoBehaviour {
     }
 
     private void SpawnAnts() {
-        for (int i = 0; i < playerList.Count; i++) {
+        for (int i = 0; i < PlayerList.Count; i++) {
             for (int j = 0; j < numOfAnts; j++) { 
                 GameObject newAnt = Instantiate(antPrefab, GetAntSpawnPoint(), Quaternion.identity);
-                playerList[i].AddNewAnt(newAnt);
+                PlayerList[i].AddNewAnt(newAnt);
                 newAnt.GetComponent<AntScript>().ownedPlayer = (AntScript.PlayerList)i;
-                newAnt.GetComponent<MeshRenderer>().material.color = playerList[i].playerInfo.playerColor;
+                newAnt.GetComponent<MeshRenderer>().material.color = PlayerList[i].playerInfo.playerColor;
             }
         }
     }
 
     private void SpawnQueen() {
-        for (int i = 0; i < playerList.Count; i++) {
+        for (int i = 0; i < PlayerList.Count; i++) {
             GameObject newQueen = Instantiate(queenPrefab, GetAntSpawnPoint() , Quaternion.identity);
-            playerList[i].AddQueen(newQueen);
+            PlayerList[i].AddQueen(newQueen);
         }
     }
 
     private void SpawnQueenAntHealthUI() {
-        for (int i = 0; i < playerList.Count; i++) {
+        for (int i = 0; i < PlayerList.Count; i++) {
             Canvas canvas = FindFirstObjectByType<Canvas>();
 
             GameObject newHealthUI = Instantiate(queenHealthUIPrefab, canvas.transform);
@@ -114,10 +115,10 @@ public class TurnManager : MonoBehaviour {
         for (int i = 0; i < numOfRounds; i++) {
 			tempText.text = "Current Round: " + (CurrentRound+1);
 
-			foreach (var player in playerList) {
+			foreach (var player in PlayerList) {
                 currentTurnEnded = false;
                 CurrentPlayerTurn = player;
-                StartCoroutine(TurnTimer());
+                turnTimerCoroutine = StartCoroutine(TurnTimer());
 
                 yield return new WaitUntil(() => currentTurnEnded == true);
             }
@@ -144,7 +145,7 @@ public class TurnManager : MonoBehaviour {
 	}
 
     private IEnumerator EndTurnCoroutine() {
-        StopCoroutine(nameof(TurnTimer));
+        StopCoroutine(turnTimerCoroutine);
         Player currentPlayerTemp = CurrentPlayerTurn.GetComponent<Player>();
         CurrentPlayerTurn = null;
         weaponManager.ForceCloseWeaponMenu();
@@ -154,18 +155,16 @@ public class TurnManager : MonoBehaviour {
             queensMoved++;
 			currentPlayerTemp.ResetQueen();
 
-			if (queensMoved == playerList.Count) {
+			if (queensMoved == PlayerList.Count) {
 				allAntsMoved = false; // ensures the round doesnt end until all ants have moved
                 queensMoved = 0;
-				for (int i = 0; i < playerList.Count; i++) {
-					playerList[i].ResetAnts();// sets all the ants back to not having moved
+				for (int i = 0; i < PlayerList.Count; i++) {
+                    PlayerList[i].ResetAnts();// sets all the ants back to not having moved
 				}
 
 				CurrentRound++;
 				dropSystem.CheckDrop();
 			}
-
-
         }
 
         currentTurnEnded = true;

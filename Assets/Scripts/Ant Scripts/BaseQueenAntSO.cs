@@ -18,12 +18,10 @@ public class BaseQueenAntSO : ScriptableObject {
 	public Color antColor = Color.black;
 
 	[Header("Queen Attributes")]
-	public string Name;
+	public string antName;
 	public QueenType queenType;
-	public int Health = 150;
-	public int Damage = 1;
+	public int health = 150;
+	public int damage = 1;
 	public int moveSpeed = 3;
 	public int jumpHeight = 2;
-
-
 }

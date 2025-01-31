@@ -8,21 +8,34 @@ using UnityEngine.InputSystem.UI;
 public class WeaponManager : MonoBehaviour {
     [Header("UI")]
     [SerializeField] private GameObject weaponMenuUI;
+    [SerializeField] private Transform weaponMenuUIGridArea;
+
+    [Header("Prefabs")]
+    [SerializeField] private WeaponMenuIconScript weaponIconPrefab;
+
+    [Header("Default Player Weapons")]
+    [SerializeField] private List<BaseWeaponSO> defaultPlayerWeapons = new List<BaseWeaponSO>();
 
     public bool WeaponMenuOpen { get; private set; } = false;
+    public BaseWeaponSO WeaponSelected { get; private set; }
     private bool uiMoving = false;
 
     private Plane plane = new Plane(Vector3.forward, 0);
     private TurnManager turnManager;
     private VirtualMouseInput mouseInput;
     private List<BaseWeaponSO> allWeapons = new List<BaseWeaponSO>();
+    private List<WeaponMenuIconScript> weaponIcons = new List<WeaponMenuIconScript>();
 
     private void Start() { 
         turnManager = FindFirstObjectByType<TurnManager>();
         mouseInput = FindFirstObjectByType<VirtualMouseInput>();
         allWeapons = Resources.LoadAll<BaseWeaponSO>("").ToList();
+
+        FillWeaponMenu();
+        GivePlayerDefaultWeapons();
     }
 
+    //Function for handling firing weapons
     public void FireWeapon(BaseWeaponSO weaponInfo, Transform playerPosition) {
         GameObject newWeapon = Instantiate(weaponInfo.weaponPrefab, playerPosition.position, Quaternion.identity);
         Rigidbody rb = newWeapon.GetComponent<Rigidbody>();
@@ -50,11 +63,14 @@ public class WeaponManager : MonoBehaviour {
 
         //Set weapon values
         rb.useGravity = weaponInfo.useGravity;
-        weaponScript.weaponInfo = weaponInfo;
+        weaponScript.SetupWeapon(weaponInfo);
         
         if (weaponInfo.explosive && !weaponInfo.explodeOnImpact) {
             weaponScript.StartFuse();
         }
+
+        WeaponSelected = null;
+        turnManager.EndTurn();
     }
 
     //Code to ensure the aiming reticle stays inside the screen.
@@ -74,6 +90,7 @@ public class WeaponManager : MonoBehaviour {
         }
         else if (WeaponMenuOpen == false && uiMoving == false) {
             uiMoving = true;
+            WeaponMenuOpen = true;
             StartCoroutine(OpenWeaponMenuCoroutine());
         }
     }
@@ -112,7 +129,7 @@ public class WeaponManager : MonoBehaviour {
             queenHealthUI.SetActive(false);
         }
 
-        WeaponMenuOpen = true;
+        CheckAllIcons();
         weaponMenuUI.SetActive(true);
         weaponMenuUI.GetComponent<MoveUI>().StartMoveUI(LerpType.OutBack, weaponMenuUI, new Vector2(-500, 50), new Vector2(50, 50), 1.0f);
 
@@ -141,5 +158,36 @@ public class WeaponManager : MonoBehaviour {
         }
 
         uiMoving = false;
+    }
+
+    private void FillWeaponMenu() {
+        foreach (BaseWeaponSO weapon in allWeapons) {
+            bool hasWeapon = defaultPlayerWeapons.Contains(weapon);
+            WeaponMenuIconScript newIcon = Instantiate(weaponIconPrefab, weaponMenuUIGridArea);
+            newIcon.GetComponent<WeaponMenuIconScript>().SetWeapon(weapon, hasWeapon);
+            weaponIcons.Add(newIcon.GetComponent<WeaponMenuIconScript>());
+        }
+    }
+
+    private void CheckAllIcons() {
+        foreach (WeaponMenuIconScript icon in weaponIcons) {
+            if (turnManager.CurrentPlayerTurn != null) {
+                bool playerHasWeapon = turnManager.CurrentPlayerTurn.CurrentWeapons.Contains(icon.Weapon);
+                icon.ToggleVisibility(playerHasWeapon);
+            }
+        }
+    }
+
+    private void GivePlayerDefaultWeapons() {
+        foreach (Player player in turnManager.PlayerList) {
+            foreach (BaseWeaponSO weapon in defaultPlayerWeapons) {
+                player.AddNewWeapon(weapon);
+            }
+        }
+    }
+
+    public void SetSelectedWeapon(BaseWeaponSO weapon) {
+        WeaponSelected = weapon;
+        StartCoroutine(CloseWeaponMenuCoroutine());
     }
 }

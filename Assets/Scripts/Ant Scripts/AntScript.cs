@@ -40,7 +40,7 @@ public class AntScript : MonoBehaviour {
         }
     }
 
-	void TakeDamage(int Damage) {
+	public void TakeDamage(int Damage) {
 		antInfo.health -= Damage;
 	}
 

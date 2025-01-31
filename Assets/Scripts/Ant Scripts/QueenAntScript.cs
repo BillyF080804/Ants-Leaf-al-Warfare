@@ -50,26 +50,26 @@ public class QueenAntScript : MonoBehaviour {
 	}
 
 	void FireAttack() {
-		int damageToDeal = queenAntInfo.Damage * attackLevel;
+		int damageToDeal = queenAntInfo.damage * attackLevel;
 	}
 	void BeeAttack() {
-		int damageToDeal = queenAntInfo.Damage * attackLevel;
+		int damageToDeal = queenAntInfo.damage * attackLevel;
 	}
 	void PharaohAttack() {
-		int damageToDeal = queenAntInfo.Damage * attackLevel;
+		int damageToDeal = queenAntInfo.damage * attackLevel;
 	}
 	void WeaverAttack() {
-		int damageToDeal = queenAntInfo.Damage * attackLevel;
+		int damageToDeal = queenAntInfo.damage * attackLevel;
 	}
 	void DraculaAttack() {
-		int damageToDeal = queenAntInfo.Damage * attackLevel;
+		int damageToDeal = queenAntInfo.damage * attackLevel;
 	}
 	void BulletAttack() {
-		int damageToDeal = queenAntInfo.Damage * attackLevel;
+		int damageToDeal = queenAntInfo.damage * attackLevel;
 	}
 
 	public int GetHealth() {
-		return queenAntInfo.Health;
+		return queenAntInfo.health;
 	}
 
 	public void OnMove(InputValue value) {
@@ -85,7 +85,11 @@ public class QueenAntScript : MonoBehaviour {
 		}
 	}
 
-	private void OnCollisionEnter(Collision collision) {
+    public void TakeDamage(int Damage) {
+        queenAntInfo.health -= Damage;
+    }
+
+    private void OnCollisionEnter(Collision collision) {
 		if (collision.gameObject.transform.position.y < gameObject.transform.position.y) {
 			canJump = true;
 		}
