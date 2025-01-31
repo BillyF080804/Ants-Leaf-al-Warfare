@@ -11,7 +11,7 @@ public class QueenAntScript : MonoBehaviour {
 
 	[Header("Game Info")]
 	public PlayerList ownedPlayer;
-	Vector3 moveVector = Vector3.zero;
+	public Vector3 moveVector = Vector3.zero;
 	bool canJump = true;
 	public int attackLevel = 0;
 

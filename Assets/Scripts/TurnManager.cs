@@ -22,16 +22,20 @@ public class TurnManager : MonoBehaviour {
     private float currentTurnTime;
     private bool currentTurnEnded = false;
 
-    public int CurrentRound { get; private set; } = 1;
+    public int CurrentRound { get; private set; } = 0;
     public Player CurrentPlayerTurn { get; private set; } = null;
 
     //Tracks which ant's turn it currently is
     public AntScript CurrentAntTurn { get; private set; } = null;
     public bool allAntsMoved = false;
+    int queensMoved = 0;
 
     private WeaponManager weaponManager;
 	private WeaponDropSystem dropSystem;
     private List<Player> playerList = new List<Player>();
+
+
+    [SerializeField] TextMeshProUGUI tempText;
 
     private void Start() {
         numOfAnts = LoadingData.numOfAnts;
@@ -108,14 +112,20 @@ public class TurnManager : MonoBehaviour {
 
     private IEnumerator StartGame() {
         for (int i = 0; i < numOfRounds; i++) {
-            foreach (var player in playerList) {
+			tempText.text = "Current Round: " + (CurrentRound+1);
+
+			foreach (var player in playerList) {
                 currentTurnEnded = false;
                 CurrentPlayerTurn = player;
                 StartCoroutine(TurnTimer());
 
                 yield return new WaitUntil(() => currentTurnEnded == true);
             }
-        }
+
+			if (i == CurrentRound && CurrentRound != numOfRounds) {
+				i--;
+			}
+		}
     }
 
 	private IEnumerator TurnTimer() {
@@ -135,19 +145,27 @@ public class TurnManager : MonoBehaviour {
 
     private IEnumerator EndTurnCoroutine() {
         StopCoroutine(nameof(TurnTimer));
+        Player currentPlayerTemp = CurrentPlayerTurn.GetComponent<Player>();
         CurrentPlayerTurn = null;
         weaponManager.ForceCloseWeaponMenu();
         yield return new WaitUntil(() => weaponManager.WeaponMenuOpen == false);
 
-        if (CurrentPlayerTurn == playerList[playerList.Count - 1] && allAntsMoved) {
-            allAntsMoved = false; // ensures the round doesnt end until all ants have moved
+        if (allAntsMoved) { //CurrentPlayerTurn == playerList[playerList.Count - 1] && 
+            queensMoved++;
+			currentPlayerTemp.ResetQueen();
 
-            for (int i = 0; i < playerList.Count; i++) {
-                playerList[i].ResetAnts();// sets all the ants back to not having moved
-            }
+			if (queensMoved == playerList.Count) {
+				allAntsMoved = false; // ensures the round doesnt end until all ants have moved
+                queensMoved = 0;
+				for (int i = 0; i < playerList.Count; i++) {
+					playerList[i].ResetAnts();// sets all the ants back to not having moved
+				}
 
-            CurrentRound++;
-            dropSystem.CheckDrop();
+				CurrentRound++;
+				dropSystem.CheckDrop();
+			}
+
+
         }
 
         currentTurnEnded = true;
@@ -163,6 +181,6 @@ public class TurnManager : MonoBehaviour {
         } 
         else {
             allAntsMoved = true;
-        }
+		}
 	}
 }

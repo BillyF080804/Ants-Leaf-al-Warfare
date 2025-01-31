@@ -12,7 +12,7 @@ public class Player : MonoBehaviour {
 
     [Header("Game Info")]
     [SerializeField] private BaseWeaponSO currentWeapon;
-    
+
     private LobbyManager lobbyManager;
     private TurnManager turnManager;
     private WeaponManager weaponManager;
@@ -22,7 +22,7 @@ public class Player : MonoBehaviour {
     private List<BaseWeaponSO> currentWeapons = new List<BaseWeaponSO>();
 
     private void Awake() {
-        lobbyManager = FindFirstObjectByType<LobbyManager>();    
+        lobbyManager = FindFirstObjectByType<LobbyManager>();
         SceneManager.activeSceneChanged += ActiveSceneChanged;
 
         DontDestroyOnLoad(gameObject);
@@ -66,11 +66,10 @@ public class Player : MonoBehaviour {
 
     //Function called when the player presses the move button
     private void OnMove(InputValue value) {
-        if (turnManager != null && SceneManager.GetActiveScene().name.Contains("Game") && turnManager.CurrentPlayerTurn == this) { 
+        if (turnManager != null && SceneManager.GetActiveScene().name.Contains("Game") && turnManager.CurrentPlayerTurn == this) {
             if (turnManager.CurrentAntTurn != null) {
                 antList.Where(x => turnManager.CurrentAntTurn == x.GetComponent<AntScript>()).First().GetComponent<AntScript>().OnMove(value); //Move for normal ants
-            }
-            else {
+            } else {
                 queenAnt.GetComponent<QueenAntScript>().OnMove(value); //Move for queen ants
             }
         }
@@ -81,8 +80,7 @@ public class Player : MonoBehaviour {
         if (turnManager != null && SceneManager.GetActiveScene().name.Contains("Game") && turnManager.CurrentPlayerTurn == this) {
             if (turnManager.CurrentAntTurn != null) {
                 antList.Where(x => turnManager.CurrentAntTurn == x.GetComponent<AntScript>()).First().GetComponent<AntScript>().OnJump(); //Jump for normal ants
-            }
-            else {
+            } else {
                 queenAnt.GetComponent<QueenAntScript>().OnJump(); //Jump for queen ants
             }
         }
@@ -96,30 +94,35 @@ public class Player : MonoBehaviour {
     }
 
     public AntScript GetAnt(AntScript currentAnt) {
-        if(currentAnt != null) {
-			currentAnt.moveVector = Vector3.zero;
-		}    
+        if (currentAnt != null) {
+            currentAnt.moveVector = Vector3.zero;
+        }
 
         List<AntScript> possibleAnts = new List<AntScript>();
-        for(int i = 0; i < antList.Count; i++) {
+        for (int i = 0; i < antList.Count; i++) {
             AntScript nextAnt = antList[i].GetComponent<AntScript>();
-			if (nextAnt.hasHadTurn == false) {
+            if (nextAnt.hasHadTurn == false) {
                 possibleAnts.Add(nextAnt);
             }
         }
 
-        if(possibleAnts.Count > 0) {
-			int nextAntIndex = Random.Range(0, possibleAnts.Count);
-			return possibleAnts[nextAntIndex];
-		}
-        else { 
-            return null; 
+        if (possibleAnts.Count > 0) {
+            int nextAntIndex = Random.Range(0, possibleAnts.Count);
+            return possibleAnts[nextAntIndex];
+        } else {
+            return null;
         }
     }
 
     public void ResetAnts() {
-		for (int i = 0;i < antList.Count;i++) {
+        for (int i = 0; i < antList.Count; i++) {
             antList[i].GetComponent<AntScript>().hasHadTurn = false;
+            Debug.Log("ant turn again");
         }
+    }
+
+    public void ResetQueen() {
+        queenAnt.GetComponent<QueenAntScript>().moveVector = Vector3.zero;
+
     }
 }
