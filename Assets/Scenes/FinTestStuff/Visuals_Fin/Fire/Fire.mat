@@ -108,13 +108,13 @@ Material:
     - _DetailNormalMapScale: 1
     - _DissolveScale: 5
     - _Dissolve_Amount: 1.2
-    - _DistortionAmount: 0.1
+    - _DistortionAmount: -0.11
     - _DistortionScale: 10
     - _Distortion_Amount: 0.14
     - _DstBlend: 10
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
-    - _FlameSize: -0.48
+    - _FlameSize: 0
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
@@ -144,8 +144,8 @@ Material:
     - _Emission: {r: 19.698313, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColour: {r: 0.7490196, g: 0.2763321, b: 0, a: 0}
-    - _FlameColour: {r: 2.9960787, g: 0.5343681, b: 0, a: 1}
-    - _OtherFlameColour: {r: 5.3403144, g: 1.8173846, b: 0.055919632, a: 0}
+    - _FlameColour: {r: 5.9921575, g: 3.4778013, b: 0, a: 1}
+    - _OtherFlameColour: {r: 7.129739, g: 5.3473043, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &6315223105311210620
