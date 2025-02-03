@@ -53,7 +53,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FireShape:
-        m_Texture: {fileID: 2800000, guid: 7c13de19257471b43b5fe6d88faafef1, type: 3}
+        m_Texture: {fileID: 2800000, guid: 96d14b08e8d563a4a8e59b10873f67a5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainFire:
@@ -144,7 +144,7 @@ Material:
     - _Emission: {r: 19.698313, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColour: {r: 0.7490196, g: 0.2763321, b: 0, a: 0}
-    - _FlameColour: {r: 6.807571, g: 2.6095688, b: 0, a: 1}
+    - _FlameColour: {r: 2.9960787, g: 0.5343681, b: 0, a: 1}
     - _OtherFlameColour: {r: 5.3403144, g: 1.8173846, b: 0.055919632, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
