@@ -41,14 +41,26 @@ public class LobbyManager : MonoBehaviour {
 
     //Called when a player changes the number of players in the game
     public void UpdatePlayerCount(int value) {
-        if (value == 0) {
-            expectedPlayerCount = 2;
-        }
-        else if (value == 1) {
-            expectedPlayerCount = 4;
-        }
+		switch (value) {
+			case 0: {
+				expectedPlayerCount = 1;
+				break;
+			}
+			case 1: {
+				expectedPlayerCount = 2;
+				break;
+			}
+			case 2: {
+				expectedPlayerCount = 3;
+				break;
+			}
+			case 3: {
+				expectedPlayerCount = 4;
+				break;
+			}
+		}
 
-        foreach (var player in playerCardList) { 
+		foreach (var player in playerCardList) { 
             Destroy(player.card);
         }
 
