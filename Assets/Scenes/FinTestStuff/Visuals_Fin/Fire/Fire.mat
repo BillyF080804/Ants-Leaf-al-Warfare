@@ -95,6 +95,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaClip: 1
+    - _AlphaClip_Threshold: 0.3
     - _AlphaToMask: 0
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
@@ -138,7 +139,7 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Colour: {r: 5.5908813, g: 0.8386322, b: 0, a: 0}
-    - _Direction: {r: 0, g: -0.25, b: 0, a: 0}
+    - _Direction: {r: 0.33, g: 0.12, b: 0, a: 0}
     - _DistortionSpeed: {r: 0.15, g: -0.2, b: 0, a: 0}
     - _DistortionSpeed_1: {r: -0.1, g: -0.5, b: 0, a: 0}
     - _Emission: {r: 19.698313, g: 0, b: 0, a: 1}
