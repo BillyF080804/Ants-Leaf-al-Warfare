@@ -9,14 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c139a7d7857c284a85dff29aa31d9d5, type: 3}
-  m_Name: Fire Queen
+  m_Script: {fileID: 11500000, guid: a6bce53b57bfd1b4ea23fb8c135d608b, type: 3}
+  m_Name: Bee Queen
   m_EditorClassIdentifier: 
   antPrefab: {fileID: 0}
   antColor: {r: 0, g: 0, b: 0, a: 1}
-  Name: 
-  queenType: 0
-  Health: 150
-  Damage: 1
-  moveSpeed: 5
-  jumpHeight: 10
+  antName: 
+  moveSpeed: 1
+  jumpHeight: 2
+  health: 100
+  IsQueen: 1
+  queenType: 1
+  damage: 1

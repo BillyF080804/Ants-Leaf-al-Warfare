@@ -14,4 +14,19 @@ public class AntSO : ScriptableObject {
 	public int jumpHeight = 2;
 	public int health = 100;
 
+
+	public enum QueenType {
+		Fire,
+		Bee,
+		Pharaoh,
+		Weaver,
+		Dracula,
+		Bullet
+	}
+
+
+	[Header("Queen Attributes")]
+	public bool IsQueen = false;
+	public QueenType queenType;
+	public int damage = 1;
 }
