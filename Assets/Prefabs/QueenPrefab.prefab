@@ -146,6 +146,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 297f68be2c4a111439bc4dc076f9f46a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  queenAntInfo: {fileID: 11400000, guid: 311a979bdc74abf479bd34043279137d, type: 2}
+  antInfo: {fileID: 11400000, guid: 6a4a47061533efa499ac876195438a4d, type: 2}
   ownedPlayer: 0
+  moveVector: {x: 0, y: 0, z: 0}
+  canJump: 1
   attackLevel: 0
