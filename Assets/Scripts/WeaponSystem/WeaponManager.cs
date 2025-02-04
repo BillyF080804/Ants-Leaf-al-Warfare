@@ -84,7 +84,10 @@ public class WeaponManager : MonoBehaviour {
 
     //Used to either open or close the weapon menu
     public void WeaponMenu() {
-        if (WeaponMenuOpen == true && uiMoving == false) {
+        if (WeaponMenuOpen == false && uiMoving == false && WeaponSelected != null) {
+            WeaponSelected = null;
+        }
+        else if (WeaponMenuOpen == true && uiMoving == false) {
             uiMoving = true;
             StartCoroutine(CloseWeaponMenuCoroutine());
         }

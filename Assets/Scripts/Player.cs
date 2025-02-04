@@ -62,7 +62,7 @@ public class Player : MonoBehaviour {
 
     //Function called when the player presses the move button
     private void OnMove(InputValue value) {
-        if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false) {
+        if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false && weaponManager.WeaponSelected == null) {
             if (turnManager.CurrentAntTurn != null) {
                 antList.Where(x => turnManager.CurrentAntTurn == x.GetComponent<AntScript>()).First().GetComponent<AntScript>().OnMove(value); //Move for normal ants
             } else {
@@ -73,7 +73,7 @@ public class Player : MonoBehaviour {
 
     //Function called when the player presses the jump button
     private void OnJump() {
-        if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false) {
+        if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false && weaponManager.WeaponSelected == null) {
             if (turnManager.CurrentAntTurn != null) {
                 antList.Where(x => turnManager.CurrentAntTurn == x.GetComponent<AntScript>()).First().GetComponent<AntScript>().OnJump(); //Jump for normal ants
             } else {

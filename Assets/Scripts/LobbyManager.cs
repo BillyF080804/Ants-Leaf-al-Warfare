@@ -87,9 +87,7 @@ public class LobbyManager : MonoBehaviour {
             playerCardList[i].playerNumText.text = "Player " + (i + 1);
 
             if (i != 0) {
-                while (playerCardList[i].colorBand.color == playerCardList[i - 1].colorBand.color) {
-                    playerCardList[i].colorBand.color = ChooseNewColor();
-                }    
+                ChangeColor(playerCardList[i].playerNum);  
             }
             else {
                 playerCardList[i].colorBand.color = ChooseNewColor();
@@ -173,7 +171,10 @@ public class LobbyManager : MonoBehaviour {
             newColor = ChooseNewColor();
         }
 
-        playerList.Where(x => x.playerInfo.playerNum == playerNum).First().playerInfo.playerColor = newColor;
+        if (playerList.Count > 0) {
+            playerList.Where(x => x.playerInfo.playerNum == playerNum).First().playerInfo.playerColor = newColor;
+        }
+
         playerCardList.Where(x => x.playerNum == playerNum).First().colorBand.color = newColor;
     }
 }
