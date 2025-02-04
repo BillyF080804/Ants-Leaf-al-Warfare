@@ -61,12 +61,21 @@
                 },
                 {
                     "name": "Aim",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "772ffbb8-88fc-48d3-9f5b-c71fb6607b02",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "AimStrength",
+                    "type": "Value",
+                    "id": "8862d948-5184-4b0e-9dcb-55365fc91414",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -252,7 +261,7 @@
                     "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard&Mouse",
                     "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -282,7 +291,7 @@
                 {
                     "name": "Up/Down",
                     "id": "fc6e63f3-bd5f-4083-91f9-0950f5fb490e",
-                    "path": "1DAxis",
+                    "path": "2DVector",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -291,7 +300,7 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "positive",
+                    "name": "Up",
                     "id": "3b96710c-8058-40ff-b37d-42f71471682f",
                     "path": "<Keyboard>/upArrow",
                     "interactions": "",
@@ -302,7 +311,29 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "positive",
+                    "name": "Up",
+                    "id": "cc8513c0-99ca-44f6-ba70-365f6a194b27",
+                    "path": "<Gamepad>/leftStick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Down",
+                    "id": "b075edc3-bcc1-491b-ae46-5f6a8d54bd92",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Down",
                     "id": "13ff74aa-7a63-445c-bcfb-854a6650e404",
                     "path": "<Gamepad>/leftStick/up",
                     "interactions": "",
@@ -313,9 +344,9 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "negative",
+                    "name": "Left",
                     "id": "e2059c81-1b2f-4755-a9a9-581b6de09d05",
-                    "path": "<Keyboard>/downArrow",
+                    "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -324,13 +355,90 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "negative",
-                    "id": "c6de2300-783f-4b49-87e5-7d6db86ea008",
-                    "path": "<Gamepad>/leftStick/down",
+                    "name": "Left",
+                    "id": "65143a90-8f31-4634-80fb-f3c709a5a90a",
+                    "path": "<Gamepad>/leftStick/left",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Right",
+                    "id": "c6de2300-783f-4b49-87e5-7d6db86ea008",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Right",
+                    "id": "93b22e56-9160-4e20-a902-457f00182b96",
+                    "path": "<Gamepad>/leftStick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Up/Down",
+                    "id": "3932e7e8-fbcc-4e88-bbe2-a9591c11c2c8",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AimStrength",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "positive",
+                    "id": "c869a19e-3842-4784-9c56-dc3899fedcf7",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "AimStrength",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "99b8b225-1825-43f8-aeac-16ae8d148ef8",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "AimStrength",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "negative",
+                    "id": "8ccb84ec-e5fa-4912-a597-5e2ff7e40a2b",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "AimStrength",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "negative",
+                    "id": "4aad0bd4-c9d3-4fac-ae5a-ce0eeda9ab41",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "AimStrength",
                     "isComposite": false,
                     "isPartOfComposite": true
                 }

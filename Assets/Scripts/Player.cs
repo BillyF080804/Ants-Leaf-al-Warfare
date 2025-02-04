@@ -3,6 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using static UnityEngine.Rendering.DebugUI;
 using Random = UnityEngine.Random;
 
 public class Player : MonoBehaviour {
@@ -56,7 +57,7 @@ public class Player : MonoBehaviour {
     //Function called when the player presses the fire weapon button
     private void OnFireWeapon() {
         if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false && weaponManager.WeaponSelected != null) {
-            weaponManager.FireWeapon(weaponManager.WeaponSelected, transform);
+            weaponManager.FireWeapon(weaponManager.WeaponSelected, turnManager.CurrentAntTurn.transform);
         }
     }
 
@@ -90,9 +91,16 @@ public class Player : MonoBehaviour {
     }
 
     //Function called when player has weapon selected and is aiming
-    private void OnAim() {
+    private void OnAim(InputValue value) {
         if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false && weaponManager.WeaponSelected != null) {
-            Debug.Log("do aiming");
+            weaponManager.AimWeapon(value);
+        }
+    }
+
+    //Function called when player has weapon selected and changes strength of shot
+    private void OnAimStrength(InputValue value) {
+        if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false && weaponManager.WeaponSelected != null) {
+            weaponManager.AimStrength(value);
         }
     }
 

@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem.LowLevel;
-using UnityEngine.InputSystem.UI;
+using UnityEngine.InputSystem;
 
 public class WeaponManager : MonoBehaviour {
     [Header("UI")]
@@ -16,19 +15,24 @@ public class WeaponManager : MonoBehaviour {
     [Header("Default Player Weapons")]
     [SerializeField] private List<BaseWeaponSO> defaultPlayerWeapons = new List<BaseWeaponSO>();
 
+    private bool uiMoving = false;
+    private bool facingRight = true;
+    private float aimStrength = 1.0f;
+    private Vector2 aimPosition = Vector2.zero;
+
     public bool WeaponMenuOpen { get; private set; } = false;
     public BaseWeaponSO WeaponSelected { get; private set; }
-    private bool uiMoving = false;
 
-    private Plane plane = new Plane(Vector3.forward, 0);
     private TurnManager turnManager;
-    private VirtualMouseInput mouseInput;
+    private Coroutine aimCoroutine;
+    private Coroutine aimStrengthCoroutine;
     private List<BaseWeaponSO> allWeapons = new List<BaseWeaponSO>();
     private List<WeaponMenuIconScript> weaponIcons = new List<WeaponMenuIconScript>();
 
+    public Vector3 facingDirection;
+
     private void Start() { 
         turnManager = FindFirstObjectByType<TurnManager>();
-        mouseInput = FindFirstObjectByType<VirtualMouseInput>();
         allWeapons = Resources.LoadAll<BaseWeaponSO>("").ToList();
 
         FillWeaponMenu();
@@ -37,29 +41,23 @@ public class WeaponManager : MonoBehaviour {
 
     //Function for handling firing weapons
     public void FireWeapon(BaseWeaponSO weaponInfo, Transform playerPosition) {
+        Vector3 spawnPos = new Vector3(aimPosition.x - 3, playerPosition.position.y, 0); //Also change the z on this to be the same as comment below.
         GameObject newWeapon = Instantiate(weaponInfo.weaponPrefab, playerPosition.position, Quaternion.identity);
         Rigidbody rb = newWeapon.GetComponent<Rigidbody>();
         WeaponScript weaponScript = newWeapon.GetComponent<WeaponScript>();
-
-        //Calculate virtual mouse position in world space
-        Vector3 mousePosInWorldSpace = Vector3.one;
-        Ray ray = Camera.main.ScreenPointToRay(mouseInput.cursorTransform.position);
-
-        if (plane.Raycast(ray, out float distance)) {
-            mousePosInWorldSpace = ray.GetPoint(distance);
-        }
+        Vector3 aimPos = new Vector3(aimPosition.x, aimPosition.y, 0); //Update the z value to be assigned from the inspector in a game manager script, with a z offset variable.
 
         //Calculate velocity & rotation
-        Vector3 weaponDirection = mousePosInWorldSpace - playerPosition.position;
-        Vector3 weaponRotation = playerPosition.position - mousePosInWorldSpace;
+        Vector3 weaponDirection = aimPos - playerPosition.position;
+        Vector3 weaponRotation = playerPosition.position - aimPos;
 
         //Set velocity
-        Vector2 weaponVelocity = new Vector2(weaponDirection.x, weaponDirection.y).normalized * weaponInfo.weaponSpeed;
+        Vector2 weaponVelocity = new Vector2(weaponDirection.x, weaponDirection.y).normalized * weaponInfo.weaponSpeed * aimStrength;
         rb.velocity = weaponVelocity;
 
         //Set rotation
         float originalRotation = Mathf.Atan2(weaponRotation.y, weaponRotation.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, originalRotation);
+        newWeapon.transform.rotation = Quaternion.Euler(0, 0, originalRotation);
 
         //Set weapon values
         rb.useGravity = weaponInfo.useGravity;
@@ -73,19 +71,86 @@ public class WeaponManager : MonoBehaviour {
         turnManager.EndTurn();
     }
 
-    //Code to ensure the aiming reticle stays inside the screen.
-    //Will get changed to a different way of doing this. I hope.
-    private void LateUpdate() {
-        Vector2 virtualMousePos = mouseInput.virtualMouse.position.value;
-        virtualMousePos.x = Mathf.Clamp(virtualMousePos.x, 0f, Screen.width);
-        virtualMousePos.y = Mathf.Clamp(virtualMousePos.y, 0f, Screen.height);
-        InputState.Change(mouseInput.virtualMouse.position, virtualMousePos);
+    //Handles stop/starting aiming coroutine
+    public void AimWeapon(InputValue inputValue) {
+        if (inputValue.Get<Vector2>() != Vector2.zero) {
+            aimCoroutine = StartCoroutine(AimCoroutine(inputValue));
+        }
+        else {
+            if (aimCoroutine != null) {
+                StopCoroutine(aimCoroutine);
+            }
+        }
+    }
+
+    //Handles changing the aim whilst aiming buttons are held
+    private IEnumerator AimCoroutine(InputValue inputValue) {
+        Vector2 aimValue = inputValue.Get<Vector2>();
+
+        if (aimValue.x < 0) {
+            facingRight = false;
+            aimPosition.x = turnManager.CurrentAntTurn.transform.position.x - 5;
+        }
+        else if (aimValue.x > 0) {
+            facingRight = true;
+            aimPosition.x = turnManager.CurrentAntTurn.transform.position.x + 5;
+        }
+
+        while (aimValue.y > 0) {
+            aimPosition.y += 1 * Time.deltaTime;
+            yield return null;
+        }
+
+        while (aimValue.y < 0) {
+            aimPosition.y -= 1 * Time.deltaTime;
+            yield return null;
+        }
+    }
+
+    //Handles stop/starting aim strength coroutine
+    public void AimStrength(InputValue inputValue) {
+        if (inputValue.Get() != null) {
+            aimStrengthCoroutine = StartCoroutine(AimStrengthCoroutine(inputValue));
+        }
+        else {
+            if (aimStrengthCoroutine != null) {
+                StopCoroutine(aimStrengthCoroutine);
+            }
+        }
+    }
+
+    //Used to increase the aim strength whilst button is held
+    private IEnumerator AimStrengthCoroutine(InputValue inputValue) {
+        float strengthValue = inputValue.Get<float>();
+
+        while (strengthValue > 0) {
+            aimStrength += 0.25f * Time.deltaTime;
+            yield return null;
+        }
+
+        while (strengthValue < 0) {
+            aimStrength -= 0.25f * Time.deltaTime;
+            yield return null;
+        }
+
+        aimStrength = Mathf.Clamp(aimStrength, 0.1f, 2.0f);
+        float arrowSize = aimArrowDefaultSize * aimStrength;
+        aimArrow.transform.localScale = new Vector3(arrowSize, arrowSize, arrowSize);
+    }
+
+    //Resets the aim to a default position
+    private void ResetAimPosition() {
+        facingRight = true;
+        aimPosition = turnManager.CurrentAntTurn.transform.position;
+        aimPosition.x += 2;
+        aimPosition.y += 2;
     }
 
     //Used to either open or close the weapon menu
     public void WeaponMenu() {
         if (WeaponMenuOpen == false && uiMoving == false && WeaponSelected != null) {
             WeaponSelected = null;
+            aimArrow.SetActive(false);
         }
         else if (WeaponMenuOpen == true && uiMoving == false) {
             uiMoving = true;
@@ -191,6 +256,7 @@ public class WeaponManager : MonoBehaviour {
 
     public void SetSelectedWeapon(BaseWeaponSO weapon) {
         WeaponSelected = weapon;
+        ResetAimPosition();
         StartCoroutine(CloseWeaponMenuCoroutine());
     }
 }

@@ -1,10 +1,25 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class WeaponScript : MonoBehaviour {
     private BaseWeaponSO weaponInfo;
+    private List<Collider> objectsToAvoid = new List<Collider>();
+
+    private void Awake() {
+        foreach (Collider col in Physics.OverlapSphere(transform.position, 1.0f)) {
+            objectsToAvoid.Add(col);
+        }
+
+        StartCoroutine(IgnoreCollisionsTimer());
+    }
+
+    private IEnumerator IgnoreCollisionsTimer() {
+        yield return new WaitForSeconds(0.5f);
+        objectsToAvoid.Clear();
+    }
 
     public void SetupWeapon(BaseWeaponSO weapon) {
         weaponInfo = weapon;
@@ -37,14 +52,16 @@ public class WeaponScript : MonoBehaviour {
     }
 
     private void OnCollisionEnter(Collision collision) {
-        if (weaponInfo.explosive && weaponInfo.explodeOnImpact) {
-            Explode();
-        }
-        else if (collision.gameObject.CompareTag("Player")) {
-            CheckAntType(collision.gameObject);
-        }
+        if (objectsToAvoid.Count == 0 || !objectsToAvoid.Contains(collision.collider)) {
+            if (weaponInfo.explosive && weaponInfo.explodeOnImpact) {
+                Explode();
+            }
+            else if (collision.gameObject.CompareTag("Player")) {
+                CheckAntType(collision.gameObject);
+            }
 
-        Destroy(gameObject);
+            Destroy(gameObject);
+        }
     }
 
     private void CheckAntType(GameObject gameObjectToCheck) {
