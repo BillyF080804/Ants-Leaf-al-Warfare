@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Ant System/New Queen Type", fileName = "New Queen")]
-public class BaseQueenAntSO : ScriptableObject {
+public class QueenAntSO : ScriptableObject {
 	public enum QueenType { 
 		Fire,
 		Bee,

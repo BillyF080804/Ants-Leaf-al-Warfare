@@ -5,14 +5,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static AntScript;
 
-public class QueenAntScript : MonoBehaviour {
+public class QueenAntScript : Ant {
 	[Header("Queen Info")]
-	public BaseQueenAntSO queenAntInfo;
+	public QueenAntSO queenAntInfo;
 
 	[Header("Game Info")]
-	public PlayerList ownedPlayer;
-	public Vector3 moveVector = Vector3.zero;
-	bool canJump = true;
 	public int attackLevel = 0;
 
 	public void PassTurn() {
@@ -21,27 +18,27 @@ public class QueenAntScript : MonoBehaviour {
 
 	public void Attack() {
 		switch (queenAntInfo.queenType) {
-			case BaseQueenAntSO.QueenType.Fire: {
+			case QueenAntSO.QueenType.Fire: {
 				FireAttack();
 				break;
 			}
-			case BaseQueenAntSO.QueenType.Bee: {
+			case QueenAntSO.QueenType.Bee: {
 				BeeAttack();
 				break;
 			}
-			case BaseQueenAntSO.QueenType.Pharaoh: {
+			case QueenAntSO.QueenType.Pharaoh: {
 				PharaohAttack();
 				break;
 			}
-			case BaseQueenAntSO.QueenType.Weaver: {
+			case QueenAntSO.QueenType.Weaver: {
 				WeaverAttack();
 				break;
 			}
-			case BaseQueenAntSO.QueenType.Dracula: {
+			case QueenAntSO.QueenType.Dracula: {
 				DraculaAttack();
 				break;
 			}
-			case BaseQueenAntSO.QueenType.Bullet: {
+			case QueenAntSO.QueenType.Bullet: {
 				BulletAttack();
 				break;
 			}
@@ -89,11 +86,7 @@ public class QueenAntScript : MonoBehaviour {
         queenAntInfo.health -= Damage;
     }
 
-    private void OnCollisionEnter(Collision collision) {
-		if (collision.gameObject.transform.position.y < gameObject.transform.position.y) {
-			canJump = true;
-		}
-	}
+
 
 	private void Update() {
 		transform.Translate(queenAntInfo.moveSpeed * Time.deltaTime * moveVector);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Ant System/New Ant Type", fileName = "New Ant")]
-public class BaseAntSO : ScriptableObject {
+public class AntSO : ScriptableObject {
 	[Header("Ant Cosmetics")]
 	public GameObject antPrefab = null;
 	public Color antColor = Color.black;
