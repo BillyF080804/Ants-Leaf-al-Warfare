@@ -34,4 +34,8 @@ public class WeaponMenuIconScript : MonoBehaviour {
     public void SetSelectedWeapon() {
         weaponManager.SetSelectedWeapon(Weapon);
     }
+
+    public void OnButtonHover() {
+        weaponManager.UpdateWeaponInfo(Weapon);
+    }
 }

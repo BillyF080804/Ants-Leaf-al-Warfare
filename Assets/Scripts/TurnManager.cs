@@ -16,6 +16,7 @@ public class TurnManager : MonoBehaviour {
     [Header("UI")]
     [SerializeField] private GameObject levelNameText;
     [SerializeField] private GameObject queenHealthUIPrefab;
+    [SerializeField] private Canvas mainCanvas;
     [field: SerializeField] public List<GameObject> QueenHealthUI { get; private set; }
 
     private int numOfAnts = 2;
@@ -71,9 +72,7 @@ public class TurnManager : MonoBehaviour {
 
     private void SpawnQueenAntHealthUI() {
         for (int i = 0; i < PlayerList.Count; i++) {
-            Canvas canvas = FindFirstObjectByType<Canvas>();
-
-            GameObject newHealthUI = Instantiate(queenHealthUIPrefab, canvas.transform);
+            GameObject newHealthUI = Instantiate(queenHealthUIPrefab, mainCanvas.transform);
             QueenHealthUI.Add(newHealthUI);
 
             switch (i) {
@@ -148,7 +147,7 @@ public class TurnManager : MonoBehaviour {
         StopCoroutine(turnTimerCoroutine);
         Player currentPlayerTemp = CurrentPlayerTurn.GetComponent<Player>();
         CurrentPlayerTurn = null;
-        weaponManager.ForceCloseWeaponMenu();
+        weaponManager.EndTurn();
         yield return new WaitUntil(() => weaponManager.WeaponMenuOpen == false);
 
         if (allAntsMoved) { //CurrentPlayerTurn == playerList[playerList.Count - 1] && 

@@ -7,12 +7,12 @@
             "actions": [
                 {
                     "name": "SkipTurn",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "22eb929e-1ce8-4bf9-863c-175922eac552",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Hold(duration=1)",
-                    "initialStateCheck": false
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "ChangeColor",

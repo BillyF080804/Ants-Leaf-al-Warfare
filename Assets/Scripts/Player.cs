@@ -3,7 +3,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using static UnityEngine.Rendering.DebugUI;
 using Random = UnityEngine.Random;
 
 public class Player : MonoBehaviour {

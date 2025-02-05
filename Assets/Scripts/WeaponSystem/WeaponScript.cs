@@ -6,22 +6,9 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class WeaponScript : MonoBehaviour {
     private BaseWeaponSO weaponInfo;
-    private List<Collider> objectsToAvoid = new List<Collider>();
 
-    private void Awake() {
-        foreach (Collider col in Physics.OverlapSphere(transform.position, 1.0f)) {
-            objectsToAvoid.Add(col);
-        }
-
-        StartCoroutine(IgnoreCollisionsTimer());
-    }
-
-    private IEnumerator IgnoreCollisionsTimer() {
-        yield return new WaitForSeconds(0.5f);
-        objectsToAvoid.Clear();
-    }
-
-    public void SetupWeapon(BaseWeaponSO weapon) {
+    public void SetupWeapon(BaseWeaponSO weapon, Collider objectCollider) {
+        Physics.IgnoreCollision(GetComponent<Collider>(), objectCollider, true);
         weaponInfo = weapon;
         Destroy(gameObject, 10.0f);
     }
@@ -46,30 +33,20 @@ public class WeaponScript : MonoBehaviour {
 
         foreach (Collider collider in colliders) {
             Debug.Log(collider.name + " damage dealt: " + weaponInfo.baseDamage);
-            CheckAntType(collider.gameObject);
+            collider.GetComponent<Ant>().TakeDamage(weaponInfo.baseDamage);
             collider.GetComponent<Rigidbody>().AddExplosionForce(weaponInfo.explosionPower, transform.position, weaponInfo.explosionRange, 3, ForceMode.Impulse);
         }
     }
 
     private void OnCollisionEnter(Collision collision) {
-        if (objectsToAvoid.Count == 0 || !objectsToAvoid.Contains(collision.collider)) {
-            if (weaponInfo.explosive && weaponInfo.explodeOnImpact) {
-                Explode();
-            }
-            else if (collision.gameObject.CompareTag("Player")) {
-                CheckAntType(collision.gameObject);
-            }
+        if (weaponInfo.explosive && weaponInfo.explodeOnImpact) {
+            Explode();
+        }
+        else if (collision.gameObject.CompareTag("Player")) {
+            Debug.Log(collision.gameObject.name + " damage dealt: " + weaponInfo.baseDamage);
+            collision.gameObject.GetComponent<Ant>().TakeDamage(weaponInfo.baseDamage);
+        }
 
-            Destroy(gameObject);
-        }
-    }
-
-    private void CheckAntType(GameObject gameObjectToCheck) {
-        if (gameObjectToCheck.TryGetComponent(out AntScript antScript)) {
-            antScript.TakeDamage(weaponInfo.baseDamage);
-        }
-        else {
-            gameObjectToCheck.GetComponent<QueenAntScript>().TakeDamage(weaponInfo.baseDamage);
-        }
+        Destroy(gameObject);
     }
 }

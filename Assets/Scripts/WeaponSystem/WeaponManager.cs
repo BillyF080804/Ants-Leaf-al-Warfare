@@ -1,13 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class WeaponManager : MonoBehaviour {
     [Header("UI")]
+    [SerializeField] private RectTransform aimArrow;
+
+    [Header("Weapon Menu UI")]
     [SerializeField] private GameObject weaponMenuUI;
     [SerializeField] private Transform weaponMenuUIGridArea;
+    [SerializeField] private TMP_Text weaponNameText;
+    [SerializeField] private TMP_Text weaponDescriptionText;
 
     [Header("Prefabs")]
     [SerializeField] private WeaponMenuIconScript weaponIconPrefab;
@@ -16,13 +22,9 @@ public class WeaponManager : MonoBehaviour {
     [SerializeField] private List<BaseWeaponSO> defaultPlayerWeapons = new List<BaseWeaponSO>();
 
     private bool uiMoving = false;
-    private bool facingRight = true;
     private float aimStrength = 1.0f;
     private Vector2 aimPosition = Vector2.zero;
-
-    private float aimArrowDefaultSize;
-    [SerializeField]
-    private GameObject aimArrow;
+    private float aimArrowDefaultSize = 2.0f;
 
     public bool WeaponMenuOpen { get; private set; } = false;
     public BaseWeaponSO WeaponSelected { get; private set; }
@@ -30,14 +32,14 @@ public class WeaponManager : MonoBehaviour {
     private TurnManager turnManager;
     private Coroutine aimCoroutine;
     private Coroutine aimStrengthCoroutine;
+    private List<GameObject> activeWeapons = new List<GameObject>();
     private List<BaseWeaponSO> allWeapons = new List<BaseWeaponSO>();
     private List<WeaponMenuIconScript> weaponIcons = new List<WeaponMenuIconScript>();
-
-    public Vector3 facingDirection;
 
     private void Start() { 
         turnManager = FindFirstObjectByType<TurnManager>();
         allWeapons = Resources.LoadAll<BaseWeaponSO>("").ToList();
+        aimArrowDefaultSize = aimArrow.localScale.x;
 
         FillWeaponMenu();
         GivePlayerDefaultWeapons();
@@ -45,8 +47,8 @@ public class WeaponManager : MonoBehaviour {
 
     //Function for handling firing weapons
     public void FireWeapon(BaseWeaponSO weaponInfo, Transform playerPosition) {
-        Vector3 spawnPos = new Vector3(aimPosition.x - 3, playerPosition.position.y, 0); //Also change the z on this to be the same as comment below.
-        GameObject newWeapon = Instantiate(weaponInfo.weaponPrefab, playerPosition.position, Quaternion.identity);
+        Vector3 spawnPos = new Vector3(playerPosition.position.x, playerPosition.position.y + 1, 0); //Also change the z on this to be the same as comment below.
+        GameObject newWeapon = Instantiate(weaponInfo.weaponPrefab, spawnPos, Quaternion.identity);
         Rigidbody rb = newWeapon.GetComponent<Rigidbody>();
         WeaponScript weaponScript = newWeapon.GetComponent<WeaponScript>();
         Vector3 aimPos = new Vector3(aimPosition.x, aimPosition.y, 0); //Update the z value to be assigned from the inspector in a game manager script, with a z offset variable.
@@ -65,13 +67,20 @@ public class WeaponManager : MonoBehaviour {
 
         //Set weapon values
         rb.useGravity = weaponInfo.useGravity;
-        weaponScript.SetupWeapon(weaponInfo);
+        weaponScript.SetupWeapon(weaponInfo, playerPosition.GetComponent<Collider>());
+        activeWeapons.Add(newWeapon);
         
         if (weaponInfo.explosive && !weaponInfo.explodeOnImpact) {
             weaponScript.StartFuse();
         }
 
-        WeaponSelected = null;
+        StartCoroutine(WaitTillWeaponsFinished());
+    }
+
+    private IEnumerator WaitTillWeaponsFinished() {
+        aimArrow.gameObject.SetActive(false);
+        yield return new WaitUntil(() => activeWeapons.Where(x => x != null).Count() == 0);
+        activeWeapons.Clear();
         turnManager.EndTurn();
     }
 
@@ -92,21 +101,23 @@ public class WeaponManager : MonoBehaviour {
         Vector2 aimValue = inputValue.Get<Vector2>();
 
         if (aimValue.x < 0) {
-            facingRight = false;
             aimPosition.x = turnManager.CurrentAntTurn.transform.position.x - 5;
+            UpdateArrowAim();
         }
         else if (aimValue.x > 0) {
-            facingRight = true;
             aimPosition.x = turnManager.CurrentAntTurn.transform.position.x + 5;
+            UpdateArrowAim();
         }
 
         while (aimValue.y > 0) {
             aimPosition.y += 1 * Time.deltaTime;
+            UpdateArrowAim();
             yield return null;
         }
 
         while (aimValue.y < 0) {
             aimPosition.y -= 1 * Time.deltaTime;
+            UpdateArrowAim();
             yield return null;
         }
     }
@@ -129,32 +140,50 @@ public class WeaponManager : MonoBehaviour {
 
         while (strengthValue > 0) {
             aimStrength += 0.25f * Time.deltaTime;
+            UpdateArrowSize();
             yield return null;
         }
 
         while (strengthValue < 0) {
             aimStrength -= 0.25f * Time.deltaTime;
+            UpdateArrowSize();
             yield return null;
         }
-
-        aimStrength = Mathf.Clamp(aimStrength, 0.1f, 2.0f);
-        float arrowSize = aimArrowDefaultSize * aimStrength;
-        aimArrow.transform.localScale = new Vector3(arrowSize, arrowSize, arrowSize);
     }
 
     //Resets the aim to a default position
     private void ResetAimPosition() {
-        facingRight = true;
         aimPosition = turnManager.CurrentAntTurn.transform.position;
         aimPosition.x += 2;
         aimPosition.y += 2;
+
+        aimArrow.gameObject.SetActive(true);
+        Vector3 arrowPos = turnManager.CurrentAntTurn.transform.position;
+        arrowPos.y += 2;
+        aimArrow.anchoredPosition = arrowPos;
+        aimStrength = 1.0f;
+
+        UpdateArrowAim();
+        UpdateArrowSize();
+    }
+
+    private void UpdateArrowAim() {
+        Vector3 aimRotation = (Vector3)aimPosition - aimArrow.position;
+        aimArrow.localRotation = Quaternion.LookRotation(Vector3.forward, new Vector2(-aimRotation.y, aimRotation.x));
+        aimArrow.localEulerAngles = new Vector3(0, 0, aimArrow.localEulerAngles.z - 90);
+    }
+
+    private void UpdateArrowSize() {
+        aimStrength = Mathf.Clamp(aimStrength, 0.5f, 2.0f);
+        float arrowSize = aimArrowDefaultSize * aimStrength;
+        aimArrow.transform.localScale = new Vector3(arrowSize, arrowSize, arrowSize);
     }
 
     //Used to either open or close the weapon menu
     public void WeaponMenu() {
         if (WeaponMenuOpen == false && uiMoving == false && WeaponSelected != null) {
             WeaponSelected = null;
-            aimArrow.SetActive(false);
+            aimArrow.gameObject.SetActive(false);
         }
         else if (WeaponMenuOpen == true && uiMoving == false) {
             uiMoving = true;
@@ -167,7 +196,12 @@ public class WeaponManager : MonoBehaviour {
         }
     }
 
-    public void ForceCloseWeaponMenu() {
+    //Called when a turn is ended
+    public void EndTurn() {
+        WeaponSelected = null;
+        aimArrow.gameObject.SetActive(false);
+        StopAllCoroutines();
+
         StartCoroutine(ForceCloseWeaponMenuCoroutine());
     }
 
@@ -203,7 +237,7 @@ public class WeaponManager : MonoBehaviour {
 
         CheckAllIcons();
         weaponMenuUI.SetActive(true);
-        weaponMenuUI.GetComponent<MoveUI>().StartMoveUI(LerpType.OutBack, weaponMenuUI, new Vector2(-500, 50), new Vector2(50, 50), 1.0f);
+        weaponMenuUI.GetComponent<MoveUI>().StartMoveUI(LerpType.OutBack, weaponMenuUI, new Vector2(-750, 50), new Vector2(50, 50), 1.0f);
 
         yield return new WaitUntil(() => weaponMenuUI.GetComponent<RectTransform>().anchoredPosition == new Vector2(50, 50));
         uiMoving = false;
@@ -211,9 +245,9 @@ public class WeaponManager : MonoBehaviour {
 
     //Closes the weapons menu and opens the queen ant health UI
     private IEnumerator CloseWeaponMenuCoroutine() {
-        weaponMenuUI.GetComponent<MoveUI>().StartMoveUI(LerpType.InBack, weaponMenuUI, new Vector2(50, 50), new Vector2(-500, 50), 1.0f);
+        weaponMenuUI.GetComponent<MoveUI>().StartMoveUI(LerpType.InBack, weaponMenuUI, new Vector2(50, 50), new Vector2(-750, 50), 1.0f);
 
-        yield return new WaitUntil(() => weaponMenuUI.GetComponent<RectTransform>().anchoredPosition == new Vector2(-500, 50));
+        yield return new WaitUntil(() => weaponMenuUI.GetComponent<RectTransform>().anchoredPosition == new Vector2(-750, 50));
         weaponMenuUI.SetActive(false);
         WeaponMenuOpen = false;
 
@@ -256,6 +290,11 @@ public class WeaponManager : MonoBehaviour {
                 player.AddNewWeapon(weapon);
             }
         }
+    }
+
+    public void UpdateWeaponInfo(BaseWeaponSO weapon) {
+        weaponNameText.text = weapon.weaponName;
+        weaponDescriptionText.text = weapon.weaponDescription;
     }
 
     public void SetSelectedWeapon(BaseWeaponSO weapon) {

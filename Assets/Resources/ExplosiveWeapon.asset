@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c76268df7a3d27b4397d0d1e6cbf16c9, type: 3}
-  m_Name: StraightShotWeapon
+  m_Name: ExplosiveWeapon
   m_EditorClassIdentifier: 
-  weaponName: Straight Shot Weapon
-  weaponDescription: A weapon that is straight shot.
+  weaponName: 'Explosive Weapon '
+  weaponDescription: It explodes.
   weaponIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   weaponPrefab: {fileID: 2035224743872689002, guid: 48600db732ecebc49831131511799a3a, type: 3}
   baseDamage: 25
   weaponSpeed: 20
-  useGravity: 0
-  explosive: 0
+  useGravity: 1
+  explosive: 1
   explodeOnImpact: 0
   explosionRange: 5
   explosionPower: 1
