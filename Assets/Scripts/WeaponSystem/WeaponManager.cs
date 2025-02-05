@@ -20,6 +20,10 @@ public class WeaponManager : MonoBehaviour {
     private float aimStrength = 1.0f;
     private Vector2 aimPosition = Vector2.zero;
 
+    private float aimArrowDefaultSize;
+    [SerializeField]
+    private GameObject aimArrow;
+
     public bool WeaponMenuOpen { get; private set; } = false;
     public BaseWeaponSO WeaponSelected { get; private set; }
 
