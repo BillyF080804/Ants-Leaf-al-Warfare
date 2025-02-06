@@ -8,13 +8,25 @@ public class FadeScript : MonoBehaviour {
         StartCoroutine(FadeObject(true, fadeDuration, fadeObject));
     }
 
+    public void FadeInUI(float fadeDuration) {
+        StartCoroutine(FadeObject(true, fadeDuration, gameObject));
+    }
+
     public void FadeOutUI(float fadeDuration, GameObject fadeObject) {
         StartCoroutine(FadeObject(false, fadeDuration, fadeObject));
+    }
+
+    public void FadeOutUI(float fadeDuration) {
+        StartCoroutine(FadeObject(false, fadeDuration, gameObject));
     }
 
     public void FadeInAndOutUI(float fadeDuration, float timeBetweenFades, GameObject fadeObject) {
         fadeObject.SetActive(true);
         StartCoroutine(FadeObjectInAndOut(fadeDuration, timeBetweenFades, fadeObject));
+    }
+
+    public void FadeInAndOutUI(float fadeDuration, float timeBetweenFades) {
+        StartCoroutine(FadeObjectInAndOut(fadeDuration, timeBetweenFades, gameObject));
     }
 
     //Fades an object in waits for x amount of time and then fades object out

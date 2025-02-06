@@ -7,6 +7,10 @@ public class MoveUI : MonoBehaviour {
         StartCoroutine(MoveUICoroutine(lerpType, objectToLerp, startPosition, endPosition, duration));
     }
 
+    public void StartMoveUI(LerpType lerpType, Vector2 startPosition, Vector2 endPosition, float duration) {
+        StartCoroutine(MoveUICoroutine(lerpType, gameObject, startPosition, endPosition, duration));
+    }
+
     //Coroutine to move UI
     private IEnumerator MoveUICoroutine(LerpType lerpType, GameObject objectToLerp, Vector2 startPosition, Vector2 endPosition, float duration) {
         //Create time variable
