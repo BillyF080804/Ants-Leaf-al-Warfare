@@ -17,10 +17,16 @@ public class BaseWeaponSO : ScriptableObject {
     public bool useGravity = true;
     public bool explosive = false;
 
+    [Header("VFX")]
+    public bool hasVFX = false;
+
     [HideInInspector] public bool explodeOnImpact = true;
     [HideInInspector] public float explosionRange = 5.0f;
     [HideInInspector] public float explosionPower = 5.0f;
     [HideInInspector] public float fuseTimer = 5.0f;
+
+    [HideInInspector] public float vfxSize = 1.0f;
+    [HideInInspector] public GameObject vfxObject = null;
 }
 
 #if (UNITY_EDITOR)
@@ -42,6 +48,13 @@ public class BaseWeaponSOEditor : Editor {
             if (!baseWeapon.explodeOnImpact) {
                 baseWeapon.fuseTimer = EditorGUILayout.FloatField("Fuse Timer", baseWeapon.fuseTimer);
             }
+        }
+
+        if (baseWeapon.hasVFX == true) {
+            EditorGUILayout.Space(15);
+            EditorGUILayout.LabelField("VFX", EditorStyles.boldLabel);
+            baseWeapon.vfxObject = (GameObject)EditorGUILayout.ObjectField("VFX", baseWeapon.vfxObject, typeof(GameObject), true);
+            baseWeapon.vfxSize = EditorGUILayout.FloatField("VFX Size", baseWeapon.vfxSize);
         }
     }
 }

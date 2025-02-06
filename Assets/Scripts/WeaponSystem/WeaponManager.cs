@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class WeaponManager : MonoBehaviour {
@@ -23,13 +24,16 @@ public class WeaponManager : MonoBehaviour {
 
     private bool uiMoving = false;
     private float aimStrength = 1.0f;
-    private Vector2 aimPosition = Vector2.zero;
     private float aimArrowDefaultSize = 2.0f;
+    public float strengthValue = 0.0f;
+    private Vector2 aimValue = Vector2.zero;
+    private Vector2 aimPosition = Vector2.zero;
 
     public bool WeaponMenuOpen { get; private set; } = false;
     public BaseWeaponSO WeaponSelected { get; private set; }
 
     private TurnManager turnManager;
+    private EventSystem eventSystem;
     private Coroutine aimCoroutine;
     private Coroutine aimStrengthCoroutine;
     private List<GameObject> activeWeapons = new List<GameObject>();
@@ -38,6 +42,7 @@ public class WeaponManager : MonoBehaviour {
 
     private void Start() { 
         turnManager = FindFirstObjectByType<TurnManager>();
+        eventSystem = FindFirstObjectByType<EventSystem>();
         allWeapons = Resources.LoadAll<BaseWeaponSO>("").ToList();
         aimArrowDefaultSize = aimArrow.localScale.x;
 
@@ -84,70 +89,42 @@ public class WeaponManager : MonoBehaviour {
         turnManager.EndTurn();
     }
 
-    //Handles stop/starting aiming coroutine
+    //Handles setting aimValue
     public void AimWeapon(InputValue inputValue) {
-        if (inputValue.Get<Vector2>() != Vector2.zero) {
-            aimCoroutine = StartCoroutine(AimCoroutine(inputValue));
-        }
-        else {
-            if (aimCoroutine != null) {
-                StopCoroutine(aimCoroutine);
-            }
-        }
+        aimValue = inputValue.Get<Vector2>();
     }
 
-    //Handles changing the aim whilst aiming buttons are held
-    private IEnumerator AimCoroutine(InputValue inputValue) {
-        Vector2 aimValue = inputValue.Get<Vector2>();
-
-        if (aimValue.x < 0) {
-            aimPosition.x = turnManager.CurrentAntTurn.transform.position.x - 5;
-            UpdateArrowAim();
-        }
-        else if (aimValue.x > 0) {
-            aimPosition.x = turnManager.CurrentAntTurn.transform.position.x + 5;
-            UpdateArrowAim();
-        }
-
-        while (aimValue.y > 0) {
-            aimPosition.y += 1 * Time.deltaTime;
-            UpdateArrowAim();
-            yield return null;
-        }
-
-        while (aimValue.y < 0) {
-            aimPosition.y -= 1 * Time.deltaTime;
-            UpdateArrowAim();
-            yield return null;
-        }
-    }
-
-    //Handles stop/starting aim strength coroutine
+    //Handles setting strengthValue
     public void AimStrength(InputValue inputValue) {
-        if (inputValue.Get() != null) {
-            aimStrengthCoroutine = StartCoroutine(AimStrengthCoroutine(inputValue));
+        strengthValue = inputValue.Get<float>();
+    }
+
+    private void ArrowAim() {
+        if (aimValue.x < -0.25f) {
+            aimPosition.x = turnManager.CurrentAntTurn.transform.position.x - 5;
         }
-        else {
-            if (aimStrengthCoroutine != null) {
-                StopCoroutine(aimStrengthCoroutine);
-            }
+        else if (aimValue.x > 0.25f) {
+            aimPosition.x = turnManager.CurrentAntTurn.transform.position.x + 5;
+        }
+
+        aimPosition.y += aimValue.y * Time.deltaTime;
+    }
+
+    private void ArrowStrength() {
+        if (strengthValue > 0) {
+            aimStrength += 0.25f * Time.deltaTime;
+        }
+        else if (strengthValue < 0) { 
+            aimStrength -= 0.25f * Time.deltaTime;
         }
     }
 
-    //Used to increase the aim strength whilst button is held
-    private IEnumerator AimStrengthCoroutine(InputValue inputValue) {
-        float strengthValue = inputValue.Get<float>();
-
-        while (strengthValue > 0) {
-            aimStrength += 0.25f * Time.deltaTime;
+    private void Update() {
+        if (WeaponSelected != null) {
+            ArrowAim();
+            ArrowStrength();
             UpdateArrowSize();
-            yield return null;
-        }
-
-        while (strengthValue < 0) {
-            aimStrength -= 0.25f * Time.deltaTime;
-            UpdateArrowSize();
-            yield return null;
+            UpdateArrowAim();
         }
     }
 
@@ -237,14 +214,17 @@ public class WeaponManager : MonoBehaviour {
 
         CheckAllIcons();
         weaponMenuUI.SetActive(true);
+        eventSystem.SetSelectedGameObject(weaponIcons.First().GetButton());
         weaponMenuUI.GetComponent<MoveUI>().StartMoveUI(LerpType.OutBack, weaponMenuUI, new Vector2(-750, 50), new Vector2(50, 50), 1.0f);
 
         yield return new WaitUntil(() => weaponMenuUI.GetComponent<RectTransform>().anchoredPosition == new Vector2(50, 50));
+        EnableIconInteraction();
         uiMoving = false;
     }
 
     //Closes the weapons menu and opens the queen ant health UI
     private IEnumerator CloseWeaponMenuCoroutine() {
+        DisableIconInteraction();
         weaponMenuUI.GetComponent<MoveUI>().StartMoveUI(LerpType.InBack, weaponMenuUI, new Vector2(50, 50), new Vector2(-750, 50), 1.0f);
 
         yield return new WaitUntil(() => weaponMenuUI.GetComponent<RectTransform>().anchoredPosition == new Vector2(-750, 50));
@@ -281,6 +261,18 @@ public class WeaponManager : MonoBehaviour {
                 bool playerHasWeapon = turnManager.CurrentPlayerTurn.CurrentWeapons.Contains(icon.Weapon);
                 icon.ToggleVisibility(playerHasWeapon);
             }
+        }
+    }
+
+    private void EnableIconInteraction() {
+        foreach (WeaponMenuIconScript icon in weaponIcons) {
+            icon.AllowButtonInteraction();
+        }
+    }
+
+    private void DisableIconInteraction() {
+        foreach (WeaponMenuIconScript icon in weaponIcons) {
+            icon.DisableButtonInteraction();
         }
     }
 

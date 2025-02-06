@@ -11,7 +11,7 @@
                     "id": "22eb929e-1ce8-4bf9-863c-175922eac552",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Hold(duration=1)",
                     "initialStateCheck": true
                 },
                 {
@@ -61,7 +61,7 @@
                 },
                 {
                     "name": "Aim",
-                    "type": "Value",
+                    "type": "PassThrough",
                     "id": "772ffbb8-88fc-48d3-9f5b-c71fb6607b02",
                     "expectedControlType": "Vector2",
                     "processors": "",
@@ -70,9 +70,9 @@
                 },
                 {
                     "name": "AimStrength",
-                    "type": "Value",
+                    "type": "PassThrough",
                     "id": "8862d948-5184-4b0e-9dcb-55365fc91414",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -289,9 +289,9 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "Up/Down",
-                    "id": "fc6e63f3-bd5f-4083-91f9-0950f5fb490e",
-                    "path": "2DVector",
+                    "name": "2D Vector",
+                    "id": "6d049d6a-5dd5-498c-848b-d90e3d769552",
+                    "path": "2DVector(mode=2)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -301,7 +301,7 @@
                 },
                 {
                     "name": "Up",
-                    "id": "3b96710c-8058-40ff-b37d-42f71471682f",
+                    "id": "ea3a3405-4685-4382-8193-e71f5e46dceb",
                     "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
@@ -312,7 +312,7 @@
                 },
                 {
                     "name": "Up",
-                    "id": "cc8513c0-99ca-44f6-ba70-365f6a194b27",
+                    "id": "191fd1fd-2154-47bc-b946-40e87e26f4ba",
                     "path": "<Gamepad>/leftStick/up",
                     "interactions": "",
                     "processors": "",
@@ -323,7 +323,7 @@
                 },
                 {
                     "name": "Down",
-                    "id": "b075edc3-bcc1-491b-ae46-5f6a8d54bd92",
+                    "id": "fcc0f4b1-003e-471b-8273-4b7d38ceb0bb",
                     "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
@@ -334,8 +334,8 @@
                 },
                 {
                     "name": "Down",
-                    "id": "13ff74aa-7a63-445c-bcfb-854a6650e404",
-                    "path": "<Gamepad>/leftStick/up",
+                    "id": "da782da0-13ba-4ca6-9696-b83c5eff1c0b",
+                    "path": "<Gamepad>/leftStick/down",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -345,7 +345,7 @@
                 },
                 {
                     "name": "Left",
-                    "id": "e2059c81-1b2f-4755-a9a9-581b6de09d05",
+                    "id": "703636af-149f-4ad5-aabd-d211ea977cb6",
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
@@ -356,7 +356,7 @@
                 },
                 {
                     "name": "Left",
-                    "id": "65143a90-8f31-4634-80fb-f3c709a5a90a",
+                    "id": "9251bb61-473d-4ee0-96cb-9e1766b6489c",
                     "path": "<Gamepad>/leftStick/left",
                     "interactions": "",
                     "processors": "",
@@ -367,7 +367,7 @@
                 },
                 {
                     "name": "Right",
-                    "id": "c6de2300-783f-4b49-87e5-7d6db86ea008",
+                    "id": "c1a3556a-f1c5-40f2-b252-45ead7645072",
                     "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
@@ -378,7 +378,7 @@
                 },
                 {
                     "name": "Right",
-                    "id": "93b22e56-9160-4e20-a902-457f00182b96",
+                    "id": "eab5e94c-c302-46fe-9284-aa46e14b8e81",
                     "path": "<Gamepad>/leftStick/right",
                     "interactions": "",
                     "processors": "",

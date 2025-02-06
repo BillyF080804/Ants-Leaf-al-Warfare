@@ -17,10 +17,12 @@ MonoBehaviour:
   weaponIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   weaponPrefab: {fileID: 2035224743872689002, guid: 48600db732ecebc49831131511799a3a, type: 3}
   baseDamage: 25
-  weaponSpeed: 20
+  weaponSpeed: 10
   useGravity: 1
   explosive: 1
-  explodeOnImpact: 0
+  hasVFX: 1
+  explodeOnImpact: 1
   explosionRange: 5
   explosionPower: 1
   fuseTimer: 0.2
+  vfxObject: {fileID: 2169185026088089853, guid: b22ffd9e1b7000c4daadabd9b6b95113, type: 3}

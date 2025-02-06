@@ -13,6 +13,18 @@ public class WeaponScript : MonoBehaviour {
         Destroy(gameObject, 10.0f);
     }
 
+    private void OnCollisionEnter(Collision collision) {
+        if (weaponInfo.explosive && weaponInfo.explodeOnImpact) {
+            Explode();
+        }
+        else if (collision.gameObject.CompareTag("Player")) {
+            Debug.Log(collision.gameObject.name + " damage dealt: " + weaponInfo.baseDamage);
+            collision.gameObject.GetComponent<Ant>().TakeDamage(weaponInfo.baseDamage);
+        }
+
+        Destroy(gameObject);
+    }
+
     public void StartFuse() {
         StartCoroutine(FuseTimer());
     }
@@ -31,22 +43,22 @@ public class WeaponScript : MonoBehaviour {
     private void Explode() {
         Collider[] colliders = Physics.OverlapSphere(transform.position, weaponInfo.explosionRange).Where(x => x.CompareTag("Player")).ToArray();
 
+        if (weaponInfo.hasVFX == true && weaponInfo.vfxObject != null) {
+            CreateVFX();
+        }
+
         foreach (Collider collider in colliders) {
             Debug.Log(collider.name + " damage dealt: " + weaponInfo.baseDamage);
             collider.GetComponent<Ant>().TakeDamage(weaponInfo.baseDamage);
             collider.GetComponent<Rigidbody>().AddExplosionForce(weaponInfo.explosionPower, transform.position, weaponInfo.explosionRange, 3, ForceMode.Impulse);
         }
-    }
-
-    private void OnCollisionEnter(Collision collision) {
-        if (weaponInfo.explosive && weaponInfo.explodeOnImpact) {
-            Explode();
-        }
-        else if (collision.gameObject.CompareTag("Player")) {
-            Debug.Log(collision.gameObject.name + " damage dealt: " + weaponInfo.baseDamage);
-            collision.gameObject.GetComponent<Ant>().TakeDamage(weaponInfo.baseDamage);
-        }
 
         Destroy(gameObject);
+    }
+
+    private void CreateVFX() {
+        GameObject vfxObj = Instantiate(weaponInfo.vfxObject, transform.position, Quaternion.identity);
+        vfxObj.transform.localScale = new Vector3(weaponInfo.vfxSize, weaponInfo.vfxSize, weaponInfo.vfxSize);
+        Destroy(vfxObj, 2.5f);
     }
 }

@@ -313,7 +313,7 @@ MonoBehaviour:
   m_ScrollWheelAction: {fileID: 2467956929747266810, guid: 79d48e3dddafab443b358765e7c68a0b, type: 3}
   m_TrackedDevicePositionAction: {fileID: -304907280204105270, guid: 79d48e3dddafab443b358765e7c68a0b, type: 3}
   m_TrackedDeviceOrientationAction: {fileID: 1632533704805447896, guid: 79d48e3dddafab443b358765e7c68a0b, type: 3}
-  m_DeselectOnBackgroundClick: 1
+  m_DeselectOnBackgroundClick: 0
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
 --- !u!1 &456278869
@@ -1534,10 +1534,10 @@ SceneRoots:
   - {fileID: 1627281273}
   - {fileID: 468267073}
   - {fileID: 546226801}
+  - {fileID: 239141027}
   - {fileID: 1998806276}
   - {fileID: 1244382061}
   - {fileID: 2003787145}
   - {fileID: 2060376111}
   - {fileID: 625805645}
-  - {fileID: 239141027}
   - {fileID: 48997132}

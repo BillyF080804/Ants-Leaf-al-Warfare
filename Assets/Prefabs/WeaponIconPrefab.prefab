@@ -253,6 +253,38 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7693498855874816613}
+          m_TargetAssemblyTypeName: WeaponMenuIconScript, Assembly-CSharp
+          m_MethodName: OnButtonHoverExit
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 10
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7693498855874816613}
+          m_TargetAssemblyTypeName: WeaponMenuIconScript, Assembly-CSharp
+          m_MethodName: OnButtonHoverExit
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &3062408170296811258
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,9 +413,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93fe9de42dd22b249b959f91927e9850, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  iconBackground: {fileID: 4976709226611495072}
   icon: {fileID: 1093505231558454372}
   iconVisibility: {fileID: 3062408170296811258}
-  button: {fileID: 3053677243328928463}
+  buttonObj: {fileID: 3053677243328928463}
 --- !u!222 &3851983850309685858
 CanvasRenderer:
   m_ObjectHideFlags: 0
