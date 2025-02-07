@@ -7,7 +7,7 @@ public class AntScript : Ant {
 
 
 	[Header("Game Info")]
-	public bool hasHadTurn = false;
+	
 	private TurnManager turnManager;
 
 	private void Start() {

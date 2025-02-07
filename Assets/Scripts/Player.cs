@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
+using static UnityEngine.Rendering.DebugUI;
 using Random = UnityEngine.Random;
 
 public class Player : MonoBehaviour {
@@ -70,10 +71,16 @@ public class Player : MonoBehaviour {
     private void OnMove(InputValue value) {
         if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false && weaponManager.WeaponSelected == null) {
             if (turnManager.CurrentAntTurn != null) {
-                antList.Where(x => turnManager.CurrentAntTurn == x.GetComponent<AntScript>()).First().GetComponent<AntScript>().OnMove(value); //Move for normal ants
-            } else {
-                queenAnt.GetComponent<QueenAntScript>().OnMove(value); //Move for queen ants
-            }
+                if(turnManager.CurrentAntTurn.GetComponent<QueenAntScript>() != null) {
+                    queenAnt.GetComponent<Ant>().OnMove(value);
+                } else {
+					antList.Where(x => turnManager.CurrentAntTurn == x.GetComponent<Ant>()).First().GetComponent<Ant>().OnMove(value); //Move for normal ants
+
+				}
+			} 
+            //else {
+            //    queenAnt.GetComponent<QueenAntScript>().OnMove(value); //Move for queen ants
+            //}
         }
     }
 
@@ -81,10 +88,15 @@ public class Player : MonoBehaviour {
     private void OnJump() {
         if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false && weaponManager.WeaponSelected == null) {
             if (turnManager.CurrentAntTurn != null) {
-                antList.Where(x => turnManager.CurrentAntTurn == x.GetComponent<AntScript>()).First().GetComponent<AntScript>().OnJump(); //Jump for normal ants
-            } else {
-                queenAnt.GetComponent<QueenAntScript>().OnJump(); //Jump for queen ants
+                if (turnManager.CurrentAntTurn.GetComponent<QueenAntScript>() != null) {
+                    queenAnt.GetComponent<Ant>().OnJump();
+                } else {
+                    antList.Where(x => turnManager.CurrentAntTurn == x.GetComponent<Ant>()).First().GetComponent<Ant>().OnJump(); //Jump for normal ants
+                }
             }
+            //else {
+            //    queenAnt.GetComponent<QueenAntScript>().OnJump(); //Jump for queen ants
+            //}
         }
     }
 
@@ -118,14 +130,14 @@ public class Player : MonoBehaviour {
         }
     }
 
-    public AntScript GetAnt(AntScript currentAnt) {
+    public Ant GetAnt(Ant currentAnt) {
         if (currentAnt != null) {
             currentAnt.moveVector = Vector3.zero;
         }
 
-        List<AntScript> possibleAnts = new List<AntScript>();
+        List<Ant> possibleAnts = new List<Ant>();
         for (int i = 0; i < antList.Count; i++) {
-            AntScript nextAnt = antList[i].GetComponent<AntScript>();
+			Ant nextAnt = antList[i].GetComponent<Ant>();
             if (nextAnt.hasHadTurn == false) {
                 possibleAnts.Add(nextAnt);
             }
@@ -135,20 +147,28 @@ public class Player : MonoBehaviour {
             int nextAntIndex = Random.Range(0, possibleAnts.Count);
             return possibleAnts[nextAntIndex];
         } else {
-            return null;
+            Ant testAnt = queenAnt.GetComponent<Ant>();
+
+			if (testAnt.hasHadTurn) {
+				return null;
+            } else {
+                return testAnt;
+
+			}
+            
         }
     }
 
     public void ResetAnts() {
         for (int i = 0; i < antList.Count; i++) {
-            antList[i].GetComponent<AntScript>().hasHadTurn = false;
-            Debug.Log("ant turn again");
+            antList[i].GetComponent<Ant>().hasHadTurn = false;
         }
-    }
+		queenAnt.GetComponent<Ant>().hasHadTurn = false;
+	}
 
-    public void ResetQueen() {
-        queenAnt.GetComponent<QueenAntScript>().moveVector = Vector3.zero;
-    }
+    //public void ResetQueen() {
+    //    queenAnt.GetComponent<Ant>().moveVector = Vector3.zero;
+    //}
 
     public void AddNewWeapon(BaseWeaponSO newWeapon) {
         CurrentWeapons.Add(newWeapon);

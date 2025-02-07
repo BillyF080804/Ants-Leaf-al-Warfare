@@ -27,13 +27,13 @@ public class TurnManager : MonoBehaviour {
     public Player CurrentPlayerTurn { get; private set; } = null;
 
     //Tracks which ant's turn it currently is
-    public AntScript CurrentAntTurn { get; private set; } = null;
+    public Ant CurrentAntTurn { get; private set; } = null;
     public bool allAntsMoved = false;
     int queensMoved = 0;
 
     private Coroutine turnTimerCoroutine;
     private WeaponManager weaponManager;
-	private WeaponDropSystem dropSystem;
+    private WeaponDropSystem dropSystem;
     public List<Player> PlayerList { get; private set; } = new List<Player>();
 
 
@@ -49,15 +49,15 @@ public class TurnManager : MonoBehaviour {
         SpawnAnts();
         SpawnQueen();
 
-		StartCoroutine(LevelTextCoroutine());
+        StartCoroutine(LevelTextCoroutine());
     }
 
     private void SpawnAnts() {
         for (int i = 0; i < PlayerList.Count; i++) {
-            for (int j = 0; j < numOfAnts; j++) { 
+            for (int j = 0; j < numOfAnts; j++) {
                 GameObject newAnt = Instantiate(antPrefab, GetAntSpawnPoint(), Quaternion.identity);
                 PlayerList[i].AddNewAnt(newAnt);
-                newAnt.GetComponent<AntScript>().ownedPlayer = (AntScript.PlayerList)i;
+                newAnt.GetComponent<Ant>().ownedPlayer = (Ant.PlayerList)i;
                 newAnt.GetComponent<MeshRenderer>().material.color = PlayerList[i].playerInfo.playerColor;
             }
         }
@@ -65,7 +65,7 @@ public class TurnManager : MonoBehaviour {
 
     private void SpawnQueen() {
         for (int i = 0; i < PlayerList.Count; i++) {
-            GameObject newQueen = Instantiate(queenPrefab, GetAntSpawnPoint() , Quaternion.identity);
+            GameObject newQueen = Instantiate(queenPrefab, GetAntSpawnPoint(), Quaternion.identity);
             PlayerList[i].AddQueen(newQueen);
         }
     }
@@ -77,21 +77,21 @@ public class TurnManager : MonoBehaviour {
 
             switch (i) {
                 case 0:
-                    newHealthUI.GetComponent<RectTransform>().localPosition = new Vector2(-785, 415);
-                    newHealthUI.GetComponentInChildren<TMP_Text>().text = "Player 1 Queen Ant Health: 100";
-                    break;
+                newHealthUI.GetComponent<RectTransform>().localPosition = new Vector2(-785, 415);
+                newHealthUI.GetComponentInChildren<TMP_Text>().text = "Player 1 Queen Ant Health: 100";
+                break;
                 case 1:
-                    newHealthUI.GetComponent<RectTransform>().localPosition = new Vector2(785, 415);
-                    newHealthUI.GetComponentInChildren<TMP_Text>().text = "Player 2 Queen Ant Health: 100";
-                    break;
+                newHealthUI.GetComponent<RectTransform>().localPosition = new Vector2(785, 415);
+                newHealthUI.GetComponentInChildren<TMP_Text>().text = "Player 2 Queen Ant Health: 100";
+                break;
                 case 2:
-                    newHealthUI.GetComponent<RectTransform>().localPosition = new Vector2(-785, -415);
-                    newHealthUI.GetComponentInChildren<TMP_Text>().text = "Player 3 Queen Ant Health: 100";
-                    break;
+                newHealthUI.GetComponent<RectTransform>().localPosition = new Vector2(-785, -415);
+                newHealthUI.GetComponentInChildren<TMP_Text>().text = "Player 3 Queen Ant Health: 100";
+                break;
                 case 3:
-                    newHealthUI.GetComponent<RectTransform>().localPosition = new Vector2(785, -415);
-                    newHealthUI.GetComponentInChildren<TMP_Text>().text = "Player 4 Queen Ant Health: 100";
-                    break;
+                newHealthUI.GetComponent<RectTransform>().localPosition = new Vector2(785, -415);
+                newHealthUI.GetComponentInChildren<TMP_Text>().text = "Player 4 Queen Ant Health: 100";
+                break;
             }
         }
     }
@@ -108,30 +108,34 @@ public class TurnManager : MonoBehaviour {
         yield return new WaitUntil(() => levelNameText.activeSelf == false);
 
         StartCoroutine(StartGame());
-    } 
+    }
 
     private IEnumerator StartGame() {
-        for (int i = 0; i < numOfRounds; i++) {
-			tempText.text = "Current Round: " + (CurrentRound+1);
+        // PickAntTurn();
 
-			foreach (var player in PlayerList) {
+        for (int i = 0; i < numOfRounds; i++) {
+            tempText.text = "Current Round: " + (CurrentRound + 1);
+
+            foreach (var player in PlayerList) {
                 currentTurnEnded = false;
                 CurrentPlayerTurn = player;
                 turnTimerCoroutine = StartCoroutine(TurnTimer());
 
+
+
                 yield return new WaitUntil(() => currentTurnEnded == true);
             }
 
-			if (i == CurrentRound && CurrentRound != numOfRounds) {
-				i--;
-			}
-		}
+            if (i == CurrentRound && CurrentRound != numOfRounds) {
+                i--;
+            }
+        }
     }
 
-	private IEnumerator TurnTimer() {
-		PickAntTurn();
+    private IEnumerator TurnTimer() {
+        PickAntTurn();
 
-		while (currentTurnTime < maxTurnTime) {
+        while (currentTurnTime < maxTurnTime) {
             currentTurnTime += Time.deltaTime;
             yield return null;
         }
@@ -141,29 +145,29 @@ public class TurnManager : MonoBehaviour {
 
     public void EndTurn() {
         StartCoroutine(EndTurnCoroutine());
-	}
+    }
 
     private IEnumerator EndTurnCoroutine() {
         StopCoroutine(turnTimerCoroutine);
         Player currentPlayerTemp = CurrentPlayerTurn.GetComponent<Player>();
+        CheckIfAllAntsMoved();
         CurrentPlayerTurn = null;
         weaponManager.EndTurn();
         yield return new WaitUntil(() => weaponManager.WeaponMenuOpen == false);
 
+
         if (allAntsMoved) { //CurrentPlayerTurn == playerList[playerList.Count - 1] && 
-            queensMoved++;
-			currentPlayerTemp.ResetQueen();
 
-			if (queensMoved == PlayerList.Count) {
-				allAntsMoved = false; // ensures the round doesnt end until all ants have moved
-                queensMoved = 0;
-				for (int i = 0; i < PlayerList.Count; i++) {
-                    PlayerList[i].ResetAnts();// sets all the ants back to not having moved
-				}
+            for (int i = 0; i < PlayerList.Count; i++) {
+                PlayerList[i].ResetAnts();// sets all the ants back to not having moved
+            }
 
-				CurrentRound++;
-				dropSystem.CheckDrop();
-			}
+            allAntsMoved = false; // ensures the round doesnt end until all ants have moved
+
+
+            CurrentRound++;
+            dropSystem.CheckDrop();
+
         }
 
         currentTurnEnded = true;
@@ -171,14 +175,24 @@ public class TurnManager : MonoBehaviour {
     }
 
     //Decides which ant to use
-	private void PickAntTurn() {
+    private void PickAntTurn() {
         CurrentAntTurn = CurrentPlayerTurn.GetAnt(CurrentAntTurn);
 
         if (CurrentAntTurn != null) {
             CurrentAntTurn.hasHadTurn = true;
-        } 
-        else {
+        }
+    }
+
+    private void CheckIfAllAntsMoved() {
+        int playersFinishedRound = 0;
+        for (int i = 0; i < PlayerList.Count; i++) {
+            CurrentAntTurn = PlayerList[i].GetAnt(CurrentAntTurn);
+            if (CurrentAntTurn == null) {
+                playersFinishedRound++;
+            }
+        }
+        if (playersFinishedRound == PlayerList.Count) {
             allAntsMoved = true;
-		}
-	}
+        }
+    }
 }
