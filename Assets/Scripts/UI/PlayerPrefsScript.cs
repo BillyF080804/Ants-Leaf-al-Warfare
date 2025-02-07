@@ -6,9 +6,12 @@ using UnityEngine.Rendering;
 public class PlayerPrefsScript : MonoBehaviour
 {
 
-	public enum PlayerPrefList {
+	public enum PlayerPrefSliderList {
 		Volume,
-		Resolution
+		
+	}
+	public enum PlayerPrefDropdownList {
+		Resolution,
 	}
 
 	public static void SetVolume(float volume) {

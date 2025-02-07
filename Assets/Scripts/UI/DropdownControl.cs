@@ -8,7 +8,7 @@ using UnityEngine;
 public class DropdownControl : MonoBehaviour
 {
 	TMP_Dropdown dropdown;
-	public PlayerPrefsScript.PlayerPrefList playerPref;
+	public PlayerPrefsScript.PlayerPrefDropdownList playerPref;
 
 	private void Start() {
 		dropdown = gameObject.GetComponent<TMP_Dropdown>();
@@ -17,7 +17,7 @@ public class DropdownControl : MonoBehaviour
 
 	public void UpdateValue() {
 		switch (playerPref) {
-			case PlayerPrefsScript.PlayerPrefList.Resolution: {
+			case PlayerPrefsScript.PlayerPrefDropdownList.Resolution: {
 				PlayerPrefsScript.SetResolution(dropdown.options[dropdown.value].text);
 				break;
 			}
@@ -28,7 +28,7 @@ public class DropdownControl : MonoBehaviour
 
 	public void InitialiseValues() {
 		switch (playerPref) {
-			case PlayerPrefsScript.PlayerPrefList.Resolution: {
+			case PlayerPrefsScript.PlayerPrefDropdownList.Resolution: {
 				string valueToSet = PlayerPrefsScript.GetResolution();
 				Debug.Log(valueToSet);
 				for(int i = 0; i < dropdown.options.Count; i++) {

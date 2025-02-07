@@ -8,7 +8,7 @@ public class SliderControl : MonoBehaviour
 {
 	Slider slider;
 	[SerializeField] TextMeshProUGUI text;
-	public PlayerPrefsScript.PlayerPrefList playerPref;
+	public PlayerPrefsScript.PlayerPrefSliderList playerPref;
 
 	private void Start() {
 		slider = gameObject.GetComponent<Slider>();
@@ -17,7 +17,7 @@ public class SliderControl : MonoBehaviour
 
 	public void UpdateValue() {
 		switch (playerPref) {
-			case PlayerPrefsScript.PlayerPrefList.Volume: {
+			case PlayerPrefsScript.PlayerPrefSliderList.Volume: {
 				PlayerPrefsScript.SetVolume(slider.value);
 				text.text = "" + slider.value;
 				break;
@@ -29,7 +29,7 @@ public class SliderControl : MonoBehaviour
 
 	public void InitialiseValues() {
 		switch(playerPref) {
-			case PlayerPrefsScript.PlayerPrefList.Volume: {
+			case PlayerPrefsScript.PlayerPrefSliderList.Volume: {
 				slider.value = PlayerPrefsScript.GetVolume();
 				text.text = ""+slider.value;
 				break;
