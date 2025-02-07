@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -11,6 +12,8 @@ public class Player : MonoBehaviour {
     [Header("Player Info")]
     public PlayerInfo playerInfo = new PlayerInfo();
 
+    private Coroutine skipTurnCoroutine;
+    private CameraSystem cameraSystem;
     private LobbyManager lobbyManager;
     private TurnManager turnManager;
     private WeaponManager weaponManager;
@@ -30,6 +33,7 @@ public class Player : MonoBehaviour {
         if (nextScene.name.Contains("Game")) {
             turnManager = FindFirstObjectByType<TurnManager>();
             weaponManager = FindFirstObjectByType<WeaponManager>();
+            cameraSystem = FindFirstObjectByType<CameraSystem>();
         }
     }
 
@@ -51,7 +55,18 @@ public class Player : MonoBehaviour {
     //Function called when the player presses the skip turn button
     private void OnSkipTurn() {
         if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false) {
-            turnManager.EndTurn();
+            if (skipTurnCoroutine == null) {
+                skipTurnCoroutine = StartCoroutine(SkipTurnCoroutine(2.0f));
+                cameraSystem.ZoomCameraIn(2.0f);
+            }
+            else if (skipTurnCoroutine != null) {
+                if (cameraSystem.IsZoomingOut == false) {
+                    cameraSystem.ZoomCameraOut(0.5f);
+                }
+
+                StopCoroutine(skipTurnCoroutine);
+                skipTurnCoroutine = null;
+            }
         }
     }
 
@@ -130,7 +145,23 @@ public class Player : MonoBehaviour {
         }
     }
 
+<<<<<<< Updated upstream
     public Ant GetAnt(Ant currentAnt) {
+=======
+    private IEnumerator SkipTurnCoroutine(float skipDuration) {
+        float timeElapsed = 0.0f;
+
+        while (timeElapsed < skipDuration) {
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        cameraSystem.ZoomCameraOut(0.5f);
+        turnManager.EndTurn();
+    }
+
+    public AntScript GetAnt(AntScript currentAnt) {
+>>>>>>> Stashed changes
         if (currentAnt != null) {
             currentAnt.moveVector = Vector3.zero;
         }

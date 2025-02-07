@@ -17,7 +17,12 @@ public class WeaponDropSystem : MonoBehaviour {
     private void Start() {
         turnManager = FindFirstObjectByType<TurnManager>();
 
-        dropChances = dropChances.OrderBy(x => x.dropChance).ToList();
+        if (dropChances.Count == 0) {
+            Debug.LogWarning("WeaponDropSystem: No drop chances set up. Please add at least one drop chance.");
+        }
+        else {
+            dropChances = dropChances.OrderBy(x => x.dropChance).ToList();
+        }
     }
 
     public void CheckDrop() {
