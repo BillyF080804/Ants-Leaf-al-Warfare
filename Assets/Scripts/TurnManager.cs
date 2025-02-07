@@ -29,7 +29,6 @@ public class TurnManager : MonoBehaviour {
     //Tracks which ant's turn it currently is
     public Ant CurrentAntTurn { get; private set; } = null;
     public bool allAntsMoved = false;
-    int queensMoved = 0;
 
     private Coroutine turnTimerCoroutine;
     private WeaponManager weaponManager;
