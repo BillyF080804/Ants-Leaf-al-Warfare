@@ -57,7 +57,12 @@ public class Player : MonoBehaviour {
     //Function called when the player presses the fire weapon button
     private void OnFireWeapon() {
         if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false && weaponManager.WeaponSelected != null) {
-            weaponManager.FireWeapon(weaponManager.WeaponSelected, turnManager.CurrentAntTurn.transform);
+            if (weaponManager.WeaponSelected.isMelee) {
+                weaponManager.UseMeleeWeapon(weaponManager.WeaponSelected, turnManager.CurrentAntTurn.transform);
+            }
+            else {
+                weaponManager.FireWeapon(weaponManager.WeaponSelected, turnManager.CurrentAntTurn.transform);
+            }
         }
     }
 

@@ -82,6 +82,17 @@ public class WeaponManager : MonoBehaviour {
         StartCoroutine(WaitTillWeaponsFinished());
     }
 
+    public void UseMeleeWeapon(BaseWeaponSO weaponInfo, Transform playerPosition) {
+        Collider[] colliders = Physics.OverlapSphere(aimPosition, 2.5f).Where(x => x.CompareTag("Player") && x.gameObject != turnManager.CurrentAntTurn.gameObject).ToArray();
+
+        if (colliders.Length > 0) {
+            colliders.First().GetComponent<Ant>().TakeDamage(weaponInfo.baseDamage);
+            colliders.First().GetComponent<Rigidbody>().AddExplosionForce(weaponInfo.knockbackStrength, playerPosition.position, 0, weaponInfo.upwardsModifier, ForceMode.Impulse);
+        }
+
+        StartCoroutine(WaitTillWeaponsFinished());
+    }
+
     private IEnumerator WaitTillWeaponsFinished() {
         aimArrow.gameObject.SetActive(false);
         yield return new WaitUntil(() => activeWeapons.Where(x => x != null).Count() == 0);

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -50,7 +49,7 @@ public class WeaponScript : MonoBehaviour {
         foreach (Collider collider in colliders) {
             Debug.Log(collider.name + " damage dealt: " + weaponInfo.baseDamage);
             collider.GetComponent<Ant>().TakeDamage(weaponInfo.baseDamage);
-            collider.GetComponent<Rigidbody>().AddExplosionForce(weaponInfo.explosionPower, transform.position, weaponInfo.explosionRange, 3, ForceMode.Impulse);
+            collider.GetComponent<Rigidbody>().AddExplosionForce(weaponInfo.explosionPower, transform.position, weaponInfo.explosionRange, weaponInfo.upwardsModifier, ForceMode.Impulse);
         }
 
         Destroy(gameObject);

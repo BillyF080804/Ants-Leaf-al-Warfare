@@ -16,6 +16,7 @@ public class BaseWeaponSO : ScriptableObject {
     public float weaponSpeed = 25.0f;
     public bool useGravity = true;
     public bool explosive = false;
+    public bool isMelee = false;
 
     [Header("VFX")]
     public bool hasVFX = false;
@@ -27,6 +28,9 @@ public class BaseWeaponSO : ScriptableObject {
 
     [HideInInspector] public float vfxSize = 1.0f;
     [HideInInspector] public GameObject vfxObject = null;
+
+    [HideInInspector] public float knockbackStrength = 2.0f;
+    [HideInInspector] public float upwardsModifier = 4.0f;
 }
 
 #if (UNITY_EDITOR)
@@ -43,6 +47,7 @@ public class BaseWeaponSOEditor : Editor {
             EditorGUILayout.LabelField("Explosion Settings", EditorStyles.boldLabel);
             baseWeapon.explosionRange = EditorGUILayout.FloatField("Explosion Range", baseWeapon.explosionRange);
             baseWeapon.explosionPower = EditorGUILayout.FloatField("Explosion Power", baseWeapon.explosionPower);
+            baseWeapon.upwardsModifier = EditorGUILayout.FloatField("Updwards Modifier", baseWeapon.upwardsModifier);
             baseWeapon.explodeOnImpact = EditorGUILayout.Toggle("Explode On Impact", baseWeapon.explodeOnImpact);
 
             if (!baseWeapon.explodeOnImpact) {
@@ -55,6 +60,13 @@ public class BaseWeaponSOEditor : Editor {
             EditorGUILayout.LabelField("VFX", EditorStyles.boldLabel);
             baseWeapon.vfxObject = (GameObject)EditorGUILayout.ObjectField("VFX", baseWeapon.vfxObject, typeof(GameObject), true);
             baseWeapon.vfxSize = EditorGUILayout.FloatField("VFX Size", baseWeapon.vfxSize);
+        }
+
+        if (baseWeapon.isMelee == true) {
+            EditorGUILayout.Space(15);
+            EditorGUILayout.LabelField("Melee Settings", EditorStyles.boldLabel);
+            baseWeapon.knockbackStrength = EditorGUILayout.FloatField("Knockback Strength", baseWeapon.knockbackStrength);
+            baseWeapon.upwardsModifier = EditorGUILayout.FloatField("Updwards Modifier", baseWeapon.upwardsModifier);
         }
     }
 }
