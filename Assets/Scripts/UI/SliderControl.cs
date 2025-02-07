@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class SliderControl : MonoBehaviour
 {
-	[SerializeField] Slider slider;
+	Slider slider;
 	[SerializeField] TextMeshProUGUI text;
 	public PlayerPrefsScript.PlayerPrefList playerPref;
 
