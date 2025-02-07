@@ -4,8 +4,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
-using static UnityEngine.Rendering.DebugUI;
 using Random = UnityEngine.Random;
 
 public class Player : MonoBehaviour {
@@ -145,9 +143,6 @@ public class Player : MonoBehaviour {
         }
     }
 
-<<<<<<< Updated upstream
-    public Ant GetAnt(Ant currentAnt) {
-=======
     private IEnumerator SkipTurnCoroutine(float skipDuration) {
         float timeElapsed = 0.0f;
 
@@ -160,8 +155,7 @@ public class Player : MonoBehaviour {
         turnManager.EndTurn();
     }
 
-    public AntScript GetAnt(AntScript currentAnt) {
->>>>>>> Stashed changes
+    public Ant GetAnt(Ant currentAnt) {
         if (currentAnt != null) {
             currentAnt.moveVector = Vector3.zero;
         }
