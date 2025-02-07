@@ -34,8 +34,6 @@ public class WeaponManager : MonoBehaviour {
 
     private TurnManager turnManager;
     private EventSystem eventSystem;
-    private Coroutine aimCoroutine;
-    private Coroutine aimStrengthCoroutine;
     private List<GameObject> activeWeapons = new List<GameObject>();
     private List<BaseWeaponSO> allWeapons = new List<BaseWeaponSO>();
     private List<WeaponMenuIconScript> weaponIcons = new List<WeaponMenuIconScript>();
@@ -180,6 +178,7 @@ public class WeaponManager : MonoBehaviour {
         else if (WeaponMenuOpen == false && uiMoving == false) {
             uiMoving = true;
             WeaponMenuOpen = true;
+            turnManager.CurrentAntTurn.StopMovement();
             StartCoroutine(OpenWeaponMenuCoroutine());
         }
     }

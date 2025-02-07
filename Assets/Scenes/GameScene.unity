@@ -1293,7 +1293,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: Garden Level
   numOfRounds: 5
-  maxTurnTime: 5
+  maxTurnTime: 20
   antPrefab: {fileID: 7419841320288824830, guid: d3f6b0f801636df4fa3ef21689ebf309, type: 3}
   queenPrefab: {fileID: 7419841320288824830, guid: f2ffe306220e9534ea2e2a710635ff87, type: 3}
   levelNameText: {fileID: 456278869}

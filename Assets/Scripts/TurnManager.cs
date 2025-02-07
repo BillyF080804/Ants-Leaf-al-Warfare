@@ -76,21 +76,21 @@ public class TurnManager : MonoBehaviour {
 
             switch (i) {
                 case 0:
-                newHealthUI.GetComponent<RectTransform>().localPosition = new Vector2(-785, 415);
-                newHealthUI.GetComponentInChildren<TMP_Text>().text = "Player 1 Queen Ant Health: 100";
-                break;
+                    newHealthUI.GetComponent<RectTransform>().localPosition = new Vector2(-785, 415);
+                    newHealthUI.GetComponentInChildren<TMP_Text>().text = "Player 1 Queen Ant Health: 100";
+                    break;
                 case 1:
-                newHealthUI.GetComponent<RectTransform>().localPosition = new Vector2(785, 415);
-                newHealthUI.GetComponentInChildren<TMP_Text>().text = "Player 2 Queen Ant Health: 100";
-                break;
+                    newHealthUI.GetComponent<RectTransform>().localPosition = new Vector2(785, 415);
+                    newHealthUI.GetComponentInChildren<TMP_Text>().text = "Player 2 Queen Ant Health: 100";
+                    break;
                 case 2:
-                newHealthUI.GetComponent<RectTransform>().localPosition = new Vector2(-785, -415);
-                newHealthUI.GetComponentInChildren<TMP_Text>().text = "Player 3 Queen Ant Health: 100";
-                break;
+                    newHealthUI.GetComponent<RectTransform>().localPosition = new Vector2(-785, -415);
+                    newHealthUI.GetComponentInChildren<TMP_Text>().text = "Player 3 Queen Ant Health: 100";
+                    break;
                 case 3:
-                newHealthUI.GetComponent<RectTransform>().localPosition = new Vector2(785, -415);
-                newHealthUI.GetComponentInChildren<TMP_Text>().text = "Player 4 Queen Ant Health: 100";
-                break;
+                    newHealthUI.GetComponent<RectTransform>().localPosition = new Vector2(785, -415);
+                    newHealthUI.GetComponentInChildren<TMP_Text>().text = "Player 4 Queen Ant Health: 100";
+                    break;
             }
         }
     }

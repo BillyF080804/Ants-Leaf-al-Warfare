@@ -67,12 +67,4 @@ public class QueenAntScript : Ant {
 	void DraculaAttack() {
 		int damageToDeal = antInfo.damage * attackLevel;
 	}
-
-
-
-
-
-	private void Update() {
-		transform.Translate(antInfo.moveSpeed * Time.deltaTime * moveVector);
-	}
 }

@@ -15,13 +15,4 @@ public class AntScript : Ant {
 	}
 
 
-
-
-
-
-	private void Update() {
-		transform.Translate(antInfo.moveSpeed * Time.deltaTime * moveVector);
-	}
-
-
 }
