@@ -37,19 +37,19 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _ClipThreshold: 0.5
-    - _CloudAlpha: 1.75
-    - _Cloud_Power: 1.4
-    - _DistortScale: 60
+    - _ClipThreshold: -2.95
+    - _CloudAlpha: 1.5
+    - _Cloud_Power: 1.2
+    - _DistortScale: 0.25
     - _DistortSpeed: -0.77
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _VertexOffset: 0.05
-    - _cloudscale: 120
+    - _VertexOffset: 0.1
+    - _cloudscale: 500
     m_Colors:
-    - _CloudColours: {r: 2, g: 2, b: 2, a: 1}
-    - _CloudSpeed: {r: 0.001, g: 0.005, b: 0, a: 0}
-    - _DistortSpeed: {r: 0.001, g: 0.01, b: 0, a: 0}
+    - _CloudColours: {r: 4.5456066, g: 5.907688, b: 7.356249, a: 1}
+    - _CloudSpeed: {r: 0.001, g: 0.002, b: 0, a: 0}
+    - _DistortSpeed: {r: 0, g: 0.02, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &3621644399513870214
 MonoBehaviour:
