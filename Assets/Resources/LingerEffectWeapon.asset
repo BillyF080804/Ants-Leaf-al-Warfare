@@ -10,27 +10,40 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c76268df7a3d27b4397d0d1e6cbf16c9, type: 3}
-  m_Name: ExplosiveWeapon
+  m_Name: LingerEffectWeapon
   m_EditorClassIdentifier: 
-  weaponName: 'Explosive Weapon '
-  weaponDescription: It explodes.
-  unlimitedUses: 0
+  weaponName: Linger Effect Weapon
+  weaponDescription: Leaves an effect to either slow/damage enemies.
+  unlimitedUses: 1
   weaponIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   weaponPrefab: {fileID: 2035224743872689002, guid: 48600db732ecebc49831131511799a3a, type: 3}
   baseDamage: 25
-  weaponSpeed: 10
+  weaponSpeed: 20
   useGravity: 1
-  explosive: 1
+  weaponRandomisation: 0
+  explosive: 0
   isMelee: 0
   isMultiShot: 0
   hasVFX: 1
-  explodeOnImpact: 1
+  hasSounds: 0
+  explodeOnImpact: 0
   explosionRange: 5
   explosionPower: 1
   fuseTimer: 0.2
   vfxSize: 1
-  vfxObject: {fileID: 2169185026088089853, guid: b22ffd9e1b7000c4daadabd9b6b95113, type: 3}
+  vfxDuration: 10
+  vfxObject: {fileID: 582649436412377959, guid: 3eaeccd2c2257824aa39e156541a4864, type: 3}
+  lingerEffect: 1
+  lingerEffectRange: 5
+  dealDamage: 0
+  damagePerSecond: 5
+  slowMovement: 1
+  slowMultiplier: 0.5
   knockbackStrength: 2
   upwardsModifier: 4
-  numOfShots: 2
+  numOfShots: 5
   delayBetweenShots: 0.5
+  minimumRandomness: 0.8
+  maximumRandomness: 0.8
+  shootSound: {fileID: 0}
+  impactSound: {fileID: 0}

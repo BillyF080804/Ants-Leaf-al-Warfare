@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Ant : MonoBehaviour
-{
+public class Ant : MonoBehaviour {
 	public enum PlayerList {
 		Player1 = 0,
 		Player2 = 1,
@@ -21,10 +20,12 @@ public class Ant : MonoBehaviour
 	public Vector3 moveVector = Vector3.zero;
 	public bool canJump = true;
 
+	private int health;
 	private Rigidbody rb;
 
     private void Awake() {
         rb = GetComponent<Rigidbody>();
+		health = antInfo.health;
     }
 
 
@@ -34,11 +35,13 @@ public class Ant : MonoBehaviour
 	}
 
 	public void TakeDamage(int Damage) {
-		antInfo.health -= Damage;
+		health -= Damage;
+
+		Debug.Log("Ant Health: " + health);
 	}
 
 	public int GetHealth() {
-		return antInfo.health;
+		return health;
 	}
 
 	public void OnJump() {
@@ -53,6 +56,14 @@ public class Ant : MonoBehaviour
 		moveVector = Vector2.zero;
 		rb.velocity = Vector3.zero;
 	}
+
+	public void SlowMovement(float slowMultiplier) {
+		antInfo.moveSpeed *= slowMultiplier;
+	}
+
+	public void ResetMovement(float slowMultiplier) {
+        antInfo.moveSpeed /= slowMultiplier;
+    }
 
     private void Update() {
         transform.Translate(antInfo.moveSpeed * Time.deltaTime * moveVector);

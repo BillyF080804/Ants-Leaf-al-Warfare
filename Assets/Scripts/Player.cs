@@ -198,4 +198,8 @@ public class Player : MonoBehaviour {
     public void AddNewWeapon(BaseWeaponSO newWeapon) {
         CurrentWeapons.Add(newWeapon);
     }
+
+    public void RemoveWeapon(BaseWeaponSO weapon) {
+        CurrentWeapons.Remove(weapon);
+    }
 }

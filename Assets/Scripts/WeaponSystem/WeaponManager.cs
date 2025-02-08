@@ -18,14 +18,16 @@ public class WeaponManager : MonoBehaviour {
 
     [Header("Prefabs")]
     [SerializeField] private WeaponMenuIconScript weaponIconPrefab;
+    [SerializeField] private AOETrigger aoeTriggerAreaPrefab;
 
     [Header("Default Player Weapons")]
     [SerializeField] private List<BaseWeaponSO> defaultPlayerWeapons = new List<BaseWeaponSO>();
 
     private bool uiMoving = false;
+    private bool canAim = true;
     private float aimStrength = 1.0f;
     private float aimArrowDefaultSize = 2.0f;
-    public float strengthValue = 0.0f;
+    private float strengthValue = 0.0f;
     private Vector2 aimValue = Vector2.zero;
     private Vector2 aimPosition = Vector2.zero;
 
@@ -50,18 +52,45 @@ public class WeaponManager : MonoBehaviour {
 
     //Function for handling firing weapons
     public void FireWeapon(BaseWeaponSO weaponInfo, Transform playerPosition) {
+        canAim = false;
+        StartCoroutine(FireWeaponCoroutine(weaponInfo, playerPosition));
+    }
+
+    private IEnumerator FireWeaponCoroutine(BaseWeaponSO weaponInfo, Transform playerPosition) {
+        if (weaponInfo.isMultiShot == false) {
+            OnShoot(weaponInfo, playerPosition);
+        }
+        else if (weaponInfo.isMultiShot == true) { 
+            for (int i = 0; i < weaponInfo.numOfShots; i++) {
+                OnShoot(weaponInfo, playerPosition);
+                yield return new WaitForSeconds(weaponInfo.delayBetweenShots);
+            }
+        }
+
+        if (weaponInfo.unlimitedUses == false) {
+            turnManager.CurrentPlayerTurn.RemoveWeapon(weaponInfo);
+        }
+
+        StartCoroutine(WaitTillWeaponsFinished());
+    }
+
+    private void OnShoot(BaseWeaponSO weaponInfo, Transform playerPosition) {
         Vector3 spawnPos = new Vector3(playerPosition.position.x, playerPosition.position.y + 1, 0); //Also change the z on this to be the same as comment below.
         GameObject newWeapon = Instantiate(weaponInfo.weaponPrefab, spawnPos, Quaternion.identity);
         Rigidbody rb = newWeapon.GetComponent<Rigidbody>();
         WeaponScript weaponScript = newWeapon.GetComponent<WeaponScript>();
         Vector3 aimPos = new Vector3(aimPosition.x, aimPosition.y, 0); //Update the z value to be assigned from the inspector in a game manager script, with a z offset variable.
 
+        if (weaponInfo.weaponRandomisation == true) {
+            aimPos.y *= Random.Range(weaponInfo.minimumRandomness, weaponInfo.maximumRandomness);
+        }
+
         //Calculate velocity & rotation
         Vector3 weaponDirection = aimPos - playerPosition.position;
         Vector3 weaponRotation = playerPosition.position - aimPos;
 
         //Set velocity
-        Vector2 weaponVelocity = new Vector2(weaponDirection.x, weaponDirection.y).normalized * weaponInfo.weaponSpeed * aimStrength;
+        Vector2 weaponVelocity = new Vector2(weaponDirection.x, weaponDirection.y).normalized * weaponInfo.weaponSpeed * aimStrength * (weaponInfo.weaponRandomisation == true ? Random.Range(weaponInfo.minimumRandomness, weaponInfo.maximumRandomness) : 1.0f);
         rb.velocity = weaponVelocity;
 
         //Set rotation
@@ -70,14 +99,12 @@ public class WeaponManager : MonoBehaviour {
 
         //Set weapon values
         rb.useGravity = weaponInfo.useGravity;
-        weaponScript.SetupWeapon(weaponInfo, playerPosition.GetComponent<Collider>());
+        weaponScript.SetupWeapon(weaponInfo, playerPosition.GetComponent<Collider>(), aoeTriggerAreaPrefab);
         activeWeapons.Add(newWeapon);
-        
+
         if (weaponInfo.explosive && !weaponInfo.explodeOnImpact) {
             weaponScript.StartFuse();
         }
-
-        StartCoroutine(WaitTillWeaponsFinished());
     }
 
     public void UseMeleeWeapon(BaseWeaponSO weaponInfo, Transform playerPosition) {
@@ -129,7 +156,7 @@ public class WeaponManager : MonoBehaviour {
     }
 
     private void Update() {
-        if (WeaponSelected != null) {
+        if (WeaponSelected != null && canAim == true) {
             ArrowAim();
             ArrowStrength();
             UpdateArrowSize();
@@ -224,7 +251,7 @@ public class WeaponManager : MonoBehaviour {
 
         CheckAllIcons();
         weaponMenuUI.SetActive(true);
-        eventSystem.SetSelectedGameObject(weaponIcons.First().GetButton());
+        eventSystem.SetSelectedGameObject(weaponIcons.Where(x => x.Interactable == true).First().GetButton());
         weaponMenuUI.GetComponent<MoveUI>().StartMoveUI(LerpType.OutBack, weaponMenuUI, new Vector2(-750, 50), new Vector2(50, 50), 1.0f);
 
         yield return new WaitUntil(() => weaponMenuUI.GetComponent<RectTransform>().anchoredPosition == new Vector2(50, 50));
@@ -258,10 +285,17 @@ public class WeaponManager : MonoBehaviour {
 
     private void FillWeaponMenu() {
         foreach (BaseWeaponSO weapon in allWeapons) {
-            bool hasWeapon = defaultPlayerWeapons.Contains(weapon);
             WeaponMenuIconScript newIcon = Instantiate(weaponIconPrefab, weaponMenuUIGridArea);
-            newIcon.GetComponent<WeaponMenuIconScript>().SetWeapon(weapon, hasWeapon);
             weaponIcons.Add(newIcon.GetComponent<WeaponMenuIconScript>());
+
+            bool hasWeapon = defaultPlayerWeapons.Contains(weapon);
+            int weaponCount = -1;
+
+            if (weapon.unlimitedUses == false) {
+                weaponCount = defaultPlayerWeapons.Where(x => x == weapon).Count();
+            }
+
+            newIcon.GetComponent<WeaponMenuIconScript>().SetWeapon(weapon, hasWeapon, weaponCount);
         }
     }
 
@@ -269,7 +303,13 @@ public class WeaponManager : MonoBehaviour {
         foreach (WeaponMenuIconScript icon in weaponIcons) {
             if (turnManager.CurrentPlayerTurn != null) {
                 bool playerHasWeapon = turnManager.CurrentPlayerTurn.CurrentWeapons.Contains(icon.Weapon);
-                icon.ToggleVisibility(playerHasWeapon);
+                int weaponCount = -1;
+
+                if (icon.Weapon.unlimitedUses == false) {
+                    weaponCount = turnManager.CurrentPlayerTurn.CurrentWeapons.Where(x => x == icon.Weapon).Count();
+                }
+
+                icon.ToggleVisibility(playerHasWeapon, weaponCount);
             }
         }
     }

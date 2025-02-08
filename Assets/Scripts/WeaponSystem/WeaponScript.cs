@@ -4,10 +4,12 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class WeaponScript : MonoBehaviour {
+    private AOETrigger aoeTriggerAreaPrefab;
     private BaseWeaponSO weaponInfo;
 
-    public void SetupWeapon(BaseWeaponSO weapon, Collider objectCollider) {
+    public void SetupWeapon(BaseWeaponSO weapon, Collider objectCollider, AOETrigger _aoeTriggerAreaPrefab) {
         Physics.IgnoreCollision(GetComponent<Collider>(), objectCollider, true);
+        aoeTriggerAreaPrefab = _aoeTriggerAreaPrefab;
         weaponInfo = weapon;
         Destroy(gameObject, 10.0f);
     }
@@ -19,6 +21,10 @@ public class WeaponScript : MonoBehaviour {
         else if (collision.gameObject.CompareTag("Player")) {
             Debug.Log(collision.gameObject.name + " damage dealt: " + weaponInfo.baseDamage);
             collision.gameObject.GetComponent<Ant>().TakeDamage(weaponInfo.baseDamage);
+        }
+
+        if (weaponInfo.hasVFX == true && weaponInfo.vfxObject != null) {
+            CreateVFX();
         }
 
         Destroy(gameObject);
@@ -42,10 +48,6 @@ public class WeaponScript : MonoBehaviour {
     private void Explode() {
         Collider[] colliders = Physics.OverlapSphere(transform.position, weaponInfo.explosionRange).Where(x => x.CompareTag("Player")).ToArray();
 
-        if (weaponInfo.hasVFX == true && weaponInfo.vfxObject != null) {
-            CreateVFX();
-        }
-
         foreach (Collider collider in colliders) {
             Debug.Log(collider.name + " damage dealt: " + weaponInfo.baseDamage);
             collider.GetComponent<Ant>().TakeDamage(weaponInfo.baseDamage);
@@ -58,6 +60,10 @@ public class WeaponScript : MonoBehaviour {
     private void CreateVFX() {
         GameObject vfxObj = Instantiate(weaponInfo.vfxObject, transform.position, Quaternion.identity);
         vfxObj.transform.localScale = new Vector3(weaponInfo.vfxSize, weaponInfo.vfxSize, weaponInfo.vfxSize);
-        Destroy(vfxObj, 2.5f);
+        Destroy(vfxObj, weaponInfo.vfxDuration);
+
+        AOETrigger aoeTriggerArea = Instantiate(aoeTriggerAreaPrefab, transform.position, Quaternion.identity);
+        aoeTriggerArea.SetWeaponInfo(weaponInfo);
+        Destroy(aoeTriggerArea, weaponInfo.vfxDuration);
     }
 }
