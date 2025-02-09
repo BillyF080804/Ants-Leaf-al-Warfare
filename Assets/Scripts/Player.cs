@@ -91,9 +91,6 @@ public class Player : MonoBehaviour {
 
 				}
 			} 
-            //else {
-            //    queenAnt.GetComponent<QueenAntScript>().OnMove(value); //Move for queen ants
-            //}
         }
     }
 
@@ -107,9 +104,6 @@ public class Player : MonoBehaviour {
                     antList.Where(x => turnManager.CurrentAntTurn == x.GetComponent<Ant>()).First().GetComponent<Ant>().OnJump(); //Jump for normal ants
                 }
             }
-            //else {
-            //    queenAnt.GetComponent<QueenAntScript>().OnJump(); //Jump for queen ants
-            //}
         }
     }
 
@@ -191,15 +185,20 @@ public class Player : MonoBehaviour {
 		queenAnt.GetComponent<Ant>().hasHadTurn = false;
 	}
 
-    //public void ResetQueen() {
-    //    queenAnt.GetComponent<Ant>().moveVector = Vector3.zero;
-    //}
 
     public void AddNewWeapon(BaseWeaponSO newWeapon) {
         CurrentWeapons.Add(newWeapon);
     }
 
+<<<<<<< Updated upstream
     public void RemoveWeapon(BaseWeaponSO weapon) {
         CurrentWeapons.Remove(weapon);
+=======
+    //Temporary Func/Keybind of Left Shift
+    private void OnQueenAttack() {
+        if (turnManager.CurrentAntTurn == queenAnt.GetComponent<Ant>()) {
+			queenAnt.GetComponent<QueenAntScript>().SpecialAttack();
+        }
+>>>>>>> Stashed changes
     }
 }
