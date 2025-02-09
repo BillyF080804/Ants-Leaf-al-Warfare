@@ -29,4 +29,5 @@ public class AntSO : ScriptableObject {
 	public bool IsQueen = false;
 	public QueenType queenType;
 	public int damage = 1;
+	public QueenAttack queenAttack;
 }

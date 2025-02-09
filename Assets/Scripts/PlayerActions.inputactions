@@ -76,6 +76,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "QueenAttack",
+                    "type": "Button",
+                    "id": "a2adfef3-fc76-4889-a54d-0fee4f941ce8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -441,6 +450,17 @@
                     "action": "AimStrength",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "a3ff6352-14ce-4608-9c46-df09349a7662",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "QueenAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
