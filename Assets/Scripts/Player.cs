@@ -190,15 +190,15 @@ public class Player : MonoBehaviour {
         CurrentWeapons.Add(newWeapon);
     }
 
-<<<<<<< Updated upstream
+
     public void RemoveWeapon(BaseWeaponSO weapon) {
         CurrentWeapons.Remove(weapon);
-=======
+
+    }
     //Temporary Func/Keybind of Left Shift
     private void OnQueenAttack() {
         if (turnManager.CurrentAntTurn == queenAnt.GetComponent<Ant>()) {
 			queenAnt.GetComponent<QueenAntScript>().SpecialAttack();
         }
->>>>>>> Stashed changes
     }
 }
