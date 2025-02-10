@@ -171,6 +171,8 @@ public class WeaponManager : MonoBehaviour {
         aimPosition.y += 2;
 
         aimArrow.gameObject.SetActive(true);
+        canAim = true;
+
         Vector3 arrowPos = turnManager.CurrentAntTurn.transform.position;
         arrowPos.y += 2;
         aimArrow.anchoredPosition = arrowPos;
