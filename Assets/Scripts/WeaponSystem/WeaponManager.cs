@@ -34,6 +34,7 @@ public class WeaponManager : MonoBehaviour {
     public bool WeaponMenuOpen { get; private set; } = false;
     public BaseWeaponSO WeaponSelected { get; private set; }
 
+    private CameraSystem cameraSystem;
     private TurnManager turnManager;
     private EventSystem eventSystem;
     private List<GameObject> activeWeapons = new List<GameObject>();
@@ -41,6 +42,7 @@ public class WeaponManager : MonoBehaviour {
     private List<WeaponMenuIconScript> weaponIcons = new List<WeaponMenuIconScript>();
 
     private void Start() { 
+        cameraSystem = FindFirstObjectByType<CameraSystem>();
         turnManager = FindFirstObjectByType<TurnManager>();
         eventSystem = FindFirstObjectByType<EventSystem>();
         allWeapons = Resources.LoadAll<BaseWeaponSO>("").ToList();
@@ -101,6 +103,7 @@ public class WeaponManager : MonoBehaviour {
         rb.useGravity = weaponInfo.useGravity;
         weaponScript.SetupWeapon(weaponInfo, playerPosition.GetComponent<Collider>(), aoeTriggerAreaPrefab);
         activeWeapons.Add(newWeapon);
+        cameraSystem.SetCameraTarget(newWeapon.transform);
 
         if (weaponInfo.explosive && !weaponInfo.explodeOnImpact) {
             weaponScript.StartFuse();

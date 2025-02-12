@@ -12,11 +12,11 @@ public class CameraSystem : MonoBehaviour {
     public bool setManualOverviewPosition;
 
     private Vector3 velocity = Vector3.zero;
-    private Transform cameraTarget;
     private Camera cameraComp;
     private Coroutine cameraZoomCoroutine;
 
     public bool IsZoomingOut { get; private set; } = false;
+    public Transform CameraTarget { get; private set; }
 
     [HideInInspector] public Vector3 overviewPosition;
 
@@ -31,18 +31,21 @@ public class CameraSystem : MonoBehaviour {
         }
     }
 
-    private void Update() {
-        if (cameraComp != null) { 
-            if (cameraTarget != null) {
-                Vector3 targetPos = new Vector3(cameraTarget.position.x, cameraTarget.position.y + yOffset, zOffset);
+    private void LateUpdate() {
+        Vector3 targetPos = Vector3.zero;
 
-                cameraComp.transform.position = Vector3.SmoothDamp(cameraComp.transform.position, targetPos, ref velocity, smoothTime);
-            }
+        if (CameraTarget != null) {
+            targetPos = new Vector3(CameraTarget.position.x, CameraTarget.position.y + yOffset, zOffset);
         }
+        else {
+            targetPos = new Vector3(overviewPosition.x, overviewPosition.y + yOffset, overviewPosition.z);
+        }
+
+        cameraComp.transform.position = Vector3.SmoothDamp(cameraComp.transform.position, targetPos, ref velocity, smoothTime);
     }
 
     public void SetCameraTarget(Transform target) {
-        cameraTarget = target;
+        CameraTarget = target;
     }
 
     public void ZoomCameraIn(float zoomDuration) {

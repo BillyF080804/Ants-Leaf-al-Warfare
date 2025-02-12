@@ -6,6 +6,11 @@ using UnityEngine;
 public class WeaponScript : MonoBehaviour {
     private AOETrigger aoeTriggerAreaPrefab;
     private BaseWeaponSO weaponInfo;
+    private CameraSystem cameraSystem;
+
+    private void Awake() {
+        cameraSystem = FindFirstObjectByType<CameraSystem>();
+    }
 
     public void SetupWeapon(BaseWeaponSO weapon, Collider objectCollider, AOETrigger _aoeTriggerAreaPrefab) {
         Physics.IgnoreCollision(GetComponent<Collider>(), objectCollider, true);
@@ -65,5 +70,11 @@ public class WeaponScript : MonoBehaviour {
         AOETrigger aoeTriggerArea = Instantiate(aoeTriggerAreaPrefab, transform.position, Quaternion.identity);
         aoeTriggerArea.SetWeaponInfo(weaponInfo);
         Destroy(aoeTriggerArea, weaponInfo.vfxDuration);
+    }
+
+    private void OnDestroy() {
+        if (cameraSystem.CameraTarget == transform) {
+            cameraSystem.SetCameraTarget(null);
+        }
     }
 }
