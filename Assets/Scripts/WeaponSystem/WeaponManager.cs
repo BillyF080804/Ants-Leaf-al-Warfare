@@ -215,6 +215,8 @@ public class WeaponManager : MonoBehaviour {
     //Called when a turn is ended
     public void EndTurn() {
         WeaponSelected = null;
+        aimStrength = 0.0f;
+        aimValue = Vector2.zero;
         aimArrow.gameObject.SetActive(false);
         StopAllCoroutines();
 

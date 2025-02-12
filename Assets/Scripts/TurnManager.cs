@@ -31,6 +31,7 @@ public class TurnManager : MonoBehaviour {
     public bool allAntsMoved = false;
 
     private Coroutine turnTimerCoroutine;
+    private CameraSystem cameraSystem;
     private WeaponManager weaponManager;
     private WeaponDropSystem dropSystem;
     public List<Player> PlayerList { get; private set; } = new List<Player>();
@@ -43,6 +44,7 @@ public class TurnManager : MonoBehaviour {
         PlayerList = LoadingData.playerList;
         dropSystem = FindFirstObjectByType<WeaponDropSystem>();
         weaponManager = FindFirstObjectByType<WeaponManager>();
+        cameraSystem = FindFirstObjectByType<CameraSystem>();
 
         SpawnQueenAntHealthUI();
         SpawnAnts();
@@ -119,8 +121,7 @@ public class TurnManager : MonoBehaviour {
                 currentTurnEnded = false;
                 CurrentPlayerTurn = player;
                 turnTimerCoroutine = StartCoroutine(TurnTimer());
-
-
+                cameraSystem.SetCameraTarget(CurrentAntTurn.transform);
 
                 yield return new WaitUntil(() => currentTurnEnded == true);
             }
@@ -151,6 +152,7 @@ public class TurnManager : MonoBehaviour {
         Player currentPlayerTemp = CurrentPlayerTurn.GetComponent<Player>();
         CheckIfAllAntsMoved();
         CurrentPlayerTurn = null;
+        cameraSystem.SetCameraTarget(null);
         weaponManager.EndTurn();
         yield return new WaitUntil(() => weaponManager.WeaponMenuOpen == false);
 

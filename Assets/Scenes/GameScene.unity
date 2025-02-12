@@ -1157,6 +1157,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41a2f9bffffcf1b44acef5f2e79c0719, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  setManualOverviewPosition: 0
+  overviewPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &1998806272
 GameObject:
   m_ObjectHideFlags: 0
