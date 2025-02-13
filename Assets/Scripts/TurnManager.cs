@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class TurnManager : MonoBehaviour {
     [Header("Settings")]
@@ -15,6 +17,7 @@ public class TurnManager : MonoBehaviour {
 
     [Header("UI")]
     [SerializeField] private GameObject levelNameText;
+    [SerializeField] private TMP_Text turnTimeText;
     [SerializeField] private GameObject queenHealthUIPrefab;
     [SerializeField] private Canvas mainCanvas;
     [field: SerializeField] public List<GameObject> QueenHealthUI { get; private set; }
@@ -45,6 +48,8 @@ public class TurnManager : MonoBehaviour {
         dropSystem = FindFirstObjectByType<WeaponDropSystem>();
         weaponManager = FindFirstObjectByType<WeaponManager>();
         cameraSystem = FindFirstObjectByType<CameraSystem>();
+
+        currentTurnTime = maxTurnTime;
 
         SpawnQueenAntHealthUI();
         SpawnAnts();
@@ -135,8 +140,9 @@ public class TurnManager : MonoBehaviour {
     private IEnumerator TurnTimer() {
         PickAntTurn();
 
-        while (currentTurnTime < maxTurnTime) {
-            currentTurnTime += Time.deltaTime;
+        while (currentTurnTime > 0) {
+            currentTurnTime -= Time.deltaTime;
+            turnTimeText.text = "Time: " + TimeSpan.FromSeconds(currentTurnTime).ToString("ss");
             yield return null;
         }
 
@@ -172,7 +178,7 @@ public class TurnManager : MonoBehaviour {
         }
 
         currentTurnEnded = true;
-        currentTurnTime = 0.0f;
+        currentTurnTime = maxTurnTime;
     }
 
     //Decides which ant to use
