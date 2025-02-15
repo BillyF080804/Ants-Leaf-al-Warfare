@@ -155,7 +155,7 @@ public class TurnManager : MonoBehaviour {
 
     private IEnumerator EndTurnCoroutine() {
         StopCoroutine(turnTimerCoroutine);
-        Player currentPlayerTemp = CurrentPlayerTurn.GetComponent<Player>();
+		Player currentPlayerTemp = CurrentPlayerTurn.GetComponent<Player>();
         CheckIfAllAntsMoved();
         CurrentPlayerTurn = null;
         cameraSystem.SetCameraTarget(null);
@@ -201,5 +201,9 @@ public class TurnManager : MonoBehaviour {
         if (playersFinishedRound == PlayerList.Count) {
             allAntsMoved = true;
         }
+    }
+
+    IEnumerator Delay(int delayTime) {
+        yield return new WaitForSeconds(delayTime);
     }
 }

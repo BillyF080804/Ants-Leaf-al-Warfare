@@ -2827,8 +2827,8 @@ MonoBehaviour:
         m_Action: Join
         m_Flags: 0
       - m_Name: 
-        m_Id: 29eeba38-2a89-4f65-9e36-fd7a19a1f234
-        m_Path: <Gamepad>/buttonSouth
+        m_Id: 3fac4a45-140a-4774-8fbc-64a5ace91f35
+        m_Path: <Gamepad>/start
         m_Interactions: 
         m_Processors: 
         m_Groups: 
