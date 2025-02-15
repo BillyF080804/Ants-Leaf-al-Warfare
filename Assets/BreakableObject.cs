@@ -2,14 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BreakableObject : MonoBehaviour
 {
+    [Header("Assignments")]
     [SerializeField] private GameObject fixedObj;
     [SerializeField] private GameObject brokenObj;
     private WeaponScript damageHit;
     private Collider colliderSelf;
+
+    [Header("Settings")]
+    [SerializeField] private bool isRbody;
     [SerializeField] private Vector3 launchSpeed;
+    public UnityEvent breakEvent;
+
 
     private void Awake()
     {
@@ -23,7 +30,15 @@ public class BreakableObject : MonoBehaviour
         {
             colliderSelf.enabled = false;
             Debug.Log("Break");
-            CollisionBreak();
+            if(isRbody)
+            {
+                CollisionBreak();
+            }
+            else
+            {
+                breakEvent.Invoke();
+            }
+
         }
         damageHit = null;
     }
