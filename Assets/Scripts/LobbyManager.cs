@@ -112,7 +112,17 @@ public class LobbyManager : MonoBehaviour {
     }
 
     public void UpdateAntCount(int _numOfAnts) {
-        numOfAnts = _numOfAnts;
+        switch (_numOfAnts) {
+            case 0: {
+                numOfAnts = 2;
+
+                break;
+            }
+            case 1: {
+                numOfAnts = 4;
+                break;
+            }
+        }
     }
 
     public void UpdateSceneToLoad(int _sceneToLoad) {
