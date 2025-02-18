@@ -94,7 +94,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaClip: 0
-    - _AlphaClip_Threshold: 0.3
+    - _AlphaClip_Threshold: 81.92
     - _AlphaToMask: 0
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
@@ -114,7 +114,7 @@ Material:
     - _DstBlend: 10
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
-    - _FlameSize: 0
+    - _FlameSize: 65.6
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
@@ -138,13 +138,13 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Colour: {r: 5.5908813, g: 0.8386322, b: 0, a: 0}
-    - _Direction: {r: 0.33, g: 0.12, b: 0, a: 0}
+    - _Direction: {r: 10.08, g: 0.63, b: 0, a: 0}
     - _DistortionSpeed: {r: 0.15, g: -0.2, b: 0, a: 0}
     - _DistortionSpeed_1: {r: -0.1, g: -0.5, b: 0, a: 0}
     - _Emission: {r: 19.698313, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColour: {r: 0.7490196, g: 0.2763321, b: 0, a: 0}
-    - _FlameColour: {r: 5.9921575, g: 3.4778013, b: 0, a: 1}
+    - _FlameColour: {r: 9.734287, g: 5.6497045, b: 0, a: 1}
     - _OtherFlameColour: {r: 7.129739, g: 5.3473043, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
