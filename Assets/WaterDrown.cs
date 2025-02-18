@@ -61,7 +61,7 @@ public class WaterDrown : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if(antSform != null)
         {
