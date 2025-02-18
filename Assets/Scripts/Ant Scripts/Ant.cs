@@ -34,10 +34,14 @@ public class Ant : MonoBehaviour {
 		moveVector = new Vector3(movement.x, 0, 0);
 	}
 
-	public void TakeDamage(int Damage) {
-		health -= Damage;
+	public void TakeDamage(int damage) {
+		health -= damage;
 
 		Debug.Log("Ant Health: " + health);
+	}
+
+	public void HealDamage(int damageToHeal) {
+		health += damageToHeal;
 	}
 
 	public int GetHealth() {

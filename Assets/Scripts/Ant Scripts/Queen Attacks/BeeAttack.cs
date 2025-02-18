@@ -5,9 +5,13 @@ using UnityEngine;
 public class BeeAttack : QueenAttack {
 	[SerializeField]
 	GameObject beeSummon;
+
 	public override void ActivateAttack(int attackLevel, Ant antInfoScript) {
-		BeeScript beeScript = Instantiate(beeSummon).GetComponent<BeeScript>();
-		beeScript.InitialiseValues(antInfoScript);
-		Debug.Log("Updated");
+		for(int i = 0; i < attackLevel; i++) {
+			BeeScript beeScript = Instantiate(beeSummon).GetComponent<BeeScript>();
+			beeScript.InitialiseValues(antInfoScript, attackLevel);
+			Debug.Log("Updated");
+		}
+
 	}
 }
