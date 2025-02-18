@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c76268df7a3d27b4397d0d1e6cbf16c9, type: 3}
   m_Name: StinkBug
   m_EditorClassIdentifier: 
-  weaponName: 
-  weaponDescription: 
+  weaponName: Stink Bug
+  weaponDescription: Launches a Stinkbug, detonates on impact. Smelly business.
   unlimitedUses: 1
-  weaponIcon: {fileID: 0}
-  weaponPrefab: {fileID: 0}
+  weaponIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  weaponPrefab: {fileID: 2035224743872689002, guid: 48600db732ecebc49831131511799a3a, type: 3}
   baseDamage: 20
-  weaponSpeed: 25
+  weaponSpeed: 12.5
   useGravity: 1
   weaponRandomisation: 1
   explosive: 1
@@ -31,8 +31,8 @@ MonoBehaviour:
   explosionPower: 5
   fuseTimer: 5
   vfxSize: 1
-  vfxDuration: 2.5
-  vfxObject: {fileID: 0}
+  vfxDuration: 15
+  vfxObject: {fileID: 3444566206332756482, guid: e74bdcd39dec8da429d2e7a0c7099972, type: 3}
   lingerEffect: 1
   lingerEffectRange: 3
   dealDamage: 1
