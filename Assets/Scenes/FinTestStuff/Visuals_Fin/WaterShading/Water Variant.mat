@@ -29,6 +29,7 @@ Material:
     - _FoamCutOff: 10.23
     - _FoamScale: 0
     - _FoamSpeed: 0
+    - _QueueControl: 0
     - _RefractionScale: 0
     - _RefractionSpeed: 0
     - _WaterDepth: 15
