@@ -25,6 +25,7 @@ public class WeaponManager : MonoBehaviour {
 
     private bool uiMoving = false;
     private bool canAim = true;
+    private bool canFireWeapon = true;
     private float aimStrength = 1.0f;
     private float aimArrowDefaultSize = 2.0f;
     private float strengthValue = 0.0f;
@@ -32,6 +33,7 @@ public class WeaponManager : MonoBehaviour {
     private Vector2 aimPosition = Vector2.zero;
 
     public bool WeaponMenuOpen { get; private set; } = false;
+    public bool WeaponsActive { get; private set; } = false;
     public BaseWeaponSO WeaponSelected { get; private set; }
 
     private CameraSystem cameraSystem;
@@ -54,8 +56,11 @@ public class WeaponManager : MonoBehaviour {
 
     //Function for handling firing weapons
     public void FireWeapon(BaseWeaponSO weaponInfo, Transform playerPosition) {
-        canAim = false;
-        StartCoroutine(FireWeaponCoroutine(weaponInfo, playerPosition));
+        if (canFireWeapon) {
+            canFireWeapon = false;
+            canAim = false;
+            StartCoroutine(FireWeaponCoroutine(weaponInfo, playerPosition));
+        }
     }
 
     private IEnumerator FireWeaponCoroutine(BaseWeaponSO weaponInfo, Transform playerPosition) {
@@ -73,7 +78,7 @@ public class WeaponManager : MonoBehaviour {
             turnManager.CurrentPlayerTurn.RemoveWeapon(weaponInfo);
         }
 
-        StartCoroutine(WaitTillWeaponsFinished());
+        WaitTillWeaponsFinished();
     }
 
     private void OnShoot(BaseWeaponSO weaponInfo, Transform playerPosition) {
@@ -103,6 +108,7 @@ public class WeaponManager : MonoBehaviour {
         rb.useGravity = weaponInfo.useGravity;
         weaponScript.SetupWeapon(weaponInfo, playerPosition.GetComponent<Collider>(), aoeTriggerAreaPrefab);
         activeWeapons.Add(newWeapon);
+        WeaponsActive = true;
         cameraSystem.SetCameraTarget(newWeapon.transform);
 
         if (weaponInfo.explosive && !weaponInfo.explodeOnImpact) {
@@ -118,12 +124,18 @@ public class WeaponManager : MonoBehaviour {
             colliders.First().GetComponent<Rigidbody>().AddExplosionForce(weaponInfo.knockbackStrength, playerPosition.position, 0, weaponInfo.upwardsModifier, ForceMode.Impulse);
         }
 
-        StartCoroutine(WaitTillWeaponsFinished());
+        WaitTillWeaponsFinished();
     }
 
-    private IEnumerator WaitTillWeaponsFinished() {
+    public void WaitTillWeaponsFinished() {
+        StartCoroutine(WaitTillWeaponsFinishedCoroutine());
+    }
+
+    private IEnumerator WaitTillWeaponsFinishedCoroutine() {
         aimArrow.gameObject.SetActive(false);
         yield return new WaitUntil(() => activeWeapons.Where(x => x != null).Count() == 0);
+        canFireWeapon = true;
+        WeaponsActive = false;
         activeWeapons.Clear();
         turnManager.EndTurn();
     }

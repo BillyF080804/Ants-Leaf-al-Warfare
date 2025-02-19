@@ -146,6 +146,8 @@ public class TurnManager : MonoBehaviour {
             yield return null;
         }
 
+        weaponManager.WaitTillWeaponsFinished();
+        yield return new WaitUntil(() => weaponManager.WeaponsActive == false);
         EndTurn();
     }
 
