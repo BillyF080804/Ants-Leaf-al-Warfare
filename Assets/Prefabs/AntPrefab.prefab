@@ -106,8 +106,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.0661321, y: 1.0959797, z: 2.0354893}
+  m_Center: {x: -0.011638522, y: -0.047989845, z: -0.017817616}
 --- !u!54 &464993771418036186
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -152,6 +152,7 @@ MonoBehaviour:
   ownedPlayer: 0
   moveVector: {x: 0, y: 0, z: 0}
   canJump: 1
+  health: 0
 --- !u!1001 &3020694900688971518
 PrefabInstance:
   m_ObjectHideFlags: 0

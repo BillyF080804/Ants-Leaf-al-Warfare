@@ -15,7 +15,7 @@ public class QueenAntScript : Ant {
 
 	public void SpecialAttack() {
 		Debug.Log("HI");
-		antInfo.queenAttack.ActivateAttack(attackLevel, this);
+		antInfo.queenAttack.ActivateAttack(attackLevel, this, transform.position);
 		attackLevel = 0;
 	}
 }

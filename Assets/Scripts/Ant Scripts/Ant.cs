@@ -20,6 +20,7 @@ public class Ant : MonoBehaviour {
 	public Vector3 moveVector = Vector3.zero;
 	public bool canJump = true;
 
+	[SerializeField]
 	private int health;
 	private Rigidbody rb;
 

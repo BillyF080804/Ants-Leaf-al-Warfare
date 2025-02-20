@@ -20,5 +20,5 @@ MonoBehaviour:
   health: 100
   IsQueen: 1
   queenType: 1
-  damage: 1
+  damage: 5
   queenAttack: {fileID: 879326333907927122, guid: cbabe4859a011a740a24b0376a5d72a6, type: 3}
