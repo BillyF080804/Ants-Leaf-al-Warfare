@@ -7,8 +7,8 @@ public class BeeScript : MonoBehaviour
 {
 	public Ant.PlayerList ownedPlayer;
 	public Ant antToAttack;
-	[SerializeField]
 	int damageToDeal;
+	[SerializeField]
 	int speed = 5;
 
 	public void InitialiseValues(Ant antInfoScript, int attackLevel) {
