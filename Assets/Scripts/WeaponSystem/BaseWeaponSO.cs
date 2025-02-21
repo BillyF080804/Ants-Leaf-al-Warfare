@@ -20,6 +20,7 @@ public class BaseWeaponSO : ScriptableObject {
     public bool explosive = false;
     public bool isMelee = false;
     public bool isMultiShot = false;
+    public bool isSpray = false;
 
     [Header("VFX & Audio")]
     public bool hasVFX = false;
@@ -49,6 +50,13 @@ public class BaseWeaponSO : ScriptableObject {
 
     [HideInInspector] public float minimumRandomness = 0.8f;
     [HideInInspector] public float maximumRandomness = 1.2f;
+
+    [HideInInspector] public float sprayLength = 3.0f;
+    [HideInInspector] public float sprayHeight = 2.0f;
+    [HideInInspector] public float sprayDuration = 2.5f;
+    [HideInInspector] public float sprayAreaVFXSize = 1.0f;
+    [HideInInspector] public GameObject sprayAreaObject = null;
+    [HideInInspector] public GameObject sprayAreaVFX = null;
 
     [HideInInspector] public AudioClip shootSound;
     [HideInInspector] public AudioClip impactSound;
@@ -133,6 +141,17 @@ public class BaseWeaponSOEditor : Editor {
             EditorGUILayout.LabelField("A random value is chosen within the range selected.");
             baseWeapon.minimumRandomness = EditorGUILayout.FloatField("Minimum Randomness", baseWeapon.minimumRandomness);
             baseWeapon.maximumRandomness = EditorGUILayout.FloatField("Maximum Randomness", baseWeapon.maximumRandomness);
+        }
+
+        if (baseWeapon.isSpray == true) {
+            EditorGUILayout.Space(15);
+            EditorGUILayout.LabelField("Spray Settings", EditorStyles.boldLabel);
+            baseWeapon.sprayLength = EditorGUILayout.FloatField("Spray Length", baseWeapon.sprayLength);
+            baseWeapon.sprayHeight = EditorGUILayout.FloatField("Spray Height", baseWeapon.sprayHeight);
+            baseWeapon.sprayDuration = EditorGUILayout.FloatField("Spray Duration", baseWeapon.sprayDuration);
+            baseWeapon.sprayAreaVFXSize = EditorGUILayout.FloatField("Spray Area VFX Size", baseWeapon.sprayAreaVFXSize);
+            baseWeapon.sprayAreaObject = (GameObject)EditorGUILayout.ObjectField("Spray Area Prefab", baseWeapon.sprayAreaObject, typeof(GameObject), true);
+            baseWeapon.sprayAreaVFX = (GameObject)EditorGUILayout.ObjectField("Spray Area VFX", baseWeapon.sprayAreaVFX, typeof(GameObject), true);
         }
     }
 }

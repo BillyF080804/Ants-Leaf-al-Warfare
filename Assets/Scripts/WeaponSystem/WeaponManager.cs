@@ -127,6 +127,28 @@ public class WeaponManager : MonoBehaviour {
         WaitTillWeaponsFinished();
     }
 
+    public void UseSprayWeapon(BaseWeaponSO weaponInfo, Transform playerPosition) {
+        Vector3 spawnPos = new Vector3(playerPosition.position.x, playerPosition.position.y, playerPosition.position.z);
+        Vector3 scale = new Vector3(weaponInfo.sprayHeight, weaponInfo.sprayLength, weaponInfo.sprayLength);
+
+        if (aimPosition.x < playerPosition.position.x) {
+            spawnPos.x -= weaponInfo.sprayLength * 0.5f;
+        }
+        else {
+            spawnPos.x += weaponInfo.sprayLength * 0.5f;
+        }
+
+        GameObject sprayArea = Instantiate(weaponInfo.sprayAreaObject, spawnPos, Quaternion.identity);
+        sprayArea.transform.localScale = scale;
+        sprayArea.transform.localRotation = aimArrow.localRotation;
+
+        sprayArea.GetComponent<SprayAreaScript>().Setup(turnManager.CurrentAntTurn.GetComponent<Collider>(), weaponInfo);
+
+        activeWeapons.Add(sprayArea);
+        WeaponsActive = true;
+        WaitTillWeaponsFinished();
+    }
+
     public void WaitTillWeaponsFinished() {
         StartCoroutine(WaitTillWeaponsFinishedCoroutine());
     }

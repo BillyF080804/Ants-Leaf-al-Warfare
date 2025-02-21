@@ -74,6 +74,9 @@ public class Player : MonoBehaviour {
             if (weaponManager.WeaponSelected.isMelee) {
                 weaponManager.UseMeleeWeapon(weaponManager.WeaponSelected, turnManager.CurrentAntTurn.transform);
             }
+            else if (weaponManager.WeaponSelected.isSpray) {
+                weaponManager.UseSprayWeapon(weaponManager.WeaponSelected, turnManager.CurrentAntTurn.transform);
+            }
             else {
                 weaponManager.FireWeapon(weaponManager.WeaponSelected, turnManager.CurrentAntTurn.transform);
             }
