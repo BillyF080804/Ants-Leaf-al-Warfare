@@ -124,6 +124,8 @@ public class WeaponManager : MonoBehaviour {
             colliders.First().GetComponent<Rigidbody>().AddExplosionForce(weaponInfo.knockbackStrength, playerPosition.position, 0, weaponInfo.upwardsModifier, ForceMode.Impulse);
         }
 
+        cameraSystem.CameraDelay(weaponInfo.cameraDelay);
+        cameraSystem.SetCameraTarget(playerPosition.position);
         WaitTillWeaponsFinished();
     }
 
@@ -146,6 +148,8 @@ public class WeaponManager : MonoBehaviour {
 
         activeWeapons.Add(sprayArea);
         WeaponsActive = true;
+        cameraSystem.CameraDelay(weaponInfo.cameraDelay);
+        cameraSystem.SetCameraTarget(playerPosition.position);
         WaitTillWeaponsFinished();
     }
 
@@ -155,7 +159,7 @@ public class WeaponManager : MonoBehaviour {
 
     private IEnumerator WaitTillWeaponsFinishedCoroutine() {
         aimArrow.gameObject.SetActive(false);
-        yield return new WaitUntil(() => activeWeapons.Where(x => x != null).Count() == 0);
+        yield return new WaitUntil(() => activeWeapons.Where(x => x != null).Count() == 0 && cameraSystem.CameraDelayActive == false);
         canFireWeapon = true;
         WeaponsActive = false;
         activeWeapons.Clear();

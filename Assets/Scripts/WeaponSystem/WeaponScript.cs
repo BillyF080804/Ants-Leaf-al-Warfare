@@ -74,7 +74,8 @@ public class WeaponScript : MonoBehaviour {
 
     private void OnDestroy() {
         if (cameraSystem.CameraTarget == transform) {
-            cameraSystem.SetCameraTarget(null);
+            cameraSystem.SetCameraTarget(transform.position);
+            cameraSystem.CameraDelay(weaponInfo.cameraDelay);
         }
     }
 }

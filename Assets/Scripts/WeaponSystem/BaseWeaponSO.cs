@@ -13,6 +13,7 @@ public class BaseWeaponSO : ScriptableObject {
     public GameObject weaponPrefab = null;
 
     [Header("Weapon Settings")]
+    public float cameraDelay = 4.0f;
     public int baseDamage = 20;
     public float weaponSpeed = 25.0f;
     public bool useGravity = true;

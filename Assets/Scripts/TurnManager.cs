@@ -25,6 +25,7 @@ public class TurnManager : MonoBehaviour {
     private int numOfAnts = 2;
     private float currentTurnTime;
     private bool currentTurnEnded = false;
+    private bool turnTimerPaused = false;
 
     public int CurrentRound { get; private set; } = 0;
     public Player CurrentPlayerTurn { get; private set; } = null;
@@ -141,14 +142,27 @@ public class TurnManager : MonoBehaviour {
         PickAntTurn();
 
         while (currentTurnTime > 0) {
-            currentTurnTime -= Time.deltaTime;
-            turnTimeText.text = "Time: " + TimeSpan.FromSeconds(currentTurnTime).ToString("ss");
+            if (turnTimerPaused == false) {
+                currentTurnTime -= Time.deltaTime;
+                turnTimeText.text = "Time: " + TimeSpan.FromSeconds(currentTurnTime).ToString("ss");
+            }
+
             yield return null;
         }
 
         weaponManager.WaitTillWeaponsFinished();
-        yield return new WaitUntil(() => weaponManager.WeaponsActive == false);
+        yield return new WaitUntil(() => weaponManager.WeaponsActive == false && cameraSystem.CameraDelayActive == false);
         EndTurn();
+    }
+
+    public void PauseTurnTimer(float pauseDuration) {
+        StartCoroutine(PauseTurnTimerCoroutine(pauseDuration));
+    }
+
+    private IEnumerator PauseTurnTimerCoroutine(float pauseDuration) {
+        turnTimerPaused = true;
+        yield return new WaitForSeconds(pauseDuration);
+        turnTimerPaused = false;
     }
 
     public void EndTurn() {
@@ -203,9 +217,5 @@ public class TurnManager : MonoBehaviour {
         if (playersFinishedRound == PlayerList.Count) {
             allAntsMoved = true;
         }
-    }
-
-    IEnumerator Delay(int delayTime) {
-        yield return new WaitForSeconds(delayTime);
     }
 }
