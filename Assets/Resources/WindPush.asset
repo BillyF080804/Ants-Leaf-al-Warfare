@@ -10,20 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c76268df7a3d27b4397d0d1e6cbf16c9, type: 3}
-  m_Name: FlameThrower
+  m_Name: WindPush
   m_EditorClassIdentifier: 
-  weaponName: FlameThrower
-  weaponDescription: 'Short Range FlameThrower. FEEL THE BURN! '
+  weaponName: Blow-dry
+  weaponDescription: Blow your opponents away with WIND!
   unlimitedUses: 1
   weaponIcon: {fileID: 21300000, guid: 915d6c2602800594d89fbbaecb60ca48, type: 3}
-  weaponPrefab: {fileID: 4215415592903712972, guid: b14710584a1d9914eaa828951e70e227, type: 3}
-  baseDamage: 20
-  weaponSpeed: 0
-  useGravity: 0
+  weaponPrefab: {fileID: 2035224743872689002, guid: 48600db732ecebc49831131511799a3a, type: 3}
+  cameraDelay: 4
+  baseDamage: 0
+  weaponSpeed: 25
+  useGravity: 1
   weaponRandomisation: 0
   explosive: 0
   isMelee: 0
   isMultiShot: 0
+  isSpray: 1
   hasVFX: 0
   hasSounds: 0
   explodeOnImpact: 1
@@ -45,5 +47,11 @@ MonoBehaviour:
   delayBetweenShots: 0.5
   minimumRandomness: 0.8
   maximumRandomness: 1.2
+  sprayLength: 3
+  sprayHeight: 2
+  sprayDuration: 2.5
+  sprayAreaVFXSize: 1
+  sprayAreaObject: {fileID: 4823009550829533390, guid: 3673142af910dd34f9467e7305110f6b, type: 3}
+  sprayAreaVFX: {fileID: 5972204552708681510, guid: 272efd046b9099b4ea17d6d229e7f62e, type: 3}
   shootSound: {fileID: 0}
   impactSound: {fileID: 0}
