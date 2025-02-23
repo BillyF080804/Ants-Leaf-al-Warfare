@@ -3,10 +3,12 @@ using UnityEngine;
 public class SprayAreaScript : MonoBehaviour {
     private Collider playerCollider;
     private BaseWeaponSO weaponInfo;
+    private TurnManager turnManager;
 
-    public void Setup(Collider _playerCollider, BaseWeaponSO _weaponInfo) {
+    public void Setup(Collider _playerCollider, BaseWeaponSO _weaponInfo, TurnManager _turnManager) {
         playerCollider = _playerCollider;
         weaponInfo = _weaponInfo;
+        turnManager = _turnManager;
 
         if (weaponInfo.sprayAreaVFX != null) {
             GameObject vfx = Instantiate(weaponInfo.sprayAreaVFX, transform.position, Quaternion.identity, transform);
@@ -18,9 +20,12 @@ public class SprayAreaScript : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (other != playerCollider) {
-            other.GetComponent<Ant>().TakeDamage(weaponInfo.baseDamage);
-            Debug.Log(other.name);
+        if (other != playerCollider && other.TryGetComponent(out Ant ant)) {
+            ant.TakeDamage(weaponInfo.baseDamage);
+
+            if (weaponInfo.sprayMover == true) {
+                ant.GetComponent<Rigidbody>().AddExplosionForce(weaponInfo.sprayStrength, turnManager.CurrentAntTurn.transform.position, weaponInfo.sprayLength, 2f);
+            }
         }
     }
 }

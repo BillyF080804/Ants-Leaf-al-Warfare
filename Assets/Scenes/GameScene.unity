@@ -1440,8 +1440,11 @@ MonoBehaviour:
   turnTimeText: {fileID: 3954182}
   queenHealthUIPrefab: {fileID: 4949640269382184298, guid: e2ae6995a00a1a140bf9d26c13be17f2, type: 3}
   mainCanvas: {fileID: 1998806275}
-  <QueenHealthUI>k__BackingField: []
-  allAntsMoved: 0
+  queenAntHealthUIVariants:
+  - {fileID: 21300000, guid: 99042e5163d030042a82b977ec294ee7, type: 3}
+  - {fileID: 21300000, guid: c19929451ee11724a9e46c2d30763465, type: 3}
+  - {fileID: 21300000, guid: e33ad75f9369c5a4ca2855fafd9e681a, type: 3}
+  - {fileID: 21300000, guid: 6568490c380e5404c8f25ab5ebaf4554, type: 3}
   tempText: {fileID: 769923766}
 --- !u!4 &2003787145
 Transform:

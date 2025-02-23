@@ -52,6 +52,8 @@ public class BaseWeaponSO : ScriptableObject {
     [HideInInspector] public float minimumRandomness = 0.8f;
     [HideInInspector] public float maximumRandomness = 1.2f;
 
+    [HideInInspector] public bool sprayMover = false;
+    [HideInInspector] public float sprayStrength = 25.0f;
     [HideInInspector] public float sprayLength = 3.0f;
     [HideInInspector] public float sprayHeight = 2.0f;
     [HideInInspector] public float sprayDuration = 2.5f;
@@ -147,6 +149,12 @@ public class BaseWeaponSOEditor : Editor {
         if (baseWeapon.isSpray == true) {
             EditorGUILayout.Space(15);
             EditorGUILayout.LabelField("Spray Settings", EditorStyles.boldLabel);
+            baseWeapon.sprayMover = EditorGUILayout.Toggle("Spray Moves Ant", baseWeapon.sprayMover);
+
+            if (baseWeapon.sprayMover == true) {
+                baseWeapon.sprayStrength = EditorGUILayout.FloatField("Spray Strength", baseWeapon.sprayStrength);
+            }
+
             baseWeapon.sprayLength = EditorGUILayout.FloatField("Spray Length", baseWeapon.sprayLength);
             baseWeapon.sprayHeight = EditorGUILayout.FloatField("Spray Height", baseWeapon.sprayHeight);
             baseWeapon.sprayDuration = EditorGUILayout.FloatField("Spray Duration", baseWeapon.sprayDuration);

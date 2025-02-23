@@ -144,7 +144,7 @@ public class WeaponManager : MonoBehaviour {
         sprayArea.transform.localScale = scale;
         sprayArea.transform.localRotation = aimArrow.localRotation;
 
-        sprayArea.GetComponent<SprayAreaScript>().Setup(turnManager.CurrentAntTurn.GetComponent<Collider>(), weaponInfo);
+        sprayArea.GetComponent<SprayAreaScript>().Setup(turnManager.CurrentAntTurn.GetComponent<Collider>(), weaponInfo, turnManager);
 
         activeWeapons.Add(sprayArea);
         WeaponsActive = true;

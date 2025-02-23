@@ -140,6 +140,12 @@ public class Player : MonoBehaviour {
         }
     }
 
+    public void StopSkipTurn() {
+        if (skipTurnCoroutine != null) {
+            StopCoroutine(skipTurnCoroutine);
+        }    
+    }
+
     private IEnumerator SkipTurnCoroutine(float skipDuration) {
         float timeElapsed = 0.0f;
 

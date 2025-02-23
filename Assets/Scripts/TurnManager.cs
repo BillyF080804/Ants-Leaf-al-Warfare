@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class TurnManager : MonoBehaviour {
@@ -20,25 +21,24 @@ public class TurnManager : MonoBehaviour {
     [SerializeField] private TMP_Text turnTimeText;
     [SerializeField] private GameObject queenHealthUIPrefab;
     [SerializeField] private Canvas mainCanvas;
-    [field: SerializeField] public List<GameObject> QueenHealthUI { get; private set; }
+    [SerializeField] private List<Sprite> queenAntHealthUIVariants;
 
     private int numOfAnts = 2;
     private float currentTurnTime;
     private bool currentTurnEnded = false;
     private bool turnTimerPaused = false;
+    private bool allAntsMoved = false;
 
     public int CurrentRound { get; private set; } = 0;
     public Player CurrentPlayerTurn { get; private set; } = null;
-
-    //Tracks which ant's turn it currently is
-    public Ant CurrentAntTurn { get; private set; } = null;
-    public bool allAntsMoved = false;
+    public Ant CurrentAntTurn { get; private set; } = null; //Tracks which ant's turn it currently is
+    public List<GameObject> QueenHealthUI { get; private set; } = new List<GameObject>();
+    public List<Player> PlayerList { get; private set; } = new List<Player>();
 
     private Coroutine turnTimerCoroutine;
     private CameraSystem cameraSystem;
     private WeaponManager weaponManager;
     private WeaponDropSystem dropSystem;
-    public List<Player> PlayerList { get; private set; } = new List<Player>();
 
 
     [SerializeField] TextMeshProUGUI tempText;
@@ -81,23 +81,49 @@ public class TurnManager : MonoBehaviour {
         for (int i = 0; i < PlayerList.Count; i++) {
             GameObject newHealthUI = Instantiate(queenHealthUIPrefab, mainCanvas.transform);
             QueenHealthUI.Add(newHealthUI);
+            Image mainUI = newHealthUI.transform.GetChild(2).GetComponent<Image>();
+            RectTransform textTransform = newHealthUI.transform.GetChild(3).GetComponent<RectTransform>();
+            RectTransform backgroundTransform = newHealthUI.transform.GetChild(0).GetComponent<RectTransform>();
+            RectTransform queenImageTransform = newHealthUI.transform.GetChild(1).GetComponent<RectTransform>();
 
             switch (i) {
                 case 0:
-                    newHealthUI.GetComponent<RectTransform>().localPosition = new Vector2(-785, 415);
-                    newHealthUI.GetComponentInChildren<TMP_Text>().text = "Player 1 Queen Ant Health: 100";
+                    newHealthUI.GetComponent<RectTransform>().localPosition = new Vector2(-785, 445);
+                    backgroundTransform.localPosition = new Vector2(-75.5f, 0);
+                    queenImageTransform.localPosition = new Vector2(-75.5f, 0);                    
+                    textTransform.localPosition = new Vector2(70, -45);
+                    textTransform.GetComponent<TMP_Text>().text = "Queen Health: 100";
+                    mainUI.sprite = queenAntHealthUIVariants[i];
+                    mainUI.color = PlayerList[i].playerInfo.playerColor;
                     break;
                 case 1:
-                    newHealthUI.GetComponent<RectTransform>().localPosition = new Vector2(785, 415);
-                    newHealthUI.GetComponentInChildren<TMP_Text>().text = "Player 2 Queen Ant Health: 100";
+                    newHealthUI.GetComponent<RectTransform>().localPosition = new Vector2(785, 445);
+                    backgroundTransform.localPosition = new Vector2(75.5f, 0);
+                    queenImageTransform.localPosition = new Vector2(75.5f, 0);
+                    queenImageTransform.Rotate(new Vector3(0, 180, 0));
+                    textTransform.localPosition = new Vector2(-70, -45);
+                    textTransform.GetComponent<TMP_Text>().text = "Queen Health: 100";
+                    mainUI.sprite = queenAntHealthUIVariants[i];
+                    mainUI.color = PlayerList[i].playerInfo.playerColor;
                     break;
                 case 2:
-                    newHealthUI.GetComponent<RectTransform>().localPosition = new Vector2(-785, -415);
-                    newHealthUI.GetComponentInChildren<TMP_Text>().text = "Player 3 Queen Ant Health: 100";
+                    newHealthUI.GetComponent<RectTransform>().localPosition = new Vector2(-785, -445);
+                    backgroundTransform.localPosition = new Vector2(-75.5f, 0);
+                    queenImageTransform.localPosition = new Vector2(-75.5f, 0);
+                    textTransform.localPosition = new Vector2(70, -45);
+                    textTransform.GetComponent<TMP_Text>().text = "Queen Health: 100";
+                    mainUI.sprite = queenAntHealthUIVariants[i];
+                    mainUI.color = PlayerList[i].playerInfo.playerColor;
                     break;
                 case 3:
-                    newHealthUI.GetComponent<RectTransform>().localPosition = new Vector2(785, -415);
-                    newHealthUI.GetComponentInChildren<TMP_Text>().text = "Player 4 Queen Ant Health: 100";
+                    newHealthUI.GetComponent<RectTransform>().localPosition = new Vector2(785, -445);
+                    backgroundTransform.localPosition = new Vector2(75.5f, 0);
+                    queenImageTransform.localPosition = new Vector2(75.5f, 0);
+                    queenImageTransform.Rotate(new Vector3(0, 180, 0));
+                    textTransform.localPosition = new Vector2(-70, -45);
+                    textTransform.GetComponent<TMP_Text>().text = "Queen Health: 100";
+                    mainUI.sprite = queenAntHealthUIVariants[i];
+                    mainUI.color = PlayerList[i].playerInfo.playerColor;
                     break;
             }
         }
@@ -171,7 +197,7 @@ public class TurnManager : MonoBehaviour {
 
     private IEnumerator EndTurnCoroutine() {
         StopCoroutine(turnTimerCoroutine);
-		Player currentPlayerTemp = CurrentPlayerTurn.GetComponent<Player>();
+        CurrentPlayerTurn.StopSkipTurn();
         CheckIfAllAntsMoved();
         CurrentPlayerTurn = null;
         cameraSystem.SetCameraTarget(null);
@@ -190,7 +216,6 @@ public class TurnManager : MonoBehaviour {
 
             CurrentRound++;
             dropSystem.CheckDrop();
-
         }
 
         currentTurnEnded = true;
