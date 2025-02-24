@@ -31,6 +31,61 @@ Transform:
   m_Children: []
   m_Father: {fileID: 9155502559471427}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1532786532711151157
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4412052047261872326}
+  - component: {fileID: 5044416771320166712}
+  m_Layer: 0
+  m_Name: Holder
+  m_TagString: Untagged
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4412052047261872326
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1532786532711151157}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.12036251, y: 0.5133781, z: 0.071921974, w: -0.8466305}
+  m_LocalPosition: {x: -3.8189278, y: 3.448156, z: -1.1202283}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4008994399400500792}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5044416771320166712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1532786532711151157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29a074d529cf945029ef7cf40540c9df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Target: {fileID: 9221007851256605198}
+  m_PlayOnAwake: 0
+  m_LoopMode: 1
+  m_Method: 0
+  m_Duration: 1
+  m_MaxSpeed: 276.97137
+  m_EasingMode: 2
+  m_AlignmentMode: 1
+  m_ObjectForwardAxis: 2
+  m_ObjectUpAxis: 1
+  m_StartOffset: 0
 --- !u!1 &3293175148469667690
 GameObject:
   m_ObjectHideFlags: 0
@@ -276,13 +331,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4008994399400500792}
   - component: {fileID: 7051782487935720024}
-  - component: {fileID: 3729205591671253284}
   - component: {fileID: 4547450745132543930}
   - component: {fileID: 5522901032781997955}
   m_Layer: 0
   m_Name: Leaves
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -302,6 +356,8 @@ Transform:
   - {fileID: 2136885163606668916}
   - {fileID: 2795961225392023696}
   - {fileID: 1412106235905283568}
+  - {fileID: 8347529910072461280}
+  - {fileID: 4412052047261872326}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 7.467, y: -206.597, z: 14.328}
 --- !u!95 &7051782487935720024
@@ -325,34 +381,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3729205591671253284
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4677408570239565145}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2210073a43e2a4a41816875b3fdb447e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  launchForce: {x: 5, y: 5, z: 0}
-  launchEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4547450745132543930}
-        m_TargetAssemblyTypeName: AnimationHandler, Assembly-CSharp
-        m_MethodName: ToggleTrigger
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Interact
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &4547450745132543930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -387,6 +415,138 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 9.614775, y: 7.28, z: 11.484097}
   m_Center: {x: -2.2173815, y: 0, z: -2.6961975}
+--- !u!1 &5128248029945482708
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8347529910072461280}
+  - component: {fileID: 9221007851256605198}
+  m_Layer: 0
+  m_Name: Spline
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8347529910072461280
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5128248029945482708}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.1203625, y: 0.513378, z: 0.071921974, w: -0.8466304}
+  m_LocalPosition: {x: -4.173711, y: 13.736602, z: -0.9560248}
+  m_LocalScale: {x: 0.6179216, y: 0.61792165, z: 0.6179216}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4008994399400500792}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &9221007851256605198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5128248029945482708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dab5c7d4c32e743048dfca98e2d5914f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Spline:
+    m_EditModeType: 1
+    m_Knots: []
+    m_MetaData: []
+    m_Closed: 0
+    m_IntData:
+      m_Data: []
+    m_FloatData:
+      m_Data: []
+    m_Float4Data:
+      m_Data: []
+    m_ObjectData:
+      m_Data: []
+  m_Splines:
+  - m_EditModeType: 1
+    m_Knots:
+    - Position:
+        x: 0
+        y: -15.82
+        z: -5.2300415
+      TangentIn:
+        x: 0
+        y: 0
+        z: -1
+      TangentOut:
+        x: 0
+        y: 0
+        z: 1
+      Rotation:
+        value:
+          x: 0
+          y: 0
+          z: 0
+          w: 1
+    - Position:
+        x: -0.05001831
+        y: 37.5
+        z: 47.45996
+      TangentIn:
+        x: 0
+        y: 0
+        z: -19.711693
+      TangentOut:
+        x: 0
+        y: 0
+        z: 19.711693
+      Rotation:
+        value:
+          x: -0.007067669
+          y: 0.15251316
+          z: -0.057517227
+          w: 0.98660094
+    - Position:
+        x: -0.000015258789
+        y: 4.66
+        z: 98
+      TangentIn:
+        x: 0
+        y: 0
+        z: -3.1951897
+      TangentOut:
+        x: 0
+        y: 0
+        z: 3.1951897
+      Rotation:
+        value:
+          x: 0.0059086457
+          y: 0.048306245
+          z: 0.057182483
+          w: 0.99717695
+    m_MetaData:
+    - Mode: 2
+      Tension: 0.5
+    - Mode: 2
+      Tension: 0.5
+    - Mode: 2
+      Tension: 0.5
+    m_Closed: 0
+    m_IntData:
+      m_Data: []
+    m_FloatData:
+      m_Data: []
+    m_Float4Data:
+      m_Data: []
+    m_ObjectData:
+      m_Data: []
+  m_Knots:
+    m_KnotsLink: []
 --- !u!1 &8083616340429834691
 GameObject:
   m_ObjectHideFlags: 0
