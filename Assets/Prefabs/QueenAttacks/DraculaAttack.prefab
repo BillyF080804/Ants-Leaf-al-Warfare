@@ -44,3 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baa9315abe2740446b69456bea4d8542, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  effect: {fileID: 5701415912331228771, guid: 01e04520001a83145b8af44b859bad3a, type: 3}
+  percentages:
+  - 0.1
+  - 0.25
+  - 0.5

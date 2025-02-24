@@ -4,4 +4,24 @@ using UnityEngine;
 
 public class DraculaAttack : QueenAttack {
 
+	public EffectScript effect;
+
+	[Tooltip("Use decimal versions of the percentage you want")]
+	public List<float> percentages;
+
+	public override void ActivateAttack(int attackLevel, Ant antInfoScript) {
+		Ant[] antList = FindObjectsOfType<Ant>();
+		List<Ant> antList2 = new List<Ant>();
+		for (int i = 0; i < antList.Length; i++) {
+			if (antList[i].ownedPlayer == antInfoScript.ownedPlayer) {
+				antList2.Add(antList[i]);
+
+			}
+
+		}
+
+		for (int i = 0; i < antList2.Count; i++) {
+			effect.AddEffect(antList2[i], percentages[attackLevel-1]);
+		}
+	}
 }

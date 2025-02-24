@@ -14,8 +14,12 @@ public class QueenAntScript : Ant {
 	}
 
 	public void SpecialAttack() {
-		Debug.Log("HI");
-		antInfo.queenAttack.ActivateAttack(attackLevel, this, transform.position);
+		if(antInfo.queenType == AntSO.QueenType.Bee) {
+			antInfo.queenAttack.ActivateAttack(attackLevel, this, transform.position);
+		} else {
+			antInfo.queenAttack.ActivateAttack(attackLevel, this);
+		}
+		
 		attackLevel = 0;
 	}
 }

@@ -21,6 +21,8 @@ public class Ant : MonoBehaviour {
 	public bool canJump = true;
 
 	public List<EffectScript> effects;
+	public bool hasLifeSteal;
+	public float lifeStealPercent;
 	
 	private int health;
 	private Rigidbody rb;
@@ -80,6 +82,12 @@ public class Ant : MonoBehaviour {
 			canJump = true;
 		}
 	}
+
+	private void OnTriggerEnter(Collider other) {
+		AttachToSpline splineThing = GameObject.FindAnyObjectByType<AttachToSpline>();
+		splineThing.AttachObject();
+	}
+
 
 	public void ApplyEffects() {
 		if (effects.Count > 0) {

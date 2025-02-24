@@ -8,6 +8,8 @@ public class EffectScript : MonoBehaviour {
 	EffectSO effectInfo;
 
 	int turnsLeft;
+	int effectLevel;
+	float lifeStealPercent;
 
 	private void Start() {
 		turnsLeft = effectInfo.amountOfTurns;
@@ -31,7 +33,14 @@ public class EffectScript : MonoBehaviour {
 			case EffectSO.EffectType.StatDrop: {
 				break;
 			}
-			case EffectSO.EffectType.LifeSteal: { 
+			case EffectSO.EffectType.LifeSteal: {
+				if (ant.hasLifeSteal) {
+					ant.hasLifeSteal = !ant.hasLifeSteal;
+					ant.lifeStealPercent = 0;
+					RemoveEffect(ant);
+				}
+				ant.hasLifeSteal = true;
+				ant.lifeStealPercent = lifeStealPercent;
 				break; 
 			}
 		}
@@ -41,8 +50,13 @@ public class EffectScript : MonoBehaviour {
 		ant.effects.Add(this);
 	}
 
+	public void AddEffect(Ant ant, float lifeStealLevel) {
+		ant.effects.Add(this);
+		lifeStealPercent = lifeStealLevel;
+		ApplyEffect(ant);
+	}
+
 	public void RemoveEffect(Ant ant) {
 		ant.effects.Remove(this);
-		Destroy(this);
 	}
 }
