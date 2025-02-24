@@ -6,15 +6,24 @@ using UnityEngine.Splines;
 using UnityEngine.UI;
 public class AttachToSpline : Interactable
 {
-    public AntScript currentAnt;
+    [Header("Variables for launch")]
     [SerializeField] private GameObject attachForSpline;
-    private SplineAnimate animatedSpline;
-    private AnimationHandler animHandler;
-    [SerializeField] private string animName;
     [SerializeField] Quaternion rotation;
     [SerializeField] Vector3 detachSpeed;
+    public AntScript currentAnt;
+
+    [Header("Animation Variables")]
+    [SerializeField] AnimationHandler uiHandler;
+    [SerializeField] private string animName;
+    [SerializeField] string enterTriggerName;
+    [SerializeField] string exitTriggerName;
     [SerializeField] Image promptImage;
     public float imageDistance;
+
+    private SplineAnimate animatedSpline;
+    private AnimationHandler animHandler;
+    private bool isLaunching = false;
+
 
     private void Awake()
     {
@@ -26,19 +35,26 @@ public class AttachToSpline : Interactable
     {
         if (other.GetComponent<AntScript>() != null)
         {
-            imageDistance = Vector2.Distance(promptImage.transform.position, currentAnt.transform.position);
+            uiHandler.ToggleTrigger(enterTriggerName);
             currentAnt = other.GetComponent<AntScript>();
-            if(imageDistance >= 1.5)
-            {
-                promptImage.transform.position = Vector2.MoveTowards(promptImage.transform.position, currentAnt.transform.position, 1 * Time.deltaTime);
-            }
         }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if(!isLaunching && imageDistance >= 1.5)
+        {
+            imageDistance = Vector2.Distance(promptImage.transform.position, currentAnt.transform.position);
+            promptImage.transform.position = Vector2.MoveTowards(promptImage.transform.position, currentAnt.transform.position, 1 * Time.deltaTime);
+        }
+
     }
 
     private void OnTriggerExit(Collider other)
     {
         if ((other.GetComponent<AntScript>() == currentAnt) && (currentAnt.transform.parent == attachForSpline))
         {
+            uiHandler.ToggleTrigger(exitTriggerName);
             currentAnt = null;
         }
 
@@ -46,8 +62,10 @@ public class AttachToSpline : Interactable
 
     public void AttachObject()
     {
-        if(currentAnt != null)
+        if (currentAnt != null && !isLaunching)
         {
+            isLaunching = true;
+            uiHandler.ToggleTrigger(exitTriggerName);
             Rigidbody rb = currentAnt.GetComponent<Rigidbody>();
             currentAnt.gameObject.transform.SetParent(attachForSpline.transform);
             currentAnt.transform.rotation = rotation;
@@ -59,6 +77,7 @@ public class AttachToSpline : Interactable
 
     public void DetachObject()
     {
+        isLaunching = false;
         Rigidbody rb = currentAnt.GetComponent<Rigidbody>();
         rb.useGravity = true;
         rb.AddForce(detachSpeed, ForceMode.Impulse);
