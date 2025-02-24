@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Splines;
+using UnityEngine.UI;
 public class AttachToSpline : Interactable
 {
     public AntScript currentAnt;
@@ -12,6 +13,8 @@ public class AttachToSpline : Interactable
     [SerializeField] private string animName;
     [SerializeField] Quaternion rotation;
     [SerializeField] Vector3 detachSpeed;
+    [SerializeField] Image promptImage;
+    public float imageDistance;
 
     private void Awake()
     {
@@ -23,7 +26,12 @@ public class AttachToSpline : Interactable
     {
         if (other.GetComponent<AntScript>() != null)
         {
+            imageDistance = Vector2.Distance(promptImage.transform.position, currentAnt.transform.position);
             currentAnt = other.GetComponent<AntScript>();
+            if(imageDistance >= 1.5)
+            {
+                promptImage.transform.position = Vector2.MoveTowards(promptImage.transform.position, currentAnt.transform.position, 1 * Time.deltaTime);
+            }
         }
     }
 
