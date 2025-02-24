@@ -201,6 +201,11 @@ public class TurnManager : MonoBehaviour {
 
         CurrentAntTurn.ApplyEffects();
 
+        if (CurrentAntTurn.GetComponent<QueenAntScript>() != null) {
+            CheckIfQueenAttacked();
+
+		}
+
         CheckIfAllAntsMoved();
         CurrentPlayerTurn = null;
         cameraSystem.SetCameraTarget(null);
@@ -246,4 +251,9 @@ public class TurnManager : MonoBehaviour {
             allAntsMoved = true;
         }
     }
+
+    private void CheckIfQueenAttacked() {
+		CurrentAntTurn.GetComponent<QueenAntScript>().CheckAttackTurn();
+
+	}
 }
