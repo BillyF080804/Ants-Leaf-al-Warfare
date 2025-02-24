@@ -461,6 +461,17 @@
                     "action": "QueenAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2985ac40-5255-46ab-b389-eabc3a876cf0",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "QueenAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },

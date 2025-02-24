@@ -20,6 +20,7 @@ public class Ant : MonoBehaviour {
 	public Vector3 moveVector = Vector3.zero;
 	public bool canJump = true;
 
+	public List<EffectScript> effects;
 	
 	private int health;
 	private Rigidbody rb;
@@ -79,4 +80,13 @@ public class Ant : MonoBehaviour {
 			canJump = true;
 		}
 	}
+
+	public void ApplyEffects() {
+        if (effects.Count> 0)
+        {
+            for(int i = 0; i < effects.Count; i++) {
+				effects[i].ApplyEffect();
+			}
+        }
+    }
 }

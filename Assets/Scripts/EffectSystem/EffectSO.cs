@@ -5,10 +5,22 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Effect System/New Effect", fileName = "New Effect")]
 public class EffectSO : ScriptableObject {
 	public string effectName;
+
+	public bool multiTurn;
+
 	public int amountOfTurns;
 
-	enum EffectType {
-		Damage,
-
+	public enum EffectType {
+		NULL = -1,
+		DamageOverTime,
+		StatDrop,
+		LifeSteal
 	}
+
+	public EffectType effectType;	
+
+	public int amountOfDamagePerTurn;
+
+
+
 }

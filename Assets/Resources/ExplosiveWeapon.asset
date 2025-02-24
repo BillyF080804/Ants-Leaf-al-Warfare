@@ -17,20 +17,43 @@ MonoBehaviour:
   unlimitedUses: 0
   weaponIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   weaponPrefab: {fileID: 2035224743872689002, guid: 48600db732ecebc49831131511799a3a, type: 3}
+  cameraDelay: 4
   baseDamage: 25
   weaponSpeed: 10
   useGravity: 1
+  weaponRandomisation: 0
   explosive: 1
   isMelee: 0
   isMultiShot: 0
+  isSpray: 0
   hasVFX: 1
+  hasSounds: 0
   explodeOnImpact: 1
   explosionRange: 5
   explosionPower: 1
   fuseTimer: 0.2
   vfxSize: 1
+  vfxDuration: 2.5
   vfxObject: {fileID: 2169185026088089853, guid: b22ffd9e1b7000c4daadabd9b6b95113, type: 3}
+  lingerEffect: 0
+  lingerEffectRange: 3
+  dealDamage: 1
+  damagePerSecond: 5
+  slowMovement: 1
+  slowMultiplier: 0.5
   knockbackStrength: 2
   upwardsModifier: 4
   numOfShots: 2
   delayBetweenShots: 0.5
+  minimumRandomness: 0.8
+  maximumRandomness: 1.2
+  sprayMover: 0
+  sprayStrength: 25
+  sprayLength: 3
+  sprayHeight: 2
+  sprayDuration: 2.5
+  sprayAreaVFXSize: 1
+  sprayAreaObject: {fileID: 0}
+  sprayAreaVFX: {fileID: 0}
+  shootSound: {fileID: 0}
+  impactSound: {fileID: 0}
