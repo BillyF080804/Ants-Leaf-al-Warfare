@@ -83,12 +83,29 @@ public class Ant : MonoBehaviour {
 		}
 	}
 
+	bool canInteract;
+	Interactable interactable;
 	private void OnTriggerEnter(Collider other) {
-		AttachToSpline splineThing = GameObject.FindAnyObjectByType<AttachToSpline>();
-		splineThing.AttachObject();
+		if (other.GetComponent<Interactable>() != null) {
+			interactable = other.GetComponent<Interactable>();
+			canInteract = true;
+		}
 	}
 
+	private void OnTriggerExit(Collider other) {
+		if (other.GetComponent<Interactable>() != null) {
+			interactable = null;
+			canInteract = false;
+		}
+	}
 
+	private void OnInteract() {
+		if (canInteract) {
+			interactable.Interaction();
+		}
+	}
+
+	
 	public void ApplyEffects() {
 		if (effects.Count > 0) {
 			for (int i = 0; i < effects.Count; i++) {

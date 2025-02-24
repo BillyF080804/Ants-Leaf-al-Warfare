@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Splines;
-public class AttachToSpline : MonoBehaviour
+public class AttachToSpline : Interactable
 {
     public AntScript currentAnt;
     [SerializeField] private GameObject attachForSpline;
@@ -60,4 +60,8 @@ public class AttachToSpline : MonoBehaviour
         animatedSpline.Restart(false);
       
     }
+
+	public override void Interaction() {
+		base.Interaction();
+	}
 }

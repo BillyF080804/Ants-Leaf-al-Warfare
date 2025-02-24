@@ -12,7 +12,10 @@ public class QueenAntScript : Ant {
 
 	public void CheckAttackTurn() {
 		if (!usedAttack) {
-			attackLevel++;
+			if (attackLevel < 4) {
+				attackLevel++;
+			}
+			
 		}
 		usedAttack = false;
 	}
