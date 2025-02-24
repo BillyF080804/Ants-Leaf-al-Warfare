@@ -83,9 +83,10 @@ public class Ant : MonoBehaviour {
 		}
 	}
 
-	bool canInteract;
-	Interactable interactable;
+	public bool canInteract;
+	public Interactable interactable;
 	private void OnTriggerEnter(Collider other) {
+		Debug.Log("Entered");
 		if (other.GetComponent<Interactable>() != null) {
 			interactable = other.GetComponent<Interactable>();
 			canInteract = true;
@@ -93,17 +94,13 @@ public class Ant : MonoBehaviour {
 	}
 
 	private void OnTriggerExit(Collider other) {
+		Debug.Log("Exited");
 		if (other.GetComponent<Interactable>() != null) {
 			interactable = null;
 			canInteract = false;
 		}
 	}
 
-	private void OnInteract() {
-		if (canInteract) {
-			interactable.Interaction();
-		}
-	}
 
 	
 	public void ApplyEffects() {

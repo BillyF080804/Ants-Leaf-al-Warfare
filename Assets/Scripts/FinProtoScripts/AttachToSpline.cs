@@ -62,6 +62,7 @@ public class AttachToSpline : Interactable
     }
 
 	public override void Interaction() {
-		base.Interaction();
+        AttachObject();
+        Debug.Log("Interacted");
 	}
 }

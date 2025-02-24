@@ -1173,6 +1173,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1406606052}
   m_CullTransparentMesh: 1
+--- !u!1001 &1454922701
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4008994399400500792, guid: 1ebc8e8f8c31ffb4e9fa922d5125bda6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -30.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4008994399400500792, guid: 1ebc8e8f8c31ffb4e9fa922d5125bda6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4008994399400500792, guid: 1ebc8e8f8c31ffb4e9fa922d5125bda6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -8.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4008994399400500792, guid: 1ebc8e8f8c31ffb4e9fa922d5125bda6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.23564677
+      objectReference: {fileID: 0}
+    - target: {fileID: 4008994399400500792, guid: 1ebc8e8f8c31ffb4e9fa922d5125bda6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.13596942
+      objectReference: {fileID: 0}
+    - target: {fileID: 4008994399400500792, guid: 1ebc8e8f8c31ffb4e9fa922d5125bda6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.9616704
+      objectReference: {fileID: 0}
+    - target: {fileID: 4008994399400500792, guid: 1ebc8e8f8c31ffb4e9fa922d5125bda6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.034249615
+      objectReference: {fileID: 0}
+    - target: {fileID: 4008994399400500792, guid: 1ebc8e8f8c31ffb4e9fa922d5125bda6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 7.467
+      objectReference: {fileID: 0}
+    - target: {fileID: 4008994399400500792, guid: 1ebc8e8f8c31ffb4e9fa922d5125bda6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -206.597
+      objectReference: {fileID: 0}
+    - target: {fileID: 4008994399400500792, guid: 1ebc8e8f8c31ffb4e9fa922d5125bda6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 14.328
+      objectReference: {fileID: 0}
+    - target: {fileID: 4677408570239565145, guid: 1ebc8e8f8c31ffb4e9fa922d5125bda6, type: 3}
+      propertyPath: m_Name
+      value: Leaves
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1ebc8e8f8c31ffb4e9fa922d5125bda6, type: 3}
 --- !u!1 &1627281270
 GameObject:
   m_ObjectHideFlags: 0
@@ -1465,7 +1522,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: Garden Level
   numOfRounds: 5
-  maxTurnTime: 5
+  maxTurnTime: 25
   antPrefab: {fileID: 7419841320288824830, guid: d3f6b0f801636df4fa3ef21689ebf309, type: 3}
   queenPrefab: {fileID: 7419841320288824830, guid: f2ffe306220e9534ea2e2a710635ff87, type: 3}
   levelNameText: {fileID: 456278869}
@@ -1740,3 +1797,4 @@ SceneRoots:
   - {fileID: 2060376111}
   - {fileID: 625805645}
   - {fileID: 48997132}
+  - {fileID: 1454922701}

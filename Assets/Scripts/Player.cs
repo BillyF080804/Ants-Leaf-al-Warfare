@@ -210,4 +210,14 @@ public class Player : MonoBehaviour {
 			queenAnt.GetComponent<QueenAntScript>().SpecialAttack();
         }
     }
+
+
+    private void OnInteract()
+    {
+        if (turnManager.CurrentAntTurn.canInteract)
+        {
+            Debug.Log("ButtonPress");
+            turnManager.CurrentAntTurn.interactable.Interaction();
+        }
+    }
 }
