@@ -8,18 +8,26 @@ public class QueenAntScript : Ant {
 
 	[Header("Game Info")]
 	public int attackLevel = 1;
+	bool usedAttack = false;	
 
-	public void PassTurn() {
-		attackLevel++;
+	public void CheckAttackTurn() {
+		if (!usedAttack) {
+			attackLevel++;
+		}
+		usedAttack = false;
 	}
 
 	public void SpecialAttack() {
-		if(antInfo.queenType == AntSO.QueenType.Bee) {
-			antInfo.queenAttack.ActivateAttack(attackLevel, this, transform.position);
-		} else {
-			antInfo.queenAttack.ActivateAttack(attackLevel, this);
+		if(attackLevel != 0) {
+			if (antInfo.queenType == AntSO.QueenType.Bee) {
+				antInfo.queenAttack.ActivateAttack(attackLevel, this, transform.position);
+			} else {
+				antInfo.queenAttack.ActivateAttack(attackLevel, this);
+			}
+
+			attackLevel = 0;
+			usedAttack = true;
 		}
-		
-		attackLevel = 0;
+
 	}
 }
