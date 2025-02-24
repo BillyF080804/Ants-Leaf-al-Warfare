@@ -44,7 +44,6 @@ public class BeeScript : MonoBehaviour
 	}
 
 	private void OnTriggerEnter(Collider other) {
-		//Debug.Log("test");
 		if (other.gameObject.GetComponent<Ant>() == antToAttack) {
 			antToAttack.TakeDamage(damageToDeal);
 			Destroy(gameObject);

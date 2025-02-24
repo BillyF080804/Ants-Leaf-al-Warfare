@@ -198,6 +198,9 @@ public class TurnManager : MonoBehaviour {
     private IEnumerator EndTurnCoroutine() {
         StopCoroutine(turnTimerCoroutine);
         CurrentPlayerTurn.StopSkipTurn();
+
+        CurrentAntTurn.ApplyEffects();
+
         CheckIfAllAntsMoved();
         CurrentPlayerTurn = null;
         cameraSystem.SetCameraTarget(null);

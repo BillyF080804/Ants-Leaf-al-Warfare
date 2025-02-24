@@ -82,11 +82,10 @@ public class Ant : MonoBehaviour {
 	}
 
 	public void ApplyEffects() {
-        if (effects.Count> 0)
-        {
-            for(int i = 0; i < effects.Count; i++) {
-				effects[i].ApplyEffect();
+		if (effects.Count > 0) {
+			for (int i = 0; i < effects.Count; i++) {
+				effects[i].ApplyEffect(this);
 			}
-        }
-    }
+		}
+	}
 }
