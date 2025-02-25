@@ -18,12 +18,12 @@ public class EffectScript : MonoBehaviour {
 	public void ApplyEffect(Ant ant) {
 		switch (effectInfo.effectType) {
 			case EffectSO.EffectType.DamageOverTime: {
-				if (turnsLeft > 0) {
-					ant.TakeDamage(effectInfo.amountOfDamagePerTurn);
-					turnsLeft--;
-				} else if (effectInfo.multiTurn == false) {
+				if (effectInfo.multiTurn == false) {
 					ant.TakeDamage(effectInfo.amountOfDamagePerTurn);
 					RemoveEffect(ant);
+				} else if(turnsLeft > 0) {
+					ant.TakeDamage(effectInfo.amountOfDamagePerTurn);
+					turnsLeft--;
 				} else {
 					RemoveEffect(ant);
 				}
