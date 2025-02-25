@@ -52,7 +52,7 @@ public class AttachToSpline : Interactable
 
     private void OnTriggerExit(Collider other)
     {
-        if ((other.GetComponent<AntScript>() == currentAnt) && (currentAnt.transform.parent == attachForSpline))
+        if ((other.GetComponent<AntScript>() == currentAnt) && (currentAnt.transform.parent == null))
         {
             uiHandler.ToggleTrigger(exitTriggerName);
             currentAnt = null;
