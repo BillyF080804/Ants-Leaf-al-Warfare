@@ -117,40 +117,48 @@ public class WeaponManager : MonoBehaviour {
     }
 
     public void UseMeleeWeapon(BaseWeaponSO weaponInfo, Transform playerPosition) {
-        Collider[] colliders = Physics.OverlapSphere(aimPosition, 2.5f).Where(x => x.CompareTag("Player") && x.gameObject != turnManager.CurrentAntTurn.gameObject).ToArray();
+        if (canFireWeapon) {
+            canFireWeapon = false;
+            canAim = false;
+            Collider[] colliders = Physics.OverlapSphere(aimPosition, 2.5f).Where(x => x.CompareTag("Player") && x.gameObject != turnManager.CurrentAntTurn.gameObject).ToArray();
 
-        if (colliders.Length > 0) {
-            colliders.First().GetComponent<Ant>().TakeDamage(weaponInfo.baseDamage);
-            colliders.First().GetComponent<Rigidbody>().AddExplosionForce(weaponInfo.knockbackStrength, playerPosition.position, 0, weaponInfo.upwardsModifier, ForceMode.Impulse);
+            if (colliders.Length > 0) {
+                colliders.First().GetComponent<Ant>().TakeDamage(weaponInfo.baseDamage);
+                colliders.First().GetComponent<Rigidbody>().AddExplosionForce(weaponInfo.knockbackStrength, playerPosition.position, 0, weaponInfo.upwardsModifier, ForceMode.Impulse);
+            }
+
+            cameraSystem.CameraDelay(weaponInfo.cameraDelay);
+            cameraSystem.SetCameraTarget(playerPosition.position);
+            WaitTillWeaponsFinished();
         }
-
-        cameraSystem.CameraDelay(weaponInfo.cameraDelay);
-        cameraSystem.SetCameraTarget(playerPosition.position);
-        WaitTillWeaponsFinished();
     }
 
     public void UseSprayWeapon(BaseWeaponSO weaponInfo, Transform playerPosition) {
-        Vector3 spawnPos = new Vector3(playerPosition.position.x, playerPosition.position.y, playerPosition.position.z);
-        Vector3 scale = new Vector3(weaponInfo.sprayHeight, weaponInfo.sprayLength, weaponInfo.sprayLength);
+        if (canFireWeapon) {
+            canFireWeapon = false;
+            canAim = false;
+            Vector3 spawnPos = new Vector3(playerPosition.position.x, playerPosition.position.y, playerPosition.position.z);
+            Vector3 scale = new Vector3(weaponInfo.sprayHeight, weaponInfo.sprayLength, weaponInfo.sprayLength);
 
-        if (aimPosition.x < playerPosition.position.x) {
-            spawnPos.x -= weaponInfo.sprayLength * 0.5f;
+            if (aimPosition.x < playerPosition.position.x) {
+                spawnPos.x -= weaponInfo.sprayLength * 0.5f;
+            }
+            else {
+                spawnPos.x += weaponInfo.sprayLength * 0.5f;
+            }
+
+            GameObject sprayArea = Instantiate(weaponInfo.sprayAreaObject, spawnPos, Quaternion.identity);
+            sprayArea.transform.localScale = scale;
+            sprayArea.transform.localRotation = aimArrow.localRotation;
+
+            sprayArea.GetComponent<SprayAreaScript>().Setup(turnManager.CurrentAntTurn.GetComponent<Collider>(), weaponInfo, turnManager);
+
+            activeWeapons.Add(sprayArea);
+            WeaponsActive = true;
+            cameraSystem.CameraDelay(weaponInfo.cameraDelay);
+            cameraSystem.SetCameraTarget(playerPosition.position);
+            WaitTillWeaponsFinished();
         }
-        else {
-            spawnPos.x += weaponInfo.sprayLength * 0.5f;
-        }
-
-        GameObject sprayArea = Instantiate(weaponInfo.sprayAreaObject, spawnPos, Quaternion.identity);
-        sprayArea.transform.localScale = scale;
-        sprayArea.transform.localRotation = aimArrow.localRotation;
-
-        sprayArea.GetComponent<SprayAreaScript>().Setup(turnManager.CurrentAntTurn.GetComponent<Collider>(), weaponInfo, turnManager);
-
-        activeWeapons.Add(sprayArea);
-        WeaponsActive = true;
-        cameraSystem.CameraDelay(weaponInfo.cameraDelay);
-        cameraSystem.SetCameraTarget(playerPosition.position);
-        WaitTillWeaponsFinished();
     }
 
     public void WaitTillWeaponsFinished() {
