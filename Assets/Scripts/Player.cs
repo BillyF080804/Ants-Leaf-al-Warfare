@@ -16,6 +16,9 @@ public class Player : MonoBehaviour {
     private TurnManager turnManager;
     private WeaponManager weaponManager;
 
+    public bool ConfirmedQueenSpawn { get; private set; } = false;
+    private bool canSpawnQueen = false;
+
     private GameObject queenAnt;
     private List<GameObject> antList = new List<GameObject>();
     public List<BaseWeaponSO> CurrentWeapons { get; private set; } = new List<BaseWeaponSO>();
@@ -131,6 +134,14 @@ public class Player : MonoBehaviour {
         }
     }
 
+    //Function called when selecting where to spawn queen
+    private void OnSpawnQueenAnt() {
+        if (canSpawnQueen == true) {
+            canSpawnQueen = false;
+            ConfirmedQueenSpawn = true;
+        }
+    }
+
     private bool CheckActionIsValid() {
         if (turnManager != null && weaponManager != null && SceneManager.GetActiveScene().name.Contains("Game") && turnManager.CurrentPlayerTurn == this) {
             return true;
@@ -204,18 +215,21 @@ public class Player : MonoBehaviour {
         CurrentWeapons.Remove(weapon);
 
     }
+
+    public void AllowPlayerToSpawnQueen() {
+        canSpawnQueen = true;
+    }
+
     //Temporary Func/Keybind of Left Shift
     private void OnQueenAttack() {
-        if (turnManager.CurrentAntTurn == queenAnt.GetComponent<Ant>()) {
+        if (CheckActionIsValid()) {
 			queenAnt.GetComponent<QueenAntScript>().SpecialAttack();
         }
     }
 
 
-    private void OnInteract()
-    {
-        if (turnManager.CurrentAntTurn.canInteract)
-        {
+    private void OnInteract() {
+        if (CheckActionIsValid() && turnManager.CurrentAntTurn.canInteract) { 
             Debug.Log("ButtonPress");
             turnManager.CurrentAntTurn.interactable.Interaction();
         }

@@ -152,7 +152,11 @@ MonoBehaviour:
   ownedPlayer: 0
   moveVector: {x: 0, y: 0, z: 0}
   canJump: 1
-  health: 0
+  effects: []
+  hasLifeSteal: 0
+  lifeStealPercent: 0
+  canInteract: 0
+  interactable: {fileID: 0}
 --- !u!1001 &3020694900688971518
 PrefabInstance:
   m_ObjectHideFlags: 0

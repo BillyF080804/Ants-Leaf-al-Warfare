@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,8 +10,13 @@ using Random = UnityEngine.Random;
 public class TurnManager : MonoBehaviour {
     [Header("Settings")]
     [SerializeField] private string levelName;
-    [SerializeField] private int numOfRounds;
-    [SerializeField] private int maxTurnTime;
+    [SerializeField] private int numOfRounds = 3;
+    [SerializeField] private int maxTurnTime = 20;
+
+    [Header("Ant Spawning Settings")]
+    [SerializeField] private float mapMinX = -10.0f;
+    [SerializeField] private float mapMaxX = 10.0f;
+    [SerializeField] private float minDistanceBetweenAnts = 3.0f;
 
     [Header("Ant Prefabs")]
     [SerializeField] private GameObject antPrefab;
@@ -51,12 +57,21 @@ public class TurnManager : MonoBehaviour {
         cameraSystem = FindFirstObjectByType<CameraSystem>();
 
         currentTurnTime = maxTurnTime;
+        StartCoroutine(StartLevelCoroutine());
+    }
 
-        SpawnQueenAntHealthUI();
-        SpawnAnts();
-        SpawnQueen();
-
+    private IEnumerator StartLevelCoroutine() {
         StartCoroutine(LevelTextCoroutine());
+        yield return new WaitUntil(() => levelNameText.activeSelf == false);
+
+        StartCoroutine(SpawnQueenCoroutine());
+        yield return new WaitUntil(() => PlayerList.All(x => x.ConfirmedQueenSpawn == true));
+
+        SpawnAnts();
+        SpawnQueenAntHealthUI();
+        yield return new WaitUntil(() => QueenHealthUI.Count == PlayerList.Count);
+
+        StartCoroutine(StartGame());
     }
 
     private void SpawnAnts() {
@@ -70,10 +85,14 @@ public class TurnManager : MonoBehaviour {
         }
     }
 
-    private void SpawnQueen() {
+    private IEnumerator SpawnQueenCoroutine() {
         for (int i = 0; i < PlayerList.Count; i++) {
             GameObject newQueen = Instantiate(queenPrefab, GetAntSpawnPoint(), Quaternion.identity);
             PlayerList[i].AddQueen(newQueen);
+            PlayerList[i].AllowPlayerToSpawnQueen();
+            cameraSystem.SetCameraTarget(newQueen.transform);
+
+            yield return new WaitUntil(() => PlayerList[i].ConfirmedQueenSpawn == true);
         }
     }
 
@@ -130,7 +149,24 @@ public class TurnManager : MonoBehaviour {
     }
 
     private Vector3 GetAntSpawnPoint() {
-        return new Vector3(Random.Range(-10f, 10f), 1, 0);
+        bool validSpawn = false;
+        Vector3 spawnPos = Vector3.zero;
+
+        while (validSpawn == false) {
+            spawnPos = new Vector3(Random.Range(mapMinX, mapMaxX), 30.0f, 0);
+
+            if (Physics.Raycast(spawnPos, Vector3.down, out RaycastHit ray, 35.0f)) {
+                spawnPos = new Vector3(ray.point.x, ray.point.y + 1.0f, ray.point.z);
+            }
+
+            Collider[] colliders = Physics.OverlapSphere(spawnPos, minDistanceBetweenAnts).Where(x => x.CompareTag("Player")).ToArray();
+
+            if (colliders.Count() == 0) {
+                validSpawn = true;
+            }
+        }
+
+        return spawnPos;
     }
 
     private IEnumerator LevelTextCoroutine() {
@@ -138,9 +174,6 @@ public class TurnManager : MonoBehaviour {
 
         yield return new WaitForSeconds(1.0f);
         levelNameText.GetComponent<FadeScript>().FadeOutUI(2.0f, levelNameText);
-        yield return new WaitUntil(() => levelNameText.activeSelf == false);
-
-        StartCoroutine(StartGame());
     }
 
     private IEnumerator StartGame() {
@@ -254,6 +287,5 @@ public class TurnManager : MonoBehaviour {
 
     private void CheckIfQueenAttacked() {
 		CurrentAntTurn.GetComponent<QueenAntScript>().CheckAttackTurn();
-
 	}
 }

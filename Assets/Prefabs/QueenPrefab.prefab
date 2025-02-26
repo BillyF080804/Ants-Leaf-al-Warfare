@@ -154,4 +154,6 @@ MonoBehaviour:
   effects: []
   hasLifeSteal: 0
   lifeStealPercent: 0
+  canInteract: 0
+  interactable: {fileID: 0}
   attackLevel: 1
