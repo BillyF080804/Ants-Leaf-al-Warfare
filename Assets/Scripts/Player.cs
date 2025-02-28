@@ -19,8 +19,8 @@ public class Player : MonoBehaviour {
     public bool ConfirmedQueenSpawn { get; private set; } = false;
     private bool canSpawnQueen = false;
 
-    private GameObject queenAnt;
-    private List<GameObject> antList = new List<GameObject>();
+    public GameObject QueenAnt { get; private set; } = null;
+    public List<GameObject> AntList { get; private set; } = new List<GameObject>();
     public List<BaseWeaponSO> CurrentWeapons { get; private set; } = new List<BaseWeaponSO>();
 
     private void Awake() {
@@ -39,11 +39,19 @@ public class Player : MonoBehaviour {
     }
 
     public void AddNewAnt(GameObject newAnt) {
-        antList.Add(newAnt);
+        AntList.Add(newAnt);
+    }
+
+    public void RemoveAnt(GameObject ant) {
+        AntList.Remove(ant);
     }
 
     public void AddQueen(GameObject newQueen) {
-        queenAnt = newQueen;
+        QueenAnt = newQueen;
+    }
+
+    public void RemoveQueen() {
+        QueenAnt = null;
     }
 
     //Function called when the player presses the change color button
@@ -91,9 +99,9 @@ public class Player : MonoBehaviour {
         if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false && weaponManager.WeaponSelected == null) {
             if (turnManager.CurrentAntTurn != null) {
                 if(turnManager.CurrentAntTurn.GetComponent<QueenAntScript>() != null) {
-                    queenAnt.GetComponent<Ant>().OnMove(value);
+                    QueenAnt.GetComponent<Ant>().OnMove(value);
                 } else {
-					antList.Where(x => turnManager.CurrentAntTurn == x.GetComponent<Ant>()).First().GetComponent<Ant>().OnMove(value); //Move for normal ants
+					AntList.Where(x => turnManager.CurrentAntTurn == x.GetComponent<Ant>()).First().GetComponent<Ant>().OnMove(value); //Move for normal ants
 
 				}
 			} 
@@ -105,9 +113,9 @@ public class Player : MonoBehaviour {
         if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false && weaponManager.WeaponSelected == null) {
             if (turnManager.CurrentAntTurn != null) {
                 if (turnManager.CurrentAntTurn.GetComponent<QueenAntScript>() != null) {
-                    queenAnt.GetComponent<Ant>().OnJump();
+                    QueenAnt.GetComponent<Ant>().OnJump();
                 } else {
-                    antList.Where(x => turnManager.CurrentAntTurn == x.GetComponent<Ant>()).First().GetComponent<Ant>().OnJump(); //Jump for normal ants
+                    AntList.Where(x => turnManager.CurrentAntTurn == x.GetComponent<Ant>()).First().GetComponent<Ant>().OnJump(); //Jump for normal ants
                 }
             }
         }
@@ -175,8 +183,8 @@ public class Player : MonoBehaviour {
         }
 
         List<Ant> possibleAnts = new List<Ant>();
-        for (int i = 0; i < antList.Count; i++) {
-			Ant nextAnt = antList[i].GetComponent<Ant>();
+        for (int i = 0; i < AntList.Count; i++) {
+			Ant nextAnt = AntList[i].GetComponent<Ant>();
             if (nextAnt.hasHadTurn == false) {
                 possibleAnts.Add(nextAnt);
             }
@@ -186,7 +194,7 @@ public class Player : MonoBehaviour {
             int nextAntIndex = Random.Range(0, possibleAnts.Count);
             return possibleAnts[nextAntIndex];
         } else {
-            Ant testAnt = queenAnt.GetComponent<Ant>();
+            Ant testAnt = QueenAnt.GetComponent<Ant>();
 
 			if (testAnt.hasHadTurn) {
 				return null;
@@ -199,10 +207,10 @@ public class Player : MonoBehaviour {
     }
 
     public void ResetAnts() {
-        for (int i = 0; i < antList.Count; i++) {
-            antList[i].GetComponent<Ant>().hasHadTurn = false;
+        for (int i = 0; i < AntList.Count; i++) {
+            AntList[i].GetComponent<Ant>().hasHadTurn = false;
         }
-		queenAnt.GetComponent<Ant>().hasHadTurn = false;
+		QueenAnt.GetComponent<Ant>().hasHadTurn = false;
 	}
 
 
@@ -223,7 +231,7 @@ public class Player : MonoBehaviour {
     //Temporary Func/Keybind of Left Shift
     private void OnQueenAttack() {
         if (CheckActionIsValid()) {
-			queenAnt.GetComponent<QueenAntScript>().SpecialAttack();
+			QueenAnt.GetComponent<QueenAntScript>().SpecialAttack();
         }
     }
 

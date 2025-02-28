@@ -217,13 +217,12 @@ public class WeaponManager : MonoBehaviour {
     private void ResetAimPosition() {
         aimPosition = turnManager.CurrentAntTurn.transform.position;
         aimPosition.x += 2;
-        aimPosition.y += 2;
 
         aimArrow.gameObject.SetActive(true);
         canAim = true;
 
         Vector3 arrowPos = turnManager.CurrentAntTurn.transform.position;
-        arrowPos.y += 2;
+        arrowPos.x += 1;
         aimArrow.anchoredPosition = arrowPos;
         aimStrength = 1.0f;
 
@@ -235,6 +234,17 @@ public class WeaponManager : MonoBehaviour {
         Vector3 aimRotation = (Vector3)aimPosition - aimArrow.position;
         aimArrow.localRotation = Quaternion.LookRotation(Vector3.forward, new Vector2(-aimRotation.y, aimRotation.x));
         aimArrow.localEulerAngles = new Vector3(0, 0, aimArrow.localEulerAngles.z - 90);
+
+        if (aimPosition.x < turnManager.CurrentAntTurn.transform.position.x) {
+            Vector3 arrowPos = turnManager.CurrentAntTurn.transform.position;
+            arrowPos.x -= 1;
+            aimArrow.anchoredPosition = arrowPos;
+        }
+        else {
+            Vector3 arrowPos = turnManager.CurrentAntTurn.transform.position;
+            arrowPos.x += 1;
+            aimArrow.anchoredPosition = arrowPos;
+        }
     }
 
     private void UpdateArrowSize() {

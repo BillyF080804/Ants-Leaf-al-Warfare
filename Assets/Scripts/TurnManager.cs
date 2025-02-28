@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -18,15 +19,19 @@ public class TurnManager : MonoBehaviour {
     [SerializeField] private float mapMaxX = 10.0f;
     [SerializeField] private float minDistanceBetweenAnts = 3.0f;
 
+    [field: Header("Gamemode Settings")]
+    public int DamageToDealOnQueenDeath { get; private set; } = 10;
+
     [Header("Ant Prefabs")]
     [SerializeField] private GameObject antPrefab;
     [SerializeField] private GameObject queenPrefab;
 
     [Header("UI")]
-    [SerializeField] private GameObject levelNameText;
-    [SerializeField] private TMP_Text turnTimeText;
-    [SerializeField] private GameObject queenHealthUIPrefab;
     [SerializeField] private Canvas mainCanvas;
+    [SerializeField] private TMP_Text turnTimeText;
+    [SerializeField] private GameObject blackscreen;
+    [SerializeField] private GameObject levelNameText;
+    [SerializeField] private GameObject queenHealthUIPrefab;
     [SerializeField] private List<Sprite> queenAntHealthUIVariants;
 
     private int numOfAnts = 2;
@@ -34,8 +39,10 @@ public class TurnManager : MonoBehaviour {
     private bool currentTurnEnded = false;
     private bool turnTimerPaused = false;
     private bool allAntsMoved = false;
+    private bool gameOver = false;
 
     public int CurrentRound { get; private set; } = 0;
+    public string Gamemode { get; private set; } = string.Empty;
     public Player CurrentPlayerTurn { get; private set; } = null;
     public Ant CurrentAntTurn { get; private set; } = null; //Tracks which ant's turn it currently is
     public List<GameObject> QueenHealthUI { get; private set; } = new List<GameObject>();
@@ -52,6 +59,7 @@ public class TurnManager : MonoBehaviour {
     private void Start() {
         numOfAnts = LoadingData.numOfAnts;
         PlayerList = LoadingData.playerList;
+        Gamemode = LoadingData.gamemode;
         dropSystem = FindFirstObjectByType<WeaponDropSystem>();
         weaponManager = FindFirstObjectByType<WeaponManager>();
         cameraSystem = FindFirstObjectByType<CameraSystem>();
@@ -80,7 +88,7 @@ public class TurnManager : MonoBehaviour {
                 GameObject newAnt = Instantiate(antPrefab, GetAntSpawnPoint(), Quaternion.identity);
                 PlayerList[i].AddNewAnt(newAnt);
                 newAnt.GetComponent<Ant>().ownedPlayer = (Ant.PlayerList)i;
-                newAnt.GetComponent<MeshRenderer>().material.color = PlayerList[i].playerInfo.playerColor;
+                newAnt.GetComponentInChildren<MeshRenderer>().material.color = PlayerList[i].playerInfo.playerColor;
             }
         }
     }
@@ -88,6 +96,7 @@ public class TurnManager : MonoBehaviour {
     private IEnumerator SpawnQueenCoroutine() {
         for (int i = 0; i < PlayerList.Count; i++) {
             GameObject newQueen = Instantiate(queenPrefab, GetAntSpawnPoint(), Quaternion.identity);
+            newQueen.GetComponentInChildren<MeshRenderer>().material.color = PlayerList[i].playerInfo.playerColor;
             PlayerList[i].AddQueen(newQueen);
             PlayerList[i].AllowPlayerToSpawnQueen();
             cameraSystem.SetCameraTarget(newQueen.transform);
@@ -151,8 +160,10 @@ public class TurnManager : MonoBehaviour {
     private Vector3 GetAntSpawnPoint() {
         bool validSpawn = false;
         Vector3 spawnPos = Vector3.zero;
+        int spawnAttempts = 0;
 
         while (validSpawn == false) {
+            spawnAttempts++;
             spawnPos = new Vector3(Random.Range(mapMinX, mapMaxX), 30.0f, 0);
 
             if (Physics.Raycast(spawnPos, Vector3.down, out RaycastHit ray, 35.0f)) {
@@ -162,6 +173,10 @@ public class TurnManager : MonoBehaviour {
             Collider[] colliders = Physics.OverlapSphere(spawnPos, minDistanceBetweenAnts).Where(x => x.CompareTag("Player")).ToArray();
 
             if (colliders.Count() == 0) {
+                validSpawn = true;
+            }
+            else if (spawnAttempts == 10) {
+                Debug.LogError("ERROR: 10 Attempts to spawn ant. Ant Spawning Failed. Spawning at most recent attempt.\nThis can be avoided by either decreasing the distance between spawns or increasing map size.");
                 validSpawn = true;
             }
         }
@@ -232,6 +247,8 @@ public class TurnManager : MonoBehaviour {
         StopCoroutine(turnTimerCoroutine);
         CurrentPlayerTurn.StopSkipTurn();
 
+        yield return new WaitUntil(() => gameOver == false);
+
         CurrentAntTurn.ApplyEffects();
 
         if (CurrentAntTurn.GetComponent<QueenAntScript>() != null) {
@@ -261,6 +278,21 @@ public class TurnManager : MonoBehaviour {
 
         currentTurnEnded = true;
         currentTurnTime = maxTurnTime;
+    }
+
+    public void GameOver() {
+        StartCoroutine(GameOverCoroutine());
+    }
+
+    private IEnumerator GameOverCoroutine() {
+        Debug.Log("Game Over!");
+        gameOver = true;
+        blackscreen.SetActive(true);
+        blackscreen.GetComponent<CanvasGroup>().alpha = 0;
+        blackscreen.GetComponent<FadeScript>().FadeInUI(2.0f);
+
+        yield return new WaitUntil(() => blackscreen.GetComponent<CanvasGroup>().alpha == 1);
+        SceneManager.LoadScene("GameOverScene");
     }
 
     //Decides which ant to use

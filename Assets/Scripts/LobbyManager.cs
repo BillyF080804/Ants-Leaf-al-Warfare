@@ -17,11 +17,13 @@ public class LobbyManager : MonoBehaviour {
 
     [Header("Other UI")]
     [SerializeField] private GameObject errorText;
+    [SerializeField] private TMP_Dropdown gamemodeDropdown;
 
     [Header("Scene Info")]
     [SerializeField] private List<SceneAsset> availableScenes;
     [SerializeField] private TMP_Dropdown sceneDropdown;
 
+    private string gamemode;
     private string sceneToLoad;
     private int expectedPlayerCount = 0;
     private int numOfAnts = 2;
@@ -37,6 +39,7 @@ public class LobbyManager : MonoBehaviour {
 
         UpdatePlayerCount(0);
         UpdateSceneToLoad(0);
+        UpdateGameMode(0);
     }
 
     //Called when a player changes the number of players in the game
@@ -129,6 +132,10 @@ public class LobbyManager : MonoBehaviour {
         sceneToLoad = sceneDropdown.options[_sceneToLoad].text;
     }
 
+    public void UpdateGameMode(int _gamemode) {
+        gamemode = gamemodeDropdown.options[_gamemode].text;
+    }
+
     //Loads players into the game
     public void StartGame() {
         if (playerList.Count() != expectedPlayerCount) {
@@ -137,6 +144,7 @@ public class LobbyManager : MonoBehaviour {
         }
         else {
             errorText.SetActive(false);
+            LoadingData.gamemode = gamemode;
             LoadingData.sceneToLoad = sceneToLoad;
             LoadingData.playerList = playerList;
             LoadingData.numOfAnts = numOfAnts;
