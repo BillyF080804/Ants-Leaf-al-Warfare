@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -21,6 +22,10 @@ public class TurnManager : MonoBehaviour {
 
     [field: Header("Gamemode Settings")]
     public int DamageToDealOnQueenDeath { get; private set; } = 10;
+
+    [Header("Event Settings")]
+    [SerializeField] private UnityEvent startTurnEvent;
+    [SerializeField] private UnityEvent endTurnEvent;
 
     [Header("Ant Prefabs")]
     [SerializeField] private GameObject antPrefab;
@@ -40,11 +45,6 @@ public class TurnManager : MonoBehaviour {
     private bool turnTimerPaused = false;
     private bool allAntsMoved = false;
     private bool gameOver = false;
-
-    public delegate void TurnStart();
-    public delegate void TurnEnd();
-    public static event TurnStart OnTurnStart;
-    public static event TurnEnd OnTurnEnd;
 
     public int CurrentRound { get; private set; } = 0;
     public string Gamemode { get; private set; } = string.Empty;
@@ -207,10 +207,9 @@ public class TurnManager : MonoBehaviour {
                 CurrentPlayerTurn = player;
                 turnTimerCoroutine = StartCoroutine(TurnTimer());
                 cameraSystem.SetCameraTarget(CurrentAntTurn.transform);
-                OnTurnStart();
+                startTurnEvent.Invoke();
 
                 yield return new WaitUntil(() => currentTurnEnded == true);
-                OnTurnEnd();
             }
 
             if (i == CurrentRound && CurrentRound != numOfRounds) {
@@ -267,6 +266,7 @@ public class TurnManager : MonoBehaviour {
         CurrentPlayerTurn = null;
         cameraSystem.SetCameraTarget(null);
         weaponManager.EndTurn();
+        endTurnEvent.Invoke();
         yield return new WaitUntil(() => weaponManager.WeaponMenuOpen == false);
 
 
