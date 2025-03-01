@@ -5,14 +5,4 @@ using UnityEngine.InputSystem;
 
 public class AntScript : Ant {
 
-
-	[Header("Game Info")]
-	
-	private TurnManager turnManager;
-
-	private void Start() {
-		turnManager = FindFirstObjectByType<TurnManager>();
-	}
-
-
 }
