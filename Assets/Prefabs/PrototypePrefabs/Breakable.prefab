@@ -393,7 +393,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fixedObj: {fileID: 0}
   brokenObj: {fileID: 0}
+  isRbody: 0
   launchSpeed: {x: 0, y: 0, z: 0}
+  breakEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!54 &1090421682255026869
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -801,7 +805,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6101730619421734081}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 1, w: 0.000000104308114}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -26.018917, y: 8.5, z: 0}
   m_LocalScale: {x: 0.23102, y: 0.03233125, z: 0.23102}
   m_ConstrainProportionsScale: 0
@@ -809,7 +813,7 @@ Transform:
   - {fileID: 1515114315371037624}
   - {fileID: 1602352047607553850}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2168614447247503335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -824,7 +828,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fixedObj: {fileID: 2430282557138993755}
   brokenObj: {fileID: 6320338887728410211}
+  isRbody: 0
   launchSpeed: {x: -5, y: 2, z: 0}
+  breakEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!65 &6213057835883109218
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1272,7 +1280,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fixedObj: {fileID: 0}
   brokenObj: {fileID: 0}
+  isRbody: 0
   launchSpeed: {x: 0, y: 0, z: 0}
+  breakEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!54 &5255413603693794258
 Rigidbody:
   m_ObjectHideFlags: 0
