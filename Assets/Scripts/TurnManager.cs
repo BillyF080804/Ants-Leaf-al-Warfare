@@ -41,6 +41,11 @@ public class TurnManager : MonoBehaviour {
     private bool allAntsMoved = false;
     private bool gameOver = false;
 
+    public delegate void TurnStart();
+    public delegate void TurnEnd();
+    public static event TurnStart OnTurnStart;
+    public static event TurnEnd OnTurnEnd;
+
     public int CurrentRound { get; private set; } = 0;
     public string Gamemode { get; private set; } = string.Empty;
     public Player CurrentPlayerTurn { get; private set; } = null;
@@ -202,8 +207,10 @@ public class TurnManager : MonoBehaviour {
                 CurrentPlayerTurn = player;
                 turnTimerCoroutine = StartCoroutine(TurnTimer());
                 cameraSystem.SetCameraTarget(CurrentAntTurn.transform);
+                OnTurnStart();
 
                 yield return new WaitUntil(() => currentTurnEnded == true);
+                OnTurnEnd();
             }
 
             if (i == CurrentRound && CurrentRound != numOfRounds) {
