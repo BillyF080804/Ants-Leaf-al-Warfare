@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FinTestStuff/GardenTest01_Fin.unity
     guid: d697b34819d68774faa15aaaddab706a
+  - enabled: 1
+    path: Assets/Scenes/GameOverScene.unity
+    guid: 73cbc70c059819f4a96135cf9df357ed
   m_configObjects: {}

@@ -1,17 +1,25 @@
+using System.Linq;
 using UnityEngine;
 
 public class WeaponDrop : MonoBehaviour {
     private string dropType = string.Empty;
+    private int medkitHealth = 0;
     private BaseWeaponSO weapon;
+    private TurnManager turnManager;
+
+    private void Awake() {
+        turnManager = FindFirstObjectByType<TurnManager>();
+    }
 
     private void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.CompareTag("Player")) {
-            CollectDrop(collision.gameObject);
+            CollectDrop(collision.gameObject.GetComponent<Ant>());
         }
     }
 
-    public void SetDropMedkit() {
+    public void SetDropMedkit(int medkitHealthToHeal) {
         dropType = "Medkit";
+        medkitHealth = medkitHealthToHeal;
     }
 
     public void SetDropWeapon(BaseWeaponSO _weapon) {
@@ -19,14 +27,17 @@ public class WeaponDrop : MonoBehaviour {
         weapon = _weapon;
     }
 
-    private void CollectDrop(GameObject antObject) {
-        Debug.Log(antObject.name + " picked up " + dropType + weapon);
+    private void CollectDrop(Ant ant) {
+        int playerNum = int.Parse(ant.ownedPlayer.ToString().Last().ToString());
+        Player player = turnManager.PlayerList.Where(x => x.playerInfo.playerNum == playerNum).First();
 
         if (weapon != null) {
-            //Add weapon on Player
+            player.AddNewWeapon(weapon);
+            Debug.Log("Added weapon " + weapon);
         }
         else {
-            //Add health on ant
+            ant.HealDamage(medkitHealth);
+            Debug.Log("Healed ant for " + medkitHealth);
         }
 
         Destroy(gameObject);

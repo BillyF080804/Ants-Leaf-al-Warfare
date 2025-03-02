@@ -9,6 +9,9 @@ public class WeaponDropSystem : MonoBehaviour {
     [SerializeField] private WeaponDrop dropPrefab;
     [SerializeField] private List<DropInfo> dropInfo = new List<DropInfo>();
 
+    [Header("Medkit Heal")]
+    [SerializeField] private int medkitHealthToHeal;
+
     [Header("Drop Chances")]
     [SerializeField] private List<DropChances> dropChances = new List<DropChances>();
 
@@ -44,7 +47,7 @@ public class WeaponDropSystem : MonoBehaviour {
         bool dropIsMedkit = GetRandomDrop(medkitChance);
 
         if (dropIsMedkit == true) {
-            newDrop.SetDropMedkit();
+            newDrop.SetDropMedkit(medkitHealthToHeal);
         }
         else {
             newDrop.SetDropWeapon(GetRandomWeapon());

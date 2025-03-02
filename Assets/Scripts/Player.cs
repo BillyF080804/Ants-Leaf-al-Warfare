@@ -11,13 +11,17 @@ public class Player : MonoBehaviour {
     public PlayerInfo playerInfo = new PlayerInfo();
 
     private Coroutine skipTurnCoroutine;
+    private Coroutine moveQueenCoroutine;
+    private Coroutine moveQueenTimerCoroutine;
     private CameraSystem cameraSystem;
     private LobbyManager lobbyManager;
     private TurnManager turnManager;
     private WeaponManager weaponManager;
+    private QueenAntScript queenAntScript;
 
     public bool ConfirmedQueenSpawn { get; private set; } = false;
     private bool canSpawnQueen = false;
+    private bool queenInValidPos = true;
 
     public GameObject QueenAnt { get; private set; } = null;
     public List<GameObject> AntList { get; private set; } = new List<GameObject>();
@@ -34,7 +38,7 @@ public class Player : MonoBehaviour {
         if (nextScene.name.Contains("Game")) {
             turnManager = FindFirstObjectByType<TurnManager>();
             weaponManager = FindFirstObjectByType<WeaponManager>();
-            cameraSystem = FindFirstObjectByType<CameraSystem>();
+            cameraSystem = FindFirstObjectByType<CameraSystem>();            
         }
     }
 
@@ -48,6 +52,7 @@ public class Player : MonoBehaviour {
 
     public void AddQueen(GameObject newQueen) {
         QueenAnt = newQueen;
+        queenAntScript = QueenAnt.GetComponent<QueenAntScript>();
     }
 
     public void RemoveQueen() {
@@ -98,12 +103,7 @@ public class Player : MonoBehaviour {
     private void OnMove(InputValue value) {
         if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false && weaponManager.WeaponSelected == null) {
             if (turnManager.CurrentAntTurn != null) {
-                if(turnManager.CurrentAntTurn.GetComponent<QueenAntScript>() != null) {
-                    QueenAnt.GetComponent<Ant>().OnMove(value);
-                } else {
-					AntList.Where(x => turnManager.CurrentAntTurn == x.GetComponent<Ant>()).First().GetComponent<Ant>().OnMove(value); //Move for normal ants
-
-				}
+                turnManager.CurrentAntTurn.OnMove(value);
 			} 
         }
     }
@@ -112,11 +112,7 @@ public class Player : MonoBehaviour {
     private void OnJump() {
         if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false && weaponManager.WeaponSelected == null) {
             if (turnManager.CurrentAntTurn != null) {
-                if (turnManager.CurrentAntTurn.GetComponent<QueenAntScript>() != null) {
-                    QueenAnt.GetComponent<Ant>().OnJump();
-                } else {
-                    AntList.Where(x => turnManager.CurrentAntTurn == x.GetComponent<Ant>()).First().GetComponent<Ant>().OnJump(); //Jump for normal ants
-                }
+                turnManager.CurrentAntTurn.OnJump();
             }
         }
     }
@@ -144,9 +140,32 @@ public class Player : MonoBehaviour {
 
     //Function called when selecting where to spawn queen
     private void OnSpawnQueenAnt() {
-        if (canSpawnQueen == true) {
+        if (canSpawnQueen == true && queenInValidPos == true) {
             canSpawnQueen = false;
             ConfirmedQueenSpawn = true;
+            queenAntScript.SetQueenToTeamColour(playerInfo.playerColor);
+
+            if (moveQueenCoroutine != null) {
+                StopCoroutine(moveQueenCoroutine);
+                moveQueenCoroutine = null;
+            }
+
+            if (moveQueenTimerCoroutine != null) { 
+                StopCoroutine(moveQueenTimerCoroutine);
+                moveQueenTimerCoroutine = null;
+            }
+        }
+    }
+
+    private void OnMoveQueen(InputValue value) {
+        if (canSpawnQueen == true) {
+            if (moveQueenCoroutine == null) {
+                moveQueenCoroutine = StartCoroutine(MoveQueenCoroutine(value.Get<float>()));
+            }
+            else if (moveQueenCoroutine != null) {
+                StopCoroutine(moveQueenCoroutine);
+                moveQueenCoroutine = null;
+            }
         }
     }
 
@@ -175,6 +194,58 @@ public class Player : MonoBehaviour {
 
         cameraSystem.ZoomCameraOut(0.5f);
         turnManager.EndTurn();
+    }
+
+    private IEnumerator MoveQueenCoroutine(float value) {
+        while (true) {
+            if (value < 0.0f) {
+                value = -1;
+            }
+            else if (value > 0.0f) {
+                value = 1;
+            }
+
+            float xPos = QueenAnt.transform.position.x + value * 2.5f * Time.deltaTime;
+            xPos = Mathf.Clamp(xPos, turnManager.MapMinX, turnManager.MapMaxX);
+            Vector3 targetPos = new Vector3(xPos, 30.0f, 0);
+
+            if (Physics.Raycast(targetPos, Vector3.down, out RaycastHit ray, 35.0f, ~queenAntScript.GetQueenLayerMask())) {
+                QueenAnt.transform.position = new Vector3(ray.point.x, ray.point.y + 0.5f, ray.point.z);
+            }
+
+            CheckQueenInValidPos();
+
+            yield return null;
+        }
+    }
+
+    private void CheckQueenInValidPos() {
+        if (Physics.OverlapSphere(QueenAnt.transform.position, turnManager.MinDistanceBetweenQueens).Where(x => x.CompareTag("Player")).Count() > 1) {
+            queenInValidPos = false;
+            queenAntScript.SetQueenInvalidPos();
+        }
+        else {
+            queenInValidPos = true;
+            queenAntScript.SetQueenValidPos();
+        }
+    }
+
+    private IEnumerator MoveQueenTimerCoroutine() {
+        float timeRemaining = 20.0f;
+
+        while (timeRemaining > 0) {
+            timeRemaining -= Time.deltaTime;
+            turnManager.SetTurnTimerText(timeRemaining);
+
+            yield return null;
+        }
+
+        while (queenInValidPos == false) {
+            QueenAnt.transform.position = turnManager.GetAntSpawnPoint(turnManager.MinDistanceBetweenQueens, true);
+            CheckQueenInValidPos();
+        }
+
+        OnSpawnQueenAnt();
     }
 
     public Ant GetAnt(Ant currentAnt) {
@@ -226,12 +297,14 @@ public class Player : MonoBehaviour {
 
     public void AllowPlayerToSpawnQueen() {
         canSpawnQueen = true;
+        queenAntScript.SetQueenValidPos();
+        moveQueenTimerCoroutine = StartCoroutine(MoveQueenTimerCoroutine());
     }
 
     //Temporary Func/Keybind of Left Shift
     private void OnQueenAttack() {
         if (CheckActionIsValid()) {
-			QueenAnt.GetComponent<QueenAntScript>().SpecialAttack();
+			queenAntScript.SpecialAttack();
         }
     }
 

@@ -1,22 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class QueenAntScript : Ant {
 
-	[Header("Game Info")]
+	[Header("Queen Info")]
+	[SerializeField] private LayerMask queenLayerMask;
 	public int attackLevel = 1;
-	bool usedAttack = false;	
+	bool usedAttack = false;
+
+	[Header("Cosmetics")]
+	[SerializeField] private MeshRenderer antRenderer;
 
 	public void CheckAttackTurn() {
 		if (!usedAttack) {
 			if (attackLevel < 4) {
 				attackLevel++;
-			}
-			
+			}			
 		}
+
 		usedAttack = false;
 	}
 
@@ -31,6 +33,21 @@ public class QueenAntScript : Ant {
 			attackLevel = 0;
 			usedAttack = true;
 		}
+	}
 
+	public void SetQueenInvalidPos() {
+		antRenderer.material.color = new Color(1, 0, 0);
+	}
+
+	public void SetQueenValidPos() {
+		antRenderer.material.color = new Color(0, 1, 0);
+	}
+
+	public void SetQueenToTeamColour(Color teamColor) {
+		antRenderer.material.color = teamColor;
+	}
+
+	public LayerMask GetQueenLayerMask() {
+		return queenLayerMask;
 	}
 }

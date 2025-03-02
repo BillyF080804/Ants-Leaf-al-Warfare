@@ -15,10 +15,11 @@ public class TurnManager : MonoBehaviour {
     [SerializeField] private int numOfRounds = 3;
     [SerializeField] private int maxTurnTime = 20;
 
-    [Header("Ant Spawning Settings")]
-    [SerializeField] private float mapMinX = -10.0f;
-    [SerializeField] private float mapMaxX = 10.0f;
+    [field : Header("Ant Spawning Settings")]
+    public float MapMinX { get; private set; } = -10.0f;
+    public float MapMaxX { get; private set; } = 10.0f;
     [SerializeField] private float minDistanceBetweenAnts = 3.0f;
+    public float MinDistanceBetweenQueens { get; private set; } = 5.0f;
 
     [field: Header("Gamemode Settings")]
     public int DamageToDealOnQueenDeath { get; private set; } = 10;
@@ -90,7 +91,7 @@ public class TurnManager : MonoBehaviour {
     private void SpawnAnts() {
         for (int i = 0; i < PlayerList.Count; i++) {
             for (int j = 0; j < numOfAnts; j++) {
-                GameObject newAnt = Instantiate(antPrefab, GetAntSpawnPoint(), Quaternion.identity);
+                GameObject newAnt = Instantiate(antPrefab, GetAntSpawnPoint(minDistanceBetweenAnts, false), Quaternion.identity);
                 PlayerList[i].AddNewAnt(newAnt);
                 newAnt.GetComponent<Ant>().ownedPlayer = (Ant.PlayerList)i;
                 newAnt.GetComponentInChildren<MeshRenderer>().material.color = PlayerList[i].playerInfo.playerColor;
@@ -100,7 +101,7 @@ public class TurnManager : MonoBehaviour {
 
     private IEnumerator SpawnQueenCoroutine() {
         for (int i = 0; i < PlayerList.Count; i++) {
-            GameObject newQueen = Instantiate(queenPrefab, GetAntSpawnPoint(), Quaternion.identity);
+            GameObject newQueen = Instantiate(queenPrefab, GetAntSpawnPoint(MinDistanceBetweenQueens, false), Quaternion.identity);
             newQueen.GetComponentInChildren<MeshRenderer>().material.color = PlayerList[i].playerInfo.playerColor;
             PlayerList[i].AddQueen(newQueen);
             PlayerList[i].AllowPlayerToSpawnQueen();
@@ -162,14 +163,14 @@ public class TurnManager : MonoBehaviour {
         }
     }
 
-    private Vector3 GetAntSpawnPoint() {
+    public Vector3 GetAntSpawnPoint(float minDistance, bool spawningQueen) {
         bool validSpawn = false;
         Vector3 spawnPos = Vector3.zero;
         int spawnAttempts = 0;
 
         while (validSpawn == false) {
             spawnAttempts++;
-            spawnPos = new Vector3(Random.Range(mapMinX, mapMaxX), 30.0f, 0);
+            spawnPos = new Vector3(Random.Range(MapMinX, MapMaxX), 30.0f, 0);
 
             if (Physics.Raycast(spawnPos, Vector3.down, out RaycastHit ray, 35.0f)) {
                 spawnPos = new Vector3(ray.point.x, ray.point.y + 1.0f, ray.point.z);
@@ -177,7 +178,10 @@ public class TurnManager : MonoBehaviour {
 
             Collider[] colliders = Physics.OverlapSphere(spawnPos, minDistanceBetweenAnts).Where(x => x.CompareTag("Player")).ToArray();
 
-            if (colliders.Count() == 0) {
+            if (colliders.Count() == 0 && spawningQueen == false) {
+                validSpawn = true;
+            }
+            else if (colliders.Count() == 1 && spawningQueen == true) {
                 validSpawn = true;
             }
             else if (spawnAttempts == 10) {
@@ -224,7 +228,7 @@ public class TurnManager : MonoBehaviour {
         while (currentTurnTime > 0) {
             if (turnTimerPaused == false) {
                 currentTurnTime -= Time.deltaTime;
-                turnTimeText.text = "Time: " + TimeSpan.FromSeconds(currentTurnTime).ToString("ss");
+                SetTurnTimerText(currentTurnTime);
             }
 
             yield return null;
@@ -233,6 +237,10 @@ public class TurnManager : MonoBehaviour {
         weaponManager.WaitTillWeaponsFinished();
         yield return new WaitUntil(() => weaponManager.WeaponsActive == false && cameraSystem.CameraDelayActive == false);
         EndTurn();
+    }
+
+    public void SetTurnTimerText(float time) {
+        turnTimeText.text = "Time: " + TimeSpan.FromSeconds(time).ToString("ss");
     }
 
     public void PauseTurnTimer(float pauseDuration) {

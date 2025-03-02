@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7908919082352599518}
   - component: {fileID: 8509885123723060513}
   - component: {fileID: 4204708237448870105}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: WorldSpaceCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 1604817552618139500}
   - component: {fileID: 605342116545493705}
   - component: {fileID: 2095878908496094402}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -188,7 +188,7 @@ GameObject:
   - component: {fileID: 7978356543768747344}
   - component: {fileID: 8579123359930837577}
   - component: {fileID: 5221395507707846287}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: QueenObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -272,7 +272,7 @@ GameObject:
   - component: {fileID: 8667107319572798907}
   - component: {fileID: 464993771418036186}
   - component: {fileID: -1284222867875726491}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: QueenPrefab
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -366,7 +366,11 @@ MonoBehaviour:
   lifeStealPercent: 0
   canInteract: 0
   interactable: {fileID: 0}
+  queenLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
   attackLevel: 1
+  antRenderer: {fileID: 5221395507707846287}
 --- !u!1 &8219434639454724815
 GameObject:
   m_ObjectHideFlags: 0
@@ -377,7 +381,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8787406342795495125}
   - component: {fileID: 3448678944236052244}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: HealthSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -424,7 +428,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -444,7 +448,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 4069593079378951983}
   m_HandleRect: {fileID: 0}
@@ -465,7 +469,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5759925603402904154}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -503,7 +507,7 @@ GameObject:
   - component: {fileID: 4069593079378951983}
   - component: {fileID: 5031425326400500502}
   - component: {fileID: 6258065418516720868}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
