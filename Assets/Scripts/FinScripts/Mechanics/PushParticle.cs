@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class PushParticle : MonoBehaviour
 {
-    [SerializeField] int damage;
-    [SerializeField] int pushStrength;
+    [SerializeField] private int damage;
+    [SerializeField] private int pushStrength;
+    [SerializeField] private int radius;
     private AntScript ant;
 
 
@@ -18,6 +19,7 @@ public class PushParticle : MonoBehaviour
             Rigidbody antRb = ant.GetComponent<Rigidbody>();
             if( antRb != null )
             {
+                antRb.AddExplosionForce(pushStrength, contactPos, radius);
                 antRb.velocity = Vector3.Scale(new Vector3(contactPos.x, contactPos.y, contactPos.z), new Vector3(pushStrength, pushStrength, pushStrength).normalized);
             }
             ant.TakeDamage(damage);
