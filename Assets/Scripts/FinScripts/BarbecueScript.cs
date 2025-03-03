@@ -8,15 +8,21 @@ public class BarbecueScript : MonoBehaviour
     private bool isFallen = false;
     private bool onFire = false;
     private DangerAdder adder;
-    [Header("Interaction Variables")]
+    [Header("Numbers")]
     [SerializeField] float igniteChance;
     [SerializeField] float damage;
+    [SerializeField] Vector3 knockBackMin;
+    [SerializeField] Vector3 knockBackMax;
+
+    [Header("Game Objects")]
     [SerializeField] GameObject fireArea;
     [SerializeField] GameObject igniteFx;
     [SerializeField] GameObject extinguishFx;
+
+    [Header("Transforms")]
+    [SerializeField] Transform fxSpawnPoint;
     [SerializeField] Transform dangerSpot;
-    [SerializeField] Vector3 knockBackMin;
-    [SerializeField] Vector3 knockBackMax;
+
 
     private void Awake()
     {
@@ -67,19 +73,22 @@ public class BarbecueScript : MonoBehaviour
         fireArea.SetActive(true);
         if (igniteFx != null)
         {
-            GameObject ignition = Instantiate(igniteFx);
-            Destroy(ignition, 2f * Time.deltaTime);
+            Debug.Log("On fire");
+            GameObject ignition = Instantiate(igniteFx, fxSpawnPoint);
+            Debug.Log(ignition.name);
+            Destroy(ignition, 2f);
         }
     }
 
     private void Extinguish()
     {
+        Debug.Log("Extinguished");
         onFire = false;
         fireArea.SetActive(false);
         if(extinguishFx != null)
         {
-            GameObject extinguish = Instantiate(extinguishFx);
-            Destroy(extinguish, 2f * Time.deltaTime);
+            GameObject extinguish = Instantiate(extinguishFx, fxSpawnPoint);
+            Destroy(extinguish, 2f);
         }
     }
 }
