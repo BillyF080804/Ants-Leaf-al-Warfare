@@ -30,10 +30,8 @@ public class EffectSO : ScriptableObject {
 	[HideInInspector] public int amountOfDamagePerTurn;
 
 	//stat drop settings
-	//[HideInInspector] 
-	public StatDropType statDropType;
-
-	public float percentToDropBy;
+	[HideInInspector] public StatDropType statDropType;
+	[HideInInspector] public float percentToDropBy;
 
 }
 
@@ -53,8 +51,12 @@ public class EffectSOEditor : Editor {
 			baseEffect.amountOfDamagePerTurn = EditorGUILayout.IntField("Damage per turn", baseEffect.amountOfDamagePerTurn);
 		}
 
-		if(baseEffect.effectType == EffectSO.EffectType.StatDrop) {
-			//baseEffect.statDropType = EditorGUILayout.ObjectField("Type of Stat Drop", baseEffect.statDropType, typeof(EffectSO.StatDropType), false);
+		if (baseEffect.effectType == EffectSO.EffectType.StatDrop) {
+			EditorGUILayout.Space(15);
+			EditorGUILayout.LabelField("Stat Drop Settings", EditorStyles.boldLabel);
+			baseEffect.statDropType = (EffectSO.StatDropType)EditorGUILayout.EnumPopup("Stat Drop Type", baseEffect.statDropType);
+			baseEffect.percentToDropBy = EditorGUILayout.FloatField("Percent To Drop By", baseEffect.percentToDropBy);
+
 		}
 	}
 }
