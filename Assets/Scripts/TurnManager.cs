@@ -220,6 +220,8 @@ public class TurnManager : MonoBehaviour {
                 i--;
             }
         }
+
+        GameOver();
     }
 
     private IEnumerator TurnTimer() {
