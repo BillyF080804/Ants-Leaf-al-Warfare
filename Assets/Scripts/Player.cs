@@ -22,6 +22,7 @@ public class Player : MonoBehaviour {
     public bool ConfirmedQueenSpawn { get; private set; } = false;
     private bool canSpawnQueen = false;
     private bool queenInValidPos = true;
+    private bool skippingTurn = false;
 
     public GameObject QueenAnt { get; private set; } = null;
     public List<GameObject> AntList { get; private set; } = new List<GameObject>();
@@ -69,18 +70,26 @@ public class Player : MonoBehaviour {
     //Function called when the player presses the skip turn button
     private void OnSkipTurn() {
         if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false) {
-            if (skipTurnCoroutine == null) {
-                skipTurnCoroutine = StartCoroutine(SkipTurnCoroutine(2.0f));
-                cameraSystem.ZoomCameraIn(2.0f);
-            }
-            else if (skipTurnCoroutine != null) {
-                if (cameraSystem.IsZoomingOut == false) {
-                    cameraSystem.ZoomCameraOut(0.5f);
-                }
+            skippingTurn = !skippingTurn;
 
-                StopCoroutine(skipTurnCoroutine);
-                skipTurnCoroutine = null;
+            if (skippingTurn) { 
+                SkipTurn();
             }
+        }
+    }
+
+    private void SkipTurn() {
+        if (skipTurnCoroutine == null) {
+            skipTurnCoroutine = StartCoroutine(SkipTurnCoroutine(2.0f));
+            cameraSystem.ZoomCameraIn(2.0f);
+        }
+        else if (skipTurnCoroutine != null) {
+            if (cameraSystem.IsZoomingOut == false) {
+                cameraSystem.ZoomCameraOut(0.5f);
+            }
+
+            StopCoroutine(skipTurnCoroutine);
+            skipTurnCoroutine = null;
         }
     }
 
@@ -143,6 +152,8 @@ public class Player : MonoBehaviour {
         if (canSpawnQueen == true && queenInValidPos == true) {
             canSpawnQueen = false;
             ConfirmedQueenSpawn = true;
+            QueenAnt.GetComponent<Collider>().enabled = false;
+            QueenAnt.GetComponent<Rigidbody>().useGravity = false;
             queenAntScript.SetQueenToTeamColour(playerInfo.playerColor);
 
             if (moveQueenCoroutine != null) {
@@ -187,13 +198,16 @@ public class Player : MonoBehaviour {
     private IEnumerator SkipTurnCoroutine(float skipDuration) {
         float timeElapsed = 0.0f;
 
-        while (timeElapsed < skipDuration) {
+        while (timeElapsed < skipDuration && skippingTurn) {
             timeElapsed += Time.deltaTime;
             yield return null;
         }
 
         cameraSystem.ZoomCameraOut(0.5f);
-        turnManager.EndTurn();
+
+        if (skippingTurn) {
+            turnManager.EndTurn();
+        }
     }
 
     private IEnumerator MoveQueenCoroutine(float value) {
@@ -297,8 +311,24 @@ public class Player : MonoBehaviour {
 
     public void AllowPlayerToSpawnQueen() {
         canSpawnQueen = true;
+        QueenAnt.GetComponent<Collider>().enabled = false;
+        QueenAnt.GetComponent<Rigidbody>().useGravity = false;
         queenAntScript.SetQueenValidPos();
         moveQueenTimerCoroutine = StartCoroutine(MoveQueenTimerCoroutine());
+    }
+
+    public int GetAllHealth() {
+        int healthTotal = 0;
+
+        for (int i = 0; i < AntList.Count; i++) {
+            healthTotal += AntList[i].GetComponent<Ant>().GetHealth();
+        }
+
+        if (QueenAnt != null) {
+            healthTotal += QueenAnt.GetComponent<Ant>().GetHealth();
+        }
+
+        return healthTotal;
     }
 
     //Temporary Func/Keybind of Left Shift
