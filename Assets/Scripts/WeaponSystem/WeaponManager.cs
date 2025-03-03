@@ -38,7 +38,6 @@ public class WeaponManager : MonoBehaviour {
 
     private CameraSystem cameraSystem;
     private TurnManager turnManager;
-    private EventSystem eventSystem;
     private List<GameObject> activeWeapons = new List<GameObject>();
     private List<BaseWeaponSO> allWeapons = new List<BaseWeaponSO>();
     private List<WeaponMenuIconScript> weaponIcons = new List<WeaponMenuIconScript>();
@@ -46,7 +45,6 @@ public class WeaponManager : MonoBehaviour {
     private void Start() { 
         cameraSystem = FindFirstObjectByType<CameraSystem>();
         turnManager = FindFirstObjectByType<TurnManager>();
-        eventSystem = FindFirstObjectByType<EventSystem>();
         allWeapons = Resources.LoadAll<BaseWeaponSO>("").ToList();
         aimArrowDefaultSize = aimArrow.localScale.x;
 
@@ -314,7 +312,7 @@ public class WeaponManager : MonoBehaviour {
 
         CheckAllIcons();
         weaponMenuUI.SetActive(true);
-        eventSystem.SetSelectedGameObject(weaponIcons.Where(x => x.Interactable == true).First().GetButton());
+        turnManager.CurrentPlayerTurn.GetEventSystem().SetSelectedGameObject(weaponIcons.Where(x => x.Interactable == true).First().GetButton());
         weaponMenuUI.GetComponent<MoveUI>().StartMoveUI(LerpType.OutBack, weaponMenuUI, new Vector2(-750, 50), new Vector2(50, 50), 1.0f);
 
         yield return new WaitUntil(() => weaponMenuUI.GetComponent<RectTransform>().anchoredPosition == new Vector2(50, 50));

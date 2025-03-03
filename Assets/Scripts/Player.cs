@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
@@ -152,8 +153,8 @@ public class Player : MonoBehaviour {
         if (canSpawnQueen == true && queenInValidPos == true) {
             canSpawnQueen = false;
             ConfirmedQueenSpawn = true;
-            QueenAnt.GetComponent<Collider>().enabled = false;
-            QueenAnt.GetComponent<Rigidbody>().useGravity = false;
+            QueenAnt.GetComponent<Collider>().enabled = true;
+            QueenAnt.GetComponent<Rigidbody>().useGravity = true;
             queenAntScript.SetQueenToTeamColour(playerInfo.playerColor);
 
             if (moveQueenCoroutine != null) {
@@ -331,6 +332,10 @@ public class Player : MonoBehaviour {
         return healthTotal;
     }
 
+    public EventSystem GetEventSystem() {
+        return GetComponent<EventSystem>();
+    }
+
     //Temporary Func/Keybind of Left Shift
     private void OnQueenAttack() {
         if (CheckActionIsValid()) {
@@ -348,7 +353,7 @@ public class Player : MonoBehaviour {
 
 
 
-    [Header("Debug Thing: Please ignore")]
+    [Header("Debug Thing: Please ignore. no")]
     [SerializeField]
     EffectScript EffectScript;
     private void OnEffectTest() {
