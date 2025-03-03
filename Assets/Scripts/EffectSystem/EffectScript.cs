@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EffectScript : MonoBehaviour {
 	[SerializeField]
-	EffectSO effectInfo;
+	public EffectSO effectInfo;
 
 	int turnsLeft;
 	int effectLevel;
@@ -18,35 +18,21 @@ public class EffectScript : MonoBehaviour {
 	public void ApplyEffect(Ant ant) {
 		switch (effectInfo.effectType) {
 			case EffectSO.EffectType.DamageOverTime: {
-				if (effectInfo.multiTurn == false) {
-					ant.TakeDamage(effectInfo.amountOfDamagePerTurn);
-					RemoveEffect(ant);
-				} else if(turnsLeft > 0) {
-					ant.TakeDamage(effectInfo.amountOfDamagePerTurn);
-					turnsLeft--;
-				} else {
-					RemoveEffect(ant);
-				}
-
+				DamageOverTimeEffect(ant);
 				break;
 			}
 			case EffectSO.EffectType.StatDrop: {
+				StatDropEffect(ant);
 				break;
 			}
 			case EffectSO.EffectType.LifeSteal: {
-				if (ant.hasLifeSteal) {
-					ant.hasLifeSteal = !ant.hasLifeSteal;
-					ant.lifeStealPercent = 0;
-					RemoveEffect(ant);
-				}
-				ant.hasLifeSteal = true;
-				ant.lifeStealPercent = lifeStealPercent;
-				break; 
+				LifestealEffect(ant);
+				break;
 			}
 		}
 	}
 
-	public void AddEffect(Ant ant) { 
+	public void AddEffect(Ant ant) {
 		ant.effects.Add(this);
 	}
 
@@ -58,5 +44,43 @@ public class EffectScript : MonoBehaviour {
 
 	public void RemoveEffect(Ant ant) {
 		ant.effects.Remove(this);
+	}
+
+
+	void DamageOverTimeEffect(Ant ant) {
+		if (effectInfo.multiTurn == false) {
+			ant.TakeDamage(effectInfo.amountOfDamagePerTurn);
+			RemoveEffect(ant);
+		} else if (turnsLeft > 0) {
+			ant.TakeDamage(effectInfo.amountOfDamagePerTurn);
+			turnsLeft--;
+		} else {
+			RemoveEffect(ant);
+		}
+	}
+
+	void StatDropEffect(Ant ant) {
+		switch (effectInfo.statDropType) {
+			case EffectSO.StatDropType.Speed: {
+				ant.hasStatDrop = true;
+				ant.statDrops.Add(EffectSO.StatDropType.Speed);
+				break;
+			}
+			case EffectSO.StatDropType.Defense: {
+				ant.hasStatDrop = true;
+				ant.statDrops.Add(EffectSO.StatDropType.Defense);
+				break;
+			}
+		}
+	}
+
+	void LifestealEffect(Ant ant) {
+		if (ant.hasLifeSteal) {
+			ant.hasLifeSteal = !ant.hasLifeSteal;
+			ant.lifeStealPercent = 0;
+			RemoveEffect(ant);
+		}
+		ant.hasLifeSteal = true;
+		ant.lifeStealPercent = lifeStealPercent;
 	}
 }

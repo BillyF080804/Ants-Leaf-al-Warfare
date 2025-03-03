@@ -112,6 +112,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "EffectTest",
+                    "type": "Button",
+                    "id": "f2469fab-e379-478a-aeaa-e4212a5f919e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -598,6 +607,17 @@
                     "action": "MoveQueen",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "1f1b6afe-6d75-43db-b064-f4accb1e5f12",
+                    "path": "<Keyboard>/numpad9",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EffectTest",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },

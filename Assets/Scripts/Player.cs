@@ -315,4 +315,19 @@ public class Player : MonoBehaviour {
             turnManager.CurrentAntTurn.interactable.Interaction();
         }
     }
+
+
+
+    [Header("Debug Thing: Please ignore")]
+    [SerializeField]
+    EffectScript EffectScript;
+    private void OnEffectTest() {
+        for(int i = 0; i < AntList.Count; i++) {
+            EffectScript.AddEffect(AntList[i].GetComponent<Ant>());
+            EffectScript.ApplyEffect(AntList[i].GetComponent<Ant>());
+
+        }
+		EffectScript.AddEffect(queenAntScript);
+		EffectScript.ApplyEffect(queenAntScript);
+	}
 }

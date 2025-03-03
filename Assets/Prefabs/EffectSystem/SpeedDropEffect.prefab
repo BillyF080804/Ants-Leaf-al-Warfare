@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8947729912018931850}
   - component: {fileID: 5701415912331228771}
   m_Layer: 0
-  m_Name: BurnEffect
+  m_Name: SpeedDropEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe5c5476dc0121240af0bedf4357dd02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectInfo: {fileID: 11400000, guid: 1c85fcf68f98a354e81316275c25a0e8, type: 2}
+  effectInfo: {fileID: 11400000, guid: 9b0af0eaa3dc7264fa09218b314beb74, type: 2}

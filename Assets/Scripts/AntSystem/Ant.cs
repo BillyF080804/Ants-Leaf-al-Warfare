@@ -25,6 +25,8 @@ public class Ant : MonoBehaviour {
 	public List<EffectScript> effects;
 	public bool hasLifeSteal;
 	public float lifeStealPercent;
+	public bool hasStatDrop;
+	public List<EffectSO.StatDropType> statDrops;
 
 	private int health;
 	private Rigidbody rb;
@@ -48,7 +50,23 @@ public class Ant : MonoBehaviour {
 	}
 
 	public void TakeDamage(int damage) {
-		health -= damage;
+		if (hasStatDrop) {
+			if (statDrops.Contains(EffectSO.StatDropType.Defense)) {
+				float percentage = 0;
+				for(int i = 0; i < effects.Count; i++) {
+					if (effects[i].effectInfo.statDropType == EffectSO.StatDropType.Defense) {
+						percentage = effects[i].effectInfo.percentToDropBy;
+						break;
+					}
+				}
+
+
+				health -= (int)Mathf.Ceil(damage * percentage);
+			}
+		} else {
+			health -= damage;
+		}
+		
 		healthSlider.value = health;
 
 		if (health <= 0) {
@@ -142,7 +160,24 @@ public class Ant : MonoBehaviour {
     }
 
     private void Update() {
-        transform.Translate(antInfo.moveSpeed * Time.deltaTime * moveVector);
+        if (hasStatDrop)
+        {
+			if (statDrops.Contains(EffectSO.StatDropType.Speed)) {
+				float percentage = 0;
+				for (int i = 0; i < effects.Count; i++) {
+					if (effects[i].effectInfo.statDropType == EffectSO.StatDropType.Speed) {
+						percentage = effects[i].effectInfo.percentToDropBy;
+						break;
+					}
+				}
+				transform.Translate(antInfo.moveSpeed * Time.deltaTime * moveVector * percentage);
+
+			}
+
+		} else {
+			transform.Translate(antInfo.moveSpeed * Time.deltaTime * moveVector);
+		}
+        
     }
 
     private void OnCollisionEnter(Collision collision) {
