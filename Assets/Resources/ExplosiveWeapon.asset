@@ -17,7 +17,6 @@ MonoBehaviour:
   unlimitedUses: 0
   weaponIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   weaponPrefab: {fileID: 2035224743872689002, guid: 48600db732ecebc49831131511799a3a, type: 3}
-  cameraDelay: 4
   baseDamage: 25
   weaponSpeed: 10
   useGravity: 1
@@ -26,6 +25,9 @@ MonoBehaviour:
   isMelee: 0
   isMultiShot: 0
   isSpray: 0
+  cameraDelay: 4
+  cameraShakeOnFire: 1
+  cameraShakeOnImpact: 1
   hasVFX: 1
   hasSounds: 0
   explodeOnImpact: 1
@@ -55,5 +57,7 @@ MonoBehaviour:
   sprayAreaVFXSize: 1
   sprayAreaObject: {fileID: 0}
   sprayAreaVFX: {fileID: 0}
+  cameraShakeDuration: 0.25
+  cameraShakeIntensity: 1
   shootSound: {fileID: 0}
   impactSound: {fileID: 0}

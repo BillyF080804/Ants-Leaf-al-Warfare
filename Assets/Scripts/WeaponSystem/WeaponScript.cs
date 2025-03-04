@@ -32,6 +32,10 @@ public class WeaponScript : MonoBehaviour {
             CreateVFX();
         }
 
+        if (weaponInfo.cameraShakeOnImpact) {
+            cameraSystem.StartCameraShake(weaponInfo.cameraShakeDuration, weaponInfo.cameraShakeIntensity);
+        }
+
         Destroy(gameObject);
     }
 

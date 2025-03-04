@@ -112,6 +112,10 @@ public class WeaponManager : MonoBehaviour {
         if (weaponInfo.explosive && !weaponInfo.explodeOnImpact) {
             weaponScript.StartFuse();
         }
+
+        if (weaponInfo.cameraShakeOnFire) {
+            cameraSystem.StartCameraShake(weaponInfo.cameraShakeDuration, weaponInfo.cameraShakeIntensity);
+        }
     }
 
     public void UseMeleeWeapon(BaseWeaponSO weaponInfo, Transform playerPosition) {
@@ -123,6 +127,10 @@ public class WeaponManager : MonoBehaviour {
             if (colliders.Length > 0) {
                 colliders.First().GetComponent<Ant>().TakeDamage(weaponInfo.baseDamage);
                 colliders.First().GetComponent<Rigidbody>().AddExplosionForce(weaponInfo.knockbackStrength, playerPosition.position, 0, weaponInfo.upwardsModifier, ForceMode.Impulse);
+            }
+
+            if (weaponInfo.cameraShakeOnFire) {
+                cameraSystem.StartCameraShake(weaponInfo.cameraShakeDuration, weaponInfo.cameraShakeIntensity);
             }
 
             cameraSystem.CameraDelay(weaponInfo.cameraDelay);
@@ -150,6 +158,10 @@ public class WeaponManager : MonoBehaviour {
             sprayArea.transform.localRotation = aimArrow.localRotation;
 
             sprayArea.GetComponent<SprayAreaScript>().Setup(turnManager.CurrentAntTurn.GetComponent<Collider>(), weaponInfo, turnManager);
+
+            if (weaponInfo.cameraShakeOnFire) {
+                cameraSystem.StartCameraShake(weaponInfo.cameraShakeDuration, weaponInfo.cameraShakeIntensity);
+            }
 
             activeWeapons.Add(sprayArea);
             WeaponsActive = true;

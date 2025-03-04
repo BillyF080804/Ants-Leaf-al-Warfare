@@ -13,7 +13,6 @@ public class BaseWeaponSO : ScriptableObject {
     public GameObject weaponPrefab = null;
 
     [Header("Weapon Settings")]
-    public float cameraDelay = 4.0f;
     public int baseDamage = 20;
     public float weaponSpeed = 25.0f;
     public bool useGravity = true;
@@ -22,6 +21,11 @@ public class BaseWeaponSO : ScriptableObject {
     public bool isMelee = false;
     public bool isMultiShot = false;
     public bool isSpray = false;
+
+    [Header("Camera Settings")]
+    public float cameraDelay = 4.0f;
+    public bool cameraShakeOnFire = false;
+    public bool cameraShakeOnImpact = false;
 
     [Header("VFX & Audio")]
     public bool hasVFX = false;
@@ -60,6 +64,9 @@ public class BaseWeaponSO : ScriptableObject {
     [HideInInspector] public float sprayAreaVFXSize = 1.0f;
     [HideInInspector] public GameObject sprayAreaObject = null;
     [HideInInspector] public GameObject sprayAreaVFX = null;
+
+    [HideInInspector] public float cameraShakeDuration = 0.25f;
+    [HideInInspector] public float cameraShakeIntensity = 1;
 
     [HideInInspector] public AudioClip shootSound;
     [HideInInspector] public AudioClip impactSound;
@@ -161,6 +168,13 @@ public class BaseWeaponSOEditor : Editor {
             baseWeapon.sprayAreaVFXSize = EditorGUILayout.FloatField("Spray Area VFX Size", baseWeapon.sprayAreaVFXSize);
             baseWeapon.sprayAreaObject = (GameObject)EditorGUILayout.ObjectField("Spray Area Prefab", baseWeapon.sprayAreaObject, typeof(GameObject), true);
             baseWeapon.sprayAreaVFX = (GameObject)EditorGUILayout.ObjectField("Spray Area VFX", baseWeapon.sprayAreaVFX, typeof(GameObject), true);
+        }
+
+        if (baseWeapon.cameraShakeOnFire || baseWeapon.cameraShakeOnImpact) {
+            EditorGUILayout.Space(15);
+            EditorGUILayout.LabelField("Camera Shake Settings", EditorStyles.boldLabel);
+            baseWeapon.cameraShakeDuration = EditorGUILayout.FloatField("Camera Shake Duration", baseWeapon.cameraShakeDuration);
+            baseWeapon.cameraShakeIntensity = EditorGUILayout.FloatField("Camera Shake Intensity", baseWeapon.cameraShakeIntensity);
         }
     }
 }

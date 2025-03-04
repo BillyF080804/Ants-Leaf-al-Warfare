@@ -82,11 +82,11 @@ public class Player : MonoBehaviour {
     private void SkipTurn() {
         if (skipTurnCoroutine == null) {
             skipTurnCoroutine = StartCoroutine(SkipTurnCoroutine(2.0f));
-            cameraSystem.ZoomCameraIn(2.0f);
+            cameraSystem.ZoomCameraFOVIn(2.0f);
         }
         else if (skipTurnCoroutine != null) {
             if (cameraSystem.IsZoomingOut == false) {
-                cameraSystem.ZoomCameraOut(0.5f);
+                cameraSystem.ZoomCameraFOVOut(0.5f);
             }
 
             StopCoroutine(skipTurnCoroutine);
@@ -204,7 +204,7 @@ public class Player : MonoBehaviour {
             yield return null;
         }
 
-        cameraSystem.ZoomCameraOut(0.5f);
+        cameraSystem.ZoomCameraFOVOut(0.5f);
 
         if (skippingTurn) {
             turnManager.EndTurn();

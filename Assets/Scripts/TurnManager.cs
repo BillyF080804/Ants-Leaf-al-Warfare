@@ -292,6 +292,7 @@ public class TurnManager : MonoBehaviour {
 
             CurrentRound++;
             dropSystem.CheckDrop();
+            yield return new WaitUntil(() => dropSystem.IsDropping == false);
         }
 
         currentTurnEnded = true;

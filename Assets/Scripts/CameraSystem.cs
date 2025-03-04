@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -14,6 +13,7 @@ public class CameraSystem : MonoBehaviour {
 
     private Vector3 targetPos = Vector3.zero;
     private Vector3 velocity = Vector3.zero;
+    private GameObject cameraObj;
     private Camera cameraComp;
     private Coroutine cameraZoomCoroutine;
 
@@ -24,13 +24,14 @@ public class CameraSystem : MonoBehaviour {
     [HideInInspector] public Vector3 overviewPosition;
 
     private void Awake() {
-        cameraComp = GetComponent<Camera>();
+        cameraObj = gameObject;
+        cameraComp = GetComponentInChildren<Camera>();
 
         if (!setManualOverviewPosition) {
-            overviewPosition = cameraComp.transform.position;
+            overviewPosition = cameraObj.transform.position;
         }
         else {
-            cameraComp.transform.position = overviewPosition;
+            cameraObj.transform.position = overviewPosition;
         }
     }
 
@@ -38,7 +39,7 @@ public class CameraSystem : MonoBehaviour {
         Vector3 tempTargetPos = Vector3.zero;
 
         if (CameraTarget == null && targetPos != Vector3.zero) {
-            cameraComp.transform.position = Vector3.SmoothDamp(cameraComp.transform.position, targetPos, ref velocity, smoothTime);
+            cameraObj.transform.position = Vector3.SmoothDamp(cameraObj.transform.position, targetPos, ref velocity, smoothTime);
         }
         else {
             if (CameraTarget != null && targetPos == Vector3.zero) {
@@ -48,7 +49,7 @@ public class CameraSystem : MonoBehaviour {
                 tempTargetPos = new Vector3(overviewPosition.x, overviewPosition.y + yOffset, overviewPosition.z);
             }
 
-            cameraComp.transform.position = Vector3.SmoothDamp(cameraComp.transform.position, tempTargetPos, ref velocity, smoothTime);
+            cameraObj.transform.position = Vector3.SmoothDamp(cameraObj.transform.position, tempTargetPos, ref velocity, smoothTime);
         }
     }
 
@@ -77,23 +78,23 @@ public class CameraSystem : MonoBehaviour {
         CameraDelayActive = false;
     }
 
-    public void ZoomCameraIn(float zoomDuration) {
+    public void ZoomCameraFOVIn(float zoomDuration) {
         if (cameraZoomCoroutine != null) {
             StopCoroutine(cameraZoomCoroutine);
         }
 
-        cameraZoomCoroutine = StartCoroutine(CameraZoom(true, zoomDuration));
+        cameraZoomCoroutine = StartCoroutine(CameraFOVZoom(true, zoomDuration));
     }
 
-    public void ZoomCameraOut(float zoomDuration) {
+    public void ZoomCameraFOVOut(float zoomDuration) {
         if (cameraZoomCoroutine != null) {
             StopCoroutine(cameraZoomCoroutine);
         }
 
-        cameraZoomCoroutine = StartCoroutine(CameraZoom(false, zoomDuration));
+        cameraZoomCoroutine = StartCoroutine(CameraFOVZoom(false, zoomDuration));
     }
 
-    private IEnumerator CameraZoom(bool zoomIn, float zoomDuration) {
+    private IEnumerator CameraFOVZoom(bool zoomIn, float zoomDuration) {
         float timeElapsed = 0.0f;
         float startingZoom = cameraComp.fieldOfView;
         IsZoomingOut = !zoomIn;
@@ -117,6 +118,26 @@ public class CameraSystem : MonoBehaviour {
         }
         else {
             cameraComp.fieldOfView = 60;
+        }
+    }
+
+    public void StartCameraShake(float shakeDuration, float shakeIntensity) {
+        StartCoroutine(CameraShakeCoroutine(shakeDuration, shakeIntensity));
+    }
+
+    private IEnumerator CameraShakeCoroutine(float duration, float strength) {
+        float timeElapsed = 0.0f;
+        Vector3 originalEulerAngles = cameraComp.transform.localEulerAngles;
+
+        while (timeElapsed < duration) {
+            float randomX = Random.value - 0.5f * strength;
+            float randomY = Random.value - 0.5f * strength;
+            float randomZ = Random.value - 0.5f * strength;
+
+            cameraComp.transform.localEulerAngles = new Vector3(originalEulerAngles.x + randomX, originalEulerAngles.y + randomY, originalEulerAngles.z + randomZ);
+
+            timeElapsed += Time.deltaTime;
+            yield return null;
         }
     }
 }
