@@ -12,7 +12,7 @@ public class HoseScript : Interactable
     [SerializeField] private GameObject waterDrip;
     [SerializeField] private Transform dripPoint;
     [SerializeField] AnimationHandler animHandler;
-    [SerializeField] GameObject waterSpray;
+    [SerializeField] ParticleSystem waterSpray;
 
     [Header("Animation Variables")]
     [SerializeField] AnimationHandler uiHandler;
@@ -26,8 +26,7 @@ public class HoseScript : Interactable
 
     private void OnTriggerEnter(Collider other)
     {
-        currentAnt = other.GetComponent<AntScript>();
-        if (currentAnt != null)
+        if (other.TryGetComponent<AntScript>(out currentAnt))
         {
             uiHandler.ToggleTrigger(enterTriggerName);
         }
@@ -69,7 +68,7 @@ public class HoseScript : Interactable
     private void WaterSpray()
     {
         uiHandler.ToggleTrigger(exitTriggerName);
-        waterSpray.SetActive(true);
+        waterSpray.Play();
         hasLaunchedThisTurn = true;
         animHandler.ToggleTrigger(animName);
         if(waterDrip != null)
