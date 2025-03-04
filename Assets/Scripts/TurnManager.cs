@@ -103,6 +103,7 @@ public class TurnManager : MonoBehaviour {
         for (int i = 0; i < PlayerList.Count; i++) {
             GameObject newQueen = Instantiate(queenPrefab, GetAntSpawnPoint(MinDistanceBetweenQueens, false), Quaternion.identity);
             newQueen.GetComponentInChildren<MeshRenderer>().material.color = PlayerList[i].playerInfo.playerColor;
+            newQueen.GetComponent<Ant>().ownedPlayer = (Ant.PlayerList)i;
             PlayerList[i].AddQueen(newQueen);
             PlayerList[i].AllowPlayerToSpawnQueen();
             cameraSystem.SetCameraTarget(newQueen.transform);
