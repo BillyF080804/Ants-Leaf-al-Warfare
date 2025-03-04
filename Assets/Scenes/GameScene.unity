@@ -1913,6 +1913,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hose
       objectReference: {fileID: 0}
+    - target: {fileID: 1417744849267967637, guid: d46da59b091bbac4d8b9621f9c1032af, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4378842503058433687, guid: d46da59b091bbac4d8b9621f9c1032af, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.6215086

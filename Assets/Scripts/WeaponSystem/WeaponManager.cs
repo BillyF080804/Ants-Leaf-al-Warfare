@@ -23,7 +23,6 @@ public class WeaponManager : MonoBehaviour {
     [Header("Default Player Weapons")]
     [SerializeField] private List<BaseWeaponSO> defaultPlayerWeapons = new List<BaseWeaponSO>();
 
-    private bool uiMoving = false;
     private bool canAim = true;
     private bool canFireWeapon = true;
     private float aimStrength = 1.0f;
@@ -32,6 +31,7 @@ public class WeaponManager : MonoBehaviour {
     private Vector2 aimValue = Vector2.zero;
     private Vector2 aimPosition = Vector2.zero;
 
+    public bool UIMoving { get; private set; } = false;
     public bool WeaponMenuOpen { get; private set; } = false;
     public bool WeaponsActive { get; private set; } = false;
     public BaseWeaponSO WeaponSelected { get; private set; }
@@ -253,16 +253,16 @@ public class WeaponManager : MonoBehaviour {
 
     //Used to either open or close the weapon menu
     public void WeaponMenu() {
-        if (WeaponMenuOpen == false && uiMoving == false && WeaponSelected != null) {
+        if (WeaponMenuOpen == false && UIMoving == false && WeaponSelected != null) {
             WeaponSelected = null;
             aimArrow.gameObject.SetActive(false);
         }
-        else if (WeaponMenuOpen == true && uiMoving == false) {
-            uiMoving = true;
+        else if (WeaponMenuOpen == true && UIMoving == false) {
+            UIMoving = true;
             StartCoroutine(CloseWeaponMenuCoroutine());
         }
-        else if (WeaponMenuOpen == false && uiMoving == false) {
-            uiMoving = true;
+        else if (WeaponMenuOpen == false && UIMoving == false) {
+            UIMoving = true;
             WeaponMenuOpen = true;
             turnManager.CurrentAntTurn.StopMovement();
             StartCoroutine(OpenWeaponMenuCoroutine());
@@ -275,15 +275,14 @@ public class WeaponManager : MonoBehaviour {
         aimStrength = 0.0f;
         aimValue = Vector2.zero;
         aimArrow.gameObject.SetActive(false);
-        StopAllCoroutines();
 
         StartCoroutine(ForceCloseWeaponMenuCoroutine());
     }
 
     //Called at the end of a turn. Forces the weapon menu to close.
     private IEnumerator ForceCloseWeaponMenuCoroutine() {
-        if (uiMoving == true) {
-            yield return new WaitUntil(() => uiMoving == false);
+        if (UIMoving == true) {
+            yield return new WaitUntil(() => UIMoving == false);
         }
 
         if (WeaponMenuOpen == true) {
@@ -317,7 +316,7 @@ public class WeaponManager : MonoBehaviour {
 
         yield return new WaitUntil(() => weaponMenuUI.GetComponent<RectTransform>().anchoredPosition == new Vector2(50, 50));
         EnableIconInteraction();
-        uiMoving = false;
+        UIMoving = false;
     }
 
     //Closes the weapons menu and opens the queen ant health UI
@@ -341,7 +340,7 @@ public class WeaponManager : MonoBehaviour {
             }
         }
 
-        uiMoving = false;
+        UIMoving = false;
     }
 
     private void FillWeaponMenu() {
