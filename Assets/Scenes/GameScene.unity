@@ -2445,6 +2445,50 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &635031659
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 635031661}
+  - component: {fileID: 635031660}
+  m_Layer: 0
+  m_Name: QueenAntSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &635031660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 635031659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6000f9ee4c0efb4fbde1e8d529667c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &635031661
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 635031659}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.260266, y: 13.455602, z: -20.156223}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &762381057
 Mesh:
   m_ObjectHideFlags: 0
@@ -5404,6 +5448,7 @@ SceneRoots:
   - {fileID: 1998806276}
   - {fileID: 1244382061}
   - {fileID: 2003787145}
+  - {fileID: 635031661}
   - {fileID: 2060376111}
   - {fileID: 625805645}
   - {fileID: 48997132}

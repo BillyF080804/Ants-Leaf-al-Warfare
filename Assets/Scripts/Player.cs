@@ -12,17 +12,16 @@ public class Player : MonoBehaviour {
     public PlayerInfo playerInfo = new PlayerInfo();
 
     private Coroutine skipTurnCoroutine;
-    private Coroutine moveQueenCoroutine;
     private Coroutine moveQueenTimerCoroutine;
     private CameraSystem cameraSystem;
     private LobbyManager lobbyManager;
     private TurnManager turnManager;
     private WeaponManager weaponManager;
     private QueenAntScript queenAntScript;
+    private QueenAntSpawner queenAntSpawner;
 
     public bool ConfirmedQueenSpawn { get; private set; } = false;
     private bool canSpawnQueen = false;
-    private bool queenInValidPos = true;
     private bool skippingTurn = false;
 
     public GameObject QueenAnt { get; private set; } = null;
@@ -40,7 +39,8 @@ public class Player : MonoBehaviour {
         if (nextScene.name.Contains("Game")) {
             turnManager = FindFirstObjectByType<TurnManager>();
             weaponManager = FindFirstObjectByType<WeaponManager>();
-            cameraSystem = FindFirstObjectByType<CameraSystem>();            
+            cameraSystem = FindFirstObjectByType<CameraSystem>();
+            queenAntSpawner = FindFirstObjectByType<QueenAntSpawner>();
         }
     }
 
@@ -150,17 +150,13 @@ public class Player : MonoBehaviour {
 
     //Function called when selecting where to spawn queen
     private void OnSpawnQueenAnt() {
-        if (canSpawnQueen == true && queenInValidPos == true) {
+        if (canSpawnQueen == true && queenAntSpawner.QueenInValidPos == true) {
             canSpawnQueen = false;
             ConfirmedQueenSpawn = true;
             QueenAnt.GetComponent<Collider>().enabled = true;
             QueenAnt.GetComponent<Rigidbody>().useGravity = true;
             queenAntScript.SetQueenToTeamColour(playerInfo.playerColor);
-
-            if (moveQueenCoroutine != null) {
-                StopCoroutine(moveQueenCoroutine);
-                moveQueenCoroutine = null;
-            }
+            queenAntSpawner.SetMoveValue(0, null);
 
             if (moveQueenTimerCoroutine != null) { 
                 StopCoroutine(moveQueenTimerCoroutine);
@@ -171,13 +167,7 @@ public class Player : MonoBehaviour {
 
     private void OnMoveQueen(InputValue value) {
         if (canSpawnQueen == true) {
-            if (moveQueenCoroutine == null) {
-                moveQueenCoroutine = StartCoroutine(MoveQueenCoroutine(value.Get<float>()));
-            }
-            else if (moveQueenCoroutine != null) {
-                StopCoroutine(moveQueenCoroutine);
-                moveQueenCoroutine = null;
-            }
+            queenAntSpawner.SetMoveValue(value.Get<float>(), QueenAnt);
         }
     }
 
@@ -211,40 +201,6 @@ public class Player : MonoBehaviour {
         }
     }
 
-    private IEnumerator MoveQueenCoroutine(float value) {
-        while (true) {
-            if (value < 0.0f) {
-                value = -1;
-            }
-            else if (value > 0.0f) {
-                value = 1;
-            }
-
-            float xPos = QueenAnt.transform.position.x + value * 2.5f * Time.deltaTime;
-            xPos = Mathf.Clamp(xPos, turnManager.MapMinX, turnManager.MapMaxX);
-            Vector3 targetPos = new Vector3(xPos, 30.0f, 0);
-
-            if (Physics.Raycast(targetPos, Vector3.down, out RaycastHit ray, 35.0f, ~queenAntScript.GetQueenLayerMask())) {
-                QueenAnt.transform.position = new Vector3(ray.point.x, ray.point.y + 0.5f, ray.point.z);
-            }
-
-            CheckQueenInValidPos();
-
-            yield return null;
-        }
-    }
-
-    private void CheckQueenInValidPos() {
-        if (Physics.OverlapSphere(QueenAnt.transform.position, turnManager.MinDistanceBetweenQueens).Where(x => x.CompareTag("Player")).Count() > 1) {
-            queenInValidPos = false;
-            queenAntScript.SetQueenInvalidPos();
-        }
-        else {
-            queenInValidPos = true;
-            queenAntScript.SetQueenValidPos();
-        }
-    }
-
     private IEnumerator MoveQueenTimerCoroutine() {
         float timeRemaining = 20.0f;
 
@@ -255,9 +211,9 @@ public class Player : MonoBehaviour {
             yield return null;
         }
 
-        while (queenInValidPos == false) {
+        while (queenAntSpawner.QueenInValidPos == false) {
             QueenAnt.transform.position = turnManager.GetAntSpawnPoint(turnManager.MinDistanceBetweenQueens, true);
-            CheckQueenInValidPos();
+            queenAntSpawner.CheckQueenInValidPos();
         }
 
         OnSpawnQueenAnt();
@@ -279,16 +235,16 @@ public class Player : MonoBehaviour {
         if (possibleAnts.Count > 0) {
             int nextAntIndex = Random.Range(0, possibleAnts.Count);
             return possibleAnts[nextAntIndex];
-        } else {
+        } 
+        else {
             Ant testAnt = QueenAnt.GetComponent<Ant>();
 
 			if (testAnt.hasHadTurn) {
 				return null;
-            } else {
+            } 
+            else {
                 return testAnt;
-
-			}
-            
+			}            
         }
     }
 
@@ -316,6 +272,7 @@ public class Player : MonoBehaviour {
         QueenAnt.GetComponent<Rigidbody>().useGravity = false;
         queenAntScript.SetQueenValidPos();
         moveQueenTimerCoroutine = StartCoroutine(MoveQueenTimerCoroutine());
+        FindFirstObjectByType<QueenAntSpawner>().SetMoveValue(0, null);
     }
 
     public int GetAllHealth() {

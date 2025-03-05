@@ -16,13 +16,13 @@ public class TurnManager : MonoBehaviour {
     [SerializeField] private int maxTurnTime = 20;
 
     [field : Header("Ant Spawning Settings")]
-    public float MapMinX { get; private set; } = -10.0f;
-    public float MapMaxX { get; private set; } = 10.0f;
+    [field : SerializeField] public float MapMinX { get; private set; } = -10.0f;
+    [field: SerializeField] public float MapMaxX { get; private set; } = 10.0f;
     [SerializeField] private float minDistanceBetweenAnts = 3.0f;
-    public float MinDistanceBetweenQueens { get; private set; } = 5.0f;
+    [field: SerializeField] public float MinDistanceBetweenQueens { get; private set; } = 5.0f;
 
     [field: Header("Gamemode Settings")]
-    public int DamageToDealOnQueenDeath { get; private set; } = 10;
+    [field: SerializeField] public int DamageToDealOnQueenDeath { get; private set; } = 10;
 
     [Header("Event Settings")]
     [SerializeField] private UnityEvent startTurnEvent;
@@ -110,6 +110,8 @@ public class TurnManager : MonoBehaviour {
 
             yield return new WaitUntil(() => PlayerList[i].ConfirmedQueenSpawn == true);
         }
+
+        FindFirstObjectByType<QueenAntSpawner>().FinishSpawning();
     }
 
     private void SpawnQueenAntHealthUI() {
@@ -174,7 +176,7 @@ public class TurnManager : MonoBehaviour {
             spawnPos = new Vector3(Random.Range(MapMinX, MapMaxX), 30.0f, 0);
 
             if (Physics.Raycast(spawnPos, Vector3.down, out RaycastHit ray, 35.0f)) {
-                spawnPos = new Vector3(ray.point.x, ray.point.y + 1.0f, ray.point.z);
+                spawnPos = new Vector3(ray.point.x, ray.point.y + 0.5f, ray.point.z);
             }
 
             Collider[] colliders = Physics.OverlapSphere(spawnPos, minDistanceBetweenAnts).Where(x => x.CompareTag("Player")).ToArray();
