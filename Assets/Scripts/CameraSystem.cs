@@ -17,7 +17,7 @@ public class CameraSystem : MonoBehaviour {
     private Camera cameraComp;
     private Coroutine cameraZoomCoroutine;
 
-    public bool IsZoomingOut { get; private set; } = false;
+    public bool IsFOVZoomingOut { get; private set; } = false;
     public bool CameraDelayActive { get; private set; } = false;
     public Transform CameraTarget { get; private set; }
 
@@ -97,7 +97,7 @@ public class CameraSystem : MonoBehaviour {
     private IEnumerator CameraFOVZoom(bool zoomIn, float zoomDuration) {
         float timeElapsed = 0.0f;
         float startingZoom = cameraComp.fieldOfView;
-        IsZoomingOut = !zoomIn;
+        IsFOVZoomingOut = !zoomIn;
 
         while (timeElapsed < zoomDuration) {
             if (zoomIn == true) {
@@ -111,7 +111,7 @@ public class CameraSystem : MonoBehaviour {
             yield return null;
         }
 
-        IsZoomingOut = false;
+        IsFOVZoomingOut = false;
 
         if (zoomIn == true) {
             cameraComp.fieldOfView = 30;

@@ -84,7 +84,7 @@ public class Player : MonoBehaviour {
             cameraSystem.ZoomCameraFOVIn(2.0f);
         }
         else if (skipTurnCoroutine != null) {
-            if (cameraSystem.IsZoomingOut == false) {
+            if (cameraSystem.IsFOVZoomingOut == false) {
                 cameraSystem.ZoomCameraFOVOut(0.5f);
             }
 
