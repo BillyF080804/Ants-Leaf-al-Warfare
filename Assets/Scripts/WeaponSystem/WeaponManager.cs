@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class WeaponManager : MonoBehaviour {
@@ -18,7 +17,6 @@ public class WeaponManager : MonoBehaviour {
 
     [Header("Prefabs")]
     [SerializeField] private WeaponMenuIconScript weaponIconPrefab;
-    [SerializeField] private AOETrigger aoeTriggerAreaPrefab;
 
     [Header("Default Player Weapons")]
     [SerializeField] private List<BaseWeaponSO> defaultPlayerWeapons = new List<BaseWeaponSO>();
@@ -104,7 +102,7 @@ public class WeaponManager : MonoBehaviour {
 
         //Set weapon values
         rb.useGravity = weaponInfo.useGravity;
-        weaponScript.SetupWeapon(weaponInfo, playerPosition.GetComponent<Collider>(), aoeTriggerAreaPrefab);
+        weaponScript.SetupWeapon(weaponInfo, playerPosition.GetComponent<Collider>());
         activeWeapons.Add(newWeapon);
         WeaponsActive = true;
         cameraSystem.SetCameraTarget(newWeapon.transform);
@@ -127,6 +125,10 @@ public class WeaponManager : MonoBehaviour {
             if (colliders.Length > 0) {
                 colliders.First().GetComponent<Ant>().TakeDamage(weaponInfo.baseDamage);
                 colliders.First().GetComponent<Rigidbody>().AddExplosionForce(weaponInfo.knockbackStrength, playerPosition.position, 0, weaponInfo.upwardsModifier, ForceMode.Impulse);
+
+                if (weaponInfo.weaponEffect != null) {
+                    weaponInfo.weaponEffect.AddEffect(colliders.First().GetComponent<Ant>());
+                }
             }
 
             if (weaponInfo.cameraShakeOnFire) {

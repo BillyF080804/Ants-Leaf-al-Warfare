@@ -22,6 +22,9 @@ public class BaseWeaponSO : ScriptableObject {
     public bool isMultiShot = false;
     public bool isSpray = false;
 
+    [Header("Weapon Effect - Leave empty for no effect")]
+    public EffectScript weaponEffect = null;
+
     [Header("Camera Settings")]
     public float cameraDelay = 4.0f;
     public bool cameraShakeOnFire = false;
@@ -39,13 +42,6 @@ public class BaseWeaponSO : ScriptableObject {
     [HideInInspector] public float vfxSize = 1.0f;
     [HideInInspector] public float vfxDuration = 2.5f;
     [HideInInspector] public GameObject vfxObject = null;
-
-    [HideInInspector] public bool lingerEffect = false;
-    [HideInInspector] public float lingerEffectRange = 3.0f;
-    [HideInInspector] public bool dealDamage = true;
-    [HideInInspector] public int damagePerSecond = 5;
-    [HideInInspector] public bool slowMovement = true;
-    [HideInInspector] public float slowMultiplier = 0.5f;
 
     [HideInInspector] public float knockbackStrength = 2.0f;
     [HideInInspector] public float upwardsModifier = 4.0f;
@@ -100,27 +96,6 @@ public class BaseWeaponSOEditor : Editor {
             baseWeapon.vfxObject = (GameObject)EditorGUILayout.ObjectField("VFX", baseWeapon.vfxObject, typeof(GameObject), true);
             baseWeapon.vfxSize = EditorGUILayout.FloatField("VFX Size", baseWeapon.vfxSize);
             baseWeapon.vfxDuration = EditorGUILayout.FloatField("VFX Duration", baseWeapon.vfxDuration);
-
-            EditorGUILayout.Space(15);
-            EditorGUILayout.LabelField("Linger Effect Settings", EditorStyles.boldLabel);
-            baseWeapon.lingerEffect = EditorGUILayout.Toggle("Linger Effect", baseWeapon.lingerEffect);
-
-            if (baseWeapon.lingerEffect == true) {
-                baseWeapon.lingerEffectRange = EditorGUILayout.FloatField("Linger Effect Range", baseWeapon.lingerEffectRange);
-                baseWeapon.dealDamage = EditorGUILayout.Toggle("Deal Damage", baseWeapon.dealDamage);
-
-                if (baseWeapon.dealDamage == true) {
-                    baseWeapon.damagePerSecond = EditorGUILayout.IntField("Damage Per Second", baseWeapon.damagePerSecond);
-                }
-
-                baseWeapon.slowMovement = EditorGUILayout.Toggle("Slow Movement", baseWeapon.slowMovement);
-
-                if (baseWeapon.slowMovement == true) {
-                    EditorGUILayout.Space(5);
-                    EditorGUILayout.LabelField("The closer to 0 the more the ant will be slowed.");
-                    baseWeapon.slowMultiplier = EditorGUILayout.FloatField("Slow Multiplier", baseWeapon.slowMultiplier);
-                }
-            }
         }
 
         if (baseWeapon.isMelee == true) {

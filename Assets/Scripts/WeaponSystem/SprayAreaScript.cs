@@ -26,6 +26,10 @@ public class SprayAreaScript : MonoBehaviour {
             if (weaponInfo.sprayMover == true) {
                 ant.GetComponent<Rigidbody>().AddExplosionForce(weaponInfo.sprayStrength, turnManager.CurrentAntTurn.transform.position, weaponInfo.sprayLength, 2f);
             }
+
+            if (weaponInfo.weaponEffect != null) {
+                weaponInfo.weaponEffect.AddEffect(ant);
+            }
         }
     }
 }

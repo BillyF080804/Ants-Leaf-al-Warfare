@@ -4,7 +4,6 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class WeaponScript : MonoBehaviour {
-    private AOETrigger aoeTriggerAreaPrefab;
     private BaseWeaponSO weaponInfo;
     private CameraSystem cameraSystem;
 
@@ -12,9 +11,8 @@ public class WeaponScript : MonoBehaviour {
         cameraSystem = FindFirstObjectByType<CameraSystem>();
     }
 
-    public void SetupWeapon(BaseWeaponSO weapon, Collider objectCollider, AOETrigger _aoeTriggerAreaPrefab) {
+    public void SetupWeapon(BaseWeaponSO weapon, Collider objectCollider) {
         Physics.IgnoreCollision(GetComponent<Collider>(), objectCollider, true);
-        aoeTriggerAreaPrefab = _aoeTriggerAreaPrefab;
         weaponInfo = weapon;
         Destroy(gameObject, 10.0f);
     }
@@ -30,6 +28,10 @@ public class WeaponScript : MonoBehaviour {
 
         if (weaponInfo.hasVFX == true && weaponInfo.vfxObject != null) {
             CreateVFX();
+        }
+
+        if (weaponInfo.weaponEffect != null) {
+            weaponInfo.weaponEffect.AddEffect(collision.gameObject.GetComponent<Ant>());
         }
 
         if (weaponInfo.cameraShakeOnImpact) {
@@ -70,10 +72,6 @@ public class WeaponScript : MonoBehaviour {
         GameObject vfxObj = Instantiate(weaponInfo.vfxObject, transform.position, Quaternion.identity);
         vfxObj.transform.localScale = new Vector3(weaponInfo.vfxSize, weaponInfo.vfxSize, weaponInfo.vfxSize);
         Destroy(vfxObj, weaponInfo.vfxDuration);
-
-        AOETrigger aoeTriggerArea = Instantiate(aoeTriggerAreaPrefab, transform.position, Quaternion.identity);
-        aoeTriggerArea.SetWeaponInfo(weaponInfo);
-        Destroy(aoeTriggerArea, weaponInfo.vfxDuration);
     }
 
     private void OnDestroy() {
