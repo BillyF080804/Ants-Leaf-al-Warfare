@@ -8,11 +8,32 @@ public class CameraSystem : MonoBehaviour {
     [SerializeField] private float zOffset = -10.0f;
     [SerializeField] private float smoothTime = 0.3f;
 
+    [Header("Zoom Settings")]
+    [SerializeField] private float maxZoomIn = 5f;
+    [SerializeField] private float maxZoomOut = -10f;
+    [SerializeField] private float cameraZoomSpeed = 0.025f;
+
+    [Header("Free Cam Settings")]
+    [SerializeField] private float freeCamSpeed = 0.1f;
+    [SerializeField] private float freeCamMinX = -20.0f;
+    [SerializeField] private float freeCamMaxX = 20.0f;
+    [SerializeField] private float freeCamMinY = 0.0f;
+    [SerializeField] private float freeCamMaxY = 20.0f;
+
     [Header("Misc Settings")]
     public bool setManualOverviewPosition;
 
+    private bool freeCamEnabled = false;
+    private float cameraZoom = 0.0f;
+    private float cameraZoomValue = 0.0f;
+
+    private Vector2 freeCamValue = Vector2.zero;
+    private Vector3 freeCamPos = Vector3.zero;
     private Vector3 targetPos = Vector3.zero;
     private Vector3 velocity = Vector3.zero;
+    private Vector3 lookAtTargetPos = Vector3.zero;
+
+    private Transform lookAtTarget = null;
     private GameObject cameraObj;
     private Camera cameraComp;
     private Coroutine cameraZoomCoroutine;
@@ -36,9 +57,44 @@ public class CameraSystem : MonoBehaviour {
     }
 
     private void LateUpdate() {
+        SetCameraZoom();
+
+        if (freeCamValue != Vector2.zero && freeCamEnabled == false) {
+            freeCamEnabled = true;
+            freeCamPos = cameraObj.transform.position;
+        }
+        else if (freeCamEnabled == true) {
+            SetFreeCam();
+        }
+        else {
+            SetCameraPos();
+        }
+
+        CheckLookAtTarget();
+    }
+
+    private void SetCameraZoom() {
+        cameraZoom += cameraZoomValue * cameraZoomSpeed;
+        cameraZoom = Mathf.Clamp(cameraZoom, maxZoomOut, maxZoomIn);
+    }
+
+    private void SetFreeCam() {
+        freeCamPos += (Vector3)freeCamValue * freeCamSpeed;
+
+        float clampedX = Mathf.Clamp(freeCamPos.x, freeCamMinX, freeCamMaxX);
+        float clampedY = Mathf.Clamp(freeCamPos.y, freeCamMinY, freeCamMaxY);
+
+        freeCamPos.x = clampedX;
+        freeCamPos.y = clampedY;
+
+        cameraObj.transform.position = Vector3.SmoothDamp(cameraObj.transform.position, freeCamPos, ref velocity, smoothTime);
+    }
+
+    private void SetCameraPos() {
         Vector3 tempTargetPos = Vector3.zero;
 
         if (CameraTarget == null && targetPos != Vector3.zero) {
+            targetPos.z += cameraZoom;
             cameraObj.transform.position = Vector3.SmoothDamp(cameraObj.transform.position, targetPos, ref velocity, smoothTime);
         }
         else {
@@ -49,7 +105,20 @@ public class CameraSystem : MonoBehaviour {
                 tempTargetPos = new Vector3(overviewPosition.x, overviewPosition.y + yOffset, overviewPosition.z);
             }
 
+            tempTargetPos.z += cameraZoom;
             cameraObj.transform.position = Vector3.SmoothDamp(cameraObj.transform.position, tempTargetPos, ref velocity, smoothTime);
+        }
+    }
+
+    private void CheckLookAtTarget() {
+        if (lookAtTarget != null) {
+            cameraObj.transform.LookAt(lookAtTarget);
+        }
+        else if (lookAtTargetPos != Vector3.zero) {
+            cameraObj.transform.LookAt(lookAtTargetPos);
+        }
+        else {
+            cameraObj.transform.eulerAngles = new Vector3(10, 0, 0);
         }
     }
 
@@ -58,14 +127,54 @@ public class CameraSystem : MonoBehaviour {
         CameraTarget = target;
     }
 
+    public void SetCameraTarget(Transform target, bool resetCameraZoom) {
+        targetPos = Vector3.zero;
+        CameraTarget = target;
+
+        if (resetCameraZoom) {
+            cameraZoomValue = 0.0f;
+            cameraZoom = 0.0f;
+        }
+    }
+
     public void SetCameraTarget(Vector3 _targetPos) {
         CameraTarget = null;
         targetPos = new Vector3(_targetPos.x, _targetPos.y + 10f, _targetPos.z - 25f);
     }
 
+    public void SetCameraTarget(Vector3 _targetPos, bool resetCameraZoom) {
+        CameraTarget = null;
+        targetPos = new Vector3(_targetPos.x, _targetPos.y + 10f, _targetPos.z - 25f);
+
+        if (resetCameraZoom) {
+            cameraZoomValue = 0.0f;
+            cameraZoom = 0.0f;
+        }
+    }
+
     public void SetCameraTarget(Vector3 _targetPos, float yOffset, float zOffset) {
         CameraTarget = null;
         targetPos = new Vector3(_targetPos.x, _targetPos.y + yOffset, _targetPos.z - zOffset);
+    }
+
+    public void SetCameraTarget(Vector3 _targetPos, float yOffset, float zOffset, bool resetCameraZoom) {
+        CameraTarget = null;
+        targetPos = new Vector3(_targetPos.x, _targetPos.y + yOffset, _targetPos.z - zOffset);
+
+        if (resetCameraZoom) {
+            cameraZoomValue = 0.0f;
+            cameraZoom = 0.0f;
+        }
+    }
+
+    public void SetCameraLookAtTarget(Transform target) {
+        lookAtTarget = target;
+        lookAtTargetPos = Vector3.zero;
+    }
+
+    public void SetCameraLookAtTarget(Vector3 targetVector) {
+        lookAtTarget = null;
+        lookAtTargetPos = targetVector;
     }
 
     public void CameraDelay(float delayTime) {
@@ -139,6 +248,23 @@ public class CameraSystem : MonoBehaviour {
             timeElapsed += Time.deltaTime;
             yield return null;
         }
+    }
+
+    public void SetCameraZoom(float _cameraZoom) {
+        cameraZoomValue = _cameraZoom;
+    }
+
+    public void SetFreeCameraValue(Vector2 value) {
+        freeCamValue = value;
+    }
+
+    public void ResetCamera() {
+        cameraZoomValue = 0.0f;
+        cameraZoom = 0.0f;
+
+        freeCamEnabled = false;
+        freeCamValue = Vector2.zero;
+        freeCamPos = Vector3.zero;
     }
 }
 

@@ -121,6 +121,33 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "CameraZoom",
+                    "type": "Value",
+                    "id": "bc5fd7f3-35ad-472d-997f-dc9ec8b2e6d9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "ResetCameraPos",
+                    "type": "Button",
+                    "id": "27bbe0fc-54a2-42b1-a715-4d17118efc4d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MoveFreeCam",
+                    "type": "Value",
+                    "id": "63cbe4ba-326b-48cf-a155-05987317d787",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -640,6 +667,182 @@
                     "action": "EffectTest",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "1D Axis",
+                    "id": "77ef2f53-84ce-4985-932d-e8a3444485dc",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CameraZoom",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "positive",
+                    "id": "fa73c691-562c-4898-9d62-5797a4cf3140",
+                    "path": "<Keyboard>/#([)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "CameraZoom",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "011f9962-cbe1-4cd4-a32c-337cc26c025d",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "CameraZoom",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "negative",
+                    "id": "330aabed-f68e-4923-845a-3bb465396cbe",
+                    "path": "<Keyboard>/#(])",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "CameraZoom",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "negative",
+                    "id": "363aee4a-6d17-4d10-8d9c-0dd8a9476c3a",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "CameraZoom",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "db84f0e6-4986-40cf-803e-be3c41d62ef2",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "ResetCameraPos",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "74f5367a-926d-43e0-b925-b6d86834431e",
+                    "path": "<Gamepad>/leftStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "ResetCameraPos",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "2D Vector",
+                    "id": "5022648d-556b-4f9d-b002-e22f7bfa6575",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveFreeCam",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "927889c5-875c-41a0-95b9-aec169cf1f8d",
+                    "path": "<Mouse>/delta/up",
+                    "interactions": "",
+                    "processors": "AxisDeadzone",
+                    "groups": "Keyboard&Mouse",
+                    "action": "MoveFreeCam",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "up",
+                    "id": "8305a923-bc45-4dee-a301-33c541b2ff18",
+                    "path": "<Gamepad>/leftStick/up",
+                    "interactions": "",
+                    "processors": "AxisDeadzone",
+                    "groups": "Gamepad",
+                    "action": "MoveFreeCam",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "c76623db-dbac-4b97-90be-4410e784ebae",
+                    "path": "<Mouse>/delta/down",
+                    "interactions": "",
+                    "processors": "AxisDeadzone",
+                    "groups": "Keyboard&Mouse",
+                    "action": "MoveFreeCam",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "df3fbc72-7c06-4f42-81e8-16e81d320b4e",
+                    "path": "<Gamepad>/leftStick/down",
+                    "interactions": "",
+                    "processors": "AxisDeadzone",
+                    "groups": "Gamepad",
+                    "action": "MoveFreeCam",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "44618819-1a78-4e96-b957-daec59646e66",
+                    "path": "<Mouse>/delta/left",
+                    "interactions": "",
+                    "processors": "AxisDeadzone",
+                    "groups": "Keyboard&Mouse",
+                    "action": "MoveFreeCam",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "d370f1cb-3327-45c4-836e-544bee8c8061",
+                    "path": "<Gamepad>/leftStick/left",
+                    "interactions": "",
+                    "processors": "AxisDeadzone",
+                    "groups": "Gamepad",
+                    "action": "MoveFreeCam",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "cab3ea3f-d015-416e-8956-421ffba31bc5",
+                    "path": "<Mouse>/delta/right",
+                    "interactions": "",
+                    "processors": "AxisDeadzone",
+                    "groups": "Keyboard&Mouse",
+                    "action": "MoveFreeCam",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "6b67b03d-7137-4f17-a6ca-6322deebe90d",
+                    "path": "<Gamepad>/leftStick/right",
+                    "interactions": "",
+                    "processors": "AxisDeadzone",
+                    "groups": "Gamepad",
+                    "action": "MoveFreeCam",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         },

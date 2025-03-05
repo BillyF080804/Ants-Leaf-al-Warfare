@@ -79,17 +79,19 @@ public class Player : MonoBehaviour {
     }
 
     private void SkipTurn() {
-        if (skipTurnCoroutine == null) {
-            skipTurnCoroutine = StartCoroutine(SkipTurnCoroutine(2.0f));
-            cameraSystem.ZoomCameraFOVIn(2.0f);
-        }
-        else if (skipTurnCoroutine != null) {
-            if (cameraSystem.IsFOVZoomingOut == false) {
-                cameraSystem.ZoomCameraFOVOut(0.5f);
+        if (CheckActionIsValid()) {
+            if (skipTurnCoroutine == null) {
+                skipTurnCoroutine = StartCoroutine(SkipTurnCoroutine(2.0f));
+                cameraSystem.ZoomCameraFOVIn(2.0f);
             }
+            else if (skipTurnCoroutine != null) {
+                if (cameraSystem.IsFOVZoomingOut == false) {
+                    cameraSystem.ZoomCameraFOVOut(0.5f);
+                }
 
-            StopCoroutine(skipTurnCoroutine);
-            skipTurnCoroutine = null;
+                StopCoroutine(skipTurnCoroutine);
+                skipTurnCoroutine = null;
+            }
         }
     }
 
@@ -164,9 +166,31 @@ public class Player : MonoBehaviour {
         }
     }
 
+    //Called when the player is moving the queen during the spawning phase
     private void OnMoveQueen(InputValue value) {
         if (canSpawnQueen == true) {
             queenAntSpawner.SetMoveValue(value.Get<float>(), QueenAnt);
+        }
+    }
+
+    //Called when the player is zooming the camera in/out
+    private void OnCameraZoom(InputValue value) {
+        if (CheckActionIsValid() || canSpawnQueen == true) {
+            cameraSystem.SetCameraZoom(value.Get<float>());
+        }
+    }
+
+    //Called when the player presses the reset camera button
+    private void OnResetCameraPos() {
+        if (CheckActionIsValid() || canSpawnQueen == true) {
+            cameraSystem.ResetCamera();
+        }
+    }
+
+    //Called when the player moves the free camera
+    private void OnMoveFreeCam(InputValue value) {
+        if (CheckActionIsValid() || canSpawnQueen == true) {
+            cameraSystem.SetFreeCameraValue(value.Get<Vector2>());
         }
     }
 
@@ -269,9 +293,9 @@ public class Player : MonoBehaviour {
         canSpawnQueen = true;
         QueenAnt.GetComponent<Collider>().enabled = false;
         QueenAnt.GetComponent<Rigidbody>().useGravity = false;
-        queenAntScript.SetQueenValidPos();
         moveQueenTimerCoroutine = StartCoroutine(MoveQueenTimerCoroutine());
-        FindFirstObjectByType<QueenAntSpawner>().SetMoveValue(0, null);
+        queenAntSpawner.SetMoveValue(0, QueenAnt);
+        queenAntSpawner.CheckQueenInValidPos();
     }
 
     public int GetAllHealth() {
