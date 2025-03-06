@@ -35,6 +35,7 @@ public class TurnManager : MonoBehaviour {
     [Header("UI")]
     [SerializeField] private Canvas mainCanvas;
     [SerializeField] private TMP_Text turnTimeText;
+    [SerializeField] private TMP_Text roundNumText;
     [SerializeField] private GameObject blackscreen;
     [SerializeField] private GameObject levelNameText;
     [SerializeField] private GameObject queenHealthUIPrefab;
@@ -59,9 +60,6 @@ public class TurnManager : MonoBehaviour {
     private WeaponManager weaponManager;
     private WeaponDropSystem dropSystem;
 
-
-    [SerializeField] TextMeshProUGUI tempText;
-
     private void Start() {
         numOfAnts = LoadingData.numOfAnts;
         PlayerList = LoadingData.playerList;
@@ -78,6 +76,7 @@ public class TurnManager : MonoBehaviour {
         StartCoroutine(LevelTextCoroutine());
         yield return new WaitUntil(() => levelNameText.activeSelf == false);
 
+        ShowTimer();
         StartCoroutine(SpawnQueenCoroutine());
         yield return new WaitUntil(() => PlayerList.All(x => x.ConfirmedQueenSpawn == true));
 
@@ -85,6 +84,7 @@ public class TurnManager : MonoBehaviour {
         SpawnQueenAntHealthUI();
         yield return new WaitUntil(() => QueenHealthUI.Count == PlayerList.Count);
 
+        HideTimer(0.5f);
         StartCoroutine(StartGame());
     }
 
@@ -204,15 +204,21 @@ public class TurnManager : MonoBehaviour {
     }
 
     private IEnumerator StartGame() {
-        // PickAntTurn();
-
         for (int i = 0; i < numOfRounds; i++) {
-            tempText.text = "Current Round: " + (CurrentRound + 1);
+            roundNumText.text = "Current Round: " + (CurrentRound + 1);
+
+            cameraSystem.ResetCamera();
+            cameraSystem.SetCameraTarget(null);
+            ShowRoundNumber();
+            yield return new WaitForSeconds(2.5f);
+            HideRoundNumber();
 
             foreach (var player in PlayerList) {
                 currentTurnEnded = false;
                 CurrentPlayerTurn = player;
+                ShowTimer();
                 turnTimerCoroutine = StartCoroutine(TurnTimer());
+                cameraSystem.ResetCamera();
                 cameraSystem.SetCameraTarget(CurrentAntTurn.transform);
                 startTurnEvent.Invoke();
 
@@ -341,4 +347,36 @@ public class TurnManager : MonoBehaviour {
     private void CheckIfQueenAttacked() {
 		CurrentAntTurn.GetComponent<QueenAntScript>().CheckAttackTurn();
 	}
+
+    public void HideTimer() {
+        turnTimeText.GetComponent<MoveUI>().StartMoveUI(LerpType.InOut, turnTimeText.rectTransform.anchoredPosition, new Vector2(0, 50), 1.0f);
+    }
+
+    public void HideTimer(float duration) {
+        turnTimeText.GetComponent<MoveUI>().StartMoveUI(LerpType.InOut, turnTimeText.rectTransform.anchoredPosition, new Vector2(0, 50), duration);
+    }
+
+    public void ShowTimer() {
+        turnTimeText.GetComponent<MoveUI>().StartMoveUI(LerpType.InOut, turnTimeText.rectTransform.anchoredPosition, new Vector2(0, -50), 1.0f);
+    }
+
+    public void ShowTimer(float duration) {
+        turnTimeText.GetComponent<MoveUI>().StartMoveUI(LerpType.InOut, turnTimeText.rectTransform.anchoredPosition, new Vector2(0, -50), duration);
+    }
+
+    public void HideRoundNumber() {
+        roundNumText.GetComponent<FadeScript>().FadeOutUI(1.0f);
+    }
+
+    public void HideRoundNumber(float duration) {
+        roundNumText.GetComponent<FadeScript>().FadeOutUI(duration);
+    }
+
+    public void ShowRoundNumber() {
+        roundNumText.GetComponent<FadeScript>().FadeInUI(1.0f);
+    }
+
+    public void ShowRoundNumber(float duration) {
+        roundNumText.GetComponent<FadeScript>().FadeInUI(duration);
+    }
 }

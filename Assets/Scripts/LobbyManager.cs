@@ -164,7 +164,7 @@ public class LobbyManager : MonoBehaviour {
             case 4:
                 return Color.blue;
             case 5:
-                return Color.green;
+                return new Color(0, 0.8f, 0);
             case 6:
                 return Color.yellow;
             case 7:

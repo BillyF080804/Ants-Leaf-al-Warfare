@@ -9,6 +9,7 @@ public class FadeScript : MonoBehaviour {
     }
 
     public void FadeInUI(float fadeDuration) {
+        gameObject.SetActive(true);
         StartCoroutine(FadeObject(true, fadeDuration, gameObject));
     }
 

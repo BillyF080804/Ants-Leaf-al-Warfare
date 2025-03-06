@@ -55,6 +55,7 @@ public class WeaponManager : MonoBehaviour {
         if (canFireWeapon) {
             canFireWeapon = false;
             canAim = false;
+            turnManager.HideTimer();
             StartCoroutine(FireWeaponCoroutine(weaponInfo, playerPosition));
         }
     }
@@ -120,6 +121,7 @@ public class WeaponManager : MonoBehaviour {
         if (canFireWeapon) {
             canFireWeapon = false;
             canAim = false;
+            turnManager.HideTimer();
             Collider[] colliders = Physics.OverlapSphere(aimPosition, 2.5f).Where(x => x.CompareTag("Player") && x.gameObject != turnManager.CurrentAntTurn.gameObject).ToArray();
 
             if (colliders.Length > 0) {
@@ -145,6 +147,7 @@ public class WeaponManager : MonoBehaviour {
         if (canFireWeapon) {
             canFireWeapon = false;
             canAim = false;
+            turnManager.HideTimer();
             Vector3 spawnPos = new Vector3(playerPosition.position.x, playerPosition.position.y, playerPosition.position.z);
             Vector3 scale = new Vector3(weaponInfo.sprayHeight, weaponInfo.sprayLength, weaponInfo.sprayLength);
 

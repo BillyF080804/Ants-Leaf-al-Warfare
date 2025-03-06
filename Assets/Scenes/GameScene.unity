@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 3954181}
   - component: {fileID: 3954183}
   - component: {fileID: 3954182}
+  - component: {fileID: 3954184}
   m_Layer: 5
   m_Name: TurnTimerText
   m_TagString: Untagged
@@ -154,10 +155,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1998806276}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 50}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3954182
 MonoBehaviour:
@@ -213,8 +214,8 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -256,6 +257,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3954180}
   m_CullTransparentMesh: 1
+--- !u!114 &3954184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3954180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 128345f0403e4b4479e40e87727fec4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &24696138 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5066688452730467586, guid: ddb3859fac9866743ad7fdfc2431cacb, type: 3}
@@ -278,7 +291,6 @@ GameObject:
   - component: {fileID: 48997131}
   - component: {fileID: 48997130}
   - component: {fileID: 48997129}
-  - component: {fileID: 48997133}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -373,37 +385,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &48997133
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 48997128}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AgentTypeID: 0
-  m_CollectObjects: 0
-  m_Size: {x: 10, y: 10, z: 10}
-  m_Center: {x: 0, y: 2, z: 0}
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_UseGeometry: 0
-  m_DefaultArea: 0
-  m_GenerateLinks: 0
-  m_IgnoreNavMeshAgent: 1
-  m_IgnoreNavMeshObstacle: 1
-  m_OverrideTileSize: 0
-  m_TileSize: 256
-  m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
-  m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 0}
-  m_BuildHeightMesh: 0
 --- !u!1001 &61637879
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2062,6 +2043,11 @@ MonoBehaviour:
   maxZoomIn: 5
   maxZoomOut: -10
   cameraZoomSpeed: 0.025
+  freeCamSpeed: 0.1
+  freeCamMinX: -20
+  freeCamMaxX: 20
+  freeCamMinY: 0
+  freeCamMaxY: 20
   setManualOverviewPosition: 0
   overviewPosition: {x: 0, y: 0, z: 0}
 --- !u!43 &585709291
@@ -2668,13 +2654,15 @@ GameObject:
   - component: {fileID: 769923765}
   - component: {fileID: 769923767}
   - component: {fileID: 769923766}
+  - component: {fileID: 769923769}
+  - component: {fileID: 769923768}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: RoundNumText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &769923765
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2691,8 +2679,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 449}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1000, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &769923766
 MonoBehaviour:
@@ -2714,7 +2702,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: 'Current Round: 0'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2741,15 +2729,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 128
+  m_fontSizeBase: 128
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -2791,6 +2779,30 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 769923764}
   m_CullTransparentMesh: 1
+--- !u!114 &769923768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 769923764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0882b316a506a744481092ae01929811, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!225 &769923769
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 769923764}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &797116302
 GameObject:
   m_ObjectHideFlags: 0
@@ -5022,6 +5034,7 @@ MonoBehaviour:
   queenPrefab: {fileID: 7419841320288824830, guid: f2ffe306220e9534ea2e2a710635ff87, type: 3}
   mainCanvas: {fileID: 1998806275}
   turnTimeText: {fileID: 3954182}
+  roundNumText: {fileID: 769923766}
   blackscreen: {fileID: 797116302}
   levelNameText: {fileID: 456278869}
   queenHealthUIPrefab: {fileID: 4949640269382184298, guid: e2ae6995a00a1a140bf9d26c13be17f2, type: 3}
@@ -5030,7 +5043,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: c19929451ee11724a9e46c2d30763465, type: 3}
   - {fileID: 21300000, guid: e33ad75f9369c5a4ca2855fafd9e681a, type: 3}
   - {fileID: 21300000, guid: 6568490c380e5404c8f25ab5ebaf4554, type: 3}
-  tempText: {fileID: 769923766}
 --- !u!4 &2003787145
 Transform:
   m_ObjectHideFlags: 0

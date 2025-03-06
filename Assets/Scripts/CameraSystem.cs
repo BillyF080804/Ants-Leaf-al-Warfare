@@ -86,6 +86,8 @@ public class CameraSystem : MonoBehaviour {
 
         freeCamPos.x = clampedX;
         freeCamPos.y = clampedY;
+        freeCamPos.z = -10.0f;
+        freeCamPos.z += cameraZoom;
 
         cameraObj.transform.position = Vector3.SmoothDamp(cameraObj.transform.position, freeCamPos, ref velocity, smoothTime);
     }

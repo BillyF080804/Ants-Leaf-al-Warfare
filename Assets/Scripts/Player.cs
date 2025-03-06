@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -18,6 +19,7 @@ public class Player : MonoBehaviour {
     private WeaponManager weaponManager;
     private QueenAntScript queenAntScript;
     private QueenAntSpawner queenAntSpawner;
+    private PlayerInput playerInput;
 
     public bool ConfirmedQueenSpawn { get; private set; } = false;
     private bool canSpawnQueen = false;
@@ -29,6 +31,7 @@ public class Player : MonoBehaviour {
 
     private void Awake() {
         lobbyManager = FindFirstObjectByType<LobbyManager>();
+        playerInput = GetComponent<PlayerInput>();
         SceneManager.activeSceneChanged += ActiveSceneChanged;
 
         DontDestroyOnLoad(gameObject);
@@ -286,7 +289,6 @@ public class Player : MonoBehaviour {
 
     public void RemoveWeapon(BaseWeaponSO weapon) {
         CurrentWeapons.Remove(weapon);
-
     }
 
     public void AllowPlayerToSpawnQueen() {
@@ -314,6 +316,11 @@ public class Player : MonoBehaviour {
 
     public EventSystem GetEventSystem() {
         return GetComponent<EventSystem>();
+    }
+
+    public string GetInputDevice() {
+        Debug.Log(playerInput.devices.First().name);
+        return playerInput.devices.First().name;
     }
 
     //Temporary Func/Keybind of Left Shift
