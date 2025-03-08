@@ -2988,7 +2988,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.000009536743}
   m_SizeDelta: {x: 0, y: 28}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &1201091587
@@ -3450,6 +3450,7 @@ MonoBehaviour:
   errorText: {fileID: 273441899}
   gamemodeDropdown: {fileID: 1727778076}
   availableScenes:
+  - {fileID: 102900000, guid: 140eb1fd9303fe244aee057247659dd6, type: 3}
   - {fileID: 102900000, guid: 816d834059aae804680ae6c078a0ce28, type: 3}
   sceneDropdown: {fileID: 970970623}
 --- !u!1 &1299692028
