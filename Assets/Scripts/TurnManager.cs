@@ -175,7 +175,7 @@ public class TurnManager : MonoBehaviour {
             spawnPos = new Vector3(Random.Range(MapMinX, MapMaxX), 30.0f, 0);
 
             if (Physics.Raycast(spawnPos, Vector3.down, out RaycastHit ray, 35.0f)) {
-                spawnPos = new Vector3(ray.point.x, ray.point.y + 0.5f, ray.point.z);
+                spawnPos = new Vector3(ray.point.x, ray.point.y + 0.5f, 0);
             }
 
             Collider[] colliders = Physics.OverlapSphere(spawnPos, minDistanceBetweenAnts).Where(x => x.CompareTag("Player")).ToArray();

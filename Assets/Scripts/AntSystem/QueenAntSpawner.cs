@@ -27,7 +27,7 @@ public class QueenAntSpawner : MonoBehaviour {
             Vector3 targetPos = new Vector3(xPos, 30.0f, 0);
 
             if (Physics.Raycast(targetPos, Vector3.down, out RaycastHit ray, 35.0f, ~targetObject.GetComponent<QueenAntScript>().GetQueenLayerMask())) {
-                targetObject.transform.position = new Vector3(ray.point.x, ray.point.y + 0.5f, ray.point.z);
+                targetObject.transform.position = new Vector3(ray.point.x, ray.point.y + 0.5f, 0);
             }
 
             CheckQueenInValidPos();
