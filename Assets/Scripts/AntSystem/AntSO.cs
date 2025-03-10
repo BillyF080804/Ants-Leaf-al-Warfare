@@ -10,8 +10,8 @@ public class AntSO : ScriptableObject {
 
 	[Header("Ant Attributes")]
 	public string antName = "";
-	public float moveSpeed = 1.0f;
-	public int jumpHeight = 2;
+	public float moveSpeed = 4;
+	public int jumpHeight = 5;
 	public int health = 100;
 
 

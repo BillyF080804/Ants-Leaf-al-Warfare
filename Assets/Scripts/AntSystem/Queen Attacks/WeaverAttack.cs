@@ -12,13 +12,26 @@ public class WeaverAttack : QueenAttack {
 
 	public int mapMinX;
 	public int mapMaxX;
+	public int safeRadius = 5;
 
 	public override void ActivateAttack(int attackLevel, Ant antInfoScript, Vector3 position) {
-		Debug.Log("hi");
 		for (int i = 0; i < attackLevel; i++) {
-			GameObject tempArea = Instantiate(areaToSpawn, FindArea(),Quaternion.identity);
+			Vector3 tempPos = CheckArea();
+			GameObject tempArea = Instantiate(areaToSpawn, tempPos, Quaternion.identity);
 
 		}
+	}
+
+	public Vector3 CheckArea() {
+		Vector3 testArea = FindArea();
+
+		float maxSafe = transform.position.x + safeRadius;
+		float minSafe = transform.position.x - safeRadius;
+		while (testArea.x > minSafe && testArea.x < maxSafe) {
+			Debug.Log("BZZT");
+			testArea = FindArea();
+		}
+		return testArea;
 	}
 
 	public Vector3 FindArea() {
@@ -26,8 +39,6 @@ public class WeaverAttack : QueenAttack {
 		if (Physics.Raycast(spawnPos, Vector3.down, out RaycastHit ray, 35.0f)) {
 			spawnPos = new Vector3(Random.Range(mapMinX, mapMaxX), ray.point.y + 0.5f, 0);
 		}
-
-
 		return spawnPos;
 	}
 }
