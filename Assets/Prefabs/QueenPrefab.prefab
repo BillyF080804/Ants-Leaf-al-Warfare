@@ -273,7 +273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 297f68be2c4a111439bc4dc076f9f46a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  antInfo: {fileID: 11400000, guid: 73029478af7edfb4f96cec8b1ddceea3, type: 2}
+  antInfo: {fileID: 11400000, guid: d1c6c5eb52cecf44ba3ab99b5c72b3d8, type: 2}
   hasHadTurn: 0
   ownedPlayer: 0
   moveVector: {x: 0, y: 0, z: 0}

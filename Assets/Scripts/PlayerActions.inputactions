@@ -528,7 +528,7 @@
                 {
                     "name": "",
                     "id": "2985ac40-5255-46ab-b389-eabc3a876cf0",
-                    "path": "<Gamepad>/leftTrigger",
+                    "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -770,7 +770,7 @@
                 {
                     "name": "up",
                     "id": "8305a923-bc45-4dee-a301-33c541b2ff18",
-                    "path": "<Gamepad>/leftStick/up",
+                    "path": "<Gamepad>/rightStick/up",
                     "interactions": "",
                     "processors": "AxisDeadzone",
                     "groups": "Gamepad",
@@ -792,7 +792,7 @@
                 {
                     "name": "down",
                     "id": "df3fbc72-7c06-4f42-81e8-16e81d320b4e",
-                    "path": "<Gamepad>/leftStick/down",
+                    "path": "<Gamepad>/rightStick/down",
                     "interactions": "",
                     "processors": "AxisDeadzone",
                     "groups": "Gamepad",
@@ -814,7 +814,7 @@
                 {
                     "name": "left",
                     "id": "d370f1cb-3327-45c4-836e-544bee8c8061",
-                    "path": "<Gamepad>/leftStick/left",
+                    "path": "<Gamepad>/rightStick/left",
                     "interactions": "",
                     "processors": "AxisDeadzone",
                     "groups": "Gamepad",
@@ -836,7 +836,7 @@
                 {
                     "name": "right",
                     "id": "6b67b03d-7137-4f17-a6ca-6322deebe90d",
-                    "path": "<Gamepad>/leftStick/right",
+                    "path": "<Gamepad>/rightStick/right",
                     "interactions": "",
                     "processors": "AxisDeadzone",
                     "groups": "Gamepad",

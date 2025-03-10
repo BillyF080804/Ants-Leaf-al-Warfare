@@ -24,7 +24,7 @@ public class QueenAntScript : Ant {
 
 	public void SpecialAttack() {
 		if(attackLevel != 0) {
-			if (antInfo.queenType == AntSO.QueenType.Bee) {
+			if (antInfo.queenType == AntSO.QueenType.Bee || antInfo.queenType == AntSO.QueenType.Weaver) {
 				antInfo.queenAttack.ActivateAttack(attackLevel, this, transform.position);
 			} else {
 				antInfo.queenAttack.ActivateAttack(attackLevel, this);

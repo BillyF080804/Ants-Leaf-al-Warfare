@@ -44,3 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2c7b3ab9ddb66347978900823e382e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  areaToSpawn: {fileID: 2520957341945727043, guid: f6d2bb004a2ec2a4596ce128748438e2, type: 3}
+  effectToAdd: {fileID: 5701415912331228771, guid: 4ee10e588bac67441b96e856d4177636, type: 3}
+  mapMinX: 100
+  mapMaxX: -100
