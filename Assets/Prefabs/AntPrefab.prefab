@@ -406,6 +406,8 @@ MonoBehaviour:
   effects: []
   hasLifeSteal: 0
   lifeStealPercent: 0
+  hasStatDrop: 0
+  statDrops: 
   canInteract: 0
   interactable: {fileID: 0}
 --- !u!1 &8648079781018637731
@@ -546,7 +548,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 55e0a4e4078ee454d907d030a24cfe95, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: ec5deddade5957346a4f2400a2972ba2, type: 2}
+      objectReference: {fileID: 2100000, guid: 1236cfc5c6892f84b97b971c12b5f2bf, type: 2}
     - target: {fileID: 919132149155446097, guid: 55e0a4e4078ee454d907d030a24cfe95, type: 3}
       propertyPath: m_Name
       value: Base Ant_Low
