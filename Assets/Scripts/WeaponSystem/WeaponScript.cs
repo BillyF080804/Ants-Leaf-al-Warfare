@@ -24,21 +24,21 @@ public class WeaponScript : MonoBehaviour {
         else if (collision.gameObject.CompareTag("Player")) {
             Debug.Log(collision.gameObject.name + " damage dealt: " + weaponInfo.baseDamage);
             collision.gameObject.GetComponent<Ant>().TakeDamage(weaponInfo.baseDamage);
-        }
 
-        if (weaponInfo.hasVFX == true && weaponInfo.vfxObject != null) {
-            CreateVFX();
-        }
+            if (weaponInfo.hasVFX == true && weaponInfo.vfxObject != null) {
+                CreateVFX();
+            }
 
-        if (weaponInfo.weaponEffect != null) {
-            weaponInfo.weaponEffect.AddEffect(collision.gameObject.GetComponent<Ant>());
-        }
+            if (weaponInfo.weaponEffect != null) {
+                weaponInfo.weaponEffect.AddEffect(collision.gameObject.GetComponent<Ant>());
+            }
 
-        if (weaponInfo.cameraShakeOnImpact) {
-            cameraSystem.StartCameraShake(weaponInfo.cameraShakeDuration, weaponInfo.cameraShakeIntensity);
-        }
+            if (weaponInfo.cameraShakeOnImpact) {
+                cameraSystem.StartCameraShake(weaponInfo.cameraShakeDuration, weaponInfo.cameraShakeIntensity);
+            }
 
-        Destroy(gameObject);
+            Destroy(gameObject);
+        }
     }
 
     public void StartFuse() {
@@ -63,6 +63,18 @@ public class WeaponScript : MonoBehaviour {
             Debug.Log(collider.name + " damage dealt: " + weaponInfo.baseDamage);
             collider.GetComponent<Ant>().TakeDamage(weaponInfo.baseDamage);
             collider.GetComponent<Rigidbody>().AddExplosionForce(weaponInfo.explosionPower, transform.position, weaponInfo.explosionRange, weaponInfo.upwardsModifier, ForceMode.Impulse);
+
+            if (weaponInfo.weaponEffect != null) {
+                weaponInfo.weaponEffect.AddEffect(collider.gameObject.GetComponent<Ant>());
+            }
+        }
+
+        if (weaponInfo.hasVFX == true && weaponInfo.vfxObject != null) {
+            CreateVFX();
+        }
+
+        if (weaponInfo.cameraShakeOnImpact) {
+            cameraSystem.StartCameraShake(weaponInfo.cameraShakeDuration, weaponInfo.cameraShakeIntensity);
         }
 
         Destroy(gameObject);
