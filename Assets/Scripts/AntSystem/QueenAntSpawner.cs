@@ -2,6 +2,9 @@ using System.Linq;
 using UnityEngine;
 
 public class QueenAntSpawner : MonoBehaviour {
+    [Header("Settings")]
+    [SerializeField] private float queenSpawningSpeed = 10.0f;
+
     public bool QueenInValidPos { get; private set; } = false;
     private float moveValue = 0.0f;
     private GameObject targetObject;
@@ -22,7 +25,7 @@ public class QueenAntSpawner : MonoBehaviour {
 
     private void Update() {
         if (targetObject != null) {
-            float xPos = targetObject.transform.position.x + moveValue * 2.5f * Time.deltaTime;
+            float xPos = targetObject.transform.position.x + moveValue * queenSpawningSpeed * Time.deltaTime;
             xPos = Mathf.Clamp(xPos, turnManager.MapMinX, turnManager.MapMaxX);
             Vector3 targetPos = new Vector3(xPos, 30.0f, 0);
 

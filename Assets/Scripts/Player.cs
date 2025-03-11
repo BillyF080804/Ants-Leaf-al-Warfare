@@ -71,8 +71,15 @@ public class Player : MonoBehaviour {
         }
     }
 
-    //Function called when the player presses the skip turn button
+    //New skip turn function
     private void OnSkipTurn() {
+        if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false) {
+            turnManager.EndTurn();
+        }
+    }
+
+    //Function called when the player presses the skip turn button
+    private void OnOldSkipTurn() {
         if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false) {
             skippingTurn = !skippingTurn;
 

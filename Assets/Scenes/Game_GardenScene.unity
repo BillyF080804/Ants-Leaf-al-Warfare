@@ -32047,6 +32047,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6000f9ee4c0efb4fbde1e8d529667c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  queenSpawningSpeed: 10
 --- !u!4 &855158826
 Transform:
   m_ObjectHideFlags: 0
