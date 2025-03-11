@@ -222,6 +222,7 @@ public class TurnManager : MonoBehaviour {
                 CurrentPlayerTurn = player;
                 ShowTimer();
                 turnTimerCoroutine = StartCoroutine(TurnTimer());
+                player.ResetFreeCamSetting();
                 cameraSystem.ResetCamera();
                 cameraSystem.SetCameraTarget(CurrentAntTurn.transform);
                 startTurnEvent.Invoke();

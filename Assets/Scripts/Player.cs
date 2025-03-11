@@ -24,6 +24,7 @@ public class Player : MonoBehaviour {
     public bool ConfirmedQueenSpawn { get; private set; } = false;
     private bool canSpawnQueen = false;
     private bool skippingTurn = false;
+    private bool freeCamEnabled = false;
 
     public GameObject QueenAnt { get; private set; } = null;
     public List<GameObject> AntList { get; private set; } = new List<GameObject>();
@@ -186,14 +187,20 @@ public class Player : MonoBehaviour {
     //Called when the player presses the reset camera button
     private void OnResetCameraPos() {
         if (CheckActionIsValid() || canSpawnQueen == true) {
-            cameraSystem.ResetCamera();
+            freeCamEnabled = !freeCamEnabled;
+
+            if (freeCamEnabled == false) {
+                cameraSystem.ResetCamera();
+            }
         }
     }
 
     //Called when the player moves the free camera
     private void OnMoveFreeCam(InputValue value) {
         if (CheckActionIsValid() || canSpawnQueen == true) {
-            cameraSystem.SetFreeCameraValue(value.Get<Vector2>());
+            if (freeCamEnabled) {
+                cameraSystem.SetFreeCameraValue(value.Get<Vector2>());
+            }
         }
     }
 
@@ -281,6 +288,9 @@ public class Player : MonoBehaviour {
 		QueenAnt.GetComponent<Ant>().hasHadTurn = false;
 	}
 
+    public void ResetFreeCamSetting() {
+        freeCamEnabled = false;
+    }
 
     public void AddNewWeapon(BaseWeaponSO newWeapon) {
         CurrentWeapons.Add(newWeapon);
