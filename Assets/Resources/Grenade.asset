@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c76268df7a3d27b4397d0d1e6cbf16c9, type: 3}
-  m_Name: ExplosiveWeapon
+  m_Name: Grenade
   m_EditorClassIdentifier: 
-  weaponName: 'Explosive Weapon '
-  weaponDescription: It explodes.
-  unlimitedUses: 0
-  weaponIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  weaponPrefab: {fileID: 2035224743872689002, guid: 48600db732ecebc49831131511799a3a, type: 3}
-  baseDamage: 25
-  weaponSpeed: 10
+  weaponName: Acorn Grenade
+  weaponDescription: Duck and cover for this bunker buster of a seed!
+  unlimitedUses: 1
+  weaponIcon: {fileID: 0}
+  weaponPrefab: {fileID: 2035224743872689002, guid: 799eae2705cc99044a954b6464641fc8, type: 3}
+  baseDamage: 20
+  weaponSpeed: 20
   useGravity: 1
   weaponRandomisation: 0
   explosive: 1
@@ -27,14 +27,14 @@ MonoBehaviour:
   isSpray: 0
   weaponEffect: {fileID: 0}
   cameraDelay: 4
-  cameraShakeOnFire: 1
+  cameraShakeOnFire: 0
   cameraShakeOnImpact: 1
   hasVFX: 1
   hasSounds: 0
-  explodeOnImpact: 1
+  explodeOnImpact: 0
   explosionRange: 5
-  explosionPower: 1
-  fuseTimer: 0.2
+  explosionPower: 5
+  fuseTimer: 5
   vfxSize: 1
   vfxDuration: 2.5
   vfxObject: {fileID: 2169185026088089853, guid: b22ffd9e1b7000c4daadabd9b6b95113, type: 3}

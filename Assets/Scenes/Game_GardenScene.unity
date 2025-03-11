@@ -89264,14 +89264,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4647953210430201898}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.13638312, y: 0.000000083820275, z: 0.000000085252985, w: 0.9906562}
-  m_LocalPosition: {x: -0, y: 0.01090136, z: 0}
+  m_LocalRotation: {x: 0.6911237, y: 0.00000011888627, z: -0.000000012647036, w: 0.7227365}
+  m_LocalPosition: {x: 0.0000000012519129, y: 0.010900044, z: -0.0000009613576}
   m_LocalScale: {x: 1, y: 1, z: 0.9999999}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8723906669035140562}
   m_Father: {fileID: 3123441234915848037}
-  m_LocalEulerAnglesHint: {x: -15.677, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 87.438, y: 0, z: 0}
 --- !u!1 &2168716469226284523
 GameObject:
   m_ObjectHideFlags: 0
@@ -89543,14 +89543,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1730305698523719576}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.000000080621135, y: 0.52788526, z: 0.8493157, w: 0.00000003878322}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.00000005581445, y: 0.10716993, z: 0.9942407, w: 0.00000006991888}
+  m_LocalPosition: {x: 6.141058e-10, y: 0.000000001192093, z: -5.9604627e-10}
   m_LocalScale: {x: 1, y: 1.0000002, z: 1.0000001}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2113124093963351296}
   m_Father: {fileID: 3307690432654979239}
-  m_LocalEulerAnglesHint: {x: -63.725, y: 0, z: 180}
+  m_LocalEulerAnglesHint: {x: -12.304, y: 0, z: 180}
 --- !u!137 &3177202394788954284
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -89992,7 +89992,7 @@ Transform:
   m_GameObject: {fileID: 6493138507840633475}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.00000058114523}
-  m_LocalPosition: {x: -17.4, y: -1.8584, z: 22.44}
+  m_LocalPosition: {x: -17.4, y: -0.52, z: 22.44}
   m_LocalScale: {x: 3.8108, y: 3.8108, z: 3.8108}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -90058,6 +90058,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5861315886579736633}
+  - component: {fileID: 6493138507840633476}
   m_Layer: 0
   m_Name: VenusFlyTrap
   m_TagString: Untagged
@@ -90065,6 +90066,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!95 &6493138507840633476
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6493138507840633475}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b353b464cfd595c4f8f65b7f356457ba, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &6761739103586086801
 Transform:
   m_ObjectHideFlags: 0
@@ -90667,14 +90689,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1043588674719096401}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.1796392, y: 0.00000011801361, z: -0.000000047971547, w: 0.9837326}
-  m_LocalPosition: {x: 0, y: 0.006889152, z: 0}
+  m_LocalRotation: {x: -0.5019115, y: 0.00000012728448, z: -0.0000000052090603, w: 0.86491895}
+  m_LocalPosition: {x: 9.2483665e-10, y: 0.0068891533, z: 0.000000015832486}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1572270673565669934}
   m_Father: {fileID: 2113124093963351296}
-  m_LocalEulerAnglesHint: {x: -20.697, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -60.253, y: 0, z: 0}
 --- !u!1 &8736642521106509273
 GameObject:
   m_ObjectHideFlags: 0
