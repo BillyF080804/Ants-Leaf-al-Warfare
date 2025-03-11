@@ -26,7 +26,7 @@ public class HoseScript : Interactable
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<AntScript>(out currentAnt))
+        if (other.TryGetComponent<AntScript>(out currentAnt) && !hasLaunchedThisTurn)
         {
             uiHandler.ToggleTrigger(enterTriggerName);
         }
@@ -53,7 +53,10 @@ public class HoseScript : Interactable
 
     public override void Interaction()
     {
-        WaterSpray();
+        if (!hasLaunchedThisTurn)
+        {
+            WaterSpray();
+        }
     }
 
     public void HoseReset()
