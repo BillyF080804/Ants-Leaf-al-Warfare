@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e35e5017e9028e744b501148dc61a109, type: 3}
+  m_Name: BeePoison
+  m_EditorClassIdentifier: 
+  effectName: Poison
+  effectType: 0
+  multiTurn: 1
+  amountOfTurns: 0
+  amountOfDamagePerTurn: 0
+  statDropType: 0
+  percentToDropBy: 0

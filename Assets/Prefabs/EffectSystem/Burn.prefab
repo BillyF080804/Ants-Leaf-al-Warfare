@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8947729912018931850}
   - component: {fileID: 5701415912331228771}
   m_Layer: 0
-  m_Name: BurnEffect
+  m_Name: Burn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

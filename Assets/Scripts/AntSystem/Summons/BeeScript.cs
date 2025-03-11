@@ -11,6 +11,9 @@ public class BeeScript : MonoBehaviour
 	[SerializeField]
 	int speed = 5;
 
+	[SerializeField]
+	List<EffectScript> effects;
+
 	public void InitialiseValues(Ant antInfoScript, int attackLevel) {
 		ownedPlayer = antInfoScript.ownedPlayer;
 		damageToDeal = antInfoScript.antInfo.damage * attackLevel;
@@ -46,6 +49,12 @@ public class BeeScript : MonoBehaviour
 	private void OnTriggerEnter(Collider other) {
 		if (other.gameObject.GetComponent<Ant>() == antToAttack) {
 			antToAttack.TakeDamage(damageToDeal);
+			for(int i = 0; i<effects.Count; i++) {
+				effects[i].AddEffect(antToAttack);
+				if (effects[i].effectInfo.effectType == EffectSO.EffectType.StatDrop) {
+					effects[i].ApplyEffect(antToAttack);
+				}
+			}
 			Destroy(gameObject);
 		}
 	}
