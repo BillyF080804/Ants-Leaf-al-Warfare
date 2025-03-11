@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -18,6 +19,7 @@ public class LobbyManager : MonoBehaviour {
     [Header("Other UI")]
     [SerializeField] private GameObject errorText;
     [SerializeField] private TMP_Dropdown gamemodeDropdown;
+    [SerializeField] private LoadingUI loadingUIPrefab;
 
     [Header("Scene Info")]
     [SerializeField] private List<SceneAsset> availableScenes;
@@ -27,6 +29,7 @@ public class LobbyManager : MonoBehaviour {
     private string sceneToLoad;
     private int expectedPlayerCount = 0;
     private int numOfAnts = 2;
+    private bool loadingUISpawned = false;
     private List<PlayerCardInfo> playerCardList = new List<PlayerCardInfo>();
     private List<Player> playerList = new List<Player>();
 
@@ -143,13 +146,26 @@ public class LobbyManager : MonoBehaviour {
             errorText.GetComponent<MoveUI>().StartMoveUI(LerpType.OutBack, errorText, new Vector2(0, -25), new Vector2(0, 50), 1.0f);
         }
         else {
-            errorText.SetActive(false);
-            LoadingData.gamemode = gamemode;
-            LoadingData.sceneToLoad = sceneToLoad;
-            LoadingData.playerList = playerList;
-            LoadingData.numOfAnts = numOfAnts;
-            SceneManager.LoadScene("LoadingScene");
+            StartCoroutine(StartGameCoroutine());
         }
+    }
+
+    private IEnumerator StartGameCoroutine() {
+        errorText.SetActive(false);
+        LoadingData.gamemode = gamemode;
+        LoadingData.sceneToLoad = sceneToLoad;
+        LoadingData.playerList = playerList;
+        LoadingData.numOfAnts = numOfAnts;
+
+        if (loadingUISpawned == false) {
+            loadingUISpawned = true;
+
+            LoadingUI loadingUI = Instantiate(loadingUIPrefab);
+            loadingUI.CloseShutter();
+        }
+
+        yield return new WaitForSeconds(1.0f);
+        SceneManager.LoadScene("LoadingScene");
     }
 
     //Helper function to return a random color

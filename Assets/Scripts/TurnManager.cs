@@ -73,6 +73,13 @@ public class TurnManager : MonoBehaviour {
     }
 
     private IEnumerator StartLevelCoroutine() {
+        levelNameText.GetComponent<TMP_Text>().text = levelName;
+
+        LoadingUI loadingUI = FindFirstObjectByType<LoadingUI>();
+        loadingUI.OpenShutter();
+        yield return new WaitForSeconds(1.0f);
+        Destroy(loadingUI.gameObject);
+
         StartCoroutine(LevelTextCoroutine());
         yield return new WaitUntil(() => levelNameText.activeSelf == false);
 
@@ -196,8 +203,6 @@ public class TurnManager : MonoBehaviour {
     }
 
     private IEnumerator LevelTextCoroutine() {
-        levelNameText.GetComponent<TMP_Text>().text = levelName;
-
         yield return new WaitForSeconds(1.0f);
         levelNameText.GetComponent<FadeScript>().FadeOutUI(2.0f, levelNameText);
     }

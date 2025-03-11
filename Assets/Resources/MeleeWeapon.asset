@@ -20,17 +20,39 @@ MonoBehaviour:
   baseDamage: 25
   weaponSpeed: 20
   useGravity: 0
+  weaponRandomisation: 0
   explosive: 0
   isMelee: 1
   isMultiShot: 0
+  isSpray: 0
+  weaponEffect: {fileID: 0}
+  cameraDelay: 4
+  cameraShakeOnFire: 0
+  cameraShakeOnImpact: 0
   hasVFX: 0
+  hasSounds: 0
   explodeOnImpact: 0
   explosionRange: 5
   explosionPower: 1
   fuseTimer: 0.2
   vfxSize: 1
+  vfxDuration: 2.5
   vfxObject: {fileID: 0}
   knockbackStrength: 2
   upwardsModifier: 4
   numOfShots: 2
   delayBetweenShots: 0.5
+  minimumRandomness: 0.8
+  maximumRandomness: 1.2
+  sprayMover: 0
+  sprayStrength: 25
+  sprayLength: 3
+  sprayHeight: 2
+  sprayDuration: 2.5
+  sprayAreaVFXSize: 1
+  sprayAreaObject: {fileID: 0}
+  sprayAreaVFX: {fileID: 0}
+  cameraShakeDuration: 0.25
+  cameraShakeIntensity: 1
+  shootSound: {fileID: 0}
+  impactSound: {fileID: 0}
