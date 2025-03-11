@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c76268df7a3d27b4397d0d1e6cbf16c9, type: 3}
+  m_Name: SingleFire
+  m_EditorClassIdentifier: 
+  weaponName: Slingshot Single
+  weaponDescription: Fire a single, direct shot to your enemy!
+  unlimitedUses: 1
+  weaponIcon: {fileID: 0}
+  weaponPrefab: {fileID: 3667148812617791359, guid: 7ef10ed28193d304687981aaf28c702a, type: 3}
+  baseDamage: 20
+  weaponSpeed: 25
+  useGravity: 1
+  weaponRandomisation: 1
+  explosive: 0
+  isMelee: 0
+  isMultiShot: 0
+  isSpray: 0
+  weaponEffect: {fileID: 0}
+  cameraDelay: 4
+  cameraShakeOnFire: 0
+  cameraShakeOnImpact: 0
+  hasVFX: 0
+  hasSounds: 0
+  explodeOnImpact: 1
+  explosionRange: 5
+  explosionPower: 5
+  fuseTimer: 5
+  vfxSize: 1
+  vfxDuration: 2.5
+  vfxObject: {fileID: 0}
+  knockbackStrength: 2
+  upwardsModifier: 4
+  numOfShots: 2
+  delayBetweenShots: 0.5
+  minimumRandomness: 0.8
+  maximumRandomness: 1.2
+  sprayMover: 0
+  sprayStrength: 25
+  sprayLength: 3
+  sprayHeight: 2
+  sprayDuration: 2.5
+  sprayAreaVFXSize: 1
+  sprayAreaObject: {fileID: 0}
+  sprayAreaVFX: {fileID: 0}
+  cameraShakeDuration: 0.25
+  cameraShakeIntensity: 1
+  shootSound: {fileID: 0}
+  impactSound: {fileID: 0}
