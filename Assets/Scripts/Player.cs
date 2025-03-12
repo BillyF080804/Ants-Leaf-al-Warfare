@@ -71,6 +71,13 @@ public class Player : MonoBehaviour {
         }
     }
 
+    //Called when the player presses the ready up button
+    private void OnReadyUp() {
+        if (lobbyManager != null && SceneManager.GetActiveScene().name.Contains("Menu")) {
+            lobbyManager.ReadyUp(playerInfo.playerNum); //Only works in the menu
+        }
+    }
+
     //New skip turn function
     private void OnSkipTurn() {
         if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false) {

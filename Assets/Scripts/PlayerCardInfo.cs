@@ -2,14 +2,16 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 [Serializable]
-public class PlayerCardInfo {
+public class PlayerCardInfo : MonoBehaviour {
     public int playerNum;
+    public bool isReady;
     public GameObject card;
     public TMP_Text playerNumText;
     public TMP_Text joinText;
-    public TMP_Text currentInputText;
     public Image colorBand;
+    public Image readyBackground;
+    public TMP_Text readyText;
+    public GameObject readyUpHint;
 }

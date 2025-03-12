@@ -4,6 +4,7 @@ using System.Linq;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -14,10 +15,10 @@ public class LobbyManager : MonoBehaviour {
 
     [Header("Player Cards")]
     [SerializeField] private Transform playerCardHolder;
-    [SerializeField] private GameObject playerCard;
+    [SerializeField] private PlayerCardInfo playerCard;
 
     [Header("Other UI")]
-    [SerializeField] private GameObject errorText;
+    [SerializeField] private TMP_Text playersJoinedText;
     [SerializeField] private TMP_Dropdown gamemodeDropdown;
     [SerializeField] private LoadingUI loadingUIPrefab;
 
@@ -30,6 +31,8 @@ public class LobbyManager : MonoBehaviour {
     private int expectedPlayerCount = 0;
     private int numOfAnts = 2;
     private bool loadingUISpawned = false;
+
+    private Coroutine readyCountdownCoroutine = null;
     private List<PlayerCardInfo> playerCardList = new List<PlayerCardInfo>();
     private List<Player> playerList = new List<Player>();
 
@@ -76,21 +79,15 @@ public class LobbyManager : MonoBehaviour {
 
         playerCardList.Clear();
         playerList.Clear();
+        playersJoinedText.text = "Waiting On Players To Join . . .";
 
-        for (int i = 0; i < expectedPlayerCount; i++) { 
-            GameObject newCard = Instantiate(playerCard, playerCardHolder);
+        for (int i = 0; i < expectedPlayerCount; i++) {
+            PlayerCardInfo newCard = Instantiate(playerCard, playerCardHolder);
             newCard.name = "PlayerCard" + (i + 1);
 
-            playerCardList.Add(new PlayerCardInfo {
-                playerNum = i + 1,
-                card = newCard,
-                playerNumText = newCard.transform.GetChild(0).GetComponent<TMP_Text>(),
-                joinText = newCard.transform.GetChild(1).GetComponent<TMP_Text>(),
-                currentInputText = newCard.transform.GetChild(2).GetComponent<TMP_Text>(),
-                colorBand = newCard.transform.GetChild(3).GetComponent<Image>()
-            });
-
-            playerCardList[i].playerNumText.text = "Player " + (i + 1);
+            playerCardList.Add(newCard.GetComponent<PlayerCardInfo>());
+            playerCardList[i].playerNum = i + 1;
+            playerCardList[i].playerNumText.text = "Player " + playerCardList[i].playerNum;
 
             if (i != 0) {
                 ChangeColor(playerCardList[i].playerNum);  
@@ -113,7 +110,11 @@ public class LobbyManager : MonoBehaviour {
             playerList.Where(x => x.playerInfo.playerNum == playerNum).First().playerInfo.playerInput = input;
             playerList.Where(x => x.playerInfo.playerNum == playerNum).First().playerInfo.playerColor = playerCardList.Where(x => x.playerNum == playerNum).First().colorBand.color;
             playerCardList.Where(x => x.playerNum == playerNum).First().joinText.text = "Player Joined";
-            playerCardList.Where(x => x.playerNum == playerNum).First().currentInputText.text = input.devices.First().displayName;
+            playerCardList.Where(x => x.playerNum == playerNum).First().readyUpHint.SetActive(true);
+
+            if (playerList.Count == expectedPlayerCount) {
+                playersJoinedText.text = "Waiting On Players To Ready Up . . .";
+            }
         }
     }
 
@@ -121,7 +122,6 @@ public class LobbyManager : MonoBehaviour {
         switch (_numOfAnts) {
             case 0: {
                 numOfAnts = 2;
-
                 break;
             }
             case 1: {
@@ -139,19 +139,7 @@ public class LobbyManager : MonoBehaviour {
         gamemode = gamemodeDropdown.options[_gamemode].text;
     }
 
-    //Loads players into the game
-    public void StartGame() {
-        if (playerList.Count() != expectedPlayerCount) {
-            errorText.SetActive(true);
-            errorText.GetComponent<MoveUI>().StartMoveUI(LerpType.OutBack, errorText, new Vector2(0, -25), new Vector2(0, 50), 1.0f);
-        }
-        else {
-            StartCoroutine(StartGameCoroutine());
-        }
-    }
-
     private IEnumerator StartGameCoroutine() {
-        errorText.SetActive(false);
         LoadingData.gamemode = gamemode;
         LoadingData.sceneToLoad = sceneToLoad;
         LoadingData.playerList = playerList;
@@ -210,5 +198,41 @@ public class LobbyManager : MonoBehaviour {
         }
 
         playerCardList.Where(x => x.playerNum == playerNum).First().colorBand.color = newColor;
+    }
+
+    public void ReadyUp(int playerNum) {
+        PlayerCardInfo playerCard = playerCardList.Where(x => x.playerNum == playerNum).First();
+
+        playerCard.isReady = !playerCard.isReady;
+
+        if (playerCard.isReady) {
+            playerCard.readyBackground.color = Color.green;
+            playerCard.readyText.text = "Ready!";
+        }
+        else {
+            playerCard.readyBackground.color = Color.red;
+            playerCard.readyText.text = "Not Ready!";
+        }
+
+        if (playerCardList.All(x => x.isReady) == true) {
+            readyCountdownCoroutine = StartCoroutine(ReadyCountdownCoroutine());
+        }
+        else if (readyCountdownCoroutine != null) {
+            StopCoroutine(readyCountdownCoroutine);
+            readyCountdownCoroutine = null;
+            playersJoinedText.text = "Waiting On Players To Ready Up . . .";
+        }
+    }
+
+    private IEnumerator ReadyCountdownCoroutine() {
+        float time = 3;
+
+        while (time > 0) {
+            time -= Time.deltaTime;
+            playersJoinedText.text = Mathf.CeilToInt(time).ToString();
+            yield return null;
+        }
+
+        StartCoroutine(StartGameCoroutine());
     }
 }
