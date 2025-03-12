@@ -28,6 +28,9 @@ public class Ant : MonoBehaviour {
 	public bool hasStatDrop;
 	public List<EffectSO.StatDropType> statDrops;
 
+	public bool isStepping = false;
+	public bool isStoodBack = false;
+
 	private int health;
 	private Rigidbody rb;
 	private Slider healthSlider;
@@ -160,8 +163,7 @@ public class Ant : MonoBehaviour {
     }
 
     private void Update() {
-        if (hasStatDrop)
-        {
+        if (hasStatDrop) {
 			if (statDrops.Contains(EffectSO.StatDropType.Speed)) {
 				float percentage = 0;
 				for (int i = 0; i < effects.Count; i++) {
@@ -174,10 +176,72 @@ public class Ant : MonoBehaviour {
 
 			}
 
-		} else {
+		} 
+		else {
 			transform.Translate(antInfo.moveSpeed * Time.deltaTime * moveVector);
 		}
-        
+
+        CheckForNearbyAnts();
+    }
+
+	private void CheckForNearbyAnts() {
+		List<Collider> ants = Physics.OverlapSphere(transform.position, 3.0f).Where(x => x.GetComponent<Ant>()).ToList();
+		List<Ant> nearbyAnts = new List<Ant>();
+
+		foreach (Collider collider in ants) {
+			nearbyAnts.Add(collider.GetComponent<Ant>());
+		}
+
+		if (turnManager.CurrentAntTurn == this) {
+            nearbyAnts.Remove(this);
+
+            foreach (Ant ant in nearbyAnts) {
+                if (ant.isStepping == false && ant.isStoodBack == false) {
+                    ant.isStepping = true;
+                    ant.MoveOutTheWay();
+                }
+            }
+        }
+		else {
+			if (!nearbyAnts.Contains(turnManager.CurrentAntTurn) && isStepping == false && isStoodBack == true) {
+				isStepping = true;
+				ReturnToNormalPos();
+			}
+		}
+	}
+
+	public void MoveOutTheWay() {
+        isStepping = true;
+        StartCoroutine(StepCoroutine(-3.0f));
+    }
+
+	private void ReturnToNormalPos() {
+		isStepping = true;
+		StartCoroutine(StepCoroutine(0.0f));
+	}
+
+	private IEnumerator StepCoroutine(float targetZ) {
+        float time = 0;
+        Vector3 startingPos = transform.position;
+        Vector3 targetPos = transform.position;
+		targetPos.z = targetZ;
+
+        //Lerp to actually move the UI
+        while (time < 1.0f) {
+            transform.position = LerpLibrary.ObjectLerp(startingPos, targetPos, LerpType.InOut, time);
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = targetPos;
+		isStepping = false;
+
+		if (targetZ == 0.0f) {
+			isStoodBack = false;
+		}
+		else {
+            isStoodBack = true;
+        }
     }
 
     private void OnCollisionEnter(Collision collision) {
@@ -203,8 +267,6 @@ public class Ant : MonoBehaviour {
 			canInteract = false;
 		}
 	}
-
-
 	
 	public void ApplyEffects() {
 		if (effects.Count > 0) {
