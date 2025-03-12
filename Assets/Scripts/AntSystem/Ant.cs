@@ -34,7 +34,7 @@ public class Ant : MonoBehaviour {
 	private int health;
 	private Rigidbody rb;
 	private Slider healthSlider;
-	private TurnManager turnManager;
+	protected TurnManager turnManager;
 
     private void Awake() {
 		turnManager = FindFirstObjectByType<TurnManager>();
@@ -139,6 +139,10 @@ public class Ant : MonoBehaviour {
 
 	public int GetHealth() {
 		return health;
+	}
+
+	public void SetHealth(int healthToSet) {
+		health = healthToSet;
 	}
 
 	public void OnJump() {

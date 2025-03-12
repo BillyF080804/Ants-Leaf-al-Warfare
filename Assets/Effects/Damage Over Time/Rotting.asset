@@ -9,16 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6bce53b57bfd1b4ea23fb8c135d608b, type: 3}
-  m_Name: Base Ant
+  m_Script: {fileID: 11500000, guid: e35e5017e9028e744b501148dc61a109, type: 3}
+  m_Name: Rotting
   m_EditorClassIdentifier: 
-  antPrefab: {fileID: 0}
-  antColor: {r: 0, g: 0, b: 0, a: 1}
-  antName: Worker
-  moveSpeed: 5
-  jumpHeight: 6
-  health: 100
-  IsQueen: 0
-  queenType: 0
-  damage: 1
-  queenAttack: {fileID: 0}
+  effectName: Rotting
+  effectType: 0
+  multiTurn: 1
+  amountOfTurns: 2
+  amountOfDamagePerTurn: 5
+  statDropType: 0
+  percentToDropBy: 0

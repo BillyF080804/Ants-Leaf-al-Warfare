@@ -28,7 +28,6 @@ public class WeaverAttack : QueenAttack {
 		float maxSafe = transform.position.x + safeRadius;
 		float minSafe = transform.position.x - safeRadius;
 		while (testArea.x > minSafe && testArea.x < maxSafe) {
-			Debug.Log("BZZT");
 			testArea = FindArea();
 		}
 		return testArea;

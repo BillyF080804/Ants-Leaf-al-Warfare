@@ -10,4 +10,11 @@ public class QueenAttack : MonoBehaviour {
 	public virtual void ActivateAttack(int attackLevel, Ant antInfoScript, Vector3 position) {
 		Debug.Log("Not Updated");
 	}
+
+	public virtual void ActivateAttack(int attackLevel, Ant antInfoScript, Vector3 position, TurnManager turnManager) {
+		Debug.Log("Not Updated");
+	}
+
+
+	
 }

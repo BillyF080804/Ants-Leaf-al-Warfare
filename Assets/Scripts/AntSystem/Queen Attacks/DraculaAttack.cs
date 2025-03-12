@@ -20,10 +20,11 @@ public class DraculaAttack : QueenAttack {
 
 		}
 
+		int index = attackLevel - 1;
 		for (int i = 0; i < antList2.Count; i++) {
-			int index = attackLevel - 1;
-			if(attackLevel< percentages.Count) {
-				effect.AddEffect(antList2[i], percentages[attackLevel - 1]);
+			
+			if(attackLevel < percentages.Count) {
+				effect.AddEffect(antList2[i], percentages[index]);
 			}
 			
 		}

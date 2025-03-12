@@ -24,11 +24,20 @@ public class QueenAntScript : Ant {
 
 	public void SpecialAttack() {
 		if(attackLevel != 0) {
-			if (antInfo.queenType == AntSO.QueenType.Bee || antInfo.queenType == AntSO.QueenType.Weaver) {
-				antInfo.queenAttack.ActivateAttack(attackLevel, this, transform.position);
-			} else {
+			if(antInfo.queenType == AntSO.QueenType.Dracula) {
 				antInfo.queenAttack.ActivateAttack(attackLevel, this);
+			} else if (antInfo.queenType == AntSO.QueenType.Pharaoh) {
+				antInfo.queenAttack.ActivateAttack(attackLevel, this, transform.position, turnManager);
+			} else {
+				antInfo.queenAttack.ActivateAttack(attackLevel, this, transform.position);
 			}
+
+
+			//if (antInfo.queenType == AntSO.QueenType.Bee || antInfo.queenType == AntSO.QueenType.Weaver || antInfo.queenType == AntSO.QueenType.Weaver) {
+			//	antInfo.queenAttack.ActivateAttack(attackLevel, this, transform.position);
+			//} else {
+			//	antInfo.queenAttack.ActivateAttack(attackLevel, this);
+			//}
 
 			attackLevel = 0;
 			usedAttack = true;
