@@ -10,7 +10,7 @@ public class FlyTrapHazard: Interactable
     [SerializeField] private GameObject attachForSpline;
     [SerializeField] Quaternion rotation;
     [SerializeField] Vector3 detachSpeed;
-    public AntScript currentAnt;
+    public Ant currentAnt;
 
     [Header("Animation Variables")]
     [SerializeField] AnimationHandler uiHandler;
@@ -33,10 +33,10 @@ public class FlyTrapHazard: Interactable
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<AntScript>() != null)
+        if (other.GetComponent<Ant>() != null)
         {
             uiHandler.ToggleTrigger(enterTriggerName);
-            currentAnt = other.GetComponent<AntScript>();
+            currentAnt = other.GetComponent<Ant>();
         }
     }
 
@@ -52,7 +52,7 @@ public class FlyTrapHazard: Interactable
 
     private void OnTriggerExit(Collider other)
     {
-        if ((other.GetComponent<AntScript>() == currentAnt) && (currentAnt.transform.parent == null))
+        if ((other.GetComponent<Ant>() == currentAnt) && (currentAnt.transform.parent == null))
         {
             uiHandler.ToggleTrigger(exitTriggerName);
             currentAnt = null;

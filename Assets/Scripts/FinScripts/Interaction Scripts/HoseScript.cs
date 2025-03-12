@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 public class HoseScript : Interactable
 {
-    private AntScript currentAnt;
+    private Ant currentAnt;
     bool hasLaunchedThisTurn = false;
+    private TurnManager turnM;
     
     [Header("Assignments")]
     [SerializeField] private GameObject waterDrip;
@@ -23,12 +24,19 @@ public class HoseScript : Interactable
 
     public float imageDistance;
 
+    private void Awake()
+    {
+        turnM = FindObjectOfType<TurnManager>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<AntScript>(out currentAnt) && !hasLaunchedThisTurn)
+        if (other.TryGetComponent<Ant>(out currentAnt) && !hasLaunchedThisTurn)
         {
-            uiHandler.ToggleTrigger(enterTriggerName);
+            if(currentAnt = turnM.CurrentAntTurn)
+            {
+                uiHandler.ToggleTrigger(enterTriggerName);
+            }
         }
     }
 
@@ -43,7 +51,7 @@ public class HoseScript : Interactable
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.GetComponent<AntScript>() == currentAnt)
+        if (other.GetComponent<Ant>() == currentAnt)
         {
             uiHandler.ToggleTrigger(exitTriggerName);
             currentAnt = null;
