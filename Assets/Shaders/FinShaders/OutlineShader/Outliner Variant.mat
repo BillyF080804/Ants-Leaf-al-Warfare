@@ -34,7 +34,7 @@ Material:
     - _CastShadows: 0
     - _DstBlend: 10
     - _FresnelPower: 3.16
-    - _OutlineScale: 1.02
+    - _OutlineScale: 1.01
     - _SrcBlend: 5
     - _ZTest: 2
     m_Colors:
