@@ -16,7 +16,7 @@ public class WaterDrown : MonoBehaviour
     [SerializeField] float riseSpeed;
 
     float currentDistance;
-    AntScript antScript;
+    Ant antScript;
     Rigidbody currentRb;
     Transform antSform;
     

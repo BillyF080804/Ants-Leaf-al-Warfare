@@ -1,95 +1,126 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Splines;
 using UnityEngine.UI;
-public class FlyTrapHazard: Interactable
+public class FlyTrapHazard: MonoBehaviour
 {
-    [Header("Variables for launch")]
-    [SerializeField] private GameObject attachForSpline;
-    [SerializeField] Quaternion rotation;
-    [SerializeField] Vector3 detachSpeed;
+    [Header("Variables for Attack")]
     public Ant currentAnt;
+    [SerializeField] private int recoveryTurns;
+    [SerializeField] private int dazeTurns;
+    private List<Ant> antList = new List<Ant>();
+    [SerializeField] private GameObject crunchParticles;
+    [SerializeField] private int attackDamage;
+    [SerializeField] private Transform particleSpawn;
+    [SerializeField] private GameObject canvas;
 
     [Header("Animation Variables")]
-    [SerializeField] AnimationHandler uiHandler;
-    [SerializeField] private string animName;
-    [SerializeField] string enterTriggerName;
-    [SerializeField] string exitTriggerName;
-    [SerializeField] Image promptImage;
-    public float imageDistance;
+    [SerializeField] private string restingBool;
+    [SerializeField] string attackTriggerName;
+    [SerializeField] string dazeHit;
+    [SerializeField] float timeToAttack;
+    [SerializeField] private Animator animator;
 
-    private SplineAnimate animatedSpline;
-    private AnimationHandler animHandler;
-    private bool isLaunching = false;
+    private bool chompedThisTurn;
+    private int recoveryTurnsPassed = 0;
+    private float timePassedForAttack;
 
-
-    private void Awake()
-    {
-        animHandler = GetComponent<AnimationHandler>();
-        animatedSpline = GetComponentInChildren<SplineAnimate>();
-    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<Ant>() != null)
+        other.TryGetComponent<Ant>(out currentAnt);
+        if (currentAnt != null)
         {
-            uiHandler.ToggleTrigger(enterTriggerName);
-            currentAnt = other.GetComponent<Ant>();
+            antList.Add(currentAnt);
         }
+        canvas.SetActive(true);
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if(!isLaunching && imageDistance >= 1.5)
+        if(antList.Count > 0 && !chompedThisTurn)
         {
-            imageDistance = Vector2.Distance(promptImage.transform.position, currentAnt.transform.position);
-            promptImage.transform.position = Vector2.MoveTowards(promptImage.transform.position, currentAnt.transform.position, 1 * Time.deltaTime);
+            timePassedForAttack += Time.deltaTime;
         }
 
+        if (timePassedForAttack >= timeToAttack)
+        {
+            chompedThisTurn = true;
+            Attack();
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if ((other.GetComponent<Ant>() == currentAnt) && (currentAnt.transform.parent == null))
+        other.TryGetComponent<Ant>(out currentAnt);
+        antList.Remove(currentAnt);
+        if(antList.Count == 0)
         {
-            uiHandler.ToggleTrigger(exitTriggerName);
-            currentAnt = null;
-        }
-
-    }
-
-    public void AttachObject()
-    {
-        if (currentAnt != null && !isLaunching)
-        {
-            isLaunching = true;
-            uiHandler.ToggleTrigger(exitTriggerName);
-            Rigidbody rb = currentAnt.GetComponent<Rigidbody>();
-            currentAnt.gameObject.transform.SetParent(attachForSpline.transform);
-            currentAnt.transform.rotation = rotation;
-            rb.useGravity = false;
-            animatedSpline.Play();
-            animHandler.ToggleTrigger(animName);
+            timePassedForAttack = 0;
+            canvas.SetActive(false);
         }
     }
 
-    public void DetachObject()
+    private void Attack()
     {
-        isLaunching = false;
-        Rigidbody rb = currentAnt.GetComponent<Rigidbody>();
-        rb.useGravity = true;
-        rb.AddForce(detachSpeed, ForceMode.Impulse);
-        currentAnt.transform.SetParent(null);
-        currentAnt.transform.rotation = rotation;
-        currentAnt = null;
-        animatedSpline.Restart(false);
-      
+        canvas.SetActive(false);
+        animator.Play(attackTriggerName);
+        animator.SetBool(restingBool, true);
+        timePassedForAttack = 0;
     }
 
-	public override void Interaction() {
-        AttachObject();
-        Debug.Log("Interacted");
-	}
+    public void endOfTurnRecover()
+    {
+        if(chompedThisTurn)
+        {
+            recoveryTurnsPassed = recoveryTurnsPassed + 1;
+            Debug.Log("TurnsRecovered" + recoveryTurnsPassed);
+            if (recoveryTurnsPassed >= recoveryTurns)
+            {
+                Recovery();
+            }
+        }
+    }
+
+    private void Recovery()
+    {
+        Debug.Log("Recovered");
+        recoveryTurns = 0;
+        animator.SetBool(restingBool, false);
+        chompedThisTurn = false;
+    }
+
+    public void SpawnParticles()
+    {
+        if(crunchParticles != null)
+        {
+            Instantiate(crunchParticles, particleSpawn);
+        }
+    }
+
+    public void AttackAnts()
+    {
+        foreach (Ant ant in antList)
+        {
+            Debug.Log(attackDamage);
+            ant.TakeDamage(attackDamage);
+        }
+    }
+
+    public void backToIdle()
+    {
+        animator.Play("FlyTrapIdle");
+    }
+
+    public void GetHit()
+    {
+        if (!chompedThisTurn)
+        {
+            chompedThisTurn = true;
+            animator.SetTrigger(dazeHit);
+            animator.SetBool(restingBool, true);
+            recoveryTurnsPassed = dazeTurns;
+        }
+    }
+
 }
