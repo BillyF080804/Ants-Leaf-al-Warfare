@@ -15,6 +15,7 @@ public class StunCollider : MonoBehaviour
         {
             trapHazard.GetHit();
             Debug.Log("Hit");
+            Destroy(weaponObject.gameObject);
         }
         weaponObject = null;
     }
