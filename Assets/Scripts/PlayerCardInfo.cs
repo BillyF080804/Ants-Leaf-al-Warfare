@@ -5,13 +5,17 @@ using UnityEngine.UI;
 
 [Serializable]
 public class PlayerCardInfo : MonoBehaviour {
+    [Header("Settings")]
     public int playerNum;
     public bool isReady;
+
+    [Header("UI")]
     public GameObject card;
-    public TMP_Text playerNumText;
-    public TMP_Text joinText;
     public Image colorBand;
+    public TMP_Text colorChangePrompt;
     public Image readyBackground;
     public TMP_Text readyText;
-    public GameObject readyUpHint;
+    public TMP_Text textHint;
+    public Image queenImage;
+    public TMP_Text teamText;
 }

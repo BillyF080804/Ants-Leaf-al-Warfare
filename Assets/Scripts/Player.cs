@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -11,7 +10,6 @@ public class Player : MonoBehaviour {
     [Header("Player Info")]
     public PlayerInfo playerInfo = new PlayerInfo();
 
-    private Coroutine skipTurnCoroutine;
     private Coroutine moveQueenTimerCoroutine;
     private CameraSystem cameraSystem;
     private LobbyManager lobbyManager;
@@ -23,7 +21,6 @@ public class Player : MonoBehaviour {
 
     public bool ConfirmedQueenSpawn { get; private set; } = false;
     private bool canSpawnQueen = false;
-    private bool skippingTurn = false;
     private bool freeCamEnabled = false;
 
     public GameObject QueenAnt { get; private set; } = null;
@@ -66,50 +63,29 @@ public class Player : MonoBehaviour {
 
     //Function called when the player presses the change color button
     private void OnChangeColor() {
-        if (lobbyManager != null && SceneManager.GetActiveScene().name.Contains("Menu")) {
-            lobbyManager.ChangeColor(playerInfo.playerNum); //Only works in the menu
+        if (lobbyManager != null && SceneManager.GetActiveScene().name.Contains("Lobby")) {
+            lobbyManager.ChangeColor(playerInfo.playerNum); //Only works in the lobby
         }
     }
 
     //Called when the player presses the ready up button
     private void OnReadyUp() {
-        if (lobbyManager != null && SceneManager.GetActiveScene().name.Contains("Menu")) {
-            lobbyManager.ReadyUp(playerInfo.playerNum); //Only works in the menu
+        if (lobbyManager != null && SceneManager.GetActiveScene().name.Contains("Lobby")) {
+            lobbyManager.ReadyUp(playerInfo.playerNum); //Only works in the lobby
         }
     }
 
-    //New skip turn function
+    //Called when the player presses a change queen specialism button
+    private void OnChangeQueenSpecialism() {
+        if (lobbyManager != null && SceneManager.GetActiveScene().name.Contains("Lobby")) {
+            lobbyManager.ChangeQueenSpecialism(playerInfo.playerNum); //Only works in the lobby
+        }
+    }
+
+    //Skip turn function
     private void OnSkipTurn() {
         if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false) {
             turnManager.EndTurn();
-        }
-    }
-
-    //Function called when the player presses the skip turn button
-    private void OnOldSkipTurn() {
-        if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false) {
-            skippingTurn = !skippingTurn;
-
-            if (skippingTurn) { 
-                SkipTurn();
-            }
-        }
-    }
-
-    private void SkipTurn() {
-        if (CheckActionIsValid()) {
-            if (skipTurnCoroutine == null) {
-                skipTurnCoroutine = StartCoroutine(SkipTurnCoroutine(2.0f));
-                cameraSystem.ZoomCameraFOVIn(2.0f);
-            }
-            else if (skipTurnCoroutine != null) {
-                if (cameraSystem.IsFOVZoomingOut == false) {
-                    cameraSystem.ZoomCameraFOVOut(0.5f);
-                }
-
-                StopCoroutine(skipTurnCoroutine);
-                skipTurnCoroutine = null;
-            }
         }
     }
 
@@ -176,6 +152,7 @@ public class Player : MonoBehaviour {
             QueenAnt.GetComponent<Rigidbody>().useGravity = true;
             queenAntScript.SetQueenToTeamColour(playerInfo.playerColor);
             queenAntSpawner.SetMoveValue(0, null);
+            turnManager.ChangeQueenSpecialism(playerInfo.queenType, QueenAnt.GetComponent<Ant>());
 
             if (moveQueenTimerCoroutine != null) { 
                 StopCoroutine(moveQueenTimerCoroutine);
@@ -224,27 +201,6 @@ public class Player : MonoBehaviour {
         }
         else {
             return false;
-        }
-    }
-
-    public void StopSkipTurn() {
-        if (skipTurnCoroutine != null) {
-            StopCoroutine(skipTurnCoroutine);
-        }    
-    }
-
-    private IEnumerator SkipTurnCoroutine(float skipDuration) {
-        float timeElapsed = 0.0f;
-
-        while (timeElapsed < skipDuration && skippingTurn) {
-            timeElapsed += Time.deltaTime;
-            yield return null;
-        }
-
-        cameraSystem.ZoomCameraFOVOut(0.5f);
-
-        if (skippingTurn) {
-            turnManager.EndTurn();
         }
     }
 
@@ -310,7 +266,6 @@ public class Player : MonoBehaviour {
         CurrentWeapons.Add(newWeapon);
     }
 
-
     public void RemoveWeapon(BaseWeaponSO weapon) {
         CurrentWeapons.Remove(weapon);
     }
@@ -342,9 +297,8 @@ public class Player : MonoBehaviour {
         return GetComponent<EventSystem>();
     }
 
-    public string GetInputDevice() {
-        Debug.Log(playerInput.devices.First().name);
-        return playerInput.devices.First().name;
+    public string GetKeybindForAction(string actionName) {
+        return playerInput.actions.FindAction(actionName).GetBindingDisplayString(InputBinding.DisplayStringOptions.DontIncludeInteractions);
     }
 
     //Temporary Func/Keybind of Left Shift

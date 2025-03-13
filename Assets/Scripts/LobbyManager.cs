@@ -4,10 +4,8 @@ using System.Linq;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class LobbyManager : MonoBehaviour {
     [Header("Settings")]
@@ -87,7 +85,6 @@ public class LobbyManager : MonoBehaviour {
 
             playerCardList.Add(newCard.GetComponent<PlayerCardInfo>());
             playerCardList[i].playerNum = i + 1;
-            playerCardList[i].playerNumText.text = "Player " + playerCardList[i].playerNum;
 
             if (i != 0) {
                 ChangeColor(playerCardList[i].playerNum);  
@@ -106,11 +103,15 @@ public class LobbyManager : MonoBehaviour {
             int playerNum = playerList.Count;
             input.gameObject.name = "Player" + playerNum;
 
-            playerList[playerNum - 1].playerInfo.playerNum = playerNum;
-            playerList.Where(x => x.playerInfo.playerNum == playerNum).First().playerInfo.playerInput = input;
-            playerList.Where(x => x.playerInfo.playerNum == playerNum).First().playerInfo.playerColor = playerCardList.Where(x => x.playerNum == playerNum).First().colorBand.color;
-            playerCardList.Where(x => x.playerNum == playerNum).First().joinText.text = "Player Joined";
-            playerCardList.Where(x => x.playerNum == playerNum).First().readyUpHint.SetActive(true);
+            Player player = playerList[playerNum - 1];
+            PlayerCardInfo playerCard = playerCardList[playerNum - 1];
+
+            player.playerInfo.playerNum = playerNum;
+            player.playerInfo.playerInput = input;
+            player.playerInfo.playerColor = playerCardList.Where(x => x.playerNum == playerNum).First().colorBand.color;
+            playerCard.textHint.text = "Press " + input.actions.FindAction("ReadyUp").GetBindingDisplayString(InputBinding.DisplayStringOptions.DontIncludeInteractions) + " To Ready Up";
+            playerCard.colorChangePrompt.text = input.actions.FindAction("ChangeColor").GetBindingDisplayString(InputBinding.DisplayStringOptions.DontIncludeInteractions);
+            playerCard.colorChangePrompt.gameObject.SetActive(true);
 
             if (playerList.Count == expectedPlayerCount) {
                 playersJoinedText.text = "Waiting On Players To Ready Up . . .";
@@ -182,35 +183,36 @@ public class LobbyManager : MonoBehaviour {
 
     //Called when a user presses the change color button
     public void ChangeColor(int playerNum) {
-        Color newColor = ChooseNewColor();
-        List<Color> cardColors = new List<Color>();
+        PlayerCardInfo playerCard = playerCardList.Where(x => x.playerNum == playerNum).First();
 
-        foreach (var playerCard in playerCardList) {
-            cardColors.Add(playerCard.colorBand.color);
+        if (playerCard.isReady == false) {
+            Color newColor = ChooseNewColor();
+            List<Color> cardColors = new List<Color>();
+
+            foreach (var playerCards in playerCardList) {
+                cardColors.Add(playerCards.colorBand.color);
+            }
+
+            while (cardColors.Where(x => x == newColor).Count() > 0) {
+                newColor = ChooseNewColor();
+            }
+
+            if (playerList.Count > 0) {
+                playerList.Where(x => x.playerInfo.playerNum == playerNum).First().playerInfo.playerColor = newColor;
+            }
+
+            playerCard.colorBand.color = newColor;
         }
-
-        while (cardColors.Where(x => x == newColor).Count() > 0) {
-            newColor = ChooseNewColor();
-        }
-
-        if (playerList.Count > 0) {
-            playerList.Where(x => x.playerInfo.playerNum == playerNum).First().playerInfo.playerColor = newColor;
-        }
-
-        playerCardList.Where(x => x.playerNum == playerNum).First().colorBand.color = newColor;
     }
 
     public void ReadyUp(int playerNum) {
         PlayerCardInfo playerCard = playerCardList.Where(x => x.playerNum == playerNum).First();
-
         playerCard.isReady = !playerCard.isReady;
 
         if (playerCard.isReady) {
-            playerCard.readyBackground.color = Color.green;
             playerCard.readyText.text = "Ready!";
         }
         else {
-            playerCard.readyBackground.color = Color.red;
             playerCard.readyText.text = "Not Ready!";
         }
 
@@ -234,5 +236,9 @@ public class LobbyManager : MonoBehaviour {
         }
 
         StartCoroutine(StartGameCoroutine());
+    }
+
+    public void ChangeQueenSpecialism(int playerNum) {
+        Debug.Log("Not imp.");
     }
 }

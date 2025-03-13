@@ -79,6 +79,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerInfo:
     playerNum: 0
+    queenType: Bee
     playerColor: {r: 0, g: 0, b: 0, a: 0}
     playerInput: {fileID: 0}
   EffectScript: {fileID: 5701415912331228771, guid: 4ee10e588bac67441b96e856d4177636, type: 3}

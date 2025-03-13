@@ -28,6 +28,9 @@ public class TurnManager : MonoBehaviour {
     [SerializeField] private UnityEvent startTurnEvent;
     [SerializeField] private UnityEvent endTurnEvent;
 
+    [Header("Queen Ant Specialisms")]
+    [SerializeField] private List<AntSO> queenAntSpecials = new List<AntSO>();
+
     [Header("Ant Prefabs")]
     [SerializeField] private GameObject antPrefab;
     [SerializeField] private GameObject queenPrefab;
@@ -101,7 +104,7 @@ public class TurnManager : MonoBehaviour {
                 GameObject newAnt = Instantiate(antPrefab, GetAntSpawnPoint(minDistanceBetweenAnts, false), Quaternion.identity);
                 PlayerList[i].AddNewAnt(newAnt);
                 newAnt.GetComponent<Ant>().ownedPlayer = (Ant.PlayerList)i;
-                newAnt.GetComponentInChildren<MeshRenderer>().material.color = PlayerList[i].playerInfo.playerColor;
+                newAnt.GetComponent<AntScript>().ChangeAntColors(PlayerList[i].playerInfo.playerColor);
             }
         }
     }
@@ -275,7 +278,6 @@ public class TurnManager : MonoBehaviour {
 
     private IEnumerator EndTurnCoroutine() {
         StopCoroutine(turnTimerCoroutine);
-        CurrentPlayerTurn.StopSkipTurn();
 
         yield return new WaitUntil(() => gameOver == false);
 
@@ -346,6 +348,32 @@ public class TurnManager : MonoBehaviour {
         }
         if (playersFinishedRound == PlayerList.Count) {
             allAntsMoved = true;
+        }
+    }
+
+    public void ChangeQueenSpecialism(string queenType, Ant queenAnt) {
+        switch (queenType) {
+            case "Bullet":
+                queenAnt.antInfo = queenAntSpecials.Where(x => x.queenType == AntSO.QueenType.Bullet).First();
+                break;
+            case "Bee":
+                queenAnt.antInfo = queenAntSpecials.Where(x => x.queenType == AntSO.QueenType.Bee).First();
+                break;
+            case "Weaver":
+                queenAnt.antInfo = queenAntSpecials.Where(x => x.queenType == AntSO.QueenType.Weaver).First();
+                break;
+            case "Fire":
+                queenAnt.antInfo = queenAntSpecials.Where(x => x.queenType == AntSO.QueenType.Fire).First();
+                break;
+            case "Dracula":
+                queenAnt.antInfo = queenAntSpecials.Where(x => x.queenType == AntSO.QueenType.Dracula).First();
+                break;
+            case "Pharaoh":
+                queenAnt.antInfo = queenAntSpecials.Where(x => x.queenType == AntSO.QueenType.Pharaoh).First();
+                break;
+            default:
+                Debug.LogError("Invalid Queen Ant - " + queenType);
+                break;
         }
     }
 

@@ -53,8 +53,8 @@ public class QueenAntScript : Ant {
 	}
 
 	public void SetQueenToTeamColour(Color teamColor) {
-		antRenderer.material.color = teamColor;
-	}
+        antRenderer.material.SetColor("_MainColours", teamColor);
+    }
 
 	public LayerMask GetQueenLayerMask() {
 		return queenLayerMask;
