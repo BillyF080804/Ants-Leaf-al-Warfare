@@ -6,13 +6,16 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class WeaponDropSystem : MonoBehaviour {
-    [field : Header("Drop Information")]
+    [Header("Drop Settings")]
     [SerializeField] private float dropOverviewDuration = 2.5f;
-    [SerializeField] private WeaponDrop dropPrefab;
-    [SerializeField] private List<DropInfo> dropInfo = new List<DropInfo>();
+    [SerializeField] private int minNumOfCrates = 1;
+    [SerializeField] private int maxNumOfCrates = 3;
+    [SerializeField] private int medkitHealthToHeal = 10;
+    [SerializeField][Range(0.0f, 1.0f)] private float medkitChance = 0.25f;
+    [SerializeField][Range(0.0f, 1.0f)] private float dropChancePerTurn = 0.25f;
 
-    [Header("Medkit Heal")]
-    [SerializeField] private int medkitHealthToHeal;
+    [Header("Drop Prefab")]
+    [SerializeField] private WeaponDrop dropPrefab;
 
     [Header("Drop Chances")]
     [SerializeField] private List<DropChances> dropChances = new List<DropChances>();
@@ -34,27 +37,26 @@ public class WeaponDropSystem : MonoBehaviour {
     }
 
     public void CheckDrop() {
-        StartCoroutine(CheckDropCoroutine());
+        float randomNum = Random.value;
+
+        if (randomNum < dropChancePerTurn) {
+            StartCoroutine(CheckDropCoroutine());
+        }
     }
 
     private IEnumerator CheckDropCoroutine() {
-        List<DropInfo> availableDrops = new List<DropInfo>();
-        availableDrops = dropInfo.Where(x => x.roundNumber == turnManager.CurrentRound).ToList();
+        IsDropping = true;
+        cameraSystem.SetCameraTarget(null);
+        cameraSystem.CameraDelay(dropOverviewDuration);
 
-        if (availableDrops.Count() > 0) {
-            IsDropping = true;
-            cameraSystem.SetCameraTarget(cameraSystem.overviewPosition);
-            cameraSystem.CameraDelay(dropOverviewDuration);
+        int randomNum = Random.Range(minNumOfCrates, maxNumOfCrates);
 
-            foreach (DropInfo drop in availableDrops) {
-                for (int i = 0; i < drop.numOfDrops; i++) {
-                    CreateNewDrop(drop.medkitChance);
-                }
-            }
-
-            yield return new WaitForSeconds(dropOverviewDuration);
-            IsDropping = false;
+        for (int i = 0; i < randomNum; i++) {
+            CreateNewDrop(medkitChance);
         }
+
+        yield return new WaitForSeconds(dropOverviewDuration);
+        IsDropping = false;
     }
 
     private void CreateNewDrop(float medkitChance) {
@@ -88,13 +90,6 @@ public class WeaponDropSystem : MonoBehaviour {
 
         return dropChances.Last().weapon;
     }
-}
-
-[Serializable]
-public class DropInfo {
-    public int roundNumber;
-    public int numOfDrops;
-    [Range(0, 1)] public float medkitChance;
 }
 
 [Serializable]

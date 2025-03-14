@@ -120,7 +120,7 @@ public class CameraSystem : MonoBehaviour {
             cameraObj.transform.LookAt(lookAtTargetPos);
         }
         else {
-            cameraObj.transform.eulerAngles = new Vector3(10, 0, 0);
+            cameraObj.transform.eulerAngles = new Vector3(15, 0, 0);
         }
     }
 
