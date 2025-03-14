@@ -16,6 +16,10 @@ public class PlayerCardInfo : MonoBehaviour {
     public Image readyBackground;
     public TMP_Text readyText;
     public TMP_Text textHint;
+
+    [Header("Queen UI")]
     public Image queenImage;
     public TMP_Text teamText;
+    public GameObject leftArrow;
+    public GameObject rightArrow;
 }

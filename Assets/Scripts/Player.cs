@@ -76,9 +76,9 @@ public class Player : MonoBehaviour {
     }
 
     //Called when the player presses a change queen specialism button
-    private void OnChangeQueenSpecialism() {
+    private void OnChangeQueenSpecialism(InputValue value) {
         if (lobbyManager != null && SceneManager.GetActiveScene().name.Contains("Lobby")) {
-            lobbyManager.ChangeQueenSpecialism(playerInfo.playerNum); //Only works in the lobby
+            lobbyManager.ChangeQueenSpecialism(playerInfo.playerNum, value.Get<float>()); //Only works in the lobby
         }
     }
 

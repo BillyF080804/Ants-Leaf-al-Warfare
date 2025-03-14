@@ -231,14 +231,68 @@ public class LobbyManager : MonoBehaviour {
 
         while (time > 0) {
             time -= Time.deltaTime;
-            playersJoinedText.text = Mathf.CeilToInt(time).ToString();
+            playersJoinedText.text = "Starting Game In . . . " + Mathf.CeilToInt(time).ToString();
             yield return null;
         }
 
         StartCoroutine(StartGameCoroutine());
     }
 
-    public void ChangeQueenSpecialism(int playerNum) {
-        Debug.Log("Not imp.");
+    public void ChangeQueenSpecialism(int playerNum, float value) {
+        Player player = playerList.Where(x => x.playerInfo.playerNum == playerNum).First();
+        PlayerCardInfo playerCard = playerCardList.Where(x => x.playerNum == playerNum).First(); 
+
+        if (value > 0) {
+            switch (player.playerInfo.queenType) {
+                case "Bee":
+                    player.playerInfo.queenType = "Dracula";
+                    playerCard.teamText.text = "Team:\nDracula Ant";
+                    playerCard.leftArrow.SetActive(true);
+                    break;
+                case "Dracula":
+                    player.playerInfo.queenType = "Weaver";
+                    playerCard.teamText.text = "Team:\nWeaver Ant";
+                    break;
+                case "Weaver":
+                    player.playerInfo.queenType = "Pharaoh";
+                    playerCard.teamText.text = "Team:\nPharaoh Ant";
+                    break;
+                case "Pharaoh":
+                    player.playerInfo.queenType = "Fire";
+                    playerCard.teamText.text = "Team:\nFire Ant";
+                    break;
+                case "Fire":
+                    player.playerInfo.queenType = "Bullet";
+                    playerCard.teamText.text = "Team:\nBullet Ant";
+                    playerCard.rightArrow.SetActive(false);
+                    break;
+            }
+        }
+        else if (value < 0) {
+            switch (player.playerInfo.queenType) {
+                case "Bullet":
+                    player.playerInfo.queenType = "Fire";
+                    playerCard.teamText.text = "Team:\nFire Ant";
+                    playerCard.rightArrow.SetActive(true);
+                    break;
+                case "Fire":
+                    player.playerInfo.queenType = "Pharaoh";
+                    playerCard.teamText.text = "Team:\nPharaoh Ant";
+                    break;
+                case "Pharaoh":
+                    player.playerInfo.queenType = "Weaver";
+                    playerCard.teamText.text = "Team:\nWeaver Ant";
+                    break;
+                case "Weaver":
+                    player.playerInfo.queenType = "Dracula";
+                    playerCard.teamText.text = "Team:\nDracula Ant";
+                    break;
+                case "Dracula":
+                    player.playerInfo.queenType = "Bee";
+                    playerCard.teamText.text = "Team:\nBee Ant";
+                    playerCard.leftArrow.SetActive(false);
+                    break;
+            }
+        }
     }
 }

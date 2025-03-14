@@ -7,7 +7,7 @@
             "actions": [
                 {
                     "name": "SkipTurn",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "22eb929e-1ce8-4bf9-863c-175922eac552",
                     "expectedControlType": "Button",
                     "processors": "",
@@ -153,6 +153,15 @@
                     "name": "ReadyUp",
                     "type": "Button",
                     "id": "fe713f44-78eb-4153-92bc-df99ade59f0b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ChangeQueenSpecialism",
+                    "type": "Button",
+                    "id": "49a91789-ce14-46fe-986c-81a2adfacde3",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -874,6 +883,39 @@
                     "action": "ReadyUp",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "1D Axis",
+                    "id": "6818e734-7fa7-4fb6-b56c-4e89c5d98934",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ChangeQueenSpecialism",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "09938a8b-fa6a-462a-9713-8a6e8e863250",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "ChangeQueenSpecialism",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "5c39296c-a933-4ceb-87bc-0d30eaaa2b41",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "ChangeQueenSpecialism",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         },
