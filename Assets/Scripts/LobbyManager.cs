@@ -242,7 +242,7 @@ public class LobbyManager : MonoBehaviour {
         Player player = playerList.Where(x => x.playerInfo.playerNum == playerNum).First();
         PlayerCardInfo playerCard = playerCardList.Where(x => x.playerNum == playerNum).First(); 
 
-        if (value > 0) {
+        if (value > 0 && playerCard.isReady == false) {
             switch (player.playerInfo.queenType) {
                 case "Bee":
                     player.playerInfo.queenType = "Dracula";
@@ -268,7 +268,7 @@ public class LobbyManager : MonoBehaviour {
                     break;
             }
         }
-        else if (value < 0) {
+        else if (value < 0 && playerCard.isReady == false) {
             switch (player.playerInfo.queenType) {
                 case "Bullet":
                     player.playerInfo.queenType = "Fire";

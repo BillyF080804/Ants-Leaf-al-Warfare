@@ -207,7 +207,7 @@ public class TurnManager : MonoBehaviour {
 
     private IEnumerator LevelTextCoroutine() {
         yield return new WaitForSeconds(1.0f);
-        levelNameText.GetComponent<FadeScript>().FadeOutUI(2.0f, levelNameText);
+        levelNameText.GetComponent<FadeScript>().FadeOutUI(2.0f);
     }
 
     private IEnumerator StartGame() {
