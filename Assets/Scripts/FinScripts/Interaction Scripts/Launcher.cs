@@ -7,12 +7,12 @@ public class Launcher : MonoBehaviour
     [Header("Setup")]
     [SerializeField] private Vector3 launchForce;
     [SerializeField] private UnityEvent launchEvent;
-    private AntScript currentAnt;
+    private Ant currentAnt;
     private Rigidbody currentRbody;
 
     private void OnTriggerEnter(Collider other)
     {
-        currentAnt = other.GetComponent<AntScript>();
+        currentAnt = other.GetComponent<Ant>();
         currentRbody = currentAnt.gameObject.GetComponent<Rigidbody>();
         if (currentAnt != null && currentRbody != null)
         {

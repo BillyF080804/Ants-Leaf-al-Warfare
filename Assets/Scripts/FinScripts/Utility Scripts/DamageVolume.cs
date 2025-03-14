@@ -11,8 +11,8 @@ public class DamageVolume : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        AntScript ant = other.GetComponent<AntScript>();
-        if(ant.GetComponent<AntScript>() != null)
+		Ant ant = other.GetComponent<Ant>();
+        if(ant.GetComponent<Ant>() != null)
         {
             ant.TakeDamage(damageTaken);
             Debug.Log("DamagedAnt");

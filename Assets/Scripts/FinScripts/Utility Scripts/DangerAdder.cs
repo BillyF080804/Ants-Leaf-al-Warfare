@@ -5,8 +5,8 @@ using UnityEngine;
 public class DangerAdder : MonoBehaviour
 {
     private BarbecueScript bScript;
-    private List<AntScript> antsInDanger = new List<AntScript>();
-    private AntScript currentAnt;
+    private List<Ant> antsInDanger = new List<Ant>();
+    private Ant currentAnt;
     private void Awake()
     {
         bScript = GetComponentInParent<BarbecueScript>();
@@ -14,7 +14,7 @@ public class DangerAdder : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        currentAnt = other.GetComponent<AntScript>();
+        currentAnt = other.GetComponent<Ant>();
         if (currentAnt != null) 
         {
             antsInDanger.Add(currentAnt);
@@ -24,7 +24,7 @@ public class DangerAdder : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        currentAnt = other.GetComponent<AntScript>();
+        currentAnt = other.GetComponent<Ant>();
         if (currentAnt != null)
         {
             antsInDanger.Remove(currentAnt);

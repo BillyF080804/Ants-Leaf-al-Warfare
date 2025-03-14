@@ -184,7 +184,10 @@ public class Ant : MonoBehaviour {
 		else {
 			transform.Translate(antInfo.moveSpeed * Time.deltaTime * moveVector);
 		}
-
+		if(turnManager.CurrentAntTurn == this) {
+			transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+		}
+		
         CheckForNearbyAnts();
     }
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class QueenAntScript : Ant {
+public class QueenBaseAntScript : Ant {
 
 	[Header("Queen Info")]
 	[SerializeField] private LayerMask queenLayerMask;

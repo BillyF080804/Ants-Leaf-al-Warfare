@@ -6,7 +6,7 @@ public class FireSpray : MonoBehaviour
 {
     [SerializeField] private int FlameDamage;
     private CameraSystem cameraSystem;
-    AntScript antScript;
+	Ant antScript;
 
     // Start is called before the first frame update
     private void Awake() {
@@ -16,7 +16,7 @@ public class FireSpray : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
 
-        antScript = other.GetComponent<AntScript>();
+        antScript = other.GetComponent<Ant>();
         if( antScript != null )
         {
             BurnAnt();

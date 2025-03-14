@@ -256,33 +256,35 @@ public class LobbyManager : MonoBehaviour {
                 case "Weaver":
                     player.playerInfo.queenType = "Pharaoh";
                     playerCard.teamText.text = "Team:\nPharaoh Ant";
-                    break;
-                case "Pharaoh":
-                    player.playerInfo.queenType = "Fire";
-                    playerCard.teamText.text = "Team:\nFire Ant";
-                    break;
-                case "Fire":
-                    player.playerInfo.queenType = "Bullet";
-                    playerCard.teamText.text = "Team:\nBullet Ant";
-                    playerCard.rightArrow.SetActive(false);
-                    break;
+				    playerCard.rightArrow.SetActive(false);
+				    break;
+                //case "Pharaoh":
+                //    player.playerInfo.queenType = "Fire";
+                //    playerCard.teamText.text = "Team:\nFire Ant";
+                //    break;
+                //case "Fire":
+                //    player.playerInfo.queenType = "Bullet";
+                //    playerCard.teamText.text = "Team:\nBullet Ant";
+                //    playerCard.rightArrow.SetActive(false);
+                //    break;
             }
         }
         else if (value < 0 && playerCard.isReady == false) {
             switch (player.playerInfo.queenType) {
-                case "Bullet":
-                    player.playerInfo.queenType = "Fire";
-                    playerCard.teamText.text = "Team:\nFire Ant";
-                    playerCard.rightArrow.SetActive(true);
-                    break;
-                case "Fire":
-                    player.playerInfo.queenType = "Pharaoh";
-                    playerCard.teamText.text = "Team:\nPharaoh Ant";
-                    break;
+                //case "Bullet":
+                //    player.playerInfo.queenType = "Fire";
+                //    playerCard.teamText.text = "Team:\nFire Ant";
+                //    playerCard.rightArrow.SetActive(true);
+                //    break;
+                //case "Fire":
+                //    player.playerInfo.queenType = "Pharaoh";
+                //    playerCard.teamText.text = "Team:\nPharaoh Ant";
+                //    break;
                 case "Pharaoh":
                     player.playerInfo.queenType = "Weaver";
                     playerCard.teamText.text = "Team:\nWeaver Ant";
-                    break;
+				    playerCard.rightArrow.SetActive(true);
+				    break;
                 case "Weaver":
                     player.playerInfo.queenType = "Dracula";
                     playerCard.teamText.text = "Team:\nDracula Ant";

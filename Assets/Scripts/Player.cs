@@ -15,7 +15,7 @@ public class Player : MonoBehaviour {
     private LobbyManager lobbyManager;
     private TurnManager turnManager;
     private WeaponManager weaponManager;
-    private QueenAntScript queenAntScript;
+    private QueenBaseAntScript queenBaseAntScript;
     private QueenAntSpawner queenAntSpawner;
     private PlayerInput playerInput;
 
@@ -54,7 +54,7 @@ public class Player : MonoBehaviour {
 
     public void AddQueen(GameObject newQueen) {
         QueenAnt = newQueen;
-        queenAntScript = QueenAnt.GetComponent<QueenAntScript>();
+        queenBaseAntScript = QueenAnt.GetComponent<QueenBaseAntScript>();
     }
 
     public void RemoveQueen() {
@@ -150,7 +150,7 @@ public class Player : MonoBehaviour {
             ConfirmedQueenSpawn = true;
             QueenAnt.GetComponent<Collider>().enabled = true;
             QueenAnt.GetComponent<Rigidbody>().useGravity = true;
-            queenAntScript.SetQueenToTeamColour(playerInfo.playerColor);
+            queenBaseAntScript.SetQueenToTeamColour(playerInfo.playerColor);
             queenAntSpawner.SetMoveValue(0, null);
             turnManager.ChangeQueenSpecialism(playerInfo.queenType, QueenAnt.GetComponent<Ant>());
 
@@ -304,7 +304,7 @@ public class Player : MonoBehaviour {
     //Temporary Func/Keybind of Left Shift
     private void OnQueenAttack() {
         if (CheckActionIsValid()) {
-			queenAntScript.SpecialAttack();
+			queenBaseAntScript.SpecialAttack();
         }
     }
 
@@ -327,7 +327,7 @@ public class Player : MonoBehaviour {
             EffectScript.ApplyEffect(AntList[i].GetComponent<Ant>());
 
         }
-		EffectScript.AddEffect(queenAntScript);
-		EffectScript.ApplyEffect(queenAntScript);
+		EffectScript.AddEffect(queenBaseAntScript);
+		EffectScript.ApplyEffect(queenBaseAntScript);
 	}
 }

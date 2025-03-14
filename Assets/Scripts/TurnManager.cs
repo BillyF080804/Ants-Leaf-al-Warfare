@@ -12,7 +12,7 @@ using Random = UnityEngine.Random;
 public class TurnManager : MonoBehaviour {
     [Header("Settings")]
     [SerializeField] private string levelName;
-    [SerializeField] private int numOfRounds = 3;
+    [SerializeField] private int maxRounds = 10;
     [SerializeField] private int maxTurnTime = 20;
 
     [field : Header("Ant Spawning Settings")]
@@ -104,7 +104,7 @@ public class TurnManager : MonoBehaviour {
                 GameObject newAnt = Instantiate(antPrefab, GetAntSpawnPoint(minDistanceBetweenAnts, false), Quaternion.identity);
                 PlayerList[i].AddNewAnt(newAnt);
                 newAnt.GetComponent<Ant>().ownedPlayer = (Ant.PlayerList)i;
-                newAnt.GetComponent<AntScript>().ChangeAntColors(PlayerList[i].playerInfo.playerColor);
+                newAnt.GetComponent<BaseAntScript>().ChangeAntColors(PlayerList[i].playerInfo.playerColor);
             }
         }
     }
@@ -211,14 +211,16 @@ public class TurnManager : MonoBehaviour {
     }
 
     private IEnumerator StartGame() {
-        for (int i = 0; i < numOfRounds; i++) {
-            roundNumText.text = "Current Round: " + (CurrentRound + 1);
+        roundNumText.text = "Current Round: 1";
+        ShowRoundNumber();
+        yield return new WaitForSeconds(2.5f);
+        HideRoundNumber();
 
+        int prevRoud = 0;
+        for (int i = 0; i < 1000; i++) {
             cameraSystem.ResetCamera();
             cameraSystem.SetCameraTarget(null);
-            ShowRoundNumber();
-            yield return new WaitForSeconds(2.5f);
-            HideRoundNumber();
+
 
             foreach (var player in PlayerList) {
                 currentTurnEnded = false;
@@ -233,12 +235,23 @@ public class TurnManager : MonoBehaviour {
                 yield return new WaitUntil(() => currentTurnEnded == true);
             }
 
-            if (i == CurrentRound && CurrentRound != numOfRounds) {
-                i--;
+            
+
+            if (CurrentRound == maxRounds) {
+				GameOver();
+			} else if(prevRoud != CurrentRound) {
+                roundNumText.text = "Current Round: " + (CurrentRound + 1);
+
+                cameraSystem.ResetCamera();
+                cameraSystem.SetCameraTarget(null);
+                ShowRoundNumber();
+                yield return new WaitForSeconds(2.5f);
+                HideRoundNumber();
+                prevRoud++;
             }
         }
 
-        GameOver();
+       
     }
 
     private IEnumerator TurnTimer() {
@@ -283,7 +296,7 @@ public class TurnManager : MonoBehaviour {
 
         CurrentAntTurn.ApplyEffects();
 
-        if (CurrentAntTurn.GetComponent<QueenAntScript>() != null) {
+        if (CurrentAntTurn.GetComponent<QueenBaseAntScript>() != null) {
             CheckIfQueenAttacked();
 
 		}
@@ -378,7 +391,7 @@ public class TurnManager : MonoBehaviour {
     }
 
     private void CheckIfQueenAttacked() {
-		CurrentAntTurn.GetComponent<QueenAntScript>().CheckAttackTurn();
+		CurrentAntTurn.GetComponent<QueenBaseAntScript>().CheckAttackTurn();
 	}
 
     public void HideTimer() {

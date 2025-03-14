@@ -29,7 +29,7 @@ public class WaterDrown : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
 
-        antScript = other.GetComponent<AntScript>();
+        antScript = other.GetComponent<Ant>();
         if ( antScript != null )
         {
             currentRb = antScript.GetComponent<Rigidbody>();

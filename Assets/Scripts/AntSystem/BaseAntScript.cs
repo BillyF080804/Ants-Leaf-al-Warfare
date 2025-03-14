@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AntScript : Ant {
+public class BaseAntScript : Ant {
     [Header("Base Ant Settings")]
     [SerializeField] private MeshRenderer hat;
     [SerializeField] private MeshRenderer leafWrap;
