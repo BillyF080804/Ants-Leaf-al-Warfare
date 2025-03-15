@@ -35,6 +35,7 @@ public class HoseScript : Interactable
         {
             if(currentAnt = turnM.CurrentAntTurn)
             {
+                Debug.Log("Activated");
                 uiHandler.ToggleTrigger(enterTriggerName);
             }
         }
@@ -54,6 +55,7 @@ public class HoseScript : Interactable
         if (other.GetComponent<Ant>() == currentAnt)
         {
             uiHandler.ToggleTrigger(exitTriggerName);
+            Debug.Log("Deactivated");
             currentAnt = null;
         }
 

@@ -14,6 +14,7 @@ public class WaterDrown : MonoBehaviour
     [SerializeField] Vector3 fallDistance;
     [SerializeField] float timeBeforeRise;
     [SerializeField] float riseSpeed;
+    [SerializeField] GameObject waterRippleParticle;
 
     float currentDistance;
     Ant antScript;
@@ -35,6 +36,7 @@ public class WaterDrown : MonoBehaviour
             currentRb = antScript.GetComponent<Rigidbody>();
             if ( currentRb != null )
             {
+                Instantiate(waterRippleParticle, antScript.transform);
                 Debug.Log("ReachedMove");
                 currentRb.useGravity = false;
                 currentRb.velocity = Vector3.zero;

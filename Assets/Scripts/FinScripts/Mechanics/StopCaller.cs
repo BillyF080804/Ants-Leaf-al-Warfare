@@ -13,6 +13,10 @@ public class StopCaller : MonoBehaviour
 
     public void StopParts()
     {
-        partSys.Stop();
+        if (partSys != null)
+        {
+            partSys.Stop();
+        }
+
     }
 }
