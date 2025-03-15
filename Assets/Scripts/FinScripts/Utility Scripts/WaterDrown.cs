@@ -103,6 +103,7 @@ public class WaterDrown : MonoBehaviour
 
         else if (shiftedTwice)
         {
+            antScript.OnDeath();
             Destroy(antSform.gameObject);
             antSform = null;
             currentRb = null;
