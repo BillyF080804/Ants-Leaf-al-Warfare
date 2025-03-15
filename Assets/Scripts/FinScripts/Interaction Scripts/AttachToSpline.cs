@@ -64,10 +64,12 @@ public class AttachToSpline : Interactable
     {
         if (currentAnt != null && !isLaunching)
         {
+            currentAnt.SetCanMove(false);
             isLaunching = true;
             uiHandler.ToggleTrigger(exitTriggerName);
             Rigidbody rb = currentAnt.GetComponent<Rigidbody>();
             currentAnt.gameObject.transform.SetParent(attachForSpline.transform);
+            currentAnt.gameObject.transform.position = attachForSpline.transform.position;
             currentAnt.transform.rotation = rotation;
             rb.useGravity = false;
             animatedSpline.Play();
@@ -77,6 +79,7 @@ public class AttachToSpline : Interactable
 
     public void DetachObject()
     {
+        currentAnt.SetCanMove(true);
         isLaunching = false;
         Rigidbody rb = currentAnt.GetComponent<Rigidbody>();
         rb.useGravity = true;

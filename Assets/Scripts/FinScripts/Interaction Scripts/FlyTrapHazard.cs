@@ -63,6 +63,10 @@ public class FlyTrapHazard: MonoBehaviour
 
     private void Attack()
     {
+        foreach(Ant ant in antList)
+        {
+            ant.SetCanMove(false);
+        }
         canvas.SetActive(false);
         animator.Play(attackTriggerName);
         animator.SetBool(restingBool, true);
@@ -104,6 +108,7 @@ public class FlyTrapHazard: MonoBehaviour
         {
             Debug.Log(attackDamage);
             ant.TakeDamage(attackDamage);
+            ant.SetCanMove(true);
         }
     }
 

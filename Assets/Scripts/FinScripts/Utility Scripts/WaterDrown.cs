@@ -36,6 +36,7 @@ public class WaterDrown : MonoBehaviour
             currentRb = antScript.GetComponent<Rigidbody>();
             if ( currentRb != null )
             {
+                antScript.SetCanMove( false );
                 Instantiate(waterRippleParticle, antScript.transform);
                 Debug.Log("ReachedMove");
                 currentRb.useGravity = false;
