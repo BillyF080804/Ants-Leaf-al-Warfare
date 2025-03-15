@@ -10,38 +10,38 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c76268df7a3d27b4397d0d1e6cbf16c9, type: 3}
-  m_Name: Grenade
+  m_Name: RockBarage
   m_EditorClassIdentifier: 
-  weaponName: Acorn Grenade
-  weaponDescription: Duck and cover for this bunker buster of a seed!
+  weaponName: RockSlide
+  weaponDescription: 'When one pebble isn''t enough! Launch 3 big pebbles! '
   unlimitedUses: 1
-  weaponIcon: {fileID: 21300000, guid: bc8c40b18c35e2e4ea5a799e3e82e3e7, type: 3}
-  weaponPrefab: {fileID: 2035224743872689002, guid: 799eae2705cc99044a954b6464641fc8, type: 3}
-  baseDamage: 20
+  weaponIcon: {fileID: 21300000, guid: 7de280e877451ed49bc7b989325c0c99, type: 3}
+  weaponPrefab: {fileID: 3667148812617791359, guid: 7ef10ed28193d304687981aaf28c702a, type: 3}
+  baseDamage: 15
   weaponSpeed: 20
   useGravity: 1
   weaponRandomisation: 0
-  explosive: 1
+  explosive: 0
   isMelee: 0
-  isMultiShot: 0
+  isMultiShot: 1
   isSpray: 0
   weaponEffect: {fileID: 0}
   cameraDelay: 4
   cameraShakeOnFire: 0
-  cameraShakeOnImpact: 1
-  hasVFX: 1
+  cameraShakeOnImpact: 0
+  hasVFX: 0
   hasSounds: 0
-  explodeOnImpact: 0
+  explodeOnImpact: 1
   explosionRange: 5
   explosionPower: 5
   fuseTimer: 5
   vfxSize: 1
   vfxDuration: 2.5
-  vfxObject: {fileID: 2169185026088089853, guid: b22ffd9e1b7000c4daadabd9b6b95113, type: 3}
+  vfxObject: {fileID: 0}
   knockbackStrength: 2
   upwardsModifier: 4
-  numOfShots: 2
-  delayBetweenShots: 0.5
+  numOfShots: 3
+  delayBetweenShots: 0.25
   minimumRandomness: 0.8
   maximumRandomness: 1.2
   sprayMover: 0

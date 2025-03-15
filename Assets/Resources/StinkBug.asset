@@ -15,7 +15,7 @@ MonoBehaviour:
   weaponName: Stink Bug
   weaponDescription: Launches a Stinkbug, detonates on impact. Smelly business.
   unlimitedUses: 1
-  weaponIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  weaponIcon: {fileID: 21300000, guid: 300a1a274a7a93345befb64e12f89dd0, type: 3}
   weaponPrefab: {fileID: 2035224743872689002, guid: 48600db732ecebc49831131511799a3a, type: 3}
   baseDamage: 20
   weaponSpeed: 12.5
@@ -24,6 +24,11 @@ MonoBehaviour:
   explosive: 1
   isMelee: 0
   isMultiShot: 0
+  isSpray: 0
+  weaponEffect: {fileID: 0}
+  cameraDelay: 4
+  cameraShakeOnFire: 0
+  cameraShakeOnImpact: 0
   hasVFX: 1
   hasSounds: 0
   explodeOnImpact: 1
@@ -33,17 +38,21 @@ MonoBehaviour:
   vfxSize: 1
   vfxDuration: 15
   vfxObject: {fileID: 3444566206332756482, guid: e74bdcd39dec8da429d2e7a0c7099972, type: 3}
-  lingerEffect: 1
-  lingerEffectRange: 3
-  dealDamage: 1
-  damagePerSecond: 5
-  slowMovement: 1
-  slowMultiplier: 0.5
   knockbackStrength: 2
   upwardsModifier: 4
   numOfShots: 2
   delayBetweenShots: 0.5
   minimumRandomness: 0.8
   maximumRandomness: 1.2
+  sprayMover: 0
+  sprayStrength: 25
+  sprayLength: 3
+  sprayHeight: 2
+  sprayDuration: 2.5
+  sprayAreaVFXSize: 1
+  sprayAreaObject: {fileID: 0}
+  sprayAreaVFX: {fileID: 0}
+  cameraShakeDuration: 0.25
+  cameraShakeIntensity: 1
   shootSound: {fileID: 0}
   impactSound: {fileID: 0}

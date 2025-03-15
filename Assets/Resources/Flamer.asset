@@ -15,10 +15,9 @@ MonoBehaviour:
   weaponName: Flamer
   weaponDescription: 'Short Range FlameThrower. FEEL THE BURN! '
   unlimitedUses: 1
-  weaponIcon: {fileID: 21300000, guid: 915d6c2602800594d89fbbaecb60ca48, type: 3}
+  weaponIcon: {fileID: 21300000, guid: 64e4c844c20f46249ab196ad9f7ceabd, type: 3}
   weaponPrefab: {fileID: 2035224743872689002, guid: 48600db732ecebc49831131511799a3a, type: 3}
-  cameraDelay: 4
-  baseDamage: 20
+  baseDamage: 15
   weaponSpeed: 25
   useGravity: 1
   weaponRandomisation: 0
@@ -26,6 +25,10 @@ MonoBehaviour:
   isMelee: 0
   isMultiShot: 0
   isSpray: 1
+  weaponEffect: {fileID: 0}
+  cameraDelay: 4
+  cameraShakeOnFire: 0
+  cameraShakeOnImpact: 0
   hasVFX: 0
   hasSounds: 0
   explodeOnImpact: 1
@@ -35,23 +38,21 @@ MonoBehaviour:
   vfxSize: 1
   vfxDuration: 2.5
   vfxObject: {fileID: 0}
-  lingerEffect: 0
-  lingerEffectRange: 3
-  dealDamage: 1
-  damagePerSecond: 5
-  slowMovement: 1
-  slowMultiplier: 0.5
   knockbackStrength: 2
   upwardsModifier: 4
   numOfShots: 2
   delayBetweenShots: 0.5
   minimumRandomness: 0.8
   maximumRandomness: 1.2
+  sprayMover: 0
+  sprayStrength: 25
   sprayLength: 3
   sprayHeight: 2
   sprayDuration: 2.5
   sprayAreaVFXSize: 1
   sprayAreaObject: {fileID: 4823009550829533390, guid: 3673142af910dd34f9467e7305110f6b, type: 3}
   sprayAreaVFX: {fileID: 4215415592903712972, guid: b14710584a1d9914eaa828951e70e227, type: 3}
+  cameraShakeDuration: 0.25
+  cameraShakeIntensity: 1
   shootSound: {fileID: 0}
   impactSound: {fileID: 0}

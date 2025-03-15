@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c76268df7a3d27b4397d0d1e6cbf16c9, type: 3}
-  m_Name: Grenade
+  m_Name: AcornRocket
   m_EditorClassIdentifier: 
-  weaponName: Acorn Grenade
-  weaponDescription: Duck and cover for this bunker buster of a seed!
+  weaponName: Acorn Rocket
+  weaponDescription: 'Need more oomph? Take a Rocket! '
   unlimitedUses: 1
-  weaponIcon: {fileID: 21300000, guid: bc8c40b18c35e2e4ea5a799e3e82e3e7, type: 3}
-  weaponPrefab: {fileID: 2035224743872689002, guid: 799eae2705cc99044a954b6464641fc8, type: 3}
+  weaponIcon: {fileID: 21300000, guid: 5fed55888c664104495946fd22feb566, type: 3}
+  weaponPrefab: {fileID: 6799662342576615998, guid: 3f4c9235186a1064b968cd3c191dafa9, type: 3}
   baseDamage: 20
-  weaponSpeed: 20
+  weaponSpeed: 55
   useGravity: 1
-  weaponRandomisation: 0
+  weaponRandomisation: 1
   explosive: 1
   isMelee: 0
   isMultiShot: 0
@@ -28,14 +28,14 @@ MonoBehaviour:
   weaponEffect: {fileID: 0}
   cameraDelay: 4
   cameraShakeOnFire: 0
-  cameraShakeOnImpact: 1
+  cameraShakeOnImpact: 0
   hasVFX: 1
   hasSounds: 0
-  explodeOnImpact: 0
-  explosionRange: 5
-  explosionPower: 5
+  explodeOnImpact: 1
+  explosionRange: 10
+  explosionPower: 8
   fuseTimer: 5
-  vfxSize: 1
+  vfxSize: 2
   vfxDuration: 2.5
   vfxObject: {fileID: 2169185026088089853, guid: b22ffd9e1b7000c4daadabd9b6b95113, type: 3}
   knockbackStrength: 2
