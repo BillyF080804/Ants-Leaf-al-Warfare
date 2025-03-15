@@ -298,8 +298,13 @@ public class TurnManager : MonoBehaviour {
 
         if (CurrentAntTurn.GetComponent<QueenBaseAntScript>() != null) {
             CheckIfQueenAttacked();
+		}
+
+        if (CurrentAntTurn.GetComponent<MummyScript>() != null) {
+            CurrentAntTurn.GetComponent<MummyScript>().DecreaseTurnsAlive();
 
 		}
+        
 
         CheckIfAllAntsMoved();
         CurrentPlayerTurn = null;

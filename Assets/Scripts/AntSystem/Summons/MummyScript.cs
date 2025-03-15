@@ -13,4 +13,11 @@ public class MummyScript : Ant
 		effect = _effect;
 	}
 
+
+	public void DecreaseTurnsAlive() {
+		turnsAlive--;
+		if (turnsAlive <= 0) {
+			OnDeath();
+		}
+	}
 }

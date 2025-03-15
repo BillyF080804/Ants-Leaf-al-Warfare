@@ -86,7 +86,7 @@ public class Ant : MonoBehaviour {
 		}
 	}
 
-	private void OnDeath() {
+	public void OnDeath() {
 		int playerNum = int.Parse(ownedPlayer.ToString().Last().ToString());
 		Player player = turnManager.PlayerList.Where(x => x.playerInfo.playerNum == playerNum).First();
 
