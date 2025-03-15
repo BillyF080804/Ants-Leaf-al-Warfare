@@ -6,4 +6,11 @@ public class MummyScript : Ant
 {
 	[SerializeField]
 	int turnsAlive;
+
+	EffectScript effect;
+
+	public void InitialiseMummy(EffectScript _effect) {
+		effect = _effect;
+	}
+
 }

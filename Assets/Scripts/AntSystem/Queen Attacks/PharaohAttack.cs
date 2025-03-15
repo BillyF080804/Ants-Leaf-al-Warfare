@@ -21,13 +21,14 @@ public class PharaohAttack : QueenAttack {
 		if (attackLevel != 3 && attackLevel > 0) {
 			for (int i = 0; i < 2; i++) {
 				GameObject tempMummy = Instantiate(mummySummon);
-				tempMummy.GetComponent<Ant>().SetHealth(baseHealth + healthPerLevel * attackLevel);
+				tempMummy.GetComponent<MummyScript>().SetHealth(baseHealth + healthPerLevel * attackLevel);
+				tempMummy.GetComponent<MummyScript>().InitialiseMummy();
 				turnManager.PlayerList[(int)antInfoScript.ownedPlayer].AddNewAnt(tempMummy);
 			}
 		} else {
 			for (int i = 0; i < 3; i++) {
 				GameObject tempMummy = Instantiate(mummySummon);
-				tempMummy.GetComponent<Ant>().SetHealth(baseHealth + healthPerLevel * 2);
+				tempMummy.GetComponent<MummyScript>().SetHealth(baseHealth + healthPerLevel * 2);
 				turnManager.PlayerList[(int)antInfoScript.ownedPlayer].AddNewAnt(tempMummy);
 			}
 		}

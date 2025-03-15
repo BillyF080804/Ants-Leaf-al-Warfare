@@ -36,6 +36,8 @@ public class Ant : MonoBehaviour {
 	private Slider healthSlider;
 	protected TurnManager turnManager;
 
+	private bool canMove = true;
+
     private void Awake() {
 		turnManager = FindFirstObjectByType<TurnManager>();
         rb = GetComponent<Rigidbody>();
@@ -46,6 +48,13 @@ public class Ant : MonoBehaviour {
 		healthSlider.value = health;
     }
 
+
+	public void SetCanMove(bool _canMove) {
+		canMove = _canMove;
+	}
+	public bool GetCanMove() {
+		return canMove;
+	}
 
     public void OnMove(InputValue value) {
 		Vector2 movement = value.Get<Vector2>();
@@ -146,7 +155,7 @@ public class Ant : MonoBehaviour {
 	}
 
 	public void OnJump() {
-		if (canJump) {
+		if (canJump && canMove) {
 			Vector2 Force = new Vector2(0, antInfo.jumpHeight);
 			rb.AddForce(Force, ForceMode.Impulse);
 			canJump = false;
@@ -167,23 +176,25 @@ public class Ant : MonoBehaviour {
     }
 
     private void Update() {
-        if (hasStatDrop) {
-			if (statDrops.Contains(EffectSO.StatDropType.Speed)) {
-				float percentage = 0;
-				for (int i = 0; i < effects.Count; i++) {
-					if (effects[i].effectInfo.statDropType == EffectSO.StatDropType.Speed) {
-						percentage = effects[i].effectInfo.percentToDropBy;
-						break;
+		if(canMove) {
+			if (hasStatDrop) {
+				if (statDrops.Contains(EffectSO.StatDropType.Speed)) {
+					float percentage = 0;
+					for (int i = 0; i < effects.Count; i++) {
+						if (effects[i].effectInfo.statDropType == EffectSO.StatDropType.Speed) {
+							percentage = effects[i].effectInfo.percentToDropBy;
+							break;
+						}
 					}
+					transform.Translate(antInfo.moveSpeed * Time.deltaTime * moveVector * percentage);
+
 				}
-				transform.Translate(antInfo.moveSpeed * Time.deltaTime * moveVector * percentage);
 
+			} else {
+				transform.Translate(antInfo.moveSpeed * Time.deltaTime * moveVector);
 			}
-
-		} 
-		else {
-			transform.Translate(antInfo.moveSpeed * Time.deltaTime * moveVector);
 		}
+
 		if(turnManager.CurrentAntTurn == this) {
 			transform.position = new Vector3(transform.position.x, transform.position.y, 0);
 		}
