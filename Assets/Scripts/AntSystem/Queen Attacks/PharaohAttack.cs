@@ -22,13 +22,14 @@ public class PharaohAttack : QueenAttack {
 			for (int i = 0; i < 2; i++) {
 				GameObject tempMummy = Instantiate(mummySummon);
 				tempMummy.GetComponent<MummyScript>().SetHealth(baseHealth + healthPerLevel * attackLevel);
-				tempMummy.GetComponent<MummyScript>().InitialiseMummy(mummyEffect);
+				tempMummy.GetComponent<MummyScript>().InitialiseMummy(mummyEffect,antInfoScript.ownedPlayer);
 				turnManager.PlayerList[(int)antInfoScript.ownedPlayer].AddNewAnt(tempMummy);
 			}
 		} else {
 			for (int i = 0; i < 3; i++) {
 				GameObject tempMummy = Instantiate(mummySummon);
 				tempMummy.GetComponent<MummyScript>().SetHealth(baseHealth + healthPerLevel * 2);
+				tempMummy.GetComponent<MummyScript>().InitialiseMummy(mummyEffect, antInfoScript.ownedPlayer);
 				turnManager.PlayerList[(int)antInfoScript.ownedPlayer].AddNewAnt(tempMummy);
 			}
 		}

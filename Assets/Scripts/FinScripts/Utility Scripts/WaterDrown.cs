@@ -33,10 +33,10 @@ public class WaterDrown : MonoBehaviour
     {
 
         antScript = other.GetComponent<Ant>();
-        if ( antScript != null )
+        if (antScript != null)
         {
             currentRb = antScript.GetComponent<Rigidbody>();
-            if ( currentRb != null )
+            if (currentRb != null)
             {
                 antScript.SetCanMove( false );
                 Instantiate(waterRippleParticle, antScript.transform);
@@ -44,7 +44,7 @@ public class WaterDrown : MonoBehaviour
                 currentRb.useGravity = false;
                 currentRb.velocity = Vector3.zero;
                 currentRb.AddForce(fallDistance, ForceMode.Impulse);
-                antSform =antScript.GetComponent<Transform>();
+                antSform = antScript.GetComponent<Transform>();
                 impacted = true;
             }
         }
@@ -92,14 +92,25 @@ public class WaterDrown : MonoBehaviour
         else if (shiftedTwice)
         {
             antScript.OnDeath();
-            Destroy(antSform.gameObject);
             antSform = null;
             currentRb = null;
             antScript = null;
         }
     }
 
-    private void MoveTo2()
+	private void MoveTo1() {
+		Debug.Log("Moving one");
+		antSform.transform.position = Vector3.Lerp(oldPos, floatAway1.position, riseSpeed);
+		currentDistance = Vector3.Distance(antSform.position, floatAway1.position);
+		if (minDistance >= currentDistance) {
+			floatedUp = false;
+			shiftedOnce = true;
+			currentDistance = 0;
+			hasSetOldPos = false;
+		}
+	}
+
+	private void MoveTo2()
     {
         Debug.Log("Moving two");
         antSform.transform.position = Vector3.Lerp(oldPos, floatAway2.position, riseSpeed);
@@ -113,19 +124,7 @@ public class WaterDrown : MonoBehaviour
         }
     }
 
-    private void MoveTo1()
-    {
-        Debug.Log("Moving one");
-        antSform.transform.position = Vector3.Lerp(oldPos, floatAway1.position, riseSpeed);
-        currentDistance = Vector3.Distance(antSform.position, floatAway1.position);
-        if (minDistance >= currentDistance)
-        {
-            floatedUp = false;
-            shiftedOnce = true;
-            currentDistance = 0;
-            hasSetOldPos = false;
-        }
-    }
+
 
     private IEnumerator MoveDelay()
     {
@@ -138,7 +137,6 @@ public class WaterDrown : MonoBehaviour
         {
             impacted = false;
             floatedUp = true;
-            StopCoroutine(MoveDelay());
             currentDistance = 0;
             hasSetOldPos = false;
         }

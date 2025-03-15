@@ -145,7 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   antInfo: {fileID: 11400000, guid: ebf9fd71cb265ae4f93c7254b789876a, type: 2}
-  hasHadTurn: 0
+  hasHadTurn: 1
   ownedPlayer: 0
   moveVector: {x: 0, y: 0, z: 0}
   canJump: 1
@@ -159,6 +159,7 @@ MonoBehaviour:
   canInteract: 0
   interactable: {fileID: 0}
   turnsAlive: 2
+  attackDamage: 10
 --- !u!54 &7489131007118444899
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -101,7 +101,10 @@ public class Player : MonoBehaviour {
             else {
                 weaponManager.FireWeapon(weaponManager.WeaponSelected, turnManager.CurrentAntTurn.transform);
             }
-        }
+        } else if (CheckActionIsValid() && turnManager.CurrentAntTurn.GetComponent<MummyScript>() != null) {
+            turnManager.CurrentAntTurn.GetComponent<MummyScript>().Attack();
+
+		}
     }
 
     //Function called when the player presses the move button
@@ -124,7 +127,7 @@ public class Player : MonoBehaviour {
 
     //Function called when the player presses the open weapon menu button
     private void OnWeaponMenu() {
-        if (CheckActionIsValid()) {
+        if (CheckActionIsValid() && turnManager.CurrentAntTurn.GetComponent<MummyScript>() == null) {
             weaponManager.WeaponMenu();
         }
     }

@@ -41,6 +41,7 @@ public class QueenBaseAntScript : Ant {
 
 			attackLevel = 0;
 			usedAttack = true;
+			turnManager.EndTurn();
 		}
 	}
 

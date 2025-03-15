@@ -263,9 +263,6 @@ public class Ant : MonoBehaviour {
     }
 
     private void OnCollisionEnter(Collision collision) {
-		//if (collision.gameObject.transform.position.y < gameObject.transform.position.y) {
-		//	canJump = true;
-		//}
 		if(Physics.Raycast(gameObject.transform.position, Vector3.down, out RaycastHit ray, 3.0f)) {
 			canJump = true;
 		}
