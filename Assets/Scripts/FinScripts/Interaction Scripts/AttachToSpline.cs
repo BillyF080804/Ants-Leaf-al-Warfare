@@ -69,7 +69,7 @@ public class AttachToSpline : Interactable
             uiHandler.ToggleTrigger(exitTriggerName);
             Rigidbody rb = currentAnt.GetComponent<Rigidbody>();
             currentAnt.gameObject.transform.SetParent(attachForSpline.transform);
-            currentAnt.gameObject.transform.position = attachForSpline.transform.position;
+            currentAnt.gameObject.transform.localPosition = Vector3.zero;
             currentAnt.transform.rotation = rotation;
             rb.useGravity = false;
             animatedSpline.Play();
