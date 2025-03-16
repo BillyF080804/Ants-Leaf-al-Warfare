@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c76268df7a3d27b4397d0d1e6cbf16c9, type: 3}
-  m_Name: Flamer
+  m_Name: Hot Coal
   m_EditorClassIdentifier: 
-  weaponName: Flamer
-  weaponDescription: 'Short Range FlameThrower. FEEL THE BURN! '
-  unlimitedUses: 1
-  useAutomaticRotation: 0
-  weaponIcon: {fileID: 21300000, guid: 64e4c844c20f46249ab196ad9f7ceabd, type: 3}
-  weaponPrefab: {fileID: 2035224743872689002, guid: 48600db732ecebc49831131511799a3a, type: 3}
-  baseDamage: 15
-  weaponSpeed: 25
+  weaponName: Hot Coal
+  weaponDescription: 'Fresh Smoking Coal from the Barbecue, light em up! '
+  unlimitedUses: 0
+  useAutomaticRotation: 1
+  weaponIcon: {fileID: 21300000, guid: 13d40f18c62e735468857f28505cb458, type: 3}
+  weaponPrefab: {fileID: 3667148812617791359, guid: da89128667cb022438fe87b594fb0fd3, type: 3}
+  baseDamage: 25
+  weaponSpeed: 17.5
   useGravity: 1
-  weaponRandomisation: 0
+  weaponRandomisation: 1
   explosive: 0
   isMelee: 0
   isMultiShot: 0
-  isSpray: 1
+  isSpray: 0
   weaponEffect: {fileID: 2799710843058185519, guid: 4b7928e8a0844e34ca10d681dfb212e5, type: 3}
   cameraDelay: 4
   cameraShakeOnFire: 0
@@ -51,8 +51,8 @@ MonoBehaviour:
   sprayHeight: 2
   sprayDuration: 2.5
   sprayAreaVFXSize: 1
-  sprayAreaObject: {fileID: 4823009550829533390, guid: 3673142af910dd34f9467e7305110f6b, type: 3}
-  sprayAreaVFX: {fileID: 4215415592903712972, guid: b14710584a1d9914eaa828951e70e227, type: 3}
+  sprayAreaObject: {fileID: 0}
+  sprayAreaVFX: {fileID: 0}
   cameraShakeDuration: 0.25
   cameraShakeIntensity: 1
   shootSound: {fileID: 0}
