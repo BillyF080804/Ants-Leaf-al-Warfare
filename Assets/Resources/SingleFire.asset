@@ -15,6 +15,7 @@ MonoBehaviour:
   weaponName: Slingshot Single
   weaponDescription: 'One Single shot, take aim and fire! '
   unlimitedUses: 1
+  useAutomaticRotation: 0
   weaponIcon: {fileID: 21300000, guid: 4f95420cdfb27e74fb1bc52e1d155ad3, type: 3}
   weaponPrefab: {fileID: 3667148812617791359, guid: 7ef10ed28193d304687981aaf28c702a, type: 3}
   baseDamage: 20

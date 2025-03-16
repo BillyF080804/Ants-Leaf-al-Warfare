@@ -15,6 +15,7 @@ MonoBehaviour:
   weaponName: Acorn Grenade
   weaponDescription: Duck and cover for this bunker buster of a seed!
   unlimitedUses: 1
+  useAutomaticRotation: 0
   weaponIcon: {fileID: 21300000, guid: bc8c40b18c35e2e4ea5a799e3e82e3e7, type: 3}
   weaponPrefab: {fileID: 2035224743872689002, guid: 799eae2705cc99044a954b6464641fc8, type: 3}
   baseDamage: 20

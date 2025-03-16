@@ -15,6 +15,7 @@ MonoBehaviour:
   weaponName: Melee Weapon
   weaponDescription: Nom Nom.
   unlimitedUses: 1
+  useAutomaticRotation: 0
   weaponIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   weaponPrefab: {fileID: 0}
   baseDamage: 25

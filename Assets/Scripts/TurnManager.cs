@@ -27,6 +27,7 @@ public class TurnManager : MonoBehaviour {
     [Header("Event Settings")]
     [SerializeField] private UnityEvent startTurnEvent;
     [SerializeField] private UnityEvent endTurnEvent;
+    [SerializeField] private UnityEvent startRoundEvent;
 
     [Header("Queen Ant Specialisms")]
     [SerializeField] private List<AntSO> queenAntSpecials = new List<AntSO>();
@@ -41,6 +42,7 @@ public class TurnManager : MonoBehaviour {
     [SerializeField] private TMP_Text roundNumText;
     [SerializeField] private GameObject blackscreen;
     [SerializeField] private GameObject levelNameText;
+    [SerializeField] private TMP_Text queenAntSpawnText;
     [SerializeField] private GameObject queenHealthUIPrefab;
     [SerializeField] private List<Sprite> queenAntHealthUIVariants;
 
@@ -113,13 +115,18 @@ public class TurnManager : MonoBehaviour {
         for (int i = 0; i < PlayerList.Count; i++) {
             GameObject newQueen = Instantiate(queenPrefab, GetAntSpawnPoint(MinDistanceBetweenQueens, false), Quaternion.identity);
             newQueen.GetComponent<Ant>().ownedPlayer = (Ant.PlayerList)i;
+
             PlayerList[i].AddQueen(newQueen);
             PlayerList[i].AllowPlayerToSpawnQueen();
             cameraSystem.SetCameraTarget(newQueen.transform);
 
+            queenAntSpawnText.text = "Queen Ant Spawning\nPress " + PlayerList[i].GetKeybindForAction("SpawnQueenAnt") + " To Confirm Queen Ant Position";
+            queenAntSpawnText.gameObject.SetActive(true);
+
             yield return new WaitUntil(() => PlayerList[i].ConfirmedQueenSpawn == true);
         }
 
+        queenAntSpawnText.gameObject.SetActive(false);
         FindFirstObjectByType<QueenAntSpawner>().FinishSpawning();
     }
 
@@ -212,6 +219,8 @@ public class TurnManager : MonoBehaviour {
 
     private IEnumerator StartGame() {
         roundNumText.text = "Current Round: 1";
+        cameraSystem.SetCameraTarget(null);
+
         ShowRoundNumber();
         yield return new WaitForSeconds(2.5f);
         HideRoundNumber();
@@ -221,32 +230,38 @@ public class TurnManager : MonoBehaviour {
             cameraSystem.ResetCamera();
             cameraSystem.SetCameraTarget(null);
 
-
             foreach (var player in PlayerList) {
                 currentTurnEnded = false;
                 CurrentPlayerTurn = player;
+
                 ShowTimer();
                 turnTimerCoroutine = StartCoroutine(TurnTimer());
+
                 player.ResetFreeCamSetting();
                 cameraSystem.ResetCamera();
                 cameraSystem.SetCameraTarget(CurrentAntTurn.transform);
+
                 startTurnEvent.Invoke();
 
                 yield return new WaitUntil(() => currentTurnEnded == true);
             }
-
-            
+                        
 
             if (CurrentRound == maxRounds) {
 				GameOver();
-			} else if(prevRoud != CurrentRound) {
+			} 
+            else if(prevRoud != CurrentRound) {
                 roundNumText.text = "Current Round: " + (CurrentRound + 1);
 
                 cameraSystem.ResetCamera();
                 cameraSystem.SetCameraTarget(null);
+
                 ShowRoundNumber();
                 yield return new WaitForSeconds(2.5f);
                 HideRoundNumber();
+
+                startRoundEvent.Invoke();
+
                 prevRoud++;
             }
         }

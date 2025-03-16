@@ -183,7 +183,7 @@
                 {
                     "name": "",
                     "id": "bdc8c6e7-1b8b-45ac-9ebf-8473adab58de",
-                    "path": "<Gamepad>/buttonSouth",
+                    "path": "<Gamepad>/dpad/left",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",

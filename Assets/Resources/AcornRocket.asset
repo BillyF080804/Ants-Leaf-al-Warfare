@@ -15,6 +15,7 @@ MonoBehaviour:
   weaponName: Acorn Rocket
   weaponDescription: 'Need more oomph? Take a Rocket! '
   unlimitedUses: 1
+  useAutomaticRotation: 1
   weaponIcon: {fileID: 21300000, guid: 5fed55888c664104495946fd22feb566, type: 3}
   weaponPrefab: {fileID: 6799662342576615998, guid: 3f4c9235186a1064b968cd3c191dafa9, type: 3}
   baseDamage: 20
