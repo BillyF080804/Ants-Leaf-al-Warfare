@@ -129,7 +129,7 @@ public class WeaponManager : MonoBehaviour {
                 colliders.First().GetComponent<Rigidbody>().AddExplosionForce(weaponInfo.knockbackStrength, playerPosition.position, 0, weaponInfo.upwardsModifier, ForceMode.Impulse);
 
                 if (weaponInfo.weaponEffect != null) {
-                    weaponInfo.weaponEffect.AddEffect(colliders.First().GetComponent<Ant>());
+                    weaponInfo.weaponEffect.GetComponent<EffectScript>().AddEffect(colliders.First().GetComponent<Ant>());
                 }
             }
 

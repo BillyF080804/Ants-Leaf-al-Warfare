@@ -28,7 +28,7 @@ public class SprayAreaScript : MonoBehaviour {
             }
 
             if (weaponInfo.weaponEffect != null) {
-                weaponInfo.weaponEffect.AddEffect(ant);
+                weaponInfo.weaponEffect.GetComponent<EffectScript>().AddEffect(ant);
             }
         }
     }

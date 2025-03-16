@@ -24,7 +24,7 @@ public class BaseWeaponSO : ScriptableObject {
     public bool isSpray = false;
 
     [Header("Weapon Effect - Leave empty for no effect")]
-    public EffectScript weaponEffect = null;
+    public GameObject weaponEffect = null;
 
     [Header("Camera Settings")]
     public float cameraDelay = 4.0f;

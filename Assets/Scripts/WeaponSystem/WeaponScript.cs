@@ -29,7 +29,7 @@ public class WeaponScript : MonoBehaviour {
             }
 
             if (weaponInfo.weaponEffect != null) {
-                weaponInfo.weaponEffect.AddEffect(collision.gameObject.GetComponent<Ant>());
+                weaponInfo.weaponEffect.GetComponent<EffectScript>().AddEffect(collision.gameObject.GetComponent<Ant>());
             }
 
             if (weaponInfo.cameraShakeOnImpact) {
@@ -64,7 +64,7 @@ public class WeaponScript : MonoBehaviour {
             collider.GetComponent<Rigidbody>().AddExplosionForce(weaponInfo.explosionPower, transform.position, weaponInfo.explosionRange, weaponInfo.upwardsModifier, ForceMode.Impulse);
 
             if (weaponInfo.weaponEffect != null) {
-                weaponInfo.weaponEffect.AddEffect(collider.gameObject.GetComponent<Ant>());
+                weaponInfo.weaponEffect.GetComponent<EffectScript>().AddEffect(collider.GetComponent<Ant>());
             }
         }
 
