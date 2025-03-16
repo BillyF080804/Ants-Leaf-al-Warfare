@@ -42,7 +42,7 @@ public class AttachToSpline : Interactable
 
     private void OnTriggerStay(Collider other)
     {
-        if(!isLaunching && imageDistance >= 1.5)
+        if(!isLaunching && imageDistance >= 1.5 && currentAnt.transform.position != null)
         {
             imageDistance = Vector2.Distance(promptImage.transform.position, currentAnt.transform.position);
             promptImage.transform.position = Vector2.MoveTowards(promptImage.transform.position, currentAnt.transform.position, 1 * Time.deltaTime);

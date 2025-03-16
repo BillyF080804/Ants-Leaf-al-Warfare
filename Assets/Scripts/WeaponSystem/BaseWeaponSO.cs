@@ -7,8 +7,9 @@ public class BaseWeaponSO : ScriptableObject {
     public string weaponName;
     public string weaponDescription;
     public bool unlimitedUses = true;
-    
+
     [Header("Weapon Cosmetics")]
+    public bool useAutomaticRotation = true;
     public Sprite weaponIcon = null;
     public GameObject weaponPrefab = null;
 

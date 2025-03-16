@@ -22,7 +22,6 @@ public class WeaponScript : MonoBehaviour {
             Explode();
         }
         else if (collision.gameObject.CompareTag("Player") && weaponInfo.explosive == false) {
-            Debug.Log(collision.gameObject.name + " damage dealt: " + weaponInfo.baseDamage);
             collision.gameObject.GetComponent<Ant>().TakeDamage(weaponInfo.baseDamage);
 
             if (weaponInfo.hasVFX == true && weaponInfo.vfxObject != null) {

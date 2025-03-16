@@ -89,17 +89,17 @@ public class WeaponManager : MonoBehaviour {
             aimPos.y *= Random.Range(weaponInfo.minimumRandomness, weaponInfo.maximumRandomness);
         }
 
-        //Calculate velocity & rotation
+        //Calculate velocity
         Vector3 weaponDirection = aimPos - playerPosition.position;
-        //Vector3 weaponRotation = playerPosition.position - aimPos;
-
-        //Set velocity
         Vector2 weaponVelocity = new Vector2(weaponDirection.x, weaponDirection.y).normalized * weaponInfo.weaponSpeed * aimStrength * (weaponInfo.weaponRandomisation == true ? Random.Range(weaponInfo.minimumRandomness, weaponInfo.maximumRandomness) : 1.0f);
         rb.velocity = weaponVelocity;
 
         //Set rotation
-        //float originalRotation = Mathf.Atan2(weaponRotation.y, weaponRotation.x) * Mathf.Rad2Deg;
-        //newWeapon.transform.rotation = Quaternion.Euler(0, 0, originalRotation);
+        if (weaponInfo.useAutomaticRotation == true) {
+            Vector3 weaponRotation = playerPosition.position - aimPos;
+            float originalRotation = Mathf.Atan2(weaponRotation.y, weaponRotation.x) * Mathf.Rad2Deg;
+            newWeapon.transform.rotation = Quaternion.Euler(0, 0, originalRotation);
+        }
 
         //Set weapon values
         rb.useGravity = weaponInfo.useGravity;

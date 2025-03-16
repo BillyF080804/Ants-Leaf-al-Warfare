@@ -294,16 +294,17 @@ public class TurnManager : MonoBehaviour {
 
         yield return new WaitUntil(() => gameOver == false);
 
-        CurrentAntTurn.ApplyEffects();
+        if (CurrentAntTurn != null) {
+            CurrentAntTurn.ApplyEffects();
 
-        if (CurrentAntTurn.GetComponent<QueenBaseAntScript>() != null) {
-            CheckIfQueenAttacked();
-		}
+            if (CurrentAntTurn.GetComponent<QueenBaseAntScript>() != null) {
+                CheckIfQueenAttacked();
+            }
 
-        if (CurrentAntTurn.GetComponent<MummyScript>() != null) {
-            CurrentAntTurn.GetComponent<MummyScript>().DecreaseTurnsAlive();
-
-		}
+            if (CurrentAntTurn.GetComponent<MummyScript>() != null) {
+                CurrentAntTurn.GetComponent<MummyScript>().DecreaseTurnsAlive();
+            }
+        }
         
 
         CheckIfAllAntsMoved();
