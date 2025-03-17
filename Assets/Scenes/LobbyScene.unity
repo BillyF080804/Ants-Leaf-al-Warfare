@@ -3599,8 +3599,7 @@ MonoBehaviour:
   gamemodeDropdown: {fileID: 1727778076}
   loadingUIPrefab: {fileID: 5190340234247882297, guid: 4d4a33bd784f0f640adb01b07af90115, type: 3}
   availableScenes:
-  - {fileID: 102900000, guid: 140eb1fd9303fe244aee057247659dd6, type: 3}
-  - {fileID: 102900000, guid: 816d834059aae804680ae6c078a0ce28, type: 3}
+  - Game_GardenScene
   sceneDropdown: {fileID: 970970623}
 --- !u!1 &1299692028
 GameObject:

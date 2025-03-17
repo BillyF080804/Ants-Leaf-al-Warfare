@@ -131,6 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ownedPlayer: 0
   antToAttack: {fileID: 0}
+  damageToDeal: 10
   speed: 5
   effects:
   - {fileID: 5701415912331228771, guid: 352b10a6707b74243a2fd7f1f4757ba9, type: 3}

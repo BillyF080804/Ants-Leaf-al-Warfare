@@ -21,7 +21,7 @@ public class LobbyManager : MonoBehaviour {
     [SerializeField] private LoadingUI loadingUIPrefab;
 
     [Header("Scene Info")]
-    [SerializeField] private List<SceneAsset> availableScenes;
+    [SerializeField] private List<string> availableScenes = new List<string>();
     [SerializeField] private TMP_Dropdown sceneDropdown;
 
     private string gamemode;
@@ -35,11 +35,7 @@ public class LobbyManager : MonoBehaviour {
     private List<Player> playerList = new List<Player>();
 
     private void Start() {
-        List<string> sceneNames = new List<string>();
-        foreach (SceneAsset scene in availableScenes) {
-            sceneNames.Add(scene.name);
-        }
-        sceneDropdown.AddOptions(sceneNames);
+        sceneDropdown.AddOptions(availableScenes);
 
         UpdatePlayerCount(0);
         UpdateSceneToLoad(0);

@@ -141,7 +141,7 @@ public class TurnManager : MonoBehaviour {
 
             switch (i) {
                 case 0:
-                    newHealthUI.GetComponent<RectTransform>().localPosition = new Vector2(-785, 445);
+                    newHealthUI.GetComponent<RectTransform>().anchoredPosition = new Vector2(-785, 275);
                     backgroundTransform.localPosition = new Vector2(-75.5f, 0);
                     queenImageTransform.localPosition = new Vector2(-75.5f, 0);                    
                     textTransform.localPosition = new Vector2(70, -45);
@@ -150,7 +150,7 @@ public class TurnManager : MonoBehaviour {
                     mainUI.color = PlayerList[i].playerInfo.playerColor;
                     break;
                 case 1:
-                    newHealthUI.GetComponent<RectTransform>().localPosition = new Vector2(785, 445);
+                    newHealthUI.GetComponent<RectTransform>().anchoredPosition = new Vector2(785, 275);
                     backgroundTransform.localPosition = new Vector2(75.5f, 0);
                     queenImageTransform.localPosition = new Vector2(75.5f, 0);
                     queenImageTransform.Rotate(new Vector3(0, 180, 0));
@@ -160,7 +160,7 @@ public class TurnManager : MonoBehaviour {
                     mainUI.color = PlayerList[i].playerInfo.playerColor;
                     break;
                 case 2:
-                    newHealthUI.GetComponent<RectTransform>().localPosition = new Vector2(-785, -445);
+                    newHealthUI.GetComponent<RectTransform>().anchoredPosition = new Vector2(-785, -275);
                     backgroundTransform.localPosition = new Vector2(-75.5f, 0);
                     queenImageTransform.localPosition = new Vector2(-75.5f, 0);
                     textTransform.localPosition = new Vector2(70, -45);
@@ -169,7 +169,7 @@ public class TurnManager : MonoBehaviour {
                     mainUI.color = PlayerList[i].playerInfo.playerColor;
                     break;
                 case 3:
-                    newHealthUI.GetComponent<RectTransform>().localPosition = new Vector2(785, -445);
+                    newHealthUI.GetComponent<RectTransform>().anchoredPosition = new Vector2(785, -275);
                     backgroundTransform.localPosition = new Vector2(75.5f, 0);
                     queenImageTransform.localPosition = new Vector2(75.5f, 0);
                     queenImageTransform.Rotate(new Vector3(0, 180, 0));
