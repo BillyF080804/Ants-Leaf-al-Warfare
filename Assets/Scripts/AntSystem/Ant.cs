@@ -203,7 +203,7 @@ public class Ant : MonoBehaviour {
     }
 
 	private void CheckForNearbyAnts() {
-		List<Collider> ants = Physics.OverlapBox(transform.position, new Vector3(3f, 3f, 3f)).Where(x => x.GetComponent<Ant>()).ToList();
+		List<Collider> ants = Physics.OverlapSphere(transform.position, 3.0f).Where(x => x.GetComponent<Ant>()).ToList();
 		List<Ant> nearbyAnts = new List<Ant>();
 
 		foreach (Collider collider in ants) {
