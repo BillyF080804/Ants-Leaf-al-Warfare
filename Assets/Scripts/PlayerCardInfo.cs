@@ -7,13 +7,13 @@ using UnityEngine.UI;
 public class PlayerCardInfo : MonoBehaviour {
     [Header("Settings")]
     public int playerNum;
-    public bool isReady;
+    public bool isReady = false;
+    public bool playerJoined = false;
 
     [Header("UI")]
-    public GameObject card;
+    public GameObject mainBackground;
+    public GameObject closeBackground;
     public Image colorBand;
-    public TMP_Text colorChangePrompt;
-    public Image readyBackground;
     public TMP_Text readyText;
     public TMP_Text textHint;
 

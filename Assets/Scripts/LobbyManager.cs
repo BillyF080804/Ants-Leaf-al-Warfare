@@ -6,14 +6,14 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.Windows;
 
 public class LobbyManager : MonoBehaviour {
     [Header("Settings")]
     [SerializeField] private PlayerInputManager inputManager;
 
     [Header("Player Cards")]
-    [SerializeField] private Transform playerCardHolder;
-    [SerializeField] private PlayerCardInfo playerCard;
+    [SerializeField] private List<PlayerCardInfo> playerCards;
 
     [Header("Other UI")]
     [SerializeField] private TMP_Text playersJoinedText;
@@ -26,90 +26,87 @@ public class LobbyManager : MonoBehaviour {
 
     private string gamemode;
     private string sceneToLoad;
-    private int expectedPlayerCount = 0;
+    //private int expectedPlayerCount = 0;
     private int numOfAnts = 2;
     private bool loadingUISpawned = false;
 
     private Coroutine readyCountdownCoroutine = null;
-    private List<PlayerCardInfo> playerCardList = new List<PlayerCardInfo>();
     private List<Player> playerList = new List<Player>();
 
     private void Start() {
         sceneDropdown.AddOptions(availableScenes);
 
-        UpdatePlayerCount(0);
+        //UpdatePlayerCount(0);
         UpdateSceneToLoad(0);
         UpdateGameMode(0);
     }
 
     //Called when a player changes the number of players in the game
     public void UpdatePlayerCount(int value) {
-		switch (value) {
-			case 0: {
-				expectedPlayerCount = 1;
-				break;
-			}
-			case 1: {
-				expectedPlayerCount = 2;
-				break;
-			}
-			case 2: {
-				expectedPlayerCount = 3;
-				break;
-			}
-			case 3: {
-				expectedPlayerCount = 4;
-				break;
-			}
-		}
+        //switch (value) {
+        //    case 0: {
+        //            expectedPlayerCount = 1;
+        //            break;
+        //        }
+        //    case 1: {
+        //            expectedPlayerCount = 2;
+        //            break;
+        //        }
+        //    case 2: {
+        //            expectedPlayerCount = 3;
+        //            break;
+        //        }
+        //    case 3: {
+        //            expectedPlayerCount = 4;
+        //            break;
+        //        }
+        //}
 
-		foreach (var player in playerCardList) { 
-            Destroy(player.card);
-        }
+        //playersJoinedText.text = "Waiting On Players To Join . . .";
 
-        foreach (var player in playerList) {
-            Destroy(player.gameObject);
-        }
+        //for (int i = 0; i < expectedPlayerCount; i++) {
+        //    PlayerCardInfo newCard = Instantiate(playerCard, playerCardHolder);
+        //    newCard.name = "PlayerCard" + (i + 1);
 
-        playerCardList.Clear();
-        playerList.Clear();
-        playersJoinedText.text = "Waiting On Players To Join . . .";
+        //    playerCardList.Add(newCard.GetComponent<PlayerCardInfo>());
+        //    playerCardList[i].playerNum = i + 1;
 
-        for (int i = 0; i < expectedPlayerCount; i++) {
-            PlayerCardInfo newCard = Instantiate(playerCard, playerCardHolder);
-            newCard.name = "PlayerCard" + (i + 1);
-
-            playerCardList.Add(newCard.GetComponent<PlayerCardInfo>());
-            playerCardList[i].playerNum = i + 1;
-
-            if (i != 0) {
-                ChangeColor(playerCardList[i].playerNum);  
-            }
-            else {
-                playerCardList[i].colorBand.color = ChooseNewColor();
-            }
-        }
+        //    if (i != 0) {
+        //        ChangeColor(playerCardList[i].playerNum);
+        //    }
+        //    else {
+        //        playerCardList[i].colorBand.color = ChooseNewColor();
+        //    }
+        //}
     }
 
     //Called when a player presses the join button on their controller
     public void OnPlayerJoined(PlayerInput input) {
-        if (playerList.Count < expectedPlayerCount) {
+        if (playerList.Count < 4) {
             playerList.Add(input.gameObject.GetComponent<Player>());
 
             int playerNum = playerList.Count;
             input.gameObject.name = "Player" + playerNum;
 
             Player player = playerList[playerNum - 1];
-            PlayerCardInfo playerCard = playerCardList[playerNum - 1];
+            PlayerCardInfo playerCard = playerCards[playerNum - 1];
+
+            playerCard.closeBackground.SetActive(false);
+            playerCard.mainBackground.SetActive(true);
 
             player.playerInfo.playerNum = playerNum;
             player.playerInfo.playerInput = input;
-            player.playerInfo.playerColor = playerCardList.Where(x => x.playerNum == playerNum).First().colorBand.color;
-            playerCard.textHint.text = "Press " + input.actions.FindAction("ReadyUp").GetBindingDisplayString(InputBinding.DisplayStringOptions.DontIncludeInteractions) + " To Ready Up";
-            playerCard.colorChangePrompt.text = input.actions.FindAction("ChangeColor").GetBindingDisplayString(InputBinding.DisplayStringOptions.DontIncludeInteractions);
-            playerCard.colorChangePrompt.gameObject.SetActive(true);
+            playerCard.playerJoined = true;
+            player.playerInfo.playerColor = playerCards.Where(x => x.playerNum == playerNum).First().colorBand.color;
+            playerCard.readyText.text = input.actions.FindAction("ReadyUp").GetBindingDisplayString(InputBinding.DisplayStringOptions.DontIncludeInteractions) + " - Not Ready!";
 
-            if (playerList.Count == expectedPlayerCount) {
+            if (playerList.Count > 0) {
+                playersJoinedText.text = "Waiting On Players To Ready Up . . .";
+            }
+
+            if (readyCountdownCoroutine != null) {
+                StopCoroutine(readyCountdownCoroutine);
+                readyCountdownCoroutine = null;
                 playersJoinedText.text = "Waiting On Players To Ready Up . . .";
             }
         }
@@ -179,40 +176,41 @@ public class LobbyManager : MonoBehaviour {
 
     //Called when a user presses the change color button
     public void ChangeColor(int playerNum) {
-        PlayerCardInfo playerCard = playerCardList.Where(x => x.playerNum == playerNum).First();
+        //PlayerCardInfo playerCard = playerCardList.Where(x => x.playerNum == playerNum).First();
 
-        if (playerCard.isReady == false) {
-            Color newColor = ChooseNewColor();
-            List<Color> cardColors = new List<Color>();
+        //if (playerCard.isReady == false) {
+        //    Color newColor = ChooseNewColor();
+        //    List<Color> cardColors = new List<Color>();
 
-            foreach (var playerCards in playerCardList) {
-                cardColors.Add(playerCards.colorBand.color);
-            }
+        //    foreach (var playerCards in playerCardList) {
+        //        cardColors.Add(playerCards.colorBand.color);
+        //    }
 
-            while (cardColors.Where(x => x == newColor).Count() > 0) {
-                newColor = ChooseNewColor();
-            }
+        //    while (cardColors.Where(x => x == newColor).Count() > 0) {
+        //        newColor = ChooseNewColor();
+        //    }
 
-            if (playerList.Count > 0) {
-                playerList.Where(x => x.playerInfo.playerNum == playerNum).First().playerInfo.playerColor = newColor;
-            }
+        //    if (playerList.Count > 0) {
+        //        playerList.Where(x => x.playerInfo.playerNum == playerNum).First().playerInfo.playerColor = newColor;
+        //    }
 
-            playerCard.colorBand.color = newColor;
-        }
+        //    playerCard.colorBand.color = newColor;
+        //}
     }
 
     public void ReadyUp(int playerNum) {
-        PlayerCardInfo playerCard = playerCardList.Where(x => x.playerNum == playerNum).First();
+        PlayerCardInfo playerCard = playerCards.Where(x => x.playerNum == playerNum).First();
+        Player player = playerList.Where(x => x.playerInfo.playerNum == playerNum).First();
         playerCard.isReady = !playerCard.isReady;
 
         if (playerCard.isReady) {
-            playerCard.readyText.text = "Ready!";
+            playerCard.readyText.text = player.GetKeybindForAction("ReadyUp") + " - Ready!";
         }
         else {
-            playerCard.readyText.text = "Not Ready!";
+            playerCard.readyText.text = player.GetKeybindForAction("ReadyUp") + " - Not Ready!";
         }
 
-        if (playerCardList.All(x => x.isReady) == true) {
+        if (playerCards.Where(x => x.playerJoined == true).All(x => x.isReady) == true) {
             readyCountdownCoroutine = StartCoroutine(ReadyCountdownCoroutine());
         }
         else if (readyCountdownCoroutine != null) {
@@ -236,58 +234,56 @@ public class LobbyManager : MonoBehaviour {
 
     public void ChangeQueenSpecialism(int playerNum, float value) {
         Player player = playerList.Where(x => x.playerInfo.playerNum == playerNum).First();
-        PlayerCardInfo playerCard = playerCardList.Where(x => x.playerNum == playerNum).First(); 
+        PlayerCardInfo playerCard = playerCards.Where(x => x.playerNum == playerNum).First(); 
 
         if (value > 0 && playerCard.isReady == false) {
             switch (player.playerInfo.queenType) {
                 case "Bee":
                     player.playerInfo.queenType = "Dracula";
-                    playerCard.teamText.text = "Team:\nDracula Ant";
+                    playerCard.teamText.text = "Dracula Ant";
                     playerCard.leftArrow.SetActive(true);
                     break;
                 case "Dracula":
                     player.playerInfo.queenType = "Weaver";
-                    playerCard.teamText.text = "Team:\nWeaver Ant";
+                    playerCard.teamText.text = "Weaver Ant";
                     break;
                 case "Weaver":
                     player.playerInfo.queenType = "Pharaoh";
-                    playerCard.teamText.text = "Team:\nPharaoh Ant";
-				    playerCard.rightArrow.SetActive(false);
+                    playerCard.teamText.text = "Pharaoh Ant";
 				    break;
-                //case "Pharaoh":
-                //    player.playerInfo.queenType = "Fire";
-                //    playerCard.teamText.text = "Team:\nFire Ant";
-                //    break;
-                //case "Fire":
-                //    player.playerInfo.queenType = "Bullet";
-                //    playerCard.teamText.text = "Team:\nBullet Ant";
-                //    playerCard.rightArrow.SetActive(false);
-                //    break;
+                case "Pharaoh":
+                    player.playerInfo.queenType = "Fire";
+                    playerCard.teamText.text = "Fire Ant";
+                    break;
+                case "Fire":
+                    player.playerInfo.queenType = "Bullet";
+                    playerCard.teamText.text = "Bullet Ant";
+                    playerCard.rightArrow.SetActive(false);
+                    break;
             }
         }
         else if (value < 0 && playerCard.isReady == false) {
             switch (player.playerInfo.queenType) {
-                //case "Bullet":
-                //    player.playerInfo.queenType = "Fire";
-                //    playerCard.teamText.text = "Team:\nFire Ant";
-                //    playerCard.rightArrow.SetActive(true);
-                //    break;
-                //case "Fire":
-                //    player.playerInfo.queenType = "Pharaoh";
-                //    playerCard.teamText.text = "Team:\nPharaoh Ant";
-                //    break;
+                case "Bullet":
+                    player.playerInfo.queenType = "Fire";
+                    playerCard.teamText.text = "Fire Ant";
+                    playerCard.rightArrow.SetActive(true);
+                    break;
+                case "Fire":
+                    player.playerInfo.queenType = "Pharaoh";
+                    playerCard.teamText.text = "Pharaoh Ant";
+                    break;
                 case "Pharaoh":
                     player.playerInfo.queenType = "Weaver";
-                    playerCard.teamText.text = "Team:\nWeaver Ant";
-				    playerCard.rightArrow.SetActive(true);
+                    playerCard.teamText.text = "Weaver Ant";
 				    break;
                 case "Weaver":
                     player.playerInfo.queenType = "Dracula";
-                    playerCard.teamText.text = "Team:\nDracula Ant";
+                    playerCard.teamText.text = "Dracula Ant";
                     break;
                 case "Dracula":
                     player.playerInfo.queenType = "Bee";
-                    playerCard.teamText.text = "Team:\nBee Ant";
+                    playerCard.teamText.text = "Bee Ant";
                     playerCard.leftArrow.SetActive(false);
                     break;
             }

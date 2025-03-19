@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -31,9 +32,11 @@ public class Ant : MonoBehaviour {
 	public bool isStepping = false;
 	public bool isStoodBack = false;
 
-	private int health;
+	[Header("Settings")]
+	[SerializeField] private TMP_Text healthText;
+
+    private int health;
 	private Rigidbody rb;
-	private Slider healthSlider;
 	protected TurnManager turnManager;
 
 	private bool canMove = true;
@@ -41,11 +44,9 @@ public class Ant : MonoBehaviour {
     private void Awake() {
 		turnManager = FindFirstObjectByType<TurnManager>();
         rb = GetComponent<Rigidbody>();
-		healthSlider = GetComponentInChildren<Slider>();
 		health = antInfo.health;
 
-		healthSlider.maxValue = health;
-		healthSlider.value = health;
+		healthText.text = health.ToString();
     }
 
 
@@ -79,7 +80,7 @@ public class Ant : MonoBehaviour {
 			health -= damage;
 		}
 		
-		healthSlider.value = health;
+		healthText.text = health.ToString();
 
 		if (health <= 0) {
 			OnDeath();
@@ -143,8 +144,8 @@ public class Ant : MonoBehaviour {
 
 	public void HealDamage(int damageToHeal) {
 		health += damageToHeal;
-		healthSlider.value = health;
-	}
+        healthText.text = health.ToString();
+    }
 
 	public int GetHealth() {
 		return health;
