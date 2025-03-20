@@ -22,3 +22,5 @@ MonoBehaviour:
   queenType: 4
   damage: 5
   queenAttack: {fileID: 7987820959066107180, guid: 828acaad2625c764fbc67125754ab91b, type: 3}
+  queenArchetype: Summoner
+  description: Grant your ants the ability to recover health when attacking.

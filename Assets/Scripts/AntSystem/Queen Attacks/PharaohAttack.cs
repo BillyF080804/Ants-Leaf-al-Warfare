@@ -20,14 +20,14 @@ public class PharaohAttack : QueenAttack {
 	public override void ActivateAttack(int attackLevel, Ant antInfoScript, Vector3 position, TurnManager turnManager) {
 		if (attackLevel != 3 && attackLevel > 0) {
 			for (int i = 0; i < 2; i++) {
-				GameObject tempMummy = Instantiate(mummySummon);
+				GameObject tempMummy = Instantiate(mummySummon, position + new Vector3(Random.Range(-5,5),0,0), Quaternion.identity);
 				tempMummy.GetComponent<MummyScript>().SetHealth(baseHealth + healthPerLevel * attackLevel);
 				tempMummy.GetComponent<MummyScript>().InitialiseMummy(mummyEffect,antInfoScript.ownedPlayer);
 				turnManager.PlayerList[(int)antInfoScript.ownedPlayer].AddNewAnt(tempMummy);
 			}
 		} else {
 			for (int i = 0; i < 3; i++) {
-				GameObject tempMummy = Instantiate(mummySummon);
+				GameObject tempMummy = Instantiate(mummySummon, position + new Vector3(Random.Range(-5, 5), 0, 0), Quaternion.identity);
 				tempMummy.GetComponent<MummyScript>().SetHealth(baseHealth + healthPerLevel * 2);
 				tempMummy.GetComponent<MummyScript>().InitialiseMummy(mummyEffect, antInfoScript.ownedPlayer);
 				turnManager.PlayerList[(int)antInfoScript.ownedPlayer].AddNewAnt(tempMummy);

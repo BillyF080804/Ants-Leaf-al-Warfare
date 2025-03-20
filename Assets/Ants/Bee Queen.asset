@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   antPrefab: {fileID: 0}
   antColor: {r: 0, g: 0, b: 0, a: 1}
-  antName: Bee
+  antName: Beekeeper
   moveSpeed: 4
   jumpHeight: 5
   health: 100
@@ -22,3 +22,5 @@ MonoBehaviour:
   queenType: 1
   damage: 5
   queenAttack: {fileID: 879326333907927122, guid: cbabe4859a011a740a24b0376a5d72a6, type: 3}
+  queenArchetype: Summoner
+  description: Summon Bee-Ants to sting your enemies!

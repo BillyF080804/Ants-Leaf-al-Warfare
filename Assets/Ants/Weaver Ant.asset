@@ -22,3 +22,6 @@ MonoBehaviour:
   queenType: 3
   damage: 1
   queenAttack: {fileID: 6801464776326071194, guid: 4b8afe0e8675f7d4bbbfa013c351ca13, type: 3}
+  queenArchetype: Support
+  description: Fill the battlefield with sticky webbing, slowing down all ants caught
+    in your trap!

@@ -30,4 +30,6 @@ public class AntSO : ScriptableObject {
 	public QueenType queenType;
 	public int damage = 1;
 	public QueenAttack queenAttack;
+	public string queenArchetype;
+	public string description;
 }

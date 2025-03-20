@@ -22,3 +22,6 @@ MonoBehaviour:
   queenType: 2
   damage: 1
   queenAttack: {fileID: -5928802265202237646, guid: 445bf43e93bf897448f7c36cc9013d47, type: 3}
+  queenArchetype: Summoner
+  description: Revive additional fallen ants from battles long gone for a short period
+    of time.
