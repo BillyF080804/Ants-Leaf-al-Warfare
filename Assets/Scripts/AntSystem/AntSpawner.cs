@@ -20,7 +20,7 @@ public class AntSpawner : MonoBehaviour {
         return newAnt;
     }
 
-    public Vector3 GetAntSpawnPoint() {
+    private Vector3 GetAntSpawnPoint() {
         bool validSpawn = false;
         Vector3 spawnPos = Vector3.zero;
         int spawnAttempts = 0;
@@ -43,12 +43,9 @@ public class AntSpawner : MonoBehaviour {
 
             Collider[] colliders = Physics.OverlapSphere(spawnPos, minDistanceBetweenAnts).Where(x => x.CompareTag("Player")).ToArray();
 
-            if (colliders.Count() == 0/* && spawningQueen == false*/) {
+            if (colliders.Count() == 0) {
                 validSpawn = true;
             }
-            //else if (colliders.Count() == 1 && spawningQueen == true) {
-            //    validSpawn = true;
-            //}
             else if (spawnAttempts == 10) {
                 Debug.LogError("ERROR: 10 Attempts to spawn ant. Ant Spawning Failed. Spawning at most recent attempt.\nThis can be avoided by either decreasing the distance between spawns or increasing map size.");
                 validSpawn = true;
