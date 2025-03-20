@@ -59,7 +59,6 @@ public class TurnManager : MonoBehaviour {
     public static OnTurnEnded onTurnEnded;
 
     public int CurrentRound { get; private set; } = 0;
-    public string Gamemode { get; private set; } = string.Empty;
     public Player CurrentPlayerTurn { get; private set; } = null;
     public Ant CurrentAntTurn { get; private set; } = null; //Tracks which ant's turn it currently is
     public List<GameObject> QueenHealthUI { get; private set; } = new List<GameObject>();
@@ -74,7 +73,6 @@ public class TurnManager : MonoBehaviour {
     private void Start() {
         numOfAnts = LoadingData.numOfAnts;
         PlayerList = LoadingData.playerList;
-        Gamemode = LoadingData.gamemode;
         dropSystem = FindFirstObjectByType<WeaponDropSystem>();
         weaponManager = FindFirstObjectByType<WeaponManager>();
         cameraSystem = FindFirstObjectByType<CameraSystem>();
@@ -177,9 +175,7 @@ public class TurnManager : MonoBehaviour {
 
                 prevRoud++;
             }
-        }
-
-       
+        }       
     }
 
     private IEnumerator TurnTimer() {
@@ -233,7 +229,9 @@ public class TurnManager : MonoBehaviour {
                 CurrentAntTurn.GetComponent<MummyScript>().DecreaseTurnsAlive();
             }
         }
-        
+
+        cameraSystem.IterateCameraTargets(1.0f);
+        yield return new WaitUntil(() => cameraSystem.CameraDelayActive == false);
 
         CheckIfAllAntsMoved();
         CurrentPlayerTurn = null;
@@ -244,7 +242,7 @@ public class TurnManager : MonoBehaviour {
         yield return new WaitUntil(() => weaponManager.WeaponMenuOpen == false);
 
 
-        if (allAntsMoved) { //CurrentPlayerTurn == playerList[playerList.Count - 1] && 
+        if (allAntsMoved) {
 
             for (int i = 0; i < PlayerList.Count; i++) {
                 PlayerList[i].ResetAnts();// sets all the ants back to not having moved

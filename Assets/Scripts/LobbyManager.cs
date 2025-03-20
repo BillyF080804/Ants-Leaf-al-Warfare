@@ -93,7 +93,6 @@ public class LobbyManager : MonoBehaviour {
     }
 
     private IEnumerator StartGameCoroutine() {
-        LoadingData.gamemode = gamemode;
         LoadingData.sceneToLoad = sceneToLoad;
         LoadingData.playerList = playerList;
         LoadingData.numOfAnts = numOfAnts;

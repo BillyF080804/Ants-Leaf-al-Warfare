@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -37,6 +38,10 @@ public class CameraSystem : MonoBehaviour {
     private GameObject cameraObj;
     private Camera cameraComp;
     private Coroutine cameraZoomCoroutine;
+    private List<Transform> targets = new List<Transform>();
+
+    public delegate void OnIterationFinished(Transform target);
+    public static OnIterationFinished onIterationFinished;
 
     public bool IsFOVZoomingOut { get; private set; } = false;
     public bool CameraDelayActive { get; private set; } = false;
@@ -267,6 +272,29 @@ public class CameraSystem : MonoBehaviour {
         freeCamEnabled = false;
         freeCamValue = Vector2.zero;
         freeCamPos = Vector3.zero;
+    }
+
+    public void AddNewCameraTarget(Transform newTarget) {
+        targets.Add(newTarget);
+    }
+
+    public void IterateCameraTargets(float holdDelay) {
+        if (targets.Count > 0) {
+            StartCoroutine(IterateTargetsCoroutine(holdDelay));
+        }
+    }
+
+    private IEnumerator IterateTargetsCoroutine(float delay) {
+        CameraDelayActive = true;
+
+        foreach (Transform target in targets) {
+            SetCameraTarget(target.position, 2.0f, 7.5f);
+            yield return new WaitForSeconds(0.5f);
+            onIterationFinished?.Invoke(target);
+            yield return new WaitForSeconds(delay);
+        }
+
+        CameraDelayActive = false;
     }
 }
 

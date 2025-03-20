@@ -30,6 +30,7 @@ public class DrownScript : MonoBehaviour {
             cameraSystem.SetCameraTarget(cameraOverviewPos, true);
             cameraSystem.CameraDelay(cameraDelay);
 
+            ant.isDrowning = true;
             ant.SetCanMove(false);
             turnManager.CurrentAntTurn.SetCanMove(false);
             Instantiate(rippleParticle, other.transform.position, Quaternion.identity);

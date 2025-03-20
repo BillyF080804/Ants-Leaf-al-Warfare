@@ -186,16 +186,20 @@ public class Player : MonoBehaviour {
         if (possibleAnts.Count > 0) {
             int nextAntIndex = Random.Range(0, possibleAnts.Count);
             return possibleAnts[nextAntIndex];
-        } 
-        else {
+        }
+        else if (QueenAnt != null) {
             Ant testAnt = QueenAnt.GetComponent<Ant>();
 
-			if (testAnt.hasHadTurn) {
-				return null;
-            } 
+            if (testAnt.hasHadTurn) {
+                return null;
+            }
             else {
                 return testAnt;
-			}            
+            }
+        }
+        else {
+            Debug.LogError("Isaac pls fix ty");
+            return null;
         }
     }
 

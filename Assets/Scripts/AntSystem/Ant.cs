@@ -31,6 +31,7 @@ public class Ant : MonoBehaviour {
 
 	public bool isStepping = false;
 	public bool isStoodBack = false;
+	public bool isDrowning = false;
 
 	[Header("Settings")]
 	[SerializeField] private FadeScript healthFadeScript;
@@ -40,6 +41,7 @@ public class Ant : MonoBehaviour {
 
     private int health;
 	private Rigidbody rb;
+	private Player player;
 	protected TurnManager turnManager;
 
 	private bool canMove = true;
@@ -48,7 +50,10 @@ public class Ant : MonoBehaviour {
 		turnManager = FindFirstObjectByType<TurnManager>();
         rb = GetComponent<Rigidbody>();
 
-		TurnManager.onTurnEnded += FadeOutHealthUI;
+        int playerNum = int.Parse(ownedPlayer.ToString().Last().ToString());
+        player = turnManager.PlayerList.Where(x => x.playerInfo.playerNum == playerNum).First();
+
+        TurnManager.onTurnEnded += FadeOutHealthUI;
 		WeaponManager.onOpenWeaponsMenu += FadeInHealthUI;
         WeaponManager.onCloseWeaponsMenu += FadeOutHealthUI;
 
@@ -118,50 +123,28 @@ public class Ant : MonoBehaviour {
 	}
 
 	public void OnDeath() {
-		int playerNum = int.Parse(ownedPlayer.ToString().Last().ToString());
-		Player player = turnManager.PlayerList.Where(x => x.playerInfo.playerNum == playerNum).First();
-
-		if (turnManager.Gamemode.ToUpper().Contains("HVT")) {
-			if (antInfo.IsQueen) {
-				turnManager.GameOver();
-			}
-		}
-		else if (turnManager.Gamemode.ToUpper().Contains("LAST") || turnManager.Gamemode.ToUpper().Equals("CLASSIC")) {
-            if (antInfo.IsQueen == true && turnManager.Gamemode.ToUpper().Equals("CLASSIC")) {
-                foreach (GameObject ant in player.AntList) {
-                    ant.GetComponent<Ant>().TakeDamage(turnManager.DamageToDealOnQueenDeath);
-                }
+        if (antInfo.IsQueen == true) {
+            foreach (GameObject ant in player.AntList) {
+                ant.GetComponent<Ant>().TakeDamage(turnManager.DamageToDealOnQueenDeath);
             }
+        }
 
-            Dictionary<int, int> antsRemaining = new Dictionary<int, int>();
-
-			for (int i = 0; i < turnManager.PlayerList.Count; i++) {
-				antsRemaining.Add(turnManager.PlayerList[i].playerInfo.playerNum, turnManager.PlayerList[i].AntList.Count);
-
-                if (turnManager.PlayerList[i].QueenAnt != null) {
-					antsRemaining[turnManager.PlayerList[i].playerInfo.playerNum] += 1;
-                }
-            }
-
-			if (antsRemaining.TryGetValue(playerNum, out int amount)) { 
-				if (turnManager.PlayerList.Count == 1 && amount - 1 == 1) {
-                    turnManager.GameOver();
-                }
-				else if (turnManager.PlayerList.Count == 2 && amount - 1 == 0) {
-                    turnManager.GameOver();
-                }
-				else if (turnManager.PlayerList.Count == 3 || turnManager.PlayerList.Count == 4) {
-					if (antsRemaining.Where(x => x.Value > 0).Count() == 2 && amount - 1 == 0) {
-                        turnManager.GameOver();
-                    }
-				}
-			}
+        if (isDrowning == false) {
+            FindFirstObjectByType<CameraSystem>().AddNewCameraTarget(transform);
+            CameraSystem.onIterationFinished += DestroyAnt;
+        }
+		else {
+			Destroy(antInfo.IsQueen, player);
 		}
-
-		DestroyAnt(antInfo.IsQueen, player);
     }
 
-	private void DestroyAnt(bool isQueen, Player player) {
+	private void DestroyAnt(Transform _transform) {
+		if (_transform == transform) {
+			Destroy(antInfo.IsQueen, player);
+		}
+	}
+
+	private void Destroy(bool isQueen, Player player) {
 		if (isQueen) {
 			player.RemoveQueen();
 		}
@@ -169,8 +152,41 @@ public class Ant : MonoBehaviour {
 			player.RemoveAnt(gameObject);
 		}
 
-		Destroy(gameObject);
+		CheckGameOver();
+
+        TurnManager.onTurnEnded -= FadeOutHealthUI;
+        WeaponManager.onOpenWeaponsMenu -= FadeInHealthUI;
+        WeaponManager.onCloseWeaponsMenu -= FadeOutHealthUI;
+        CameraSystem.onIterationFinished -= DestroyAnt;
+
+        Destroy(gameObject);
 	}
+
+	private void CheckGameOver() {
+        Dictionary<int, int> antsRemaining = new Dictionary<int, int>();
+
+        for (int i = 0; i < turnManager.PlayerList.Count; i++) {
+            antsRemaining.Add(turnManager.PlayerList[i].playerInfo.playerNum, turnManager.PlayerList[i].AntList.Count);
+
+            if (turnManager.PlayerList[i].QueenAnt != null) {
+                antsRemaining[turnManager.PlayerList[i].playerInfo.playerNum] += 1;
+            }
+        }
+
+        if (antsRemaining.TryGetValue(player.playerInfo.playerNum, out int amount)) {
+            if (turnManager.PlayerList.Count == 1 && amount - 1 == 0) {
+                turnManager.GameOver();
+            }
+            else if (turnManager.PlayerList.Count == 2 && amount - 1 == 0) {
+                turnManager.GameOver();
+            }
+            else if (turnManager.PlayerList.Count == 3 || turnManager.PlayerList.Count == 4) {
+                if (antsRemaining.Where(x => x.Value > 0).Count() == 2 && amount - 1 == 0) {
+                    turnManager.GameOver();
+                }
+            }
+        }
+    }
 
 	public void HealDamage(int healthToHeal) {
 		health += healthToHeal;
