@@ -10,17 +10,13 @@ public class Player : MonoBehaviour {
     [Header("Player Info")]
     public PlayerInfo playerInfo = new PlayerInfo();
 
-    private Coroutine moveQueenTimerCoroutine;
     private CameraSystem cameraSystem;
     private LobbyManager lobbyManager;
     private TurnManager turnManager;
     private WeaponManager weaponManager;
     private QueenBaseAntScript queenBaseAntScript;
-    private QueenAntSpawner queenAntSpawner;
     private PlayerInput playerInput;
 
-    public bool ConfirmedQueenSpawn { get; private set; } = false;
-    private bool canSpawnQueen = false;
     private bool freeCamEnabled = false;
 
     public GameObject QueenAnt { get; private set; } = null;
@@ -40,7 +36,6 @@ public class Player : MonoBehaviour {
             turnManager = FindFirstObjectByType<TurnManager>();
             weaponManager = FindFirstObjectByType<WeaponManager>();
             cameraSystem = FindFirstObjectByType<CameraSystem>();
-            queenAntSpawner = FindFirstObjectByType<QueenAntSpawner>();
         }
     }
 
@@ -59,13 +54,6 @@ public class Player : MonoBehaviour {
 
     public void RemoveQueen() {
         QueenAnt = null;
-    }
-
-    //Function called when the player presses the change color button
-    private void OnChangeColor() {
-        if (lobbyManager != null && SceneManager.GetActiveScene().name.Contains("Lobby")) {
-            lobbyManager.ChangeColor(playerInfo.playerNum); //Only works in the lobby
-        }
     }
 
     //Called when the player presses the ready up button
@@ -146,41 +134,16 @@ public class Player : MonoBehaviour {
         }
     }
 
-    //Function called when selecting where to spawn queen
-    private void OnSpawnQueenAnt() {
-        if (canSpawnQueen == true && queenAntSpawner.QueenInValidPos == true) {
-            canSpawnQueen = false;
-            ConfirmedQueenSpawn = true;
-            QueenAnt.GetComponent<Collider>().enabled = true;
-            QueenAnt.GetComponent<Rigidbody>().useGravity = true;
-            queenBaseAntScript.SetQueenToTeamColour(playerInfo.playerColor);
-            queenAntSpawner.SetMoveValue(0, null);
-            turnManager.ChangeQueenSpecialism(playerInfo.queenType, QueenAnt.GetComponent<Ant>());
-
-            if (moveQueenTimerCoroutine != null) { 
-                StopCoroutine(moveQueenTimerCoroutine);
-                moveQueenTimerCoroutine = null;
-            }
-        }
-    }
-
-    //Called when the player is moving the queen during the spawning phase
-    private void OnMoveQueen(InputValue value) {
-        if (canSpawnQueen == true) {
-            queenAntSpawner.SetMoveValue(value.Get<float>(), QueenAnt);
-        }
-    }
-
     //Called when the player is zooming the camera in/out
     private void OnCameraZoom(InputValue value) {
-        if (CheckActionIsValid() || canSpawnQueen == true) {
+        if (CheckActionIsValid()) {
             cameraSystem.SetCameraZoom(value.Get<float>());
         }
     }
 
     //Called when the player presses the reset camera button
     private void OnResetCameraPos() {
-        if (CheckActionIsValid() || canSpawnQueen == true) {
+        if (CheckActionIsValid()) {
             freeCamEnabled = !freeCamEnabled;
 
             if (freeCamEnabled == false) {
@@ -191,7 +154,7 @@ public class Player : MonoBehaviour {
 
     //Called when the player moves the free camera
     private void OnMoveFreeCam(InputValue value) {
-        if (CheckActionIsValid() || canSpawnQueen == true) {
+        if (CheckActionIsValid()) {
             if (freeCamEnabled) {
                 cameraSystem.SetFreeCameraValue(value.Get<Vector2>());
             }
@@ -205,24 +168,6 @@ public class Player : MonoBehaviour {
         else {
             return false;
         }
-    }
-
-    private IEnumerator MoveQueenTimerCoroutine() {
-        float timeRemaining = 20.0f;
-
-        while (timeRemaining > 0) {
-            timeRemaining -= Time.deltaTime;
-            turnManager.SetTurnTimerText(timeRemaining);
-
-            yield return null;
-        }
-
-        while (queenAntSpawner.QueenInValidPos == false) {
-            QueenAnt.transform.position = turnManager.GetAntSpawnPoint(turnManager.MinDistanceBetweenQueens, true);
-            queenAntSpawner.CheckQueenInValidPos();
-        }
-
-        OnSpawnQueenAnt();
     }
 
     public Ant GetAnt(Ant currentAnt) {
@@ -273,14 +218,14 @@ public class Player : MonoBehaviour {
         CurrentWeapons.Remove(weapon);
     }
 
-    public void AllowPlayerToSpawnQueen() {
-        canSpawnQueen = true;
-        QueenAnt.GetComponent<Collider>().enabled = false;
-        QueenAnt.GetComponent<Rigidbody>().useGravity = false;
-        moveQueenTimerCoroutine = StartCoroutine(MoveQueenTimerCoroutine());
-        queenAntSpawner.SetMoveValue(0, QueenAnt);
-        queenAntSpawner.CheckQueenInValidPos();
-    }
+    //public void AllowPlayerToSpawnQueen() {
+    //    canSpawnQueen = true;
+    //    QueenAnt.GetComponent<Collider>().enabled = false;
+    //    QueenAnt.GetComponent<Rigidbody>().useGravity = false;
+    //    moveQueenTimerCoroutine = StartCoroutine(MoveQueenTimerCoroutine());
+    //    queenAntSpawner.SetMoveValue(0, QueenAnt);
+    //    queenAntSpawner.CheckQueenInValidPos();
+    //}
 
     public int GetAllHealth() {
         int healthTotal = 0;

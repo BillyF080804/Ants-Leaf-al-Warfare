@@ -29,6 +29,11 @@ public class WeaponManager : MonoBehaviour {
     private Vector2 aimValue = Vector2.zero;
     private Vector2 aimPosition = Vector2.zero;
 
+    public delegate void OnOpenWeaponsMenu();
+    public static OnOpenWeaponsMenu onOpenWeaponsMenu;
+    public delegate void OnCloseWeaponsMenu();
+    public static OnCloseWeaponsMenu onCloseWeaponsMenu;
+
     public bool UIMoving { get; private set; } = false;
     public bool WeaponMenuOpen { get; private set; } = false;
     public bool WeaponsActive { get; private set; } = false;
@@ -55,7 +60,7 @@ public class WeaponManager : MonoBehaviour {
         if (canFireWeapon) {
             canFireWeapon = false;
             canAim = false;
-            turnManager.HideTimer();
+            //turnManager.HideTimer();
             StartCoroutine(FireWeaponCoroutine(weaponInfo, playerPosition));
         }
     }
@@ -121,7 +126,7 @@ public class WeaponManager : MonoBehaviour {
         if (canFireWeapon) {
             canFireWeapon = false;
             canAim = false;
-            turnManager.HideTimer();
+            //turnManager.HideTimer();
             Collider[] colliders = Physics.OverlapSphere(aimPosition, 2.5f).Where(x => x.CompareTag("Player") && x.gameObject != turnManager.CurrentAntTurn.gameObject).ToArray();
 
             if (colliders.Length > 0) {
@@ -147,7 +152,7 @@ public class WeaponManager : MonoBehaviour {
         if (canFireWeapon) {
             canFireWeapon = false;
             canAim = false;
-            turnManager.HideTimer();
+            //turnManager.HideTimer();
             Vector3 spawnPos = new Vector3(playerPosition.position.x, playerPosition.position.y, playerPosition.position.z);
             Vector3 scale = new Vector3(weaponInfo.sprayHeight, weaponInfo.sprayLength, weaponInfo.sprayLength);
 
@@ -273,10 +278,11 @@ public class WeaponManager : MonoBehaviour {
         if (WeaponMenuOpen == false && UIMoving == false && WeaponSelected != null) {
             WeaponSelected = null;
             aimArrow.gameObject.SetActive(false);
+            onCloseWeaponsMenu?.Invoke();
         }
         else if (WeaponMenuOpen == true && UIMoving == false) {
             UIMoving = true;
-            StartCoroutine(CloseWeaponMenuCoroutine());
+            StartCoroutine(CloseWeaponMenuCoroutine(true));
         }
         else if (WeaponMenuOpen == false && UIMoving == false) {
             UIMoving = true;
@@ -303,29 +309,13 @@ public class WeaponManager : MonoBehaviour {
         }
 
         if (WeaponMenuOpen == true) {
-            StartCoroutine(CloseWeaponMenuCoroutine());
+            StartCoroutine(CloseWeaponMenuCoroutine(true));
         }
     }
 
     //Closes the queen ant health ui and opens the weapons menu
     private IEnumerator OpenWeaponMenuCoroutine() {
-        foreach (GameObject queenAntHealthUI in turnManager.QueenHealthUI) {
-            RectTransform rect = queenAntHealthUI.GetComponent<RectTransform>();
-
-            if (rect.localPosition.y > 0) {
-                queenAntHealthUI.GetComponent<MoveUI>().StartMoveUI(LerpType.InBack, queenAntHealthUI, new Vector2(rect.localPosition.x, rect.localPosition.y), new Vector2(rect.localPosition.x, 650), 1.0f);
-            }
-            else {
-                queenAntHealthUI.GetComponent<MoveUI>().StartMoveUI(LerpType.InBack, queenAntHealthUI, new Vector2(rect.localPosition.x, rect.localPosition.y), new Vector2(rect.localPosition.x, -650), 1.0f);
-            }
-        }
-
-        yield return new WaitUntil(() => turnManager.QueenHealthUI[0].GetComponent<RectTransform>().localPosition.y > 640);
-
-        foreach (GameObject queenHealthUI in turnManager.QueenHealthUI) {
-            queenHealthUI.SetActive(false);
-        }
-
+        onOpenWeaponsMenu?.Invoke();
         CheckAllIcons();
         weaponMenuUI.SetActive(true);
         turnManager.CurrentPlayerTurn.GetEventSystem().SetSelectedGameObject(weaponIcons.Where(x => x.Interactable == true).First().GetButton());
@@ -337,7 +327,7 @@ public class WeaponManager : MonoBehaviour {
     }
 
     //Closes the weapons menu and opens the queen ant health UI
-    private IEnumerator CloseWeaponMenuCoroutine() {
+    private IEnumerator CloseWeaponMenuCoroutine(bool invokeCloseWeaponsMenu) {
         DisableIconInteraction();
         weaponMenuUI.GetComponent<MoveUI>().StartMoveUI(LerpType.InBack, weaponMenuUI, new Vector2(50, 50), new Vector2(-750, 50), 1.0f);
 
@@ -345,16 +335,8 @@ public class WeaponManager : MonoBehaviour {
         weaponMenuUI.SetActive(false);
         WeaponMenuOpen = false;
 
-        foreach (GameObject queenAntHealthUI in turnManager.QueenHealthUI) {
-            RectTransform rect = queenAntHealthUI.GetComponent<RectTransform>();
-            queenAntHealthUI.SetActive(true);
-
-            if (rect.localPosition.y > 0) {
-                queenAntHealthUI.GetComponent<MoveUI>().StartMoveUI(LerpType.OutBack, queenAntHealthUI, new Vector2(rect.localPosition.x, rect.localPosition.y), new Vector2(rect.localPosition.x, 445), 1.0f);
-            }
-            else {
-                queenAntHealthUI.GetComponent<MoveUI>().StartMoveUI(LerpType.OutBack, queenAntHealthUI, new Vector2(rect.localPosition.x, rect.localPosition.y), new Vector2(rect.localPosition.x, -445), 1.0f);
-            }
+        if (invokeCloseWeaponsMenu) {
+            onCloseWeaponsMenu?.Invoke();
         }
 
         UIMoving = false;
@@ -419,6 +401,6 @@ public class WeaponManager : MonoBehaviour {
     public void SetSelectedWeapon(BaseWeaponSO weapon) {
         WeaponSelected = weapon;
         ResetAimPosition();
-        StartCoroutine(CloseWeaponMenuCoroutine());
+        StartCoroutine(CloseWeaponMenuCoroutine(false));
     }
 }

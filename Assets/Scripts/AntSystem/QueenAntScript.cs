@@ -9,10 +9,11 @@ public class QueenBaseAntScript : Ant {
 	public int attackLevel = 1;
 	bool usedAttack = false;
 
-	[Header("Cosmetics")]
-	[SerializeField] private MeshRenderer antRenderer;
+    [Header("Queen Ant Settings")]
+    [SerializeField] private MeshRenderer hat;
+    [SerializeField] private MeshRenderer leafWrap;
 
-	public void CheckAttackTurn() {
+    public void CheckAttackTurn() {
 		if (!usedAttack) {
 			if (attackLevel < 3) {
 				attackLevel++;
@@ -45,19 +46,12 @@ public class QueenBaseAntScript : Ant {
 		}
 	}
 
-	public void SetQueenInvalidPos() {
-		antRenderer.material.color = new Color(1, 0, 0);
-	}
-
-	public void SetQueenValidPos() {
-		antRenderer.material.color = new Color(0, 1, 0);
-	}
-
-	public void SetQueenToTeamColour(Color teamColor) {
-        antRenderer.material.SetColor("_MainColours", teamColor);
+    public void ChangeAntColors(Color newColor) {
+        hat.material.SetColor("_MainColours", newColor);
+        leafWrap.material.SetColor("_MainColours", newColor);
     }
 
-	public LayerMask GetQueenLayerMask() {
+    public LayerMask GetQueenLayerMask() {
 		return queenLayerMask;
 	}
 }

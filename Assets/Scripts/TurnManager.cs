@@ -18,7 +18,6 @@ public class TurnManager : MonoBehaviour {
     [field : Header("Ant Spawning Settings")]
     [field : SerializeField] public float MapMinX { get; private set; } = -10.0f;
     [field: SerializeField] public float MapMaxX { get; private set; } = 10.0f;
-    [SerializeField] private float minDistanceBetweenAnts = 3.0f;
     [field: SerializeField] public float MinDistanceBetweenQueens { get; private set; } = 5.0f;
 
     [field: Header("Gamemode Settings")]
@@ -33,16 +32,19 @@ public class TurnManager : MonoBehaviour {
     [SerializeField] private List<AntSO> queenAntSpecials = new List<AntSO>();
 
     [Header("Ant Prefabs")]
-    [SerializeField] private GameObject antPrefab;
+    [SerializeField] private GameObject baseAntPrefab;
     [SerializeField] private GameObject queenPrefab;
+
+    [Header("Main Game UI")]
+    [SerializeField] private MoveUI mainGameUIMoveScript;
+    [SerializeField] private TMP_Text turnTimeText;
+    [SerializeField] private TMP_Text playerTurnText;
 
     [Header("UI")]
     [SerializeField] private Canvas mainCanvas;
-    [SerializeField] private TMP_Text turnTimeText;
     [SerializeField] private TMP_Text roundNumText;
     [SerializeField] private GameObject blackscreen;
     [SerializeField] private GameObject levelNameText;
-    [SerializeField] private TMP_Text queenAntSpawnText;
     [SerializeField] private GameObject queenHealthUIPrefab;
     [SerializeField] private List<Sprite> queenAntHealthUIVariants;
 
@@ -53,6 +55,9 @@ public class TurnManager : MonoBehaviour {
     private bool allAntsMoved = false;
     private bool gameOver = false;
 
+    public delegate void OnTurnEnded();
+    public static OnTurnEnded onTurnEnded;
+
     public int CurrentRound { get; private set; } = 0;
     public string Gamemode { get; private set; } = string.Empty;
     public Player CurrentPlayerTurn { get; private set; } = null;
@@ -61,6 +66,7 @@ public class TurnManager : MonoBehaviour {
     public List<Player> PlayerList { get; private set; } = new List<Player>();
 
     private Coroutine turnTimerCoroutine;
+    private AntSpawner antSpawner;
     private CameraSystem cameraSystem;
     private WeaponManager weaponManager;
     private WeaponDropSystem dropSystem;
@@ -72,6 +78,7 @@ public class TurnManager : MonoBehaviour {
         dropSystem = FindFirstObjectByType<WeaponDropSystem>();
         weaponManager = FindFirstObjectByType<WeaponManager>();
         cameraSystem = FindFirstObjectByType<CameraSystem>();
+        antSpawner = FindFirstObjectByType<AntSpawner>();
 
         currentTurnTime = maxTurnTime;
         StartCoroutine(StartLevelCoroutine());
@@ -88,128 +95,31 @@ public class TurnManager : MonoBehaviour {
         StartCoroutine(LevelTextCoroutine());
         yield return new WaitUntil(() => levelNameText.activeSelf == false);
 
-        ShowTimer();
-        StartCoroutine(SpawnQueenCoroutine());
-        yield return new WaitUntil(() => PlayerList.All(x => x.ConfirmedQueenSpawn == true));
+        SpawnAllAnts();
+        //Do camera pan across map - probably with level text still active
 
-        SpawnAnts();
-        SpawnQueenAntHealthUI();
-        yield return new WaitUntil(() => QueenHealthUI.Count == PlayerList.Count);
-
-        HideTimer(0.5f);
         StartCoroutine(StartGame());
     }
 
-    private void SpawnAnts() {
+    private void SpawnAllAnts() {
         for (int i = 0; i < PlayerList.Count; i++) {
             for (int j = 0; j < numOfAnts; j++) {
-                GameObject newAnt = Instantiate(antPrefab, GetAntSpawnPoint(minDistanceBetweenAnts, false), Quaternion.identity);
+                GameObject newAnt = antSpawner.SpawnAnt(baseAntPrefab);
                 PlayerList[i].AddNewAnt(newAnt);
                 newAnt.GetComponent<Ant>().ownedPlayer = (Ant.PlayerList)i;
                 newAnt.GetComponent<BaseAntScript>().ChangeAntColors(PlayerList[i].playerInfo.playerColor);
             }
+
+            SpawnQueen(i);
         }
     }
 
-    private IEnumerator SpawnQueenCoroutine() {
-        for (int i = 0; i < PlayerList.Count; i++) {
-            GameObject newQueen = Instantiate(queenPrefab, GetAntSpawnPoint(MinDistanceBetweenQueens, false), Quaternion.identity);
-            newQueen.GetComponent<Ant>().ownedPlayer = (Ant.PlayerList)i;
+    private void SpawnQueen(int playerNum) {
+        GameObject newQueen = antSpawner.SpawnAnt(queenPrefab);
+        newQueen.GetComponent<Ant>().ownedPlayer = (Ant.PlayerList)playerNum;
 
-            PlayerList[i].AddQueen(newQueen);
-            PlayerList[i].AllowPlayerToSpawnQueen();
-            cameraSystem.SetCameraTarget(newQueen.transform);
-
-            queenAntSpawnText.text = "Queen Ant Spawning\nPress " + PlayerList[i].GetKeybindForAction("SpawnQueenAnt") + " To Confirm Queen Ant Position";
-            queenAntSpawnText.gameObject.SetActive(true);
-
-            yield return new WaitUntil(() => PlayerList[i].ConfirmedQueenSpawn == true);
-        }
-
-        queenAntSpawnText.gameObject.SetActive(false);
-        FindFirstObjectByType<QueenAntSpawner>().FinishSpawning();
-    }
-
-    private void SpawnQueenAntHealthUI() {
-        for (int i = 0; i < PlayerList.Count; i++) {
-            GameObject newHealthUI = Instantiate(queenHealthUIPrefab, mainCanvas.transform);
-            QueenHealthUI.Add(newHealthUI);
-            Image mainUI = newHealthUI.transform.GetChild(2).GetComponent<Image>();
-            RectTransform textTransform = newHealthUI.transform.GetChild(3).GetComponent<RectTransform>();
-            RectTransform backgroundTransform = newHealthUI.transform.GetChild(0).GetComponent<RectTransform>();
-            RectTransform queenImageTransform = newHealthUI.transform.GetChild(1).GetComponent<RectTransform>();
-
-            switch (i) {
-                case 0:
-                    newHealthUI.GetComponent<RectTransform>().anchoredPosition = new Vector2(-785, 275);
-                    backgroundTransform.localPosition = new Vector2(-75.5f, 0);
-                    queenImageTransform.localPosition = new Vector2(-75.5f, 0);                    
-                    textTransform.localPosition = new Vector2(70, -45);
-                    textTransform.GetComponent<TMP_Text>().text = "Queen Health: 100";
-                    mainUI.sprite = queenAntHealthUIVariants[i];
-                    mainUI.color = PlayerList[i].playerInfo.playerColor;
-                    break;
-                case 1:
-                    newHealthUI.GetComponent<RectTransform>().anchoredPosition = new Vector2(785, 275);
-                    backgroundTransform.localPosition = new Vector2(75.5f, 0);
-                    queenImageTransform.localPosition = new Vector2(75.5f, 0);
-                    queenImageTransform.Rotate(new Vector3(0, 180, 0));
-                    textTransform.localPosition = new Vector2(-70, -45);
-                    textTransform.GetComponent<TMP_Text>().text = "Queen Health: 100";
-                    mainUI.sprite = queenAntHealthUIVariants[i];
-                    mainUI.color = PlayerList[i].playerInfo.playerColor;
-                    break;
-                case 2:
-                    newHealthUI.GetComponent<RectTransform>().anchoredPosition = new Vector2(-785, -275);
-                    backgroundTransform.localPosition = new Vector2(-75.5f, 0);
-                    queenImageTransform.localPosition = new Vector2(-75.5f, 0);
-                    textTransform.localPosition = new Vector2(70, -45);
-                    textTransform.GetComponent<TMP_Text>().text = "Queen Health: 100";
-                    mainUI.sprite = queenAntHealthUIVariants[i];
-                    mainUI.color = PlayerList[i].playerInfo.playerColor;
-                    break;
-                case 3:
-                    newHealthUI.GetComponent<RectTransform>().anchoredPosition = new Vector2(785, -275);
-                    backgroundTransform.localPosition = new Vector2(75.5f, 0);
-                    queenImageTransform.localPosition = new Vector2(75.5f, 0);
-                    queenImageTransform.Rotate(new Vector3(0, 180, 0));
-                    textTransform.localPosition = new Vector2(-70, -45);
-                    textTransform.GetComponent<TMP_Text>().text = "Queen Health: 100";
-                    mainUI.sprite = queenAntHealthUIVariants[i];
-                    mainUI.color = PlayerList[i].playerInfo.playerColor;
-                    break;
-            }
-        }
-    }
-
-    public Vector3 GetAntSpawnPoint(float minDistance, bool spawningQueen) {
-        bool validSpawn = false;
-        Vector3 spawnPos = Vector3.zero;
-        int spawnAttempts = 0;
-
-        while (validSpawn == false) {
-            spawnAttempts++;
-            spawnPos = new Vector3(Random.Range(MapMinX, MapMaxX), 30.0f, 0);
-
-            if (Physics.Raycast(spawnPos, Vector3.down, out RaycastHit ray, 35.0f)) {
-                spawnPos = new Vector3(ray.point.x, ray.point.y + 0.5f, 0);
-            }
-
-            Collider[] colliders = Physics.OverlapSphere(spawnPos, minDistanceBetweenAnts).Where(x => x.CompareTag("Player")).ToArray();
-
-            if (colliders.Count() == 0 && spawningQueen == false) {
-                validSpawn = true;
-            }
-            else if (colliders.Count() == 1 && spawningQueen == true) {
-                validSpawn = true;
-            }
-            else if (spawnAttempts == 10) {
-                Debug.LogError("ERROR: 10 Attempts to spawn ant. Ant Spawning Failed. Spawning at most recent attempt.\nThis can be avoided by either decreasing the distance between spawns or increasing map size.");
-                validSpawn = true;
-            }
-        }
-
-        return spawnPos;
+        newQueen.GetComponent<QueenBaseAntScript>().ChangeAntColors(PlayerList[playerNum].playerInfo.playerColor);
+        PlayerList[playerNum].AddQueen(newQueen);
     }
 
     private IEnumerator LevelTextCoroutine() {
@@ -224,6 +134,7 @@ public class TurnManager : MonoBehaviour {
         ShowRoundNumber();
         yield return new WaitForSeconds(2.5f);
         HideRoundNumber();
+        mainGameUIMoveScript.StartMoveUI(LerpType.Out, new Vector2(0, 250), Vector2.zero, 1.0f);
 
         int prevRoud = 0;
         for (int i = 0; i < 1000; i++) {
@@ -234,8 +145,8 @@ public class TurnManager : MonoBehaviour {
                 currentTurnEnded = false;
                 CurrentPlayerTurn = player;
 
-                ShowTimer();
                 turnTimerCoroutine = StartCoroutine(TurnTimer());
+                playerTurnText.text = "Player " + player.playerInfo.playerNum.ToString();
 
                 player.ResetFreeCamSetting();
                 cameraSystem.ResetCamera();
@@ -256,9 +167,11 @@ public class TurnManager : MonoBehaviour {
                 cameraSystem.ResetCamera();
                 cameraSystem.SetCameraTarget(null);
 
+                mainGameUIMoveScript.StartMoveUI(LerpType.In, Vector2.zero, new Vector2(0, 250), 1.0f);
                 ShowRoundNumber();
                 yield return new WaitForSeconds(2.5f);
                 HideRoundNumber();
+                mainGameUIMoveScript.StartMoveUI(LerpType.Out, new Vector2(0, 250), Vector2.zero, 1.0f);
 
                 startRoundEvent.Invoke();
 
@@ -327,6 +240,7 @@ public class TurnManager : MonoBehaviour {
         cameraSystem.SetCameraTarget(null);
         weaponManager.EndTurn();
         endTurnEvent.Invoke();
+        onTurnEnded?.Invoke();
         yield return new WaitUntil(() => weaponManager.WeaponMenuOpen == false);
 
 
@@ -414,22 +328,6 @@ public class TurnManager : MonoBehaviour {
     private void CheckIfQueenAttacked() {
 		CurrentAntTurn.GetComponent<QueenBaseAntScript>().CheckAttackTurn();
 	}
-
-    public void HideTimer() {
-        turnTimeText.GetComponent<MoveUI>().StartMoveUI(LerpType.InOut, turnTimeText.rectTransform.anchoredPosition, new Vector2(0, 50), 1.0f);
-    }
-
-    public void HideTimer(float duration) {
-        turnTimeText.GetComponent<MoveUI>().StartMoveUI(LerpType.InOut, turnTimeText.rectTransform.anchoredPosition, new Vector2(0, 50), duration);
-    }
-
-    public void ShowTimer() {
-        turnTimeText.GetComponent<MoveUI>().StartMoveUI(LerpType.InOut, turnTimeText.rectTransform.anchoredPosition, new Vector2(0, -50), 1.0f);
-    }
-
-    public void ShowTimer(float duration) {
-        turnTimeText.GetComponent<MoveUI>().StartMoveUI(LerpType.InOut, turnTimeText.rectTransform.anchoredPosition, new Vector2(0, -50), duration);
-    }
 
     public void HideRoundNumber() {
         roundNumText.GetComponent<FadeScript>().FadeOutUI(1.0f);

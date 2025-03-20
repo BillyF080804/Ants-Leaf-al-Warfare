@@ -26,7 +26,6 @@ public class LobbyManager : MonoBehaviour {
 
     private string gamemode;
     private string sceneToLoad;
-    //private int expectedPlayerCount = 0;
     private int numOfAnts = 2;
     private bool loadingUISpawned = false;
 
@@ -36,48 +35,8 @@ public class LobbyManager : MonoBehaviour {
     private void Start() {
         sceneDropdown.AddOptions(availableScenes);
 
-        //UpdatePlayerCount(0);
         UpdateSceneToLoad(0);
         UpdateGameMode(0);
-    }
-
-    //Called when a player changes the number of players in the game
-    public void UpdatePlayerCount(int value) {
-        //switch (value) {
-        //    case 0: {
-        //            expectedPlayerCount = 1;
-        //            break;
-        //        }
-        //    case 1: {
-        //            expectedPlayerCount = 2;
-        //            break;
-        //        }
-        //    case 2: {
-        //            expectedPlayerCount = 3;
-        //            break;
-        //        }
-        //    case 3: {
-        //            expectedPlayerCount = 4;
-        //            break;
-        //        }
-        //}
-
-        //playersJoinedText.text = "Waiting On Players To Join . . .";
-
-        //for (int i = 0; i < expectedPlayerCount; i++) {
-        //    PlayerCardInfo newCard = Instantiate(playerCard, playerCardHolder);
-        //    newCard.name = "PlayerCard" + (i + 1);
-
-        //    playerCardList.Add(newCard.GetComponent<PlayerCardInfo>());
-        //    playerCardList[i].playerNum = i + 1;
-
-        //    if (i != 0) {
-        //        ChangeColor(playerCardList[i].playerNum);
-        //    }
-        //    else {
-        //        playerCardList[i].colorBand.color = ChooseNewColor();
-        //    }
-        //}
     }
 
     //Called when a player presses the join button on their controller
@@ -148,54 +107,6 @@ public class LobbyManager : MonoBehaviour {
 
         yield return new WaitForSeconds(1.0f);
         SceneManager.LoadScene("LoadingScene");
-    }
-
-    //Helper function to return a random color
-    private Color ChooseNewColor() {
-        int color = Random.Range(1, 8);
-
-        switch (color) {
-            case 1:
-                return Color.red;
-            case 3:
-                return Color.black;
-            case 4:
-                return Color.blue;
-            case 5:
-                return new Color(0, 0.8f, 0);
-            case 6:
-                return Color.yellow;
-            case 7:
-                return Color.cyan;
-            case 8:
-                return Color.magenta;
-            default:
-                return Color.red;
-        }
-    }
-
-    //Called when a user presses the change color button
-    public void ChangeColor(int playerNum) {
-        //PlayerCardInfo playerCard = playerCardList.Where(x => x.playerNum == playerNum).First();
-
-        //if (playerCard.isReady == false) {
-        //    Color newColor = ChooseNewColor();
-        //    List<Color> cardColors = new List<Color>();
-
-        //    foreach (var playerCards in playerCardList) {
-        //        cardColors.Add(playerCards.colorBand.color);
-        //    }
-
-        //    while (cardColors.Where(x => x == newColor).Count() > 0) {
-        //        newColor = ChooseNewColor();
-        //    }
-
-        //    if (playerList.Count > 0) {
-        //        playerList.Where(x => x.playerInfo.playerNum == playerNum).First().playerInfo.playerColor = newColor;
-        //    }
-
-        //    playerCard.colorBand.color = newColor;
-        //}
     }
 
     public void ReadyUp(int playerNum) {

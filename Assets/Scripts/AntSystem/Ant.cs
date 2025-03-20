@@ -33,7 +33,10 @@ public class Ant : MonoBehaviour {
 	public bool isStoodBack = false;
 
 	[Header("Settings")]
+	[SerializeField] private FadeScript healthFadeScript;
+	[SerializeField] private TMP_Text healthChangeText;
 	[SerializeField] private TMP_Text healthText;
+	[SerializeField] private GameObject healthTextBackground;
 
     private int health;
 	private Rigidbody rb;
@@ -44,15 +47,36 @@ public class Ant : MonoBehaviour {
     private void Awake() {
 		turnManager = FindFirstObjectByType<TurnManager>();
         rb = GetComponent<Rigidbody>();
+
+		TurnManager.onTurnEnded += FadeOutHealthUI;
+		WeaponManager.onOpenWeaponsMenu += FadeInHealthUI;
+        WeaponManager.onCloseWeaponsMenu += FadeOutHealthUI;
+
 		health = antInfo.health;
 
-		healthText.text = health.ToString();
+		if (healthText != null) {
+            healthText.text = health.ToString();
+            healthText.transform.parent.GetComponent<CanvasGroup>().alpha = 0;
+        }
+		else {
+			Debug.LogError("Ant does not have health text assigned.");
+		}
     }
 
+	public void FadeInHealthUI() {
+		healthFadeScript.FadeInUI(0.5f);
+	}
+
+	public void FadeOutHealthUI() {
+		if (healthTextBackground.activeInHierarchy) {
+            healthFadeScript.FadeOutUI(0.5f);
+        }
+	}
 
 	public void SetCanMove(bool _canMove) {
 		canMove = _canMove;
 	}
+
 	public bool GetCanMove() {
 		return canMove;
 	}
@@ -66,6 +90,7 @@ public class Ant : MonoBehaviour {
 		if (hasStatDrop) {
 			if (statDrops.Contains(EffectSO.StatDropType.Defense)) {
 				float percentage = 0;
+
 				for(int i = 0; i < effects.Count; i++) {
 					if (effects[i].effectInfo.statDropType == EffectSO.StatDropType.Defense) {
 						percentage = effects[i].effectInfo.percentToDropBy;
@@ -73,13 +98,18 @@ public class Ant : MonoBehaviour {
 					}
 				}
 
-
 				health -= (int)Mathf.Ceil(damage * percentage);
 			}
-		} else {
+		} 
+		else {
 			health -= damage;
 		}
-		
+
+		healthChangeText.color = Color.red;
+		healthChangeText.text = "- " + damage;
+		healthChangeText.gameObject.SetActive(true);
+		healthChangeText.GetComponent<FadeScript>().FadeOutUI(1.0f);
+
 		healthText.text = health.ToString();
 
 		if (health <= 0) {
@@ -142,8 +172,14 @@ public class Ant : MonoBehaviour {
 		Destroy(gameObject);
 	}
 
-	public void HealDamage(int damageToHeal) {
-		health += damageToHeal;
+	public void HealDamage(int healthToHeal) {
+		health += healthToHeal;
+
+        healthChangeText.color = Color.green;
+        healthChangeText.text = "+ " + healthToHeal;
+        healthChangeText.gameObject.SetActive(true);
+        healthChangeText.GetComponent<FadeScript>().FadeOutUI(1.0f);
+
         healthText.text = health.ToString();
     }
 
@@ -199,68 +235,6 @@ public class Ant : MonoBehaviour {
 		if(turnManager.CurrentAntTurn == this) {
 			transform.position = new Vector3(transform.position.x, transform.position.y, 0);
 		}
-		
-        CheckForNearbyAnts();
-    }
-
-	private void CheckForNearbyAnts() {
-		List<Collider> ants = Physics.OverlapBox(transform.position, new Vector3(3f, 3f, 3f)).Where(x => x.GetComponent<Ant>()).ToList();
-		List<Ant> nearbyAnts = new List<Ant>();
-
-		foreach (Collider collider in ants) {
-			nearbyAnts.Add(collider.GetComponent<Ant>());
-		}
-
-		if (turnManager.CurrentAntTurn == this) {
-            nearbyAnts.Remove(this);
-
-            foreach (Ant ant in nearbyAnts) {
-                if (ant.isStepping == false && ant.isStoodBack == false) {
-                    ant.isStepping = true;
-                    ant.MoveOutTheWay();
-                }
-            }
-        }
-		else {
-			if (!nearbyAnts.Contains(turnManager.CurrentAntTurn) && isStepping == false && isStoodBack == true) {
-				isStepping = true;
-				ReturnToNormalPos();
-			}
-		}
-	}
-
-	public void MoveOutTheWay() {
-        isStepping = true;
-        StartCoroutine(StepCoroutine(-3.0f));
-    }
-
-	private void ReturnToNormalPos() {
-		isStepping = true;
-		StartCoroutine(StepCoroutine(0.0f));
-	}
-
-	private IEnumerator StepCoroutine(float targetZ) {
-        float time = 0;
-        Vector3 startingPos = transform.position;
-        Vector3 targetPos = transform.position;
-		targetPos.z = targetZ;
-
-        //Lerp to actually move the UI
-        while (time < 1.0f) {
-            transform.position = LerpLibrary.ObjectLerp(startingPos, targetPos, LerpType.InOut, time);
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        transform.position = targetPos;
-		isStepping = false;
-
-		if (targetZ == 0.0f) {
-			isStoodBack = false;
-		}
-		else {
-            isStoodBack = true;
-        }
     }
 
     private void OnCollisionEnter(Collision collision) {
