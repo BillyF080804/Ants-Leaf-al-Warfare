@@ -22,5 +22,5 @@ MonoBehaviour:
   queenType: 0
   damage: 1
   queenAttack: {fileID: 0}
-  queenArchetype: 
+  queenArchetype: Damage
   description: 'not set up yet '

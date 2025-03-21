@@ -23,4 +23,4 @@ MonoBehaviour:
   damage: 5
   queenAttack: {fileID: 8343384262659365228, guid: bb60bcfb06696634385b534d9f8459a1, type: 3}
   queenArchetype: Damage
-  description: What's that sound? Its a bullet ant air strike! Take cover!
+  description: What's that sound? Its a Bullet Ant air strike! Take cover!
