@@ -3484,6 +3484,13 @@ MonoBehaviour:
   availableScenes:
   - Game_GardenScene
   sceneDropdown: {fileID: 970970623}
+  antInformation:
+  - {fileID: 11400000, guid: 6a4a47061533efa499ac876195438a4d, type: 2}
+  - {fileID: 11400000, guid: 072bff5ac5fcb534b81c014d3e66fef1, type: 2}
+  - {fileID: 11400000, guid: 73029478af7edfb4f96cec8b1ddceea3, type: 2}
+  - {fileID: 11400000, guid: 9175b6a20c8a8f540b1923b5d876a9fa, type: 2}
+  - {fileID: 11400000, guid: 8286ba19baf6f9642b2965225b02bf8c, type: 2}
+  - {fileID: 11400000, guid: d1c6c5eb52cecf44ba3ab99b5c72b3d8, type: 2}
 --- !u!1 &1299692028
 GameObject:
   m_ObjectHideFlags: 0

@@ -114,6 +114,7 @@ public class TurnManager : MonoBehaviour {
         newQueen.GetComponent<Ant>().ownedPlayer = (Ant.PlayerList)playerNum;
 
         newQueen.GetComponent<QueenBaseAntScript>().ChangeAntColors(PlayerList[playerNum].playerInfo.playerColor);
+        ChangeQueenSpecialism(PlayerList[playerNum].playerInfo.queenType, newQueen.GetComponent<Ant>());
         PlayerList[playerNum].AddQueen(newQueen);
     }
 

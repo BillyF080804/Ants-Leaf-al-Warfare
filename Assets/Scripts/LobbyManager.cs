@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.Windows;
+using static AntSO;
 
 public class LobbyManager : MonoBehaviour {
     [Header("Settings")]
@@ -32,7 +33,12 @@ public class LobbyManager : MonoBehaviour {
     private Coroutine readyCountdownCoroutine = null;
     private List<Player> playerList = new List<Player>();
 
-    private void Start() {
+    //Used to change the text that shows for the archetype and description for each queen
+	[SerializeField]
+	List<AntSO> antInformation;
+
+
+	private void Start() {
         sceneDropdown.AddOptions(availableScenes);
 
         UpdateSceneToLoad(0);
@@ -53,7 +59,9 @@ public class LobbyManager : MonoBehaviour {
             playerCard.closeBackground.SetActive(false);
             playerCard.mainBackground.SetActive(true);
 
-            player.playerInfo.playerNum = playerNum;
+			ChangeQueenSpecialismText("Bee", playerCard);
+
+			player.playerInfo.playerNum = playerNum;
             player.playerInfo.playerInput = input;
             playerCard.playerJoined = true;
             player.playerInfo.playerColor = playerCards.Where(x => x.playerNum == playerNum).First().colorBand.color;
@@ -152,24 +160,29 @@ public class LobbyManager : MonoBehaviour {
                     player.playerInfo.queenType = "Dracula";
                     playerCard.teamText.text = "Dracula Ant";
                     playerCard.leftArrow.SetActive(true);
-                    break;
+				    ChangeQueenSpecialismText("Dracula", playerCard);
+				    break;
                 case "Dracula":
                     player.playerInfo.queenType = "Weaver";
                     playerCard.teamText.text = "Weaver Ant";
-                    break;
+				    ChangeQueenSpecialismText("Weaver", playerCard);
+				    break;
                 case "Weaver":
                     player.playerInfo.queenType = "Pharaoh";
                     playerCard.teamText.text = "Pharaoh Ant";
+				    ChangeQueenSpecialismText("Pharaoh", playerCard);
 				    break;
                 case "Pharaoh":
                     player.playerInfo.queenType = "Ice";
                     playerCard.teamText.text = "Ice Ant";
-                    break;
+				    ChangeQueenSpecialismText("Ice", playerCard);
+				    break;
                 case "Ice":
                     player.playerInfo.queenType = "Bullet";
                     playerCard.teamText.text = "Bullet Ant";
                     playerCard.rightArrow.SetActive(false);
-                    break;
+				    ChangeQueenSpecialismText("Bullet", playerCard);
+				    break;
             }
         }
         else if (value < 0 && playerCard.isReady == false) {
@@ -178,24 +191,78 @@ public class LobbyManager : MonoBehaviour {
                     player.playerInfo.queenType = "Ice";
                     playerCard.teamText.text = "Ice Ant";
                     playerCard.rightArrow.SetActive(true);
-                    break;
-                case "Ice":
+				    ChangeQueenSpecialismText("Ice", playerCard);
+				    break;
+				case "Ice":
                     player.playerInfo.queenType = "Pharaoh";
                     playerCard.teamText.text = "Pharaoh Ant";
-                    break;
+				    ChangeQueenSpecialismText("Pharaoh", playerCard);
+				    break;
                 case "Pharaoh":
                     player.playerInfo.queenType = "Weaver";
                     playerCard.teamText.text = "Weaver Ant";
+				    ChangeQueenSpecialismText("Weaver", playerCard);
 				    break;
                 case "Weaver":
                     player.playerInfo.queenType = "Dracula";
                     playerCard.teamText.text = "Dracula Ant";
+                    ChangeQueenSpecialismText("Dracula", playerCard);
                     break;
                 case "Dracula":
                     player.playerInfo.queenType = "Bee";
                     playerCard.teamText.text = "Bee Ant";
                     playerCard.leftArrow.SetActive(false);
-                    break;
+                    ChangeQueenSpecialismText("Bee", playerCard);
+
+					break;
+            }
+        }
+    }
+
+
+
+    public void ChangeQueenSpecialismText(string queenType, PlayerCardInfo playerCard) {
+        AntSO currentAnt = null;
+        switch (queenType) {
+            case "Bullet": {
+                currentAnt = antInformation.Where(x => x.queenType == AntSO.QueenType.Bullet).First();
+				playerCard.queenArchetypeText.text = "Type: " + currentAnt.queenArchetype;
+				playerCard.queenDescriptionText.text = "Description: "+currentAnt.description;
+                break;
+            }
+            case "Bee": {
+                currentAnt = antInformation.Where(x => x.queenType == AntSO.QueenType.Bee).First();
+				playerCard.queenArchetypeText.text = "Type: " + currentAnt.queenArchetype;
+				playerCard.queenDescriptionText.text = "Description: " + currentAnt.description;
+				break;
+            }
+            case "Weaver": {
+                currentAnt = antInformation.Where(x => x.queenType == AntSO.QueenType.Weaver).First();
+				playerCard.queenArchetypeText.text = "Type: " + currentAnt.queenArchetype;
+				playerCard.queenDescriptionText.text = "Description: " + currentAnt.description;
+				break;
+            }
+            case "Ice": {
+                currentAnt = antInformation.Where(x => x.queenType == AntSO.QueenType.Ice).First();
+				playerCard.queenArchetypeText.text = "Type: " + currentAnt.queenArchetype;
+				playerCard.queenDescriptionText.text = "Description: " + currentAnt.description;
+				break;
+            }
+            case "Dracula": {
+                currentAnt = antInformation.Where(x => x.queenType == AntSO.QueenType.Dracula).First();
+				playerCard.queenArchetypeText.text = "Type: " + currentAnt.queenArchetype;
+				playerCard.queenDescriptionText.text = "Description: " + currentAnt.description;
+				break;
+            }
+            case "Pharaoh": {
+                currentAnt = antInformation.Where(x => x.queenType == AntSO.QueenType.Pharaoh).First();
+				playerCard.queenArchetypeText.text = "Type: " + currentAnt.queenArchetype;
+				playerCard.queenDescriptionText.text = "Description: " + currentAnt.description;
+				break;
+            }
+            default: {
+                Debug.LogError("Invalid Queen Ant - " + queenType);
+                break;
             }
         }
     }
