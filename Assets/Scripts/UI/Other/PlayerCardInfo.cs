@@ -12,7 +12,7 @@ public class PlayerCardInfo : MonoBehaviour {
 
     [Header("UI")]
     public GameObject mainBackground;
-    public GameObject closeBackground;
+    public MoveUI waitingOnPlayerBackground;
     public Image colorBand;
     public TMP_Text readyText;
     public TMP_Text textHint;

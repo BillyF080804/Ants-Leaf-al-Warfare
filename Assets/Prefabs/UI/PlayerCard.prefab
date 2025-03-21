@@ -89,6 +89,7 @@ GameObject:
   - component: {fileID: 5896136736028833885}
   - component: {fileID: 4862392194270576415}
   - component: {fileID: 103896108669419350}
+  - component: {fileID: 5335503607534124840}
   m_Layer: 5
   m_Name: ClosedBackground
   m_TagString: Untagged
@@ -154,6 +155,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5335503607534124840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 608873522093136458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 128345f0403e4b4479e40e87727fec4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &882693127352920624
 GameObject:
   m_ObjectHideFlags: 0
@@ -345,7 +358,7 @@ MonoBehaviour:
   isReady: 0
   playerJoined: 0
   mainBackground: {fileID: 146918548731516605}
-  closeBackground: {fileID: 608873522093136458}
+  waitingOnPlayerBackground: {fileID: 5335503607534124840}
   colorBand: {fileID: 7031196581923684159}
   readyText: {fileID: 4408492628428699014}
   textHint: {fileID: 7846991527953177330}

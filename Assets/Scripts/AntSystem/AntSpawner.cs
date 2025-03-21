@@ -42,7 +42,7 @@ public class AntSpawner : MonoBehaviour {
 
             spawnPos = potentialSpawns[Random.Range(0, potentialSpawns.Count)];
 
-            if (Physics.Raycast(spawnPos, Vector3.down, out RaycastHit ray, 35.0f)) {
+            if (Physics.Raycast(spawnPos, Vector3.down, out RaycastHit ray, 35.0f) && !additionalSpawnPoints.Contains(spawnPos)) {
                 spawnPos = new Vector3(ray.point.x, ray.point.y + 0.5f, 0);
             }
 
