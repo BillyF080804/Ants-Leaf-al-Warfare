@@ -8,6 +8,7 @@ public class AntSpawner : MonoBehaviour {
     [Header("Spawn Settings")]
     [SerializeField] private float minDistanceBetweenAnts = 3.0f;
     [SerializeField] private List<SpawnArea> spawnAreas = new List<SpawnArea>();
+    [SerializeField] private List<Vector3> additionalSpawnPoints = new List<Vector3>();
 
     [Serializable]
     public class SpawnArea {
@@ -33,6 +34,10 @@ public class AntSpawner : MonoBehaviour {
             foreach (SpawnArea spawnArea in spawnAreas) {
                 Vector3 potentialSpawn = new Vector3(Random.Range(spawnArea.minX, spawnArea.maxX), 30.0f, 0.0f);
                 potentialSpawns.Add(potentialSpawn);
+            }
+
+            foreach (Vector3 spawn in additionalSpawnPoints) {
+                potentialSpawns.Add(spawn);
             }
 
             spawnPos = potentialSpawns[Random.Range(0, potentialSpawns.Count)];

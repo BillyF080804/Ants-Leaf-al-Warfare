@@ -6,8 +6,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 public class TurnManager : MonoBehaviour {
     [Header("Settings")]
@@ -84,17 +82,16 @@ public class TurnManager : MonoBehaviour {
 
     private IEnumerator StartLevelCoroutine() {
         levelNameText.GetComponent<TMP_Text>().text = levelName;
+        SpawnAllAnts();
 
         LoadingUI loadingUI = FindFirstObjectByType<LoadingUI>();
         loadingUI.OpenShutter();
+        cameraSystem.StartCameraPan();
         yield return new WaitForSeconds(1.0f);
         Destroy(loadingUI.gameObject);
 
         StartCoroutine(LevelTextCoroutine());
-        yield return new WaitUntil(() => levelNameText.activeSelf == false);
-
-        SpawnAllAnts();
-        //Do camera pan across map - probably with level text still active
+        yield return new WaitUntil(() => cameraSystem.CameraDelayActive == false);
 
         StartCoroutine(StartGame());
     }
@@ -121,7 +118,7 @@ public class TurnManager : MonoBehaviour {
     }
 
     private IEnumerator LevelTextCoroutine() {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(2.0f);
         levelNameText.GetComponent<FadeScript>().FadeOutUI(2.0f);
     }
 
@@ -236,6 +233,7 @@ public class TurnManager : MonoBehaviour {
         CheckIfAllAntsMoved();
         CurrentPlayerTurn = null;
         cameraSystem.SetCameraTarget(null);
+        cameraSystem.SetCameraLookAtTarget(null);
         weaponManager.EndTurn();
         endTurnEvent.Invoke();
         onTurnEnded?.Invoke();

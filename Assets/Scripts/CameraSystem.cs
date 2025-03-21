@@ -21,10 +21,14 @@ public class CameraSystem : MonoBehaviour {
     [SerializeField] private float freeCamMinY = 0.0f;
     [SerializeField] private float freeCamMaxY = 20.0f;
 
-    [Header("Misc Settings")]
-    public bool setManualOverviewPosition;
+    [Header("Camera Pan Settings")]
+    [SerializeField] private MoveUI topBlackBar;
+    [SerializeField] private MoveUI bottomBlackBar;
+    [SerializeField] private float panDuration = 10.0f;
+    [SerializeField] private List<Vector3> panPositions = new List<Vector3>();
 
     private bool freeCamEnabled = false;
+    private bool smoothingEnabled = false;
     private float cameraZoom = 0.0f;
     private float cameraZoomValue = 0.0f;
 
@@ -33,6 +37,7 @@ public class CameraSystem : MonoBehaviour {
     private Vector3 targetPos = Vector3.zero;
     private Vector3 velocity = Vector3.zero;
     private Vector3 lookAtTargetPos = Vector3.zero;
+    private Vector3 overviewPosition = Vector3.zero;
 
     private Transform lookAtTarget = null;
     private GameObject cameraObj;
@@ -47,18 +52,10 @@ public class CameraSystem : MonoBehaviour {
     public bool CameraDelayActive { get; private set; } = false;
     public Transform CameraTarget { get; private set; }
 
-    [HideInInspector] public Vector3 overviewPosition;
-
     private void Awake() {
         cameraObj = gameObject;
         cameraComp = GetComponentInChildren<Camera>();
-
-        if (!setManualOverviewPosition) {
-            overviewPosition = cameraObj.transform.position;
-        }
-        else {
-            cameraObj.transform.position = overviewPosition;
-        }
+        overviewPosition = cameraObj.transform.position;
     }
 
     private void LateUpdate() {
@@ -71,7 +68,7 @@ public class CameraSystem : MonoBehaviour {
         else if (freeCamEnabled == true) {
             SetFreeCam();
         }
-        else {
+        else if (smoothingEnabled == true) {
             SetCameraPos();
         }
 
@@ -296,22 +293,40 @@ public class CameraSystem : MonoBehaviour {
 
         CameraDelayActive = false;
     }
-}
 
-#if (UNITY_EDITOR)
-[CustomEditor(typeof(CameraSystem))]
-public class CameraSystemEditor : Editor {
-    [InitializeOnEnterPlayMode]
-    public override void OnInspectorGUI() {
-        base.OnInspectorGUI();
+    public void StartCameraPan() {
+        StartCoroutine(CameraPanCoroutine());
+    }
 
-        CameraSystem cameraSystem = (CameraSystem)target;
+    private IEnumerator CameraPanCoroutine() {
+        CameraDelayActive = true;
 
-        if (cameraSystem.setManualOverviewPosition) {
-            EditorGUILayout.Space(15);
-            EditorGUILayout.LabelField("Overview Settings", EditorStyles.boldLabel);
-            cameraSystem.overviewPosition = EditorGUILayout.Vector3Field("Overview Position", cameraSystem.overviewPosition);
+        for (int i = 0; i < panPositions.Count - 1; i++) {
+            StartCoroutine(Lerp(panPositions[i], panPositions[i + 1], panDuration));
+            yield return new WaitUntil(() => cameraObj.transform.position == panPositions[i + 1]);
         }
+
+        topBlackBar.StartMoveUI(LerpType.InOut, Vector2.zero, new Vector2(0, 100), 1.0f, true);
+        bottomBlackBar.StartMoveUI(LerpType.InOut, Vector2.zero, new Vector2(0, -100), 1.0f, true);
+        smoothingEnabled = true;
+        CameraDelayActive = false;
+    }
+
+    private IEnumerator Lerp(Vector3 startPos, Vector3 endPos, float duration) {
+        float timeElapsed = 0.0f;
+
+        while (timeElapsed < duration) {
+            cameraObj.transform.position = LerpLibrary.ObjectLerp(startPos, endPos, LerpType.InOut, timeElapsed / duration);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        cameraObj.transform.position = endPos;
+    }
+
+    public void ResetCameraToFollowAnt() {
+        ResetCamera();
+        SetCameraTarget(FindFirstObjectByType<TurnManager>().CurrentAntTurn.transform);
+        SetCameraLookAtTarget(null);
     }
 }
-#endif
