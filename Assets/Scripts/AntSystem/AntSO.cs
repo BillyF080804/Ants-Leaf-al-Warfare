@@ -16,7 +16,7 @@ public class AntSO : ScriptableObject {
 
 
 	public enum QueenType {
-		Fire,
+		Ice,
 		Bee,
 		Pharaoh,
 		Weaver,

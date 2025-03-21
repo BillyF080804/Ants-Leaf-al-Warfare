@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6bce53b57bfd1b4ea23fb8c135d608b, type: 3}
+  m_Name: Bullet Ant
+  m_EditorClassIdentifier: 
+  antPrefab: {fileID: 0}
+  antColor: {r: 0, g: 0, b: 0, a: 1}
+  antName: Bullet
+  moveSpeed: 4
+  jumpHeight: 5
+  health: 100
+  IsQueen: 1
+  queenType: 5
+  damage: 5
+  queenAttack: {fileID: 8343384262659365228, guid: bb60bcfb06696634385b534d9f8459a1, type: 3}
+  queenArchetype: Damage
+  description: What's that sound? Its a bullet ant air strike! Take cover!

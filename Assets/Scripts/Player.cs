@@ -255,7 +255,7 @@ public class Player : MonoBehaviour {
 
     //Temporary Func/Keybind of Left Shift
     private void OnQueenAttack() {
-        if (CheckActionIsValid()) {
+        if (CheckActionIsValid() && turnManager.CurrentAntTurn == queenBaseAntScript) {
 			queenBaseAntScript.SpecialAttack();
         }
     }

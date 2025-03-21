@@ -306,8 +306,8 @@ public class TurnManager : MonoBehaviour {
             case "Weaver":
                 queenAnt.antInfo = queenAntSpecials.Where(x => x.queenType == AntSO.QueenType.Weaver).First();
                 break;
-            case "Fire":
-                queenAnt.antInfo = queenAntSpecials.Where(x => x.queenType == AntSO.QueenType.Fire).First();
+            case "Ice":
+                queenAnt.antInfo = queenAntSpecials.Where(x => x.queenType == AntSO.QueenType.Ice).First();
                 break;
             case "Dracula":
                 queenAnt.antInfo = queenAntSpecials.Where(x => x.queenType == AntSO.QueenType.Dracula).First();

@@ -162,10 +162,10 @@ public class LobbyManager : MonoBehaviour {
                     playerCard.teamText.text = "Pharaoh Ant";
 				    break;
                 case "Pharaoh":
-                    player.playerInfo.queenType = "Fire";
-                    playerCard.teamText.text = "Fire Ant";
+                    player.playerInfo.queenType = "Ice";
+                    playerCard.teamText.text = "Ice Ant";
                     break;
-                case "Fire":
+                case "Ice":
                     player.playerInfo.queenType = "Bullet";
                     playerCard.teamText.text = "Bullet Ant";
                     playerCard.rightArrow.SetActive(false);
@@ -175,11 +175,11 @@ public class LobbyManager : MonoBehaviour {
         else if (value < 0 && playerCard.isReady == false) {
             switch (player.playerInfo.queenType) {
                 case "Bullet":
-                    player.playerInfo.queenType = "Fire";
-                    playerCard.teamText.text = "Fire Ant";
+                    player.playerInfo.queenType = "Ice";
+                    playerCard.teamText.text = "Ice Ant";
                     playerCard.rightArrow.SetActive(true);
                     break;
-                case "Fire":
+                case "Ice":
                     player.playerInfo.queenType = "Pharaoh";
                     playerCard.teamText.text = "Pharaoh Ant";
                     break;

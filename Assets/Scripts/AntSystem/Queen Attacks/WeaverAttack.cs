@@ -10,9 +10,12 @@ public class WeaverAttack : QueenAttack {
 	[SerializeField]
 	EffectScript effectToAdd;
 
-	public int mapMinX;
-	public int mapMaxX;
-	public int safeRadius = 5;
+	[SerializeField]
+	int mapMinX;
+	[SerializeField]
+	int mapMaxX;
+	[SerializeField]
+	int safeRadius = 5;
 
 	public override void ActivateAttack(int attackLevel, Ant antInfoScript, Vector3 position) {
 		for (int i = 0; i < attackLevel; i++) {

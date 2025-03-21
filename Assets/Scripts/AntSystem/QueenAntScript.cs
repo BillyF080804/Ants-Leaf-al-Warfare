@@ -33,13 +33,6 @@ public class QueenBaseAntScript : Ant {
 				antInfo.queenAttack.ActivateAttack(attackLevel, this, transform.position);
 			}
 
-
-			//if (antInfo.queenType == AntSO.QueenType.Bee || antInfo.queenType == AntSO.QueenType.Weaver || antInfo.queenType == AntSO.QueenType.Weaver) {
-			//	antInfo.queenAttack.ActivateAttack(attackLevel, this, transform.position);
-			//} else {
-			//	antInfo.queenAttack.ActivateAttack(attackLevel, this);
-			//}
-
 			attackLevel = 0;
 			usedAttack = true;
 			turnManager.EndTurn();
