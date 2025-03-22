@@ -28,6 +28,11 @@ public class BarbecueScript : MonoBehaviour
     {
         adder = GetComponentInChildren<DangerAdder>();
     }
+
+    private void Start()
+    {
+        
+    }
     public Ant Fall(Ant ant)
     {
         // Moves the ant that is currently in danger off to safety when barbecue falls, used in a Foreach in a different function.
