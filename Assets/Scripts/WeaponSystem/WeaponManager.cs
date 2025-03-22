@@ -23,11 +23,14 @@ public class WeaponManager : MonoBehaviour {
 
     private bool canAim = true;
     private bool canFireWeapon = true;
-    private float aimStrength = 1.0f;
-    private float aimArrowDefaultSize = 2.0f;
-    private float strengthValue = 0.0f;
+    private bool fireHeld = false;
+    private float aimStrength = 0.5f;
+    private float aimArrowDefaultSize = 0.5f;
     private Vector2 aimValue = Vector2.zero;
     private Vector2 aimPosition = Vector2.zero;
+
+    private BaseWeaponSO tempWeaponInfo;
+    private Transform tempPlayerPosition;
 
     public delegate void OnOpenWeaponsMenu();
     public static OnOpenWeaponsMenu onOpenWeaponsMenu;
@@ -60,12 +63,20 @@ public class WeaponManager : MonoBehaviour {
         if (canFireWeapon) {
             canFireWeapon = false;
             canAim = false;
-            //turnManager.HideTimer();
+            fireHeld = true;
+            tempWeaponInfo = weaponInfo;
+            tempPlayerPosition = playerPosition;
+        }
+        else if (fireHeld == true) {
             StartCoroutine(FireWeaponCoroutine(weaponInfo, playerPosition));
         }
     }
 
     private IEnumerator FireWeaponCoroutine(BaseWeaponSO weaponInfo, Transform playerPosition) {
+        fireHeld = false;
+        tempWeaponInfo = null;
+        tempPlayerPosition = null;
+
         if (weaponInfo.isMultiShot == false) {
             OnShoot(weaponInfo, playerPosition);
         }
@@ -126,7 +137,6 @@ public class WeaponManager : MonoBehaviour {
         if (canFireWeapon) {
             canFireWeapon = false;
             canAim = false;
-            //turnManager.HideTimer();
             Collider[] colliders = Physics.OverlapSphere(aimPosition, 2.5f).Where(x => x.CompareTag("Player") && x.gameObject != turnManager.CurrentAntTurn.gameObject).ToArray();
 
             if (colliders.Length > 0) {
@@ -152,7 +162,6 @@ public class WeaponManager : MonoBehaviour {
         if (canFireWeapon) {
             canFireWeapon = false;
             canAim = false;
-            //turnManager.HideTimer();
             Vector3 spawnPos = new Vector3(playerPosition.position.x, playerPosition.position.y, playerPosition.position.z);
             Vector3 scale = new Vector3(weaponInfo.sprayHeight, weaponInfo.sprayLength, weaponInfo.sprayLength);
 
@@ -199,11 +208,6 @@ public class WeaponManager : MonoBehaviour {
         aimValue = inputValue.Get<Vector2>();
     }
 
-    //Handles setting strengthValue
-    public void AimStrength(InputValue inputValue) {
-        strengthValue = inputValue.Get<float>();
-    }
-
     private void ArrowAim() {
         if (aimValue.x < -0.25f) {
             aimPosition.x = turnManager.CurrentAntTurn.transform.position.x - 5;
@@ -216,20 +220,25 @@ public class WeaponManager : MonoBehaviour {
     }
 
     private void ArrowStrength() {
-        if (strengthValue > 0) {
-            aimStrength += 0.25f * Time.deltaTime;
-        }
-        else if (strengthValue < 0) { 
-            aimStrength -= 0.25f * Time.deltaTime;
+        aimStrength += 0.5f * Time.deltaTime;
+
+        aimStrength = Mathf.Clamp(aimStrength, 0.1f, 2.0f);
+
+        if (aimStrength >= 2.0f) {
+            fireHeld = false;
+            StartCoroutine(FireWeaponCoroutine(tempWeaponInfo, tempPlayerPosition));
         }
     }
 
     private void Update() {
         if (WeaponSelected != null && canAim == true) {
             ArrowAim();
-            ArrowStrength();
-            UpdateArrowSize();
             UpdateArrowAim();
+        }
+
+        if (fireHeld == true) {
+            UpdateArrowSize();
+            ArrowStrength();
         }
     }
 
@@ -244,10 +253,10 @@ public class WeaponManager : MonoBehaviour {
         Vector3 arrowPos = turnManager.CurrentAntTurn.transform.position;
         arrowPos.x += 1;
         aimArrow.anchoredPosition = arrowPos;
-        aimStrength = 1.0f;
+        aimArrow.localScale = new Vector3(1, 1, 1);
+        aimStrength = 0.1f;
 
         UpdateArrowAim();
-        UpdateArrowSize();
     }
 
     private void UpdateArrowAim() {
@@ -268,7 +277,6 @@ public class WeaponManager : MonoBehaviour {
     }
 
     private void UpdateArrowSize() {
-        aimStrength = Mathf.Clamp(aimStrength, 0.5f, 2.0f);
         float arrowSize = aimArrowDefaultSize * aimStrength;
         aimArrow.transform.localScale = new Vector3(arrowSize, arrowSize, arrowSize);
     }

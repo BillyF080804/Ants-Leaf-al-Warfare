@@ -59,7 +59,6 @@ public class WeaponScript : MonoBehaviour {
         Collider[] colliders = Physics.OverlapSphere(transform.position, weaponInfo.explosionRange).Where(x => x.CompareTag("Player")).ToArray();
 
         foreach (Collider collider in colliders) {
-            Debug.Log(collider.name + " damage dealt: " + weaponInfo.baseDamage);
             collider.GetComponent<Ant>().TakeDamage(weaponInfo.baseDamage);
             collider.GetComponent<Rigidbody>().AddExplosionForce(weaponInfo.explosionPower, transform.position, weaponInfo.explosionRange, weaponInfo.upwardsModifier, ForceMode.Impulse);
 

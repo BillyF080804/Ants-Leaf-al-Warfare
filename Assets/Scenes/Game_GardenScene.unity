@@ -12610,7 +12610,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 512224335}
+  m_Mesh: {fileID: 778419676}
 --- !u!33 &359076891
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -37393,7 +37393,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 229867164}
+  m_Mesh: {fileID: 247183787}
 --- !u!33 &754387676
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -40554,7 +40554,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1918769419}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -61691,7 +61691,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 176787847}
 --- !u!33 &1630113399
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -64296,7 +64296,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 176787847}
+  m_Mesh: {fileID: 229867164}
 --- !u!33 &1736885734
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -82500,7 +82500,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 176787847}
+  m_Mesh: {fileID: 1617173520}
 --- !u!33 &1859857145
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -84618,7 +84618,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!223 &1918769418
 Canvas:
   m_ObjectHideFlags: 0
@@ -84659,7 +84659,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -18.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1170, y: 658}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!43 &1919310407

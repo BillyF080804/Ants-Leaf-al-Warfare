@@ -16,12 +16,12 @@
                 },
                 {
                     "name": "FireWeapon",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "2cdf2f5c-38a9-416f-99dc-9b102fa31fe0",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Move",
@@ -55,15 +55,6 @@
                     "type": "PassThrough",
                     "id": "772ffbb8-88fc-48d3-9f5b-c71fb6607b02",
                     "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "AimStrength",
-                    "type": "PassThrough",
-                    "id": "8862d948-5184-4b0e-9dcb-55365fc91414",
-                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -447,61 +438,6 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Aim",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "Up/Down",
-                    "id": "3932e7e8-fbcc-4e88-bbe2-a9591c11c2c8",
-                    "path": "1DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "AimStrength",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "positive",
-                    "id": "c869a19e-3842-4784-9c56-dc3899fedcf7",
-                    "path": "<Keyboard>/r",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "AimStrength",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "99b8b225-1825-43f8-aeac-16ae8d148ef8",
-                    "path": "<Gamepad>/rightTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "AimStrength",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "negative",
-                    "id": "8ccb84ec-e5fa-4912-a597-5e2ff7e40a2b",
-                    "path": "<Keyboard>/t",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "AimStrength",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "negative",
-                    "id": "4aad0bd4-c9d3-4fac-ae5a-ce0eeda9ab41",
-                    "path": "<Gamepad>/leftTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "AimStrength",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },

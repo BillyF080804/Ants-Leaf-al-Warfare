@@ -50,16 +50,7 @@ public class LobbyManager : MonoBehaviour {
             Player player = playerList[playerNum - 1];
             PlayerCardInfo playerCard = playerCards[playerNum - 1];
 
-            Vector2 endPos = Vector2.zero;
-
-            if (playerNum == 1 || playerNum == 3) {
-                endPos = new Vector2(-1000, 0);
-            }
-            else {
-                endPos = new Vector2(1000, 0);
-            }
-
-            playerCard.waitingOnPlayerBackground.StartMoveUI(LerpType.In, Vector2.zero, endPos, 1.5f, true);
+            playerCard.waitingOnPlayerBackground.StartMoveUI(LerpType.In, Vector2.zero, new Vector2(0, 500), 1.0f, true);
             playerCard.mainBackground.SetActive(true);
 
 			ChangeQueenSpecialism("Bee", playerCard, player);

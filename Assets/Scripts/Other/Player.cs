@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -89,9 +88,9 @@ public class Player : MonoBehaviour {
             else {
                 weaponManager.FireWeapon(weaponManager.WeaponSelected, turnManager.CurrentAntTurn.transform);
             }
-        } else if (CheckActionIsValid() && turnManager.CurrentAntTurn.GetComponent<MummyScript>() != null) {
+        } 
+        else if (CheckActionIsValid() && turnManager.CurrentAntTurn.GetComponent<MummyScript>() != null) {
             turnManager.CurrentAntTurn.GetComponent<MummyScript>().Attack();
-
 		}
     }
 
@@ -124,13 +123,6 @@ public class Player : MonoBehaviour {
     private void OnAim(InputValue value) {
         if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false && weaponManager.WeaponSelected != null) {
             weaponManager.AimWeapon(value);
-        }
-    }
-
-    //Function called when player has weapon selected and changes strength of shot
-    private void OnAimStrength(InputValue value) {
-        if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false && weaponManager.WeaponSelected != null) {
-            weaponManager.AimStrength(value);
         }
     }
 
