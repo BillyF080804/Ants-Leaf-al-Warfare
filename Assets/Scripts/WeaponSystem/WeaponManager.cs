@@ -6,8 +6,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class WeaponManager : MonoBehaviour {
-    [Header("UI")]
+    [Header("UI/Settings")]
     [SerializeField] private RectTransform aimArrow;
+    [SerializeField] private float aimRotationSpeed = 50f;
 
     [Header("Weapon Menu UI")]
     [SerializeField] private GameObject weaponMenuUI;
@@ -24,8 +25,10 @@ public class WeaponManager : MonoBehaviour {
     private bool canAim = true;
     private bool canFireWeapon = true;
     private bool fireHeld = false;
+    private bool aimingLeft = false;
     private float aimStrength = 0.5f;
     private float aimArrowDefaultSize = 0.5f;
+    private float aimRot = 0.0f;
     private Vector2 aimValue = Vector2.zero;
     private Vector2 aimPosition = Vector2.zero;
 
@@ -66,6 +69,9 @@ public class WeaponManager : MonoBehaviour {
             fireHeld = true;
             tempWeaponInfo = weaponInfo;
             tempPlayerPosition = playerPosition;
+
+            Ray ray = new Ray(aimArrow.anchoredPosition, aimArrow.up * 5);
+            aimPosition = ray.GetPoint(5.0f);
         }
         else if (fireHeld == true) {
             StartCoroutine(FireWeaponCoroutine(weaponInfo, playerPosition));
@@ -137,6 +143,10 @@ public class WeaponManager : MonoBehaviour {
         if (canFireWeapon) {
             canFireWeapon = false;
             canAim = false;
+
+            Ray ray = new Ray(aimArrow.anchoredPosition, aimArrow.up * 5);
+            aimPosition = ray.GetPoint(5.0f);
+
             Collider[] colliders = Physics.OverlapSphere(aimPosition, 2.5f).Where(x => x.CompareTag("Player") && x.gameObject != turnManager.CurrentAntTurn.gameObject).ToArray();
 
             if (colliders.Length > 0) {
@@ -162,6 +172,10 @@ public class WeaponManager : MonoBehaviour {
         if (canFireWeapon) {
             canFireWeapon = false;
             canAim = false;
+
+            Ray ray = new Ray(aimArrow.anchoredPosition, aimArrow.up * 5);
+            aimPosition = ray.GetPoint(5.0f);
+
             Vector3 spawnPos = new Vector3(playerPosition.position.x, playerPosition.position.y, playerPosition.position.z);
             Vector3 scale = new Vector3(weaponInfo.sprayHeight, weaponInfo.sprayLength, weaponInfo.sprayLength);
 
@@ -216,16 +230,61 @@ public class WeaponManager : MonoBehaviour {
             aimPosition.x = turnManager.CurrentAntTurn.transform.position.x + 5;
         }
 
-        aimPosition.y += aimValue.y * Time.deltaTime;
+        float zRot = aimValue.y * aimRotationSpeed * Time.deltaTime;
+
+        if (aimingLeft == false) {
+            aimRot = aimArrow.rotation.eulerAngles.z - zRot;
+        }
+        else {
+            aimRot = aimArrow.rotation.eulerAngles.z + zRot;
+        }
+
+        if (aimPosition.x < turnManager.CurrentAntTurn.transform.position.x) {
+            Vector3 arrowPos = turnManager.CurrentAntTurn.transform.position;
+            arrowPos.x -= 1;
+            aimArrow.anchoredPosition = arrowPos;
+
+            if (aimingLeft == false) {
+                aimingLeft = true;
+                aimArrow.rotation = Quaternion.Euler(0, 0, 90);
+            }
+            else if (aimRot <= 178 && aimRot >= 2) {
+                aimArrow.rotation = Quaternion.Euler(0, 0, aimArrow.rotation.eulerAngles.z - zRot);
+            }
+            else if (aimRot > 178 && aimRot < 180) {
+                aimArrow.rotation = Quaternion.Euler(0, 0, 177);
+            }
+            else if (aimRot < 2 && aimRot > 0) {
+                aimArrow.rotation = Quaternion.Euler(0, 0, 3);
+            }
+        }
+        else {
+            Vector3 arrowPos = turnManager.CurrentAntTurn.transform.position;
+            arrowPos.x += 1;
+            aimArrow.anchoredPosition = arrowPos;
+
+            if (aimingLeft == true) {
+                aimingLeft = false;
+                aimArrow.rotation = Quaternion.Euler(0, 0, -90);
+            }
+            else if (aimRot <= 358 && aimRot >= 182) {
+                aimArrow.rotation = Quaternion.Euler(0, 0, aimArrow.rotation.eulerAngles.z + zRot);
+            }
+            else if (aimRot > 358 && aimRot < 360) {
+                aimArrow.rotation = Quaternion.Euler(0, 0, -3);
+            }
+            else if (aimRot < 182 && aimRot > 180) {
+                aimArrow.rotation = Quaternion.Euler(0, 0, -177);
+            }
+        }
     }
 
     private void ArrowStrength() {
         aimStrength += 0.5f * Time.deltaTime;
 
-        aimStrength = Mathf.Clamp(aimStrength, 0.1f, 2.0f);
-
         if (aimStrength >= 2.0f) {
             fireHeld = false;
+            aimStrength = 2.0f;
             StartCoroutine(FireWeaponCoroutine(tempWeaponInfo, tempPlayerPosition));
         }
     }
@@ -233,7 +292,6 @@ public class WeaponManager : MonoBehaviour {
     private void Update() {
         if (WeaponSelected != null && canAim == true) {
             ArrowAim();
-            UpdateArrowAim();
         }
 
         if (fireHeld == true) {
@@ -248,6 +306,8 @@ public class WeaponManager : MonoBehaviour {
         aimPosition.x += 2;
 
         aimArrow.gameObject.SetActive(true);
+        aimArrow.rotation = Quaternion.Euler(0, 0, -90);
+        aimRot = aimArrow.rotation.eulerAngles.z;
         canAim = true;
 
         Vector3 arrowPos = turnManager.CurrentAntTurn.transform.position;
@@ -255,25 +315,6 @@ public class WeaponManager : MonoBehaviour {
         aimArrow.anchoredPosition = arrowPos;
         aimArrow.localScale = new Vector3(1, 1, 1);
         aimStrength = 0.1f;
-
-        UpdateArrowAim();
-    }
-
-    private void UpdateArrowAim() {
-        Vector3 aimRotation = (Vector3)aimPosition - aimArrow.position;
-        aimArrow.localRotation = Quaternion.LookRotation(Vector3.forward, new Vector2(-aimRotation.y, aimRotation.x));
-        aimArrow.localEulerAngles = new Vector3(0, 0, aimArrow.localEulerAngles.z - 90);
-
-        if (aimPosition.x < turnManager.CurrentAntTurn.transform.position.x) {
-            Vector3 arrowPos = turnManager.CurrentAntTurn.transform.position;
-            arrowPos.x -= 1;
-            aimArrow.anchoredPosition = arrowPos;
-        }
-        else {
-            Vector3 arrowPos = turnManager.CurrentAntTurn.transform.position;
-            arrowPos.x += 1;
-            aimArrow.anchoredPosition = arrowPos;
-        }
     }
 
     private void UpdateArrowSize() {

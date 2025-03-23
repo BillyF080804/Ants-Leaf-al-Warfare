@@ -60787,6 +60787,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aimArrow: {fileID: 887806505}
+  aimRotationSpeed: 50
   weaponMenuUI: {fileID: 962215362}
   weaponMenuUIGridArea: {fileID: 962215361}
   weaponNameText: {fileID: 962215360}

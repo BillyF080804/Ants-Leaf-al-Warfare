@@ -71,7 +71,7 @@ public class Player : MonoBehaviour {
 
     //Skip turn function
     private void OnSkipTurn() {
-        if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false) {
+        if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false && weaponManager.WeaponsActive == false) {
             turnManager.EndTurn();
         }
     }
