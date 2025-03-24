@@ -649,8 +649,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Waiting On Players To Join . . .
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 330f8fc0499c93f45b4cbf26b6ab9ee2, type: 2}
+  m_sharedMaterial: {fileID: 6013885212577805756, guid: 330f8fc0499c93f45b4cbf26b6ab9ee2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3473,6 +3473,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputManager: {fileID: 1267687524}
+  antInformation:
+  - {fileID: 11400000, guid: 6a4a47061533efa499ac876195438a4d, type: 2}
+  - {fileID: 11400000, guid: 072bff5ac5fcb534b81c014d3e66fef1, type: 2}
+  - {fileID: 11400000, guid: 73029478af7edfb4f96cec8b1ddceea3, type: 2}
+  - {fileID: 11400000, guid: 9175b6a20c8a8f540b1923b5d876a9fa, type: 2}
+  - {fileID: 11400000, guid: 8286ba19baf6f9642b2965225b02bf8c, type: 2}
+  - {fileID: 11400000, guid: d1c6c5eb52cecf44ba3ab99b5c72b3d8, type: 2}
   playerCards:
   - {fileID: 1366821911}
   - {fileID: 296281296}
@@ -3484,13 +3491,6 @@ MonoBehaviour:
   availableScenes:
   - Game_GardenScene
   sceneDropdown: {fileID: 970970623}
-  antInformation:
-  - {fileID: 11400000, guid: 6a4a47061533efa499ac876195438a4d, type: 2}
-  - {fileID: 11400000, guid: 072bff5ac5fcb534b81c014d3e66fef1, type: 2}
-  - {fileID: 11400000, guid: 73029478af7edfb4f96cec8b1ddceea3, type: 2}
-  - {fileID: 11400000, guid: 9175b6a20c8a8f540b1923b5d876a9fa, type: 2}
-  - {fileID: 11400000, guid: 8286ba19baf6f9642b2965225b02bf8c, type: 2}
-  - {fileID: 11400000, guid: d1c6c5eb52cecf44ba3ab99b5c72b3d8, type: 2}
 --- !u!1 &1299692028
 GameObject:
   m_ObjectHideFlags: 0
@@ -4977,11 +4977,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7031196581923684159, guid: 8782be091a24cd84aa9a84ef70d71c38, type: 3}
       propertyPath: m_Color.g
-      value: 0.8002131
+      value: 0.5764706
       objectReference: {fileID: 0}
     - target: {fileID: 7031196581923684159, guid: 8782be091a24cd84aa9a84ef70d71c38, type: 3}
       propertyPath: m_Color.r
-      value: 1
+      value: 0.7176471
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
