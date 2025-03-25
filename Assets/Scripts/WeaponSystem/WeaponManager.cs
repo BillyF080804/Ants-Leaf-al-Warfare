@@ -145,7 +145,7 @@ public class WeaponManager : MonoBehaviour {
             canAim = false;
 
             Ray ray = new Ray(aimArrow.anchoredPosition, aimArrow.up * 5);
-            aimPosition = ray.GetPoint(5.0f);
+            aimPosition = ray.GetPoint(2.5f);
 
             Collider[] colliders = Physics.OverlapSphere(aimPosition, 2.5f).Where(x => x.CompareTag("Player") && x.gameObject != turnManager.CurrentAntTurn.gameObject).ToArray();
 

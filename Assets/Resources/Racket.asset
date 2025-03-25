@@ -26,7 +26,7 @@ MonoBehaviour:
   isMelee: 1
   isMultiShot: 0
   isSpray: 0
-  weaponEffect: {fileID: 2035224743872689002, guid: 48600db732ecebc49831131511799a3a, type: 3}
+  weaponEffect: {fileID: 0}
   cameraDelay: 4
   cameraShakeOnFire: 0
   cameraShakeOnImpact: 1
