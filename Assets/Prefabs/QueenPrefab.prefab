@@ -566,6 +566,7 @@ Transform:
   m_Children:
   - {fileID: 8756586867995739321}
   - {fileID: 6638560165600114737}
+  - {fileID: 4368976359285142771}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &8667107319572798907
@@ -587,8 +588,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.0180779, y: 0.83151245, z: 2.0848331}
-  m_Center: {x: -0.009337306, y: -0.19396877, z: 0.0068542957}
+  m_Size: {x: 1, y: 0.8, z: 2}
+  m_Center: {x: 0, y: -0.2, z: 0}
 --- !u!54 &464993771418036186
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -638,13 +639,12 @@ MonoBehaviour:
   lifeStealPercent: 0
   hasStatDrop: 0
   statDrops: 
-  isStepping: 0
-  isStoodBack: 0
   isDrowning: 0
   healthFadeScript: {fileID: 6478637886980624727}
   healthChangeText: {fileID: 8684394791276165452}
   healthText: {fileID: 8572191964539648485}
   healthTextBackground: {fileID: 8527560696120339127}
+  <WeaponTransform>k__BackingField: {fileID: 4368976359285142771}
   canInteract: 0
   interactable: {fileID: 0}
   queenLayerMask:
@@ -653,6 +653,37 @@ MonoBehaviour:
   attackLevel: 1
   hat: {fileID: 6521603284431299478}
   leafWrap: {fileID: 7863182509729245955}
+--- !u!1 &8054865428902753365
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4368976359285142771}
+  m_Layer: 0
+  m_Name: Weapon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4368976359285142771
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8054865428902753365}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 559809522019695009}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8527560696120339127
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,12 +1,10 @@
 using UnityEngine;
 
 public class SprayAreaScript : MonoBehaviour {
-    private Collider playerCollider;
     private BaseWeaponSO weaponInfo;
     private TurnManager turnManager;
 
-    public void Setup(Collider _playerCollider, BaseWeaponSO _weaponInfo, TurnManager _turnManager) {
-        playerCollider = _playerCollider;
+    public void Setup(BaseWeaponSO _weaponInfo, TurnManager _turnManager) {
         weaponInfo = _weaponInfo;
         turnManager = _turnManager;
 
@@ -20,7 +18,7 @@ public class SprayAreaScript : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (other != playerCollider && other.TryGetComponent(out Ant ant)) {
+        if (other.gameObject != turnManager.CurrentAntTurn.gameObject && other.TryGetComponent(out Ant ant)) {
             ant.TakeDamage(weaponInfo.baseDamage);
 
             if (weaponInfo.sprayMover == true) {

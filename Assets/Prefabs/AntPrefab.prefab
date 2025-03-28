@@ -237,6 +237,37 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!1 &4714381685713450608
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 185552780971005863}
+  m_Layer: 0
+  m_Name: Weapon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &185552780971005863
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4714381685713450608}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 559809522019695009}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7419841320288824830
 GameObject:
   m_ObjectHideFlags: 0
@@ -272,6 +303,7 @@ Transform:
   - {fileID: 1652387954139096144}
   - {fileID: 8756586867995739321}
   - {fileID: 6638560165600114737}
+  - {fileID: 185552780971005863}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &8667107319572798907
@@ -344,13 +376,12 @@ MonoBehaviour:
   lifeStealPercent: 0
   hasStatDrop: 0
   statDrops: 
-  isStepping: 0
-  isStoodBack: 0
   isDrowning: 0
   healthFadeScript: {fileID: 3712256010529605187}
   healthChangeText: {fileID: 6592297603296863701}
   healthText: {fileID: 8572191964539648485}
   healthTextBackground: {fileID: 8527560696120339127}
+  <WeaponTransform>k__BackingField: {fileID: 185552780971005863}
   canInteract: 0
   interactable: {fileID: 0}
   hat: {fileID: 6521603284431299478}

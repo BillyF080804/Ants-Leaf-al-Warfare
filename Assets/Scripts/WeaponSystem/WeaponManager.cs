@@ -174,7 +174,7 @@ public class WeaponManager : MonoBehaviour {
             canAim = false;
 
             Ray ray = new Ray(aimArrow.anchoredPosition, aimArrow.up * 5);
-            aimPosition = ray.GetPoint(5.0f);
+            aimPosition = ray.GetPoint(2.5f);
 
             Vector3 spawnPos = new Vector3(playerPosition.position.x, playerPosition.position.y, playerPosition.position.z);
             Vector3 scale = new Vector3(weaponInfo.sprayHeight, weaponInfo.sprayLength, weaponInfo.sprayLength);
@@ -190,7 +190,7 @@ public class WeaponManager : MonoBehaviour {
             sprayArea.transform.localScale = scale;
             sprayArea.transform.localRotation = aimArrow.localRotation;
 
-            sprayArea.GetComponent<SprayAreaScript>().Setup(turnManager.CurrentAntTurn.GetComponent<Collider>(), weaponInfo, turnManager);
+            sprayArea.GetComponent<SprayAreaScript>().Setup(weaponInfo, turnManager);
 
             if (weaponInfo.cameraShakeOnFire) {
                 cameraSystem.StartCameraShake(weaponInfo.cameraShakeDuration, weaponInfo.cameraShakeIntensity);
@@ -214,6 +214,7 @@ public class WeaponManager : MonoBehaviour {
         canFireWeapon = true;
         WeaponsActive = false;
         activeWeapons.Clear();
+        RemoveWorldWeapon();
         turnManager.EndTurn();
     }
 
@@ -328,6 +329,7 @@ public class WeaponManager : MonoBehaviour {
             WeaponSelected = null;
             aimArrow.gameObject.SetActive(false);
             onCloseWeaponsMenu?.Invoke();
+            RemoveWorldWeapon();
         }
         else if (WeaponMenuOpen == true && UIMoving == false) {
             UIMoving = true;
@@ -347,7 +349,6 @@ public class WeaponManager : MonoBehaviour {
         aimStrength = 0.0f;
         aimValue = Vector2.zero;
         aimArrow.gameObject.SetActive(false);
-
         StartCoroutine(ForceCloseWeaponMenuCoroutine());
     }
 
@@ -449,7 +450,21 @@ public class WeaponManager : MonoBehaviour {
 
     public void SetSelectedWeapon(BaseWeaponSO weapon) {
         WeaponSelected = weapon;
+
+        if (weapon.worldWeaponPrefab != null) {
+            GameObject worldWeapon = Instantiate(weapon.worldWeaponPrefab, turnManager.CurrentAntTurn.WeaponTransform);
+            worldWeapon.transform.localScale *= weapon.worldWeaponScale;
+            worldWeapon.transform.localPosition = weapon.worldWeaponLocalPos;
+            worldWeapon.transform.localEulerAngles = weapon.worldWeaponRotation;
+        }
+
         ResetAimPosition();
         StartCoroutine(CloseWeaponMenuCoroutine(false));
+    }
+
+    private void RemoveWorldWeapon() {
+        if (turnManager.CurrentAntTurn.WeaponTransform.GetChild(0) != null) {
+            Destroy(turnManager.CurrentAntTurn.WeaponTransform.GetChild(0).gameObject);
+        }    
     }
 }

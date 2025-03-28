@@ -13,6 +13,12 @@ public class BaseWeaponSO : ScriptableObject {
     public Sprite weaponIcon = null;
     public GameObject weaponPrefab = null;
 
+    [Header("In-World Weapon")]
+    public GameObject worldWeaponPrefab = null;
+    public float worldWeaponScale = 1.0f;
+    public Vector3 worldWeaponLocalPos = Vector3.zero;
+    public Vector3 worldWeaponRotation = Vector3.zero;
+
     [Header("Weapon Settings")]
     public int baseDamage = 20;
     public float weaponSpeed = 25.0f;

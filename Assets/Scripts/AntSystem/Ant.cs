@@ -1,10 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 public class Ant : MonoBehaviour {
 	public enum PlayerList {
@@ -13,7 +11,6 @@ public class Ant : MonoBehaviour {
 		Player3 = 2,
 		Player4 = 3,
 	}
-
 
 	[Header("Ant Info")]
 	public AntSO antInfo;
@@ -29,15 +26,16 @@ public class Ant : MonoBehaviour {
 	public bool hasStatDrop;
 	public List<EffectSO.StatDropType> statDrops;
 
-	public bool isStepping = false;
-	public bool isStoodBack = false;
 	public bool isDrowning = false;
 
-	[Header("Settings")]
+	[Header("UI Settings")]
 	[SerializeField] private FadeScript healthFadeScript;
 	[SerializeField] private TMP_Text healthChangeText;
 	[SerializeField] private TMP_Text healthText;
 	[SerializeField] private GameObject healthTextBackground;
+
+	[field : Header("Weapon Transform")]
+	[field : SerializeField] public Transform WeaponTransform { get; private set; }
 
     private int health;
 	private Rigidbody rb;
