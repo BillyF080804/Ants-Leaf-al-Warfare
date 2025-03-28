@@ -384,8 +384,8 @@ MonoBehaviour:
   <WeaponTransform>k__BackingField: {fileID: 185552780971005863}
   canInteract: 0
   interactable: {fileID: 0}
-  hat: {fileID: 6521603284431299478}
-  leafWrap: {fileID: 7863182509729245955}
+  hat: {fileID: 4103092626613141247}
+  leafWrap: {fileID: 4537810194138686510}
 --- !u!1 &8527560696120339127
 GameObject:
   m_ObjectHideFlags: 0
@@ -791,6 +791,16 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!137 &4103092626613141247 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -6226839554194014908, guid: e67a868d5c66e8045959d5a3605ea794, type: 3}
+  m_PrefabInstance: {fileID: 1253354657252967355}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &4537810194138686510 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3430974631583770517, guid: e67a868d5c66e8045959d5a3605ea794, type: 3}
+  m_PrefabInstance: {fileID: 1253354657252967355}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9083509904995640146
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -872,16 +882,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b4a490424723f643afd10dc5abe70ec, type: 3}
---- !u!23 &6521603284431299478 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 2634183035084177604, guid: 4b4a490424723f643afd10dc5abe70ec, type: 3}
-  m_PrefabInstance: {fileID: 9083509904995640146}
-  m_PrefabAsset: {fileID: 0}
---- !u!23 &7863182509729245955 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: -7849564190066341807, guid: 4b4a490424723f643afd10dc5abe70ec, type: 3}
-  m_PrefabInstance: {fileID: 9083509904995640146}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8756586867995739321 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4b4a490424723f643afd10dc5abe70ec, type: 3}
