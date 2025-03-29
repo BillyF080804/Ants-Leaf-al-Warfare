@@ -44,6 +44,9 @@ public class Ant : MonoBehaviour {
 
 	private bool canMove = true;
 
+	private bool isLeft;
+	private bool isRight;
+
     private void Awake() {
 		turnManager = FindFirstObjectByType<TurnManager>();
         rb = GetComponent<Rigidbody>();
@@ -87,6 +90,20 @@ public class Ant : MonoBehaviour {
     public void OnMove(InputValue value) {
 		Vector2 movement = value.Get<Vector2>();
 		moveVector = new Vector3(movement.x, 0, 0);
+		Rigidbody rb = GetComponent<Rigidbody>();
+		if (movement.x == 0) {
+			rb.rotation = Quaternion.Euler(0, 0, 0);
+			isLeft = false;
+			isRight = false;
+		} else if (movement.x < 0) {
+			rb.rotation = Quaternion.Euler(0, 90, 0);
+			isLeft = true;
+			isRight = false;
+		} else {
+			rb.rotation = Quaternion.Euler(0, -90, 0);
+			isLeft = false;
+			isRight = true;
+		}
 	}
 
 	public void TakeDamage(int damage) {
@@ -227,7 +244,7 @@ public class Ant : MonoBehaviour {
     }
 
     private void Update() {
-		if(canMove) {
+		if (canMove) {
 			if (hasStatDrop) {
 				if (statDrops.Contains(EffectSO.StatDropType.Speed)) {
 					float percentage = 0;
@@ -237,17 +254,16 @@ public class Ant : MonoBehaviour {
 							break;
 						}
 					}
-					transform.Translate(antInfo.moveSpeed * Time.deltaTime * moveVector * percentage);
+					transform.Translate(antInfo.moveSpeed * Time.deltaTime * moveVector * percentage, Space.World);
 
+				} else {
+					
+					transform.Translate(antInfo.moveSpeed * Time.deltaTime * moveVector, Space.World);
 				}
 
 			} else {
-				transform.Translate(antInfo.moveSpeed * Time.deltaTime * moveVector);
+				transform.Translate(antInfo.moveSpeed * Time.deltaTime * moveVector, Space.World);
 			}
-		}
-
-		if(turnManager.CurrentAntTurn == this) {
-			transform.position = new Vector3(transform.position.x, transform.position.y, 0);
 		}
     }
 

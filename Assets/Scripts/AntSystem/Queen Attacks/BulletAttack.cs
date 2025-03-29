@@ -5,6 +5,8 @@ using UnityEngine;
 public class BulletAttack : QueenAttack {
 	[SerializeField]
 	GameObject bullet;
+	[SerializeField]
+	BaseWeaponSO weaponType;
 
 	[SerializeField]
 	List<int> amountOfBulletsPerLevel;
@@ -21,7 +23,8 @@ public class BulletAttack : QueenAttack {
 		int amountOfBullets = amountOfBulletsPerLevel[attackLevel-1];
 		for(int i = 0; i < amountOfBullets; i++) {
 			Vector2 spawnPos = new Vector2(CheckPos(), YPos);
-			Instantiate(bullet, spawnPos, Quaternion.identity);
+			GameObject tempBullet = Instantiate(bullet, spawnPos, Quaternion.identity);
+			tempBullet.GetComponent<WeaponScript>().SetupWeapon(weaponType, null);
 		}
 	}
 
