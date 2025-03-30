@@ -28,6 +28,8 @@ public class Ant : MonoBehaviour {
 
 	public bool isDrowning = false;
 
+	[SerializeField] private Animator animator;
+
 	[Header("UI Settings")]
 	[SerializeField] private FadeScript healthFadeScript;
 	[SerializeField] private TMP_Text healthChangeText;
@@ -43,9 +45,6 @@ public class Ant : MonoBehaviour {
 	protected TurnManager turnManager;
 
 	private bool canMove = true;
-
-	private bool isLeft;
-	private bool isRight;
 
     private void Awake() {
 		turnManager = FindFirstObjectByType<TurnManager>();
@@ -93,16 +92,10 @@ public class Ant : MonoBehaviour {
 		Rigidbody rb = GetComponent<Rigidbody>();
 		if (movement.x == 0) {
 			rb.rotation = Quaternion.Euler(0, 0, 0);
-			isLeft = false;
-			isRight = false;
 		} else if (movement.x < 0) {
 			rb.rotation = Quaternion.Euler(0, 90, 0);
-			isLeft = true;
-			isRight = false;
 		} else {
 			rb.rotation = Quaternion.Euler(0, -90, 0);
-			isLeft = false;
-			isRight = true;
 		}
 	}
 

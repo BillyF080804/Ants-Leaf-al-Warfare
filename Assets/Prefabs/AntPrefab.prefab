@@ -377,6 +377,7 @@ MonoBehaviour:
   hasStatDrop: 0
   statDrops: 
   isDrowning: 0
+  animator: {fileID: 0}
   healthFadeScript: {fileID: 3712256010529605187}
   healthChangeText: {fileID: 6592297603296863701}
   healthText: {fileID: 8572191964539648485}
@@ -778,7 +779,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2136296918050422506}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: fc4fef1e8fa508b4ab3c944c13c0ece6, type: 2}
   m_CullingMode: 0
