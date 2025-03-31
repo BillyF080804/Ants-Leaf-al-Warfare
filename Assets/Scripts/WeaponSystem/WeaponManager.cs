@@ -128,6 +128,8 @@ public class WeaponManager : MonoBehaviour {
         weaponScript.SetupWeapon(weaponInfo, playerPosition.GetComponent<Collider>());
         activeWeapons.Add(newWeapon);
         WeaponsActive = true;
+        cameraSystem.ResetCamera();
+        turnManager.CurrentPlayerTurn.ResetFreeCamSetting();
         cameraSystem.SetCameraTarget(newWeapon.transform);
 
         if (weaponInfo.explosive && !weaponInfo.explodeOnImpact) {
@@ -163,6 +165,8 @@ public class WeaponManager : MonoBehaviour {
             }
 
             cameraSystem.CameraDelay(weaponInfo.cameraDelay);
+            cameraSystem.ResetCamera();
+            turnManager.CurrentPlayerTurn.ResetFreeCamSetting();
             cameraSystem.SetCameraTarget(playerPosition.position);
             WaitTillWeaponsFinished();
         }
@@ -198,6 +202,8 @@ public class WeaponManager : MonoBehaviour {
 
             activeWeapons.Add(sprayArea);
             WeaponsActive = true;
+            cameraSystem.ResetCamera();
+            turnManager.CurrentPlayerTurn.ResetFreeCamSetting();
             cameraSystem.CameraDelay(weaponInfo.cameraDelay);
             cameraSystem.SetCameraTarget(playerPosition.position);
             WaitTillWeaponsFinished();
