@@ -69,6 +69,8 @@ public class WeaponManager : MonoBehaviour {
             fireHeld = true;
             tempWeaponInfo = weaponInfo;
             tempPlayerPosition = playerPosition;
+            cameraSystem.ResetCamera();
+            turnManager.CurrentPlayerTurn.ResetFreeCamSetting();
 
             Ray ray = new Ray(aimArrow.anchoredPosition, aimArrow.up * 5);
             aimPosition = ray.GetPoint(5.0f);
