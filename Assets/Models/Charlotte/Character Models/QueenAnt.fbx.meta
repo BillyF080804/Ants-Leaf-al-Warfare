@@ -3,7 +3,22 @@ guid: fd27c62acea831148bf3eb262c679e89
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Base Ant_Low
+    second: {fileID: 2100000, guid: 7affd508ea9a5634f824397091b9d7a2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Left Wing_Low
+    second: {fileID: 2100000, guid: 47bfc6e941eee8c40b2817ee292a785b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Right Wing_Low
+    second: {fileID: 2100000, guid: 38a61ac7213139d4fb680e7c3d406d05, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

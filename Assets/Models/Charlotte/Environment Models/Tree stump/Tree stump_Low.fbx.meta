@@ -3,7 +3,12 @@ guid: e45e55f881f354f4999c0dd00e3b829d
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TreeStump_Low
+    second: {fileID: 2100000, guid: db8f387ebecfd594db0a768e574786a2, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
