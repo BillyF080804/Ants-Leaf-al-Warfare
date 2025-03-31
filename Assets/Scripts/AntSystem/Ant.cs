@@ -89,13 +89,15 @@ public class Ant : MonoBehaviour {
     public void OnMove(InputValue value) {
 		Vector2 movement = value.Get<Vector2>();
 		moveVector = new Vector3(movement.x, 0, 0);
-		Rigidbody rb = GetComponent<Rigidbody>();
-		if (movement.x == 0) {
-			rb.rotation = Quaternion.Euler(0, 0, 0);
-		} else if (movement.x < 0) {
-			rb.rotation = Quaternion.Euler(0, 90, 0);
-		} else {
-			rb.rotation = Quaternion.Euler(0, -90, 0);
+		Transform model = transform.GetChild(0).transform;
+		//if (movement.x == 0) {
+		//	rb.rotation = Quaternion.Euler(0, 0, 0);
+		//} else
+		if (movement.x < 0) {
+			model.rotation = Quaternion.Euler(0, 90, 0);
+		} 
+		else if (movement.x > 0) {
+			model.rotation = Quaternion.Euler(0, -90, 0);
 		}
 	}
 
