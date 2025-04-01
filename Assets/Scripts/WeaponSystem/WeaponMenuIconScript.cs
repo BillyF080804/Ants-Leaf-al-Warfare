@@ -59,7 +59,7 @@ public class WeaponMenuIconScript : MonoBehaviour {
     }
 
     public void OnButtonHoverExit() {
-        iconBackground.color = new Color32(255, 165, 0, 255);
+        iconBackground.color = Color.white;
     }
 
     public void AllowButtonInteraction() {
