@@ -82,6 +82,15 @@ MonoBehaviour:
     queenType: Bee
     playerColor: {r: 0, g: 0, b: 0, a: 0}
     playerInput: {fileID: 0}
+  uiSprites:
+  - {fileID: 11400000, guid: 9f027f28cf851f8428d448e5db43c63d, type: 2}
+  - {fileID: 11400000, guid: e941009571ffa2b448b30635df4b5965, type: 2}
+  - {fileID: 11400000, guid: 47e3114dd85f1c14788bc22f90219226, type: 2}
+  - {fileID: 11400000, guid: e54b9f3660beda8418bfb66f37947e6a, type: 2}
+  - {fileID: 11400000, guid: 91b9e7f43a2aec14cb2b1163cee3897b, type: 2}
+  - {fileID: 11400000, guid: ebff57ae722499b44a077de9b36ccd6a, type: 2}
+  - {fileID: 11400000, guid: faf567607973dc74fbde211c82a868e7, type: 2}
+  - {fileID: 11400000, guid: 2c8e9ff6b9e367a4c86d34d05d84f80b, type: 2}
   EffectScript: {fileID: 5701415912331228771, guid: 4ee10e588bac67441b96e856d4177636, type: 3}
 --- !u!114 &7135399526886834650
 MonoBehaviour:
