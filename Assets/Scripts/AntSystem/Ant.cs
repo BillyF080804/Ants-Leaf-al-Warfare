@@ -90,14 +90,16 @@ public class Ant : MonoBehaviour {
 		Vector2 movement = value.Get<Vector2>();
 		moveVector = new Vector3(movement.x, 0, 0);
 		Transform model = transform.GetChild(0).transform;
-		//if (movement.x == 0) {
-		//	rb.rotation = Quaternion.Euler(0, 0, 0);
-		//} else
 		if (movement.x < 0) {
+			ResetAnimation();
+			ChangeAnimation("Walking");
 			model.rotation = Quaternion.Euler(0, 90, 0);
-		} 
-		else if (movement.x > 0) {
+		} else if (movement.x > 0) {
+			ResetAnimation();
+			ChangeAnimation("Walking");
 			model.rotation = Quaternion.Euler(0, -90, 0);
+		} else {
+			ResetAnimation();
 		}
 	}
 
@@ -140,10 +142,14 @@ public class Ant : MonoBehaviour {
         }
 
         if (isDrowning == false) {
-            FindFirstObjectByType<CameraSystem>().AddNewCameraTarget(transform);
+			ResetAnimation();
+			ChangeAnimation("Flailing");
+			FindFirstObjectByType<CameraSystem>().AddNewCameraTarget(transform);
             CameraSystem.onIterationFinished += DestroyAnt;
         }
 		else {
+			ResetAnimation();
+			ChangeAnimation("Dying");
 			Destroy(antInfo.IsQueen, player);
 		}
     }
@@ -219,6 +225,8 @@ public class Ant : MonoBehaviour {
 
 	public void OnJump() {
 		if (canJump && canMove) {
+			ResetAnimation();
+			ChangeAnimation("Jumping");
 			Vector2 Force = new Vector2(0, antInfo.jumpHeight);
 			rb.AddForce(Force, ForceMode.Impulse);
 			canJump = false;
@@ -264,6 +272,8 @@ public class Ant : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision) {
 		if(Physics.Raycast(gameObject.transform.position, Vector3.down, out RaycastHit ray, 3.0f)) {
+			ResetAnimation();
+			//ChangeAnimation("Landing");
 			canJump = true;
 		}
 	}
@@ -292,5 +302,19 @@ public class Ant : MonoBehaviour {
 				effects[i].ApplyEffect(this);
 			}
 		}
+	}
+
+	public void ChangeAnimation(string nextAnimState) {
+		animator.SetBool(nextAnimState, true);
+	}
+
+	public void ResetAnimation() {
+		animator.SetBool("Walking", false);
+		animator.SetBool("UsingBackWeapon", false);
+		animator.SetBool("Dying", false);
+		animator.SetBool("Standing", false);
+		animator.SetBool("Jumping", false);
+		animator.SetBool("Landing", false);
+		animator.SetBool("Flailing", false);
 	}
 }
