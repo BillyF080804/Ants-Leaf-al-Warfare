@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -9,12 +10,14 @@ public class Player : MonoBehaviour {
     [Header("Player Info")]
     public PlayerInfo playerInfo = new PlayerInfo();
 
+    [Header("Settings")]
+    [SerializeField] private List<TMP_SpriteAsset> uiSprites = new List<TMP_SpriteAsset>();
+
     private CameraSystem cameraSystem;
     private LobbyManager lobbyManager;
     private TurnManager turnManager;
     private WeaponManager weaponManager;
     private QueenBaseAntScript queenBaseAntScript;
-    private PlayerInput playerInput;
 
     private bool freeCamEnabled = false;
 
@@ -24,7 +27,6 @@ public class Player : MonoBehaviour {
 
     private void Awake() {
         lobbyManager = FindFirstObjectByType<LobbyManager>();
-        playerInput = GetComponent<PlayerInput>();
         SceneManager.activeSceneChanged += ActiveSceneChanged;
 
         DontDestroyOnLoad(gameObject);
@@ -214,15 +216,6 @@ public class Player : MonoBehaviour {
         CurrentWeapons.Remove(weapon);
     }
 
-    //public void AllowPlayerToSpawnQueen() {
-    //    canSpawnQueen = true;
-    //    QueenAnt.GetComponent<Collider>().enabled = false;
-    //    QueenAnt.GetComponent<Rigidbody>().useGravity = false;
-    //    moveQueenTimerCoroutine = StartCoroutine(MoveQueenTimerCoroutine());
-    //    queenAntSpawner.SetMoveValue(0, QueenAnt);
-    //    queenAntSpawner.CheckQueenInValidPos();
-    //}
-
     public int GetAllHealth() {
         int healthTotal = 0;
 
@@ -242,7 +235,30 @@ public class Player : MonoBehaviour {
     }
 
     public string GetKeybindForAction(string actionName) {
-        return playerInput.actions.FindAction(actionName).GetBindingDisplayString(InputBinding.DisplayStringOptions.DontIncludeInteractions);
+        return playerInfo.playerInput.actions.FindAction(actionName).GetBindingDisplayString(InputBinding.DisplayStringOptions.DontIncludeInteractions);
+    }
+
+    public TMP_SpriteAsset GetSpriteFromAction(string actionName) {
+        switch (playerInfo.playerInput.actions.FindAction(actionName).GetBindingDisplayString(InputBinding.DisplayStringOptions.DontIncludeInteractions)) {
+            case "A":
+                return uiSprites[0];
+            case "B":
+                return uiSprites[1];
+            case "X":
+                return uiSprites[2];
+            case "Y":
+                return uiSprites[3];
+            case "Circle":
+                return uiSprites[4];
+            case "Cross":
+                return uiSprites[5];
+            case "Square":
+                return uiSprites[6];
+            case "Triangle":
+                return uiSprites[7];
+            default:
+                return null;
+        }
     }
 
     //Temporary Func/Keybind of Left Shift

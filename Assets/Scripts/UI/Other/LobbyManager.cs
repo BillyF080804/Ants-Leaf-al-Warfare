@@ -59,7 +59,15 @@ public class LobbyManager : MonoBehaviour {
             player.playerInfo.playerInput = input;
             playerCard.playerJoined = true;
             player.playerInfo.playerColor = playerCards.Where(x => x.playerNum == playerNum).First().colorBand.color;
-            playerCard.readyText.text = input.actions.FindAction("ReadyUp").GetBindingDisplayString(InputBinding.DisplayStringOptions.DontIncludeInteractions) + " - Not Ready!";
+
+            playerCard.readyText.spriteAsset = player.GetSpriteFromAction("ReadyUp");
+
+            if (playerCard.readyText.spriteAsset != null) {
+                playerCard.readyText.text = "<sprite=0> - Ready!";
+            }
+            else {
+                playerCard.readyText.text = player.GetKeybindForAction("ReadyUp") + " - Ready!";
+            }
 
             if (playerList.Count > 0) {
                 playersJoinedText.text = "Waiting On Players To Ready Up . . .";
@@ -112,10 +120,24 @@ public class LobbyManager : MonoBehaviour {
         playerCard.isReady = !playerCard.isReady;
 
         if (playerCard.isReady) {
-            playerCard.readyText.text = player.GetKeybindForAction("ReadyUp") + " - Ready!";
+            playerCard.readyText.spriteAsset = player.GetSpriteFromAction("ReadyUp");
+
+            if (playerCard.readyText.spriteAsset != null) {
+                playerCard.readyText.text = "<sprite=0> - Ready!";
+            }
+            else {
+                playerCard.readyText.text = player.GetKeybindForAction("ReadyUp") + " - Ready!";
+            }
         }
         else {
-            playerCard.readyText.text = player.GetKeybindForAction("ReadyUp") + " - Not Ready!";
+            playerCard.readyText.spriteAsset = player.GetSpriteFromAction("ReadyUp");
+
+            if (playerCard.readyText.spriteAsset != null) {
+                playerCard.readyText.text = "<sprite=0> - Not Ready!";
+            }
+            else {
+                playerCard.readyText.text = player.GetKeybindForAction("ReadyUp") + " - Not Ready!";
+            }
         }
 
         if (playerCards.Where(x => x.playerJoined == true).All(x => x.isReady) == true) {
