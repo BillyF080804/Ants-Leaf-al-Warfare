@@ -2,12 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using UnityEngine.Windows;
-using static AntSO;
 
 public class LobbyManager : MonoBehaviour {
     [Header("Settings")]
@@ -63,10 +60,10 @@ public class LobbyManager : MonoBehaviour {
             playerCard.readyText.spriteAsset = player.GetSpriteFromAction("ReadyUp");
 
             if (playerCard.readyText.spriteAsset != null) {
-                playerCard.readyText.text = "<sprite=0> - Ready!";
+                playerCard.readyText.text = "<sprite=0> - Not Ready!";
             }
             else {
-                playerCard.readyText.text = player.GetKeybindForAction("ReadyUp") + " - Ready!";
+                playerCard.readyText.text = player.GetKeybindForAction("ReadyUp") + " - Not Ready!";
             }
 
             if (playerList.Count > 0) {

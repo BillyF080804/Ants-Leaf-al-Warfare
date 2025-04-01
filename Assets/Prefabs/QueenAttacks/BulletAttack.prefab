@@ -44,8 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4177469f41b4b7e4da2ccaa9a24eaee7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 1417744849267967637, guid: d46da59b091bbac4d8b9621f9c1032af, type: 3}
-  weaponType: {fileID: 11400000, guid: e01fdf755f2699e41bc55f08a099951f, type: 2}
+  bulletSpeed: 1
+  bulletPrefab: {fileID: 3667148812617791359, guid: 7ef10ed28193d304687981aaf28c702a, type: 3}
+  weaponType: {fileID: 11400000, guid: e9e01b0e7a1f1fd469d962765e4e850c, type: 2}
   amountOfBulletsPerLevel: 0a0000000e00000012000000
   mapMaxX: 60
   mapMinX: -60

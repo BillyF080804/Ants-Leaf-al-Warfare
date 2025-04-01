@@ -12,7 +12,10 @@ public class WeaponScript : MonoBehaviour {
     }
 
     public void SetupWeapon(BaseWeaponSO weapon, Collider objectCollider) {
-        Physics.IgnoreCollision(GetComponent<Collider>(), objectCollider, true);
+        if (objectCollider != null) {
+            Physics.IgnoreCollision(GetComponent<Collider>(), objectCollider, true);
+        }
+
         weaponInfo = weapon;
         Destroy(gameObject, 10.0f);
     }
