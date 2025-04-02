@@ -14,11 +14,15 @@ public class FadeScript : MonoBehaviour {
     }
 
     public void FadeOutUI(float fadeDuration, GameObject fadeObject) {
-        StartCoroutine(FadeObject(false, fadeDuration, fadeObject));
+        if (fadeObject.activeInHierarchy) {
+            StartCoroutine(FadeObject(false, fadeDuration, fadeObject));
+        }
     }
 
     public void FadeOutUI(float fadeDuration) {
-        StartCoroutine(FadeObject(false, fadeDuration, gameObject));
+        if (gameObject.activeInHierarchy) {
+            StartCoroutine(FadeObject(false, fadeDuration, gameObject));
+        }
     }
 
     public void FadeInAndOutUI(float fadeDuration, float timeBetweenFades, GameObject fadeObject) {

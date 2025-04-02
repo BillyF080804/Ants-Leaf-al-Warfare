@@ -338,6 +338,8 @@ public class WeaponManager : MonoBehaviour {
             aimArrow.gameObject.SetActive(false);
             onCloseWeaponsMenu?.Invoke();
             RemoveWorldWeapon();
+            turnManager.FireWeaponText.GetComponent<FadeScript>().FadeOutUI(1.0f);
+            turnManager.WeaponMenuText.GetComponent<FadeScript>().FadeInUI(1.0f);
         }
         else if (WeaponMenuOpen == true && UIMoving == false) {
             UIMoving = true;
@@ -357,6 +359,10 @@ public class WeaponManager : MonoBehaviour {
         aimStrength = 0.0f;
         aimValue = Vector2.zero;
         aimArrow.gameObject.SetActive(false);
+
+        turnManager.WeaponMenuText.GetComponent<FadeScript>().FadeInUI(1.0f);
+        turnManager.FireWeaponText.GetComponent<FadeScript>().FadeOutUI(1.0f);
+
         StartCoroutine(ForceCloseWeaponMenuCoroutine());
     }
 
@@ -378,6 +384,7 @@ public class WeaponManager : MonoBehaviour {
         weaponMenuUI.SetActive(true);
         turnManager.CurrentPlayerTurn.GetEventSystem().SetSelectedGameObject(weaponIcons.Where(x => x.Interactable == true).First().GetButton());
         weaponMenuUI.GetComponent<MoveUI>().StartMoveUI(LerpType.OutBack, weaponMenuUI, new Vector2(-750, 50), new Vector2(50, 50), 1.0f);
+        turnManager.WeaponMenuText.GetComponent<FadeScript>().FadeOutUI(1.0f);
 
         yield return new WaitUntil(() => weaponMenuUI.GetComponent<RectTransform>().anchoredPosition == new Vector2(50, 50));
         EnableIconInteraction();
@@ -395,6 +402,7 @@ public class WeaponManager : MonoBehaviour {
 
         if (invokeCloseWeaponsMenu) {
             onCloseWeaponsMenu?.Invoke();
+            turnManager.WeaponMenuText.GetComponent<FadeScript>().FadeInUI(1.0f);
         }
 
         UIMoving = false;
@@ -466,6 +474,7 @@ public class WeaponManager : MonoBehaviour {
             worldWeapon.transform.localEulerAngles = weapon.worldWeaponRotation;
         }
 
+        turnManager.FireWeaponText.GetComponent<FadeScript>().FadeInUI(1.0f);
         ResetAimPosition();
         StartCoroutine(CloseWeaponMenuCoroutine(false));
     }

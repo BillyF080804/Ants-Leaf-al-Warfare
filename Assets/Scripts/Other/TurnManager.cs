@@ -13,8 +13,8 @@ public class TurnManager : MonoBehaviour {
     [SerializeField] private int maxRounds = 10;
     [SerializeField] private int maxTurnTime = 20;
 
-    [field : Header("Ant Spawning Settings")]
-    [field : SerializeField] public float MapMinX { get; private set; } = -10.0f;
+    [field: Header("Ant Spawning Settings")]
+    [field: SerializeField] public float MapMinX { get; private set; } = -10.0f;
     [field: SerializeField] public float MapMaxX { get; private set; } = 10.0f;
     [field: SerializeField] public float MinDistanceBetweenQueens { get; private set; } = 5.0f;
 
@@ -45,6 +45,11 @@ public class TurnManager : MonoBehaviour {
     [SerializeField] private GameObject levelNameText;
     [SerializeField] private GameObject queenHealthUIPrefab;
     [SerializeField] private List<Sprite> queenAntHealthUIVariants;
+
+    [field: Header("Text Hints")]
+    [field: SerializeField] public FadeScript TextHintFadeScript { get; private set; }
+    [field: SerializeField] public TMP_Text WeaponMenuText { get; private set; }
+    [field: SerializeField] public TMP_Text FireWeaponText { get; private set; }
 
     private int numOfAnts = 2;
     private float currentTurnTime;
@@ -131,6 +136,7 @@ public class TurnManager : MonoBehaviour {
         yield return new WaitForSeconds(2.5f);
         HideRoundNumber();
         mainGameUIMoveScript.StartMoveUI(LerpType.Out, new Vector2(0, 250), Vector2.zero, 1.0f);
+        TextHintFadeScript.FadeInUI(1.0f);
 
         int prevRoud = 0;
         for (int i = 0; i < 1000; i++) {
@@ -143,6 +149,24 @@ public class TurnManager : MonoBehaviour {
 
                 turnTimerCoroutine = StartCoroutine(TurnTimer());
                 playerTurnText.text = "Player " + player.playerInfo.playerNum.ToString();
+                playerTurnText.color = player.playerInfo.playerColor;
+
+                WeaponMenuText.spriteAsset = player.GetSpriteFromAction("WeaponMenu");
+                FireWeaponText.spriteAsset = player.GetSpriteFromAction("FireWeapon");
+
+                if (WeaponMenuText.spriteAsset != null) {
+                    WeaponMenuText.text = "<sprite=0> - Weapons Menu";
+                }
+                else {
+                    WeaponMenuText.text = player.GetKeybindForAction("WeaponMenu") + " - Weapons Menu";
+                }
+
+                if (FireWeaponText.spriteAsset != null) {
+                    FireWeaponText.text = "<sprite=0> - Fire";
+                }
+                else {
+                    FireWeaponText.text = player.GetKeybindForAction("FireWeapon") + " - Fire";
+                }
 
                 player.ResetFreeCamSetting();
                 cameraSystem.ResetCamera();
@@ -164,10 +188,12 @@ public class TurnManager : MonoBehaviour {
                 cameraSystem.SetCameraTarget(null);
 
                 mainGameUIMoveScript.StartMoveUI(LerpType.In, Vector2.zero, new Vector2(0, 250), 1.0f);
+                TextHintFadeScript.FadeOutUI(1.0f);
                 ShowRoundNumber();
                 yield return new WaitForSeconds(2.5f);
                 HideRoundNumber();
                 mainGameUIMoveScript.StartMoveUI(LerpType.Out, new Vector2(0, 250), Vector2.zero, 1.0f);
+                TextHintFadeScript.FadeInUI(1.0f);
 
                 startRoundEvent.Invoke();
 
