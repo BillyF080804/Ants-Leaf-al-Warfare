@@ -50,6 +50,7 @@ public class TurnManager : MonoBehaviour {
     [field: SerializeField] public FadeScript TextHintFadeScript { get; private set; }
     [field: SerializeField] public TMP_Text WeaponMenuText { get; private set; }
     [field: SerializeField] public TMP_Text FireWeaponText { get; private set; }
+    [field: SerializeField] public TMP_Text QueenAttackText { get; private set; }
 
     private int numOfAnts = 2;
     private float currentTurnTime;
@@ -168,6 +169,19 @@ public class TurnManager : MonoBehaviour {
                     FireWeaponText.text = player.GetKeybindForAction("FireWeapon") + " - Fire";
                 }
 
+                if (CurrentAntTurn.antInfo.IsQueen == true) {
+                    QueenAttackText.spriteAsset = player.GetSpriteFromAction("QueenAttack");
+
+                    if (QueenAttackText.spriteAsset != null) {
+                        QueenAttackText.text = "<sprite=0> - Queen Attack";
+                    }
+                    else {
+                        QueenAttackText.text = player.GetKeybindForAction("QueenAttack") + " - Queen Attack";
+                    }
+
+                    QueenAttackText.GetComponent<FadeScript>().FadeInUI(1.0f);
+                }
+
                 player.ResetFreeCamSetting();
                 cameraSystem.ResetCamera();
                 cameraSystem.SetCameraTarget(CurrentAntTurn.transform);
@@ -251,6 +265,10 @@ public class TurnManager : MonoBehaviour {
 
             if (CurrentAntTurn.GetComponent<MummyScript>() != null) {
                 CurrentAntTurn.GetComponent<MummyScript>().DecreaseTurnsAlive();
+            }
+
+            if (CurrentAntTurn.antInfo.IsQueen == true) {
+                QueenAttackText.GetComponent<FadeScript>().FadeOutUI(1.0f);
             }
         }
 
