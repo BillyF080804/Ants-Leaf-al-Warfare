@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class WeaponScript : MonoBehaviour {
-    private BaseWeaponSO weaponInfo;
+    public BaseWeaponSO weaponInfo;
     private CameraSystem cameraSystem;
 
     private void Awake() {
@@ -81,7 +81,7 @@ public class WeaponScript : MonoBehaviour {
         Destroy(gameObject);
     }
 
-    private void CreateVFX() {
+    public void CreateVFX() {
         GameObject vfxObj = Instantiate(weaponInfo.vfxObject, transform.position, Quaternion.identity);
         vfxObj.transform.localScale = new Vector3(weaponInfo.vfxSize, weaponInfo.vfxSize, weaponInfo.vfxSize);
         Destroy(vfxObj, weaponInfo.vfxDuration);

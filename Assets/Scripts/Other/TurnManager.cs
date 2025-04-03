@@ -73,6 +73,7 @@ public class TurnManager : MonoBehaviour {
     private CameraSystem cameraSystem;
     private WeaponManager weaponManager;
     private WeaponDropSystem dropSystem;
+    private BBQScript bbqScript;
 
     private void Start() {
         numOfAnts = LoadingData.numOfAnts;
@@ -81,6 +82,7 @@ public class TurnManager : MonoBehaviour {
         weaponManager = FindFirstObjectByType<WeaponManager>();
         cameraSystem = FindFirstObjectByType<CameraSystem>();
         antSpawner = FindFirstObjectByType<AntSpawner>();
+        bbqScript = FindFirstObjectByType<BBQScript>();
 
         currentTurnTime = maxTurnTime;
         StartCoroutine(StartLevelCoroutine());
@@ -148,6 +150,9 @@ public class TurnManager : MonoBehaviour {
                 currentTurnEnded = false;
                 CurrentPlayerTurn = player;
 
+                startTurnEvent.Invoke();
+                yield return new WaitUntil(() => bbqScript.IsBurning == false);
+
                 turnTimerCoroutine = StartCoroutine(TurnTimer());
                 playerTurnText.text = "Player " + player.playerInfo.playerNum.ToString();
                 playerTurnText.color = player.playerInfo.playerColor;
@@ -185,8 +190,6 @@ public class TurnManager : MonoBehaviour {
                 player.ResetFreeCamSetting();
                 cameraSystem.ResetCamera();
                 cameraSystem.SetCameraTarget(CurrentAntTurn.transform);
-
-                startTurnEvent.Invoke();
 
                 yield return new WaitUntil(() => currentTurnEnded == true);
             }
