@@ -480,7 +480,7 @@ public class WeaponManager : MonoBehaviour {
     }
 
     private void RemoveWorldWeapon() {
-        if (turnManager.CurrentAntTurn.WeaponTransform.childCount > 0 && turnManager.CurrentAntTurn.WeaponTransform.GetChild(0) != null) {
+        if (turnManager.CurrentAntTurn != null && turnManager.CurrentAntTurn.WeaponTransform.childCount > 0 && turnManager.CurrentAntTurn.WeaponTransform.GetChild(0) != null) {
             Destroy(turnManager.CurrentAntTurn.WeaponTransform.GetChild(0).gameObject);
         }    
     }

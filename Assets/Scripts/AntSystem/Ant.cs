@@ -27,6 +27,7 @@ public class Ant : MonoBehaviour {
 	public List<EffectSO.StatDropType> statDrops;
 
 	public bool isDrowning = false;
+	public bool isCrushed = false;
 
 	[SerializeField] private Animator animator;
 
@@ -141,7 +142,7 @@ public class Ant : MonoBehaviour {
             }
         }
 
-        if (isDrowning == false) {
+        if (isDrowning == false && isCrushed == false) {
 			ResetAnimation();
 			ChangeAnimation("Flailing");
 			FindFirstObjectByType<CameraSystem>().AddNewCameraTarget(transform);

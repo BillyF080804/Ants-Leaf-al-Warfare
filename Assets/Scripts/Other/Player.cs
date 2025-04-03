@@ -156,7 +156,7 @@ public class Player : MonoBehaviour {
     }
 
     private bool CheckActionIsValid() {
-        if (turnManager != null && weaponManager != null && SceneManager.GetActiveScene().name.Contains("Game") && turnManager.CurrentPlayerTurn == this) {
+        if (turnManager != null && weaponManager != null && SceneManager.GetActiveScene().name.Contains("Game") && turnManager.CurrentPlayerTurn == this && turnManager.CurrentAntTurn != null) {
             return true;
         }
         else {

@@ -10,8 +10,8 @@ public class QueenBaseAntScript : Ant {
 	bool usedAttack = false;
 
     [Header("Queen Ant Settings")]
-    [SerializeField] private MeshRenderer hat;
-    [SerializeField] private MeshRenderer leafWrap;
+    [SerializeField] private SkinnedMeshRenderer hat;
+    [SerializeField] private SkinnedMeshRenderer leafWrap;
 
     public void CheckAttackTurn() {
 		if (!usedAttack) {
