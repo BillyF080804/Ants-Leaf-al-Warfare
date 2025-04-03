@@ -46,7 +46,6 @@ public class WeaponDropSystem : MonoBehaviour {
 
     private IEnumerator CheckDropCoroutine() {
         IsDropping = true;
-        cameraSystem.SetCameraTarget(null);
         cameraSystem.CameraDelay(dropOverviewDuration);
 
         int randomNum = Random.Range(minNumOfCrates, maxNumOfCrates);
@@ -60,9 +59,10 @@ public class WeaponDropSystem : MonoBehaviour {
     }
 
     private void CreateNewDrop(float medkitChance) {
-        Vector3 randomSpawnPos = new Vector3(Random.Range(turnManager.MapMinX, turnManager.MapMaxX), 10, 0);
+        Vector3 randomSpawnPos = new Vector3(Random.Range(turnManager.MapMinX, turnManager.MapMaxX), 30, 0);
         WeaponDrop newDrop = Instantiate(dropPrefab, randomSpawnPos, Quaternion.identity);
         bool dropIsMedkit = GetRandomDrop(medkitChance);
+        cameraSystem.SetCameraTarget(newDrop.transform);
 
         if (dropIsMedkit == true) {
             newDrop.SetDropMedkit(medkitHealthToHeal);

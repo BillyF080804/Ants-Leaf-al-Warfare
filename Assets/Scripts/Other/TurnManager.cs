@@ -273,6 +273,7 @@ public class TurnManager : MonoBehaviour {
         }
 
         cameraSystem.IterateCameraTargets(1.0f);
+        dropSystem.CheckDrop();
         yield return new WaitUntil(() => cameraSystem.CameraDelayActive == false);
 
         CheckIfAllAntsMoved();
@@ -295,7 +296,6 @@ public class TurnManager : MonoBehaviour {
 
 
             CurrentRound++;
-            dropSystem.CheckDrop();
             yield return new WaitUntil(() => dropSystem.IsDropping == false);
         }
 
