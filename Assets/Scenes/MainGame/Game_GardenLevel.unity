@@ -7478,7 +7478,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1db4d619afc7a1745883371128c08870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelName: Garden Level
+  levelName: The Garden
   maxRounds: 10
   maxTurnTime: 60
   <MapMinX>k__BackingField: -100
