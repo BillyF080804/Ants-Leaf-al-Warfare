@@ -12799,6 +12799,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &962215361 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 161948826689287143, guid: ddb3859fac9866743ad7fdfc2431cacb, type: 3}
+  m_PrefabInstance: {fileID: 962215357}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &962215362 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5066688452730467586, guid: ddb3859fac9866743ad7fdfc2431cacb, type: 3}
@@ -15357,7 +15362,7 @@ MonoBehaviour:
   aimArrow: {fileID: 887806505}
   aimRotationSpeed: 50
   weaponMenuUI: {fileID: 962215362}
-  weaponMenuUIGridArea: {fileID: 0}
+  weaponMenuUIGridArea: {fileID: 962215361}
   weaponNameText: {fileID: 962215360}
   weaponDescriptionText: {fileID: 962215359}
   weaponIconPrefab: {fileID: 7693498855874816613, guid: 91fec71c883a27c4283dd0024acd5cde, type: 3}
@@ -15365,7 +15370,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e9e01b0e7a1f1fd469d962765e4e850c, type: 2}
   - {fileID: 11400000, guid: 4ba7b7771e1d024449098e0c370b7273, type: 2}
   - {fileID: 11400000, guid: 47d4927366f0c6043b6ebadf6766c931, type: 2}
-  - {fileID: 11400000, guid: 26558457f28fa114c9a3801b5d59e117, type: 2}
   - {fileID: 11400000, guid: 8d6b7d2b7d3786245b9923b7b3b2a8a2, type: 2}
   - {fileID: 11400000, guid: 10a89297f8a0c194aaf476b2ae351410, type: 2}
   - {fileID: 11400000, guid: 726f3ec3c461d0940a5107138df7e3ea, type: 2}
