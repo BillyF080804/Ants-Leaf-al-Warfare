@@ -5,16 +5,9 @@ using UnityEngine;
 
 public class DrownScript : MonoBehaviour {
     [Header("Settings")]
-    [SerializeField] private float cameraDelay = 10.0f;
+    [SerializeField] private float cameraDelay = 3.0f;
     [SerializeField] private Vector3 cameraOverviewPos = new Vector3(-85, 10, -15);
     [SerializeField] private GameObject rippleParticle;
-    [SerializeField] private List<PositionInfo> positionInfo = new List<PositionInfo>();
-
-    [Serializable]
-    private class PositionInfo {
-        public Vector3 position;
-        public float duration;
-    }
 
     private CameraSystem cameraSystem;
     private TurnManager turnManager;
@@ -39,20 +32,23 @@ public class DrownScript : MonoBehaviour {
     }
 
     private IEnumerator DrownCoroutine(Transform antTransform, Ant antScript) {
-        Vector3 targetOne = antTransform.position;
-        targetOne.y -= 2.5f;
-        StartCoroutine(Lerp(antTransform.position, targetOne, 0.5f, antTransform));
-        yield return new WaitUntil(() => antTransform.position == targetOne);
+        Vector3 drownPos = antTransform.position;
 
-        foreach (PositionInfo posInfo in positionInfo) {
-            StartCoroutine(Lerp(antTransform.position, posInfo.position, posInfo.duration, antTransform));
-            yield return new WaitUntil(() => antTransform.position == posInfo.position);
-        }
+        drownPos.y -= 2.5f;
+        StartCoroutine(Lerp(antTransform.position, drownPos, 0.5f, antTransform));
+        yield return new WaitUntil(() => antTransform.position == drownPos);
 
-		cameraSystem.SetCameraLookAtTarget(null);
+        drownPos.y += 2.5f;
+        StartCoroutine(Lerp(antTransform.position, drownPos, 0.5f, antTransform));
+        yield return new WaitUntil(() => antTransform.position == drownPos);
+
+        drownPos.y -= 2.5f;
+        StartCoroutine(Lerp(antTransform.position, drownPos, 1.5f, antTransform));
+        yield return new WaitUntil(() => antTransform.position == drownPos);
+
+        cameraSystem.SetCameraLookAtTarget(null);
 		cameraSystem.SetCameraTarget(null);
 		antScript.TakeDamage(1000);
-        yield return new WaitForSeconds(2.5f);
         turnManager.EndTurn();
     }
 
