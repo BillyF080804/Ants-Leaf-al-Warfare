@@ -269,6 +269,8 @@ public class Ant : MonoBehaviour {
 				transform.Translate(antInfo.moveSpeed * Time.deltaTime * moveVector, Space.World);
 			}
 		}
+
+		transform.position = new Vector3(transform.position.x, transform.position.y, 0.0f);
     }
 
     private void OnCollisionEnter(Collision collision) {
