@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -146,11 +147,11 @@ public class Ant : MonoBehaviour {
 			ResetAnimation();
 			ChangeAnimation("Flailing");
 			FindFirstObjectByType<CameraSystem>().AddNewCameraTarget(transform);
-            CameraSystem.onIterationFinished += DestroyAnt;
+			DeathDelay(2);
+			CameraSystem.onIterationFinished += DestroyAnt;
         }
 		else {
-			ResetAnimation();
-			ChangeAnimation("Dying");
+			DeathDelay(2);
 			Destroy(antInfo.IsQueen, player);
 		}
     }
@@ -192,14 +193,17 @@ public class Ant : MonoBehaviour {
 
         if (antsRemaining.TryGetValue(player.playerInfo.playerNum, out int amount)) {
             if (turnManager.PlayerList.Count == 1 && amount - 1 == 0) {
+				GameOverScript.winningPlayerNumber = player.playerInfo.playerNum;
                 turnManager.GameOver();
             }
             else if (turnManager.PlayerList.Count == 2 && amount - 1 == 0) {
-                turnManager.GameOver();
+				GameOverScript.winningPlayerNumber = player.playerInfo.playerNum;
+				turnManager.GameOver();
             }
             else if (turnManager.PlayerList.Count == 3 || turnManager.PlayerList.Count == 4) {
                 if (antsRemaining.Where(x => x.Value > 0).Count() == 2 && amount - 1 == 0) {
-                    turnManager.GameOver();
+					GameOverScript.winningPlayerNumber = player.playerInfo.playerNum;
+					turnManager.GameOver();
                 }
             }
         }
@@ -228,9 +232,8 @@ public class Ant : MonoBehaviour {
 		if (canJump && canMove) {
 			ResetAnimation();
 			ChangeAnimation("Jumping");
-			Vector2 Force = new Vector2(0, antInfo.jumpHeight);
-			rb.AddForce(Force, ForceMode.Impulse);
-			canJump = false;
+			StartCoroutine(JumpDelay(1));
+			
 		}
 	}
 
@@ -275,8 +278,6 @@ public class Ant : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision) {
 		if(Physics.Raycast(gameObject.transform.position, Vector3.down, out RaycastHit ray, 3.0f)) {
-			ResetAnimation();
-			//ChangeAnimation("Landing");
 			canJump = true;
 		}
 	}
@@ -319,5 +320,20 @@ public class Ant : MonoBehaviour {
 		animator.SetBool("Jumping", false);
 		animator.SetBool("Landing", false);
 		animator.SetBool("Flailing", false);
+	}
+
+	private IEnumerator JumpDelay(int delay) {
+		yield return new WaitForSeconds(delay);
+		Vector2 Force = new Vector2(0, antInfo.jumpHeight);
+		rb.AddForce(Force, ForceMode.Impulse);
+		canJump = false;
+		ResetAnimation();
+		ChangeAnimation("Landing");
+	}
+
+	private IEnumerator DeathDelay(int delay) {
+		yield return new WaitForSeconds(delay);
+		ResetAnimation();
+		ChangeAnimation("Dying");
 	}
 }
