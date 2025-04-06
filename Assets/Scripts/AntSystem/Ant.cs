@@ -95,11 +95,11 @@ public class Ant : MonoBehaviour {
 		if (movement.x < 0) {
 			ResetAnimation();
 			ChangeAnimation("Walking");
-			model.rotation = Quaternion.Euler(0, 90, 0);
+			transform.rotation = Quaternion.Euler(0, 90, 0);
 		} else if (movement.x > 0) {
 			ResetAnimation();
 			ChangeAnimation("Walking");
-			model.rotation = Quaternion.Euler(0, -90, 0);
+			transform.rotation = Quaternion.Euler(0, -90, 0);
 		} else {
 			ResetAnimation();
 		}
@@ -232,8 +232,12 @@ public class Ant : MonoBehaviour {
 		if (canJump && canMove) {
 			ResetAnimation();
 			ChangeAnimation("Jumping");
+			//
+			Vector2 Force = new Vector2(0, antInfo.jumpHeight);
+			rb.AddForce(Force, ForceMode.Impulse);
+			canJump = false;
 			StartCoroutine(JumpDelay(1));
-			
+
 		}
 	}
 
@@ -324,9 +328,6 @@ public class Ant : MonoBehaviour {
 
 	private IEnumerator JumpDelay(int delay) {
 		yield return new WaitForSeconds(delay);
-		Vector2 Force = new Vector2(0, antInfo.jumpHeight);
-		rb.AddForce(Force, ForceMode.Impulse);
-		canJump = false;
 		ResetAnimation();
 		ChangeAnimation("Landing");
 	}
