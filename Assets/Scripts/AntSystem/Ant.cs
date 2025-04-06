@@ -232,11 +232,11 @@ public class Ant : MonoBehaviour {
 		if (canJump && canMove) {
 			ResetAnimation();
 			ChangeAnimation("Jumping");
-			//
-			Vector2 Force = new Vector2(0, antInfo.jumpHeight);
-			rb.AddForce(Force, ForceMode.Impulse);
 			canJump = false;
-			StartCoroutine(JumpDelay(1));
+
+			
+			StartCoroutine(JumpDelay(0.2f));
+			StartCoroutine(LandDelay(0.5f));
 
 		}
 	}
@@ -326,7 +326,13 @@ public class Ant : MonoBehaviour {
 		animator.SetBool("Flailing", false);
 	}
 
-	private IEnumerator JumpDelay(int delay) {
+	private IEnumerator JumpDelay(float delay) {
+		yield return new WaitForSeconds(delay);
+		Vector2 Force = new Vector2(0, antInfo.jumpHeight);
+		rb.AddForce(Force, ForceMode.Impulse);
+	}
+
+	private IEnumerator LandDelay(float delay) {
 		yield return new WaitForSeconds(delay);
 		ResetAnimation();
 		ChangeAnimation("Landing");
