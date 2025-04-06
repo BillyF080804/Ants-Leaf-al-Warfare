@@ -155,6 +155,7 @@ public class TurnManager : MonoBehaviour {
                 startTurnEvent.Invoke();
                 yield return new WaitUntil(() => bbqScript.IsBurning == false && hose.IsSpraying == false);
 
+                cameraSystem.SetCameraZoomingBool(true);
                 turnTimerCoroutine = StartCoroutine(TurnTimer());
                 playerTurnText.text = "Player " + player.playerInfo.playerNum.ToString();
                 playerTurnText.color = player.playerInfo.playerColor;

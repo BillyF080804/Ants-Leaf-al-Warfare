@@ -28,6 +28,7 @@ public class CameraSystem : MonoBehaviour {
     [SerializeField] private List<Vector3> panPositions = new List<Vector3>();
 
     private bool freeCamEnabled = false;
+    private bool cameraZoomingEnabled = true;
     private bool smoothingEnabled = false;
     private float cameraZoom = 0.0f;
     private float cameraZoomValue = 0.0f;
@@ -76,8 +77,14 @@ public class CameraSystem : MonoBehaviour {
     }
 
     private void SetCameraZoom() {
-        cameraZoom += cameraZoomValue * cameraZoomSpeed;
-        cameraZoom = Mathf.Clamp(cameraZoom, maxZoomOut, maxZoomIn);
+        if (cameraZoomingEnabled == true) {
+            cameraZoom += cameraZoomValue * cameraZoomSpeed;
+            cameraZoom = Mathf.Clamp(cameraZoom, maxZoomOut, maxZoomIn);
+        }
+    }
+
+    public void SetCameraZoomingBool(bool isEnabled) {
+        cameraZoomingEnabled = isEnabled;
     }
 
     private void SetFreeCam() {

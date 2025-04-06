@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class Hose : MonoBehaviour {
@@ -34,7 +33,7 @@ public class Hose : MonoBehaviour {
 
     private IEnumerator SprayWaterCoroutine() {
         IsSpraying = true;
-        cameraSystem.SetCameraTarget(transform.position, 5, 10);
+        cameraSystem.SetCameraTarget(new Vector3(transform.position.x - 5, transform.position.y, transform.position.z), 5, 10);
 
         GameObject waterParticle = Instantiate(waterParticlePrefab, transform);
         Destroy(waterParticle, 2.5f);

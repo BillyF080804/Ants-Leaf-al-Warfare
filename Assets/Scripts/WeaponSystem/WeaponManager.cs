@@ -133,6 +133,7 @@ public class WeaponManager : MonoBehaviour {
         cameraSystem.ResetCamera();
         turnManager.CurrentPlayerTurn.ResetFreeCamSetting();
         cameraSystem.SetCameraTarget(newWeapon.transform);
+        cameraSystem.SetCameraZoomingBool(false);
 
         if (weaponInfo.explosive && !weaponInfo.explodeOnImpact) {
             weaponScript.StartFuse();
@@ -170,6 +171,7 @@ public class WeaponManager : MonoBehaviour {
             cameraSystem.ResetCamera();
             turnManager.CurrentPlayerTurn.ResetFreeCamSetting();
             cameraSystem.SetCameraTarget(playerPosition.position);
+            cameraSystem.SetCameraZoomingBool(false);
             WaitTillWeaponsFinished();
         }
     }
@@ -208,6 +210,7 @@ public class WeaponManager : MonoBehaviour {
             turnManager.CurrentPlayerTurn.ResetFreeCamSetting();
             cameraSystem.CameraDelay(weaponInfo.cameraDelay);
             cameraSystem.SetCameraTarget(playerPosition.position);
+            cameraSystem.SetCameraZoomingBool(false);
             WaitTillWeaponsFinished();
         }
     }
