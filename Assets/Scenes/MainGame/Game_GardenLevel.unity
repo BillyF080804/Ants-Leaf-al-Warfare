@@ -7500,6 +7500,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2588291094306200040}
+        m_TargetAssemblyTypeName: Hose, Assembly-CSharp
+        m_MethodName: StartHose
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   endTurnEvent:
     m_PersistentCalls:
       m_Calls:
@@ -12250,7 +12262,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &953686011
 RectTransform:
   m_ObjectHideFlags: 0
@@ -32505,7 +32517,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1837978737
 RectTransform:
   m_ObjectHideFlags: 0
@@ -34821,6 +34833,72 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2005113783}
   m_CullTransparentMesh: 1
+--- !u!1 &2048646452
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2048646453}
+  - component: {fileID: 2048646454}
+  - component: {fileID: 2048646455}
+  m_Layer: 0
+  m_Name: Trigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2048646453
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2048646452}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2588291094306200041}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2048646454
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2048646452}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 30, y: 30, z: 50}
+  m_Center: {x: 0, y: 0, z: 30}
+--- !u!114 &2048646455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2048646452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 442e0fa8006461a45b474a42a54f9420, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2091626057
 GameObject:
   m_ObjectHideFlags: 0
@@ -36045,9 +36123,41 @@ PrefabInstance:
       objectReference: {fileID: 1921672009}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2194265724354931856, guid: 60b2feac6a2e71a4e9cd178ea9c66676, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2048646453}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2487495606911032212, guid: 60b2feac6a2e71a4e9cd178ea9c66676, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2588291094306200040}
   m_SourcePrefab: {fileID: 100100000, guid: 60b2feac6a2e71a4e9cd178ea9c66676, type: 3}
+--- !u!1 &2588291094306200039 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2487495606911032212, guid: 60b2feac6a2e71a4e9cd178ea9c66676, type: 3}
+  m_PrefabInstance: {fileID: 2588291094306200038}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2588291094306200040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2588291094306200039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d80e3a19d3152b54bbeceec9d4fb18ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chancePerTurn: 0.25
+  explosionForce: 500
+  waterParticlePrefab: {fileID: 4567411068875315425, guid: 2e574390684e25c49bd3b76f37d01a72, type: 3}
+  ants: []
+--- !u!4 &2588291094306200041 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2194265724354931856, guid: 60b2feac6a2e71a4e9cd178ea9c66676, type: 3}
+  m_PrefabInstance: {fileID: 2588291094306200038}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7907443590995488706
 PrefabInstance:
   m_ObjectHideFlags: 0
