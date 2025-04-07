@@ -14,7 +14,7 @@ public class GameOverScript : MonoBehaviour {
 	}
 
 	public void ReturnToLobby() {
-        SceneManager.LoadScene("LobbyScene");
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void SetWinText() {

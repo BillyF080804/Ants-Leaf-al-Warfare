@@ -14,10 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Vine Spring
   weaponDescription: 'Launch one of these and slow your foes by tangling them up! '
-  unlimitedUses: 1
+  unlimitedUses: 0
   useAutomaticRotation: 1
   weaponIcon: {fileID: 21300000, guid: 7fbea6dfecf352a4e9261fbf8277bc29, type: 3}
   weaponPrefab: {fileID: 5494822381804573462, guid: 123a736beb4657a46b3aa035ae28f3c6, type: 3}
+  worldWeaponPrefab: {fileID: 0}
+  worldWeaponScale: 1
+  worldWeaponLocalPos: {x: 0, y: 0, z: 0}
+  worldWeaponRotation: {x: 0, y: 0, z: 0}
   baseDamage: 10
   weaponSpeed: 25
   useGravity: 1
