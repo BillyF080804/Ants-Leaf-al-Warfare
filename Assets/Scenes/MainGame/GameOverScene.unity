@@ -447,7 +447,7 @@ GameObject:
   - component: {fileID: 244938184}
   - component: {fileID: 244938183}
   m_Layer: 5
-  m_Name: GameOverText (1)
+  m_Name: PlayerWinText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1144,7 +1144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbe82de50f360754991dcc5f592b505e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  winText: {fileID: 0}
+  winText: {fileID: 244938183}
 --- !u!4 &2009915041
 Transform:
   m_ObjectHideFlags: 0

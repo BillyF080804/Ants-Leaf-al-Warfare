@@ -19,6 +19,6 @@ public class GameOverScript : MonoBehaviour {
 
     public void SetWinText() {
         winText.text = "Player " + winningPlayerNumber + " wins!";
-
+        Debug.Log("hi");
 	}
 }
