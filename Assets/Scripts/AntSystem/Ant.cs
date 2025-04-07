@@ -47,6 +47,7 @@ public class Ant : MonoBehaviour {
 	protected TurnManager turnManager;
 
 	private bool canMove = true;
+	private bool isJumping = false;
 
     private void Awake() {
 		turnManager = FindFirstObjectByType<TurnManager>();
@@ -233,8 +234,9 @@ public class Ant : MonoBehaviour {
 			ResetAnimation();
 			ChangeAnimation("Jumping");
 			canJump = false;
+			isJumping = true;
 
-			
+
 			StartCoroutine(JumpDelay(0.2f));
 			StartCoroutine(LandDelay(0.5f));
 
@@ -282,7 +284,9 @@ public class Ant : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision) {
 		if(Physics.Raycast(gameObject.transform.position, Vector3.down, out RaycastHit ray, 3.0f)) {
-			canJump = true;
+			if (!isJumping) {
+				canJump = true;
+			}
 		}
 	}
 
@@ -334,6 +338,7 @@ public class Ant : MonoBehaviour {
 
 	private IEnumerator LandDelay(float delay) {
 		yield return new WaitForSeconds(delay);
+		isJumping = false;
 		ResetAnimation();
 		ChangeAnimation("Landing");
 	}
