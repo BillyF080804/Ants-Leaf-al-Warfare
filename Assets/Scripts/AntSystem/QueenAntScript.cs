@@ -13,6 +13,12 @@ public class QueenBaseAntScript : Ant {
     [SerializeField] private SkinnedMeshRenderer hat;
     [SerializeField] private SkinnedMeshRenderer leafWrap;
 
+	private CameraSystem cameraSystem;
+
+    private void Start() {
+        cameraSystem = FindFirstObjectByType<CameraSystem>();
+    }
+
     public void CheckAttackTurn() {
 		if (!usedAttack) {
 			if (attackLevel < 3) {
@@ -31,6 +37,11 @@ public class QueenBaseAntScript : Ant {
 				antInfo.queenAttack.ActivateAttack(attackLevel, this, transform.position, turnManager);
 			} else {
 				antInfo.queenAttack.ActivateAttack(attackLevel, this, transform.position);
+			}
+
+			if (antInfo.queenType == AntSO.QueenType.Bullet) {
+				cameraSystem.SetCameraTarget(null);
+				cameraSystem.CameraDelay(3.0f);
 			}
 
 			attackLevel = 0;
