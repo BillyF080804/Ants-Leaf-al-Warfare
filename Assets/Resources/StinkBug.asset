@@ -14,10 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Stink Bug
   weaponDescription: Launches a Stinkbug, detonates on impact. Smelly business.
-  unlimitedUses: 1
+  unlimitedUses: 0
   useAutomaticRotation: 0
   weaponIcon: {fileID: 21300000, guid: 300a1a274a7a93345befb64e12f89dd0, type: 3}
   weaponPrefab: {fileID: 2035224743872689002, guid: 48600db732ecebc49831131511799a3a, type: 3}
+  worldWeaponPrefab: {fileID: 0}
+  worldWeaponScale: 1
+  worldWeaponLocalPos: {x: 0, y: 0, z: 0}
+  worldWeaponRotation: {x: 0, y: 0, z: 0}
   baseDamage: 20
   weaponSpeed: 12.5
   useGravity: 1

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: AirBlower
   weaponDescription: Blow your foes away!
-  unlimitedUses: 1
+  unlimitedUses: 0
   useAutomaticRotation: 0
   weaponIcon: {fileID: 21300000, guid: 54d4a534567a1f4439a208ed01f34fdc, type: 3}
   weaponPrefab: {fileID: 2035224743872689002, guid: 48600db732ecebc49831131511799a3a, type: 3}

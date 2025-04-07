@@ -16540,19 +16540,16 @@ MonoBehaviour:
   weaponDescriptionText: {fileID: 962215359}
   weaponIconPrefab: {fileID: 7693498855874816613, guid: 91fec71c883a27c4283dd0024acd5cde, type: 3}
   defaultPlayerWeapons:
-  - {fileID: 11400000, guid: e9e01b0e7a1f1fd469d962765e4e850c, type: 2}
-  - {fileID: 11400000, guid: 4ba7b7771e1d024449098e0c370b7273, type: 2}
-  - {fileID: 11400000, guid: 47d4927366f0c6043b6ebadf6766c931, type: 2}
-  - {fileID: 11400000, guid: 8d6b7d2b7d3786245b9923b7b3b2a8a2, type: 2}
-  - {fileID: 11400000, guid: 10a89297f8a0c194aaf476b2ae351410, type: 2}
-  - {fileID: 11400000, guid: 726f3ec3c461d0940a5107138df7e3ea, type: 2}
-  - {fileID: 11400000, guid: 231f8c7efb73f6a40b4ccfa8165792ac, type: 2}
   - {fileID: 11400000, guid: 2f17db02b4a5f9e4aad6b1058951f144, type: 2}
-  - {fileID: 11400000, guid: 96d48d4b5d9633b4aa5876d1ed13d2a4, type: 2}
-  - {fileID: 11400000, guid: 200a168c00736ef41861851548b4ba61, type: 2}
-  - {fileID: 11400000, guid: 5a6ad0275859cb94496fdd329faecb52, type: 2}
+  - {fileID: 11400000, guid: 47d4927366f0c6043b6ebadf6766c931, type: 2}
   - {fileID: 11400000, guid: c2baa120d8be0654c8990bad5d4836a5, type: 2}
-  - {fileID: 11400000, guid: e01fdf755f2699e41bc55f08a099951f, type: 2}
+  - {fileID: 11400000, guid: 10a89297f8a0c194aaf476b2ae351410, type: 2}
+  - {fileID: 11400000, guid: 4ba7b7771e1d024449098e0c370b7273, type: 2}
+  - {fileID: 11400000, guid: 96d48d4b5d9633b4aa5876d1ed13d2a4, type: 2}
+  - {fileID: 11400000, guid: 96d48d4b5d9633b4aa5876d1ed13d2a4, type: 2}
+  - {fileID: 11400000, guid: 5a6ad0275859cb94496fdd329faecb52, type: 2}
+  - {fileID: 11400000, guid: 8d6b7d2b7d3786245b9923b7b3b2a8a2, type: 2}
+  - {fileID: 11400000, guid: 231f8c7efb73f6a40b4ccfa8165792ac, type: 2}
 --- !u!4 &1480928687
 Transform:
   m_ObjectHideFlags: 0
@@ -16964,11 +16961,25 @@ MonoBehaviour:
   maxNumOfCrates: 3
   medkitHealthToHeal: 10
   medkitChance: 0.25
-  dropChancePerTurn: 0.25
+  dropChancePerTurn: 0.33
   dropPrefab: {fileID: 5952809420806096037, guid: bc3c42a1cb6973849a5ae1feb035cd89, type: 3}
   dropChances:
-  - weapon: {fileID: 11400000, guid: 47d4927366f0c6043b6ebadf6766c931, type: 2}
+  - weapon: {fileID: 11400000, guid: e9e01b0e7a1f1fd469d962765e4e850c, type: 2}
+    dropChance: 0.2
+  - weapon: {fileID: 11400000, guid: 96d48d4b5d9633b4aa5876d1ed13d2a4, type: 2}
+    dropChance: 0.2
+  - weapon: {fileID: 11400000, guid: 200a168c00736ef41861851548b4ba61, type: 2}
+    dropChance: 0.3
+  - weapon: {fileID: 11400000, guid: 726f3ec3c461d0940a5107138df7e3ea, type: 2}
+    dropChance: 0.3
+  - weapon: {fileID: 11400000, guid: 231f8c7efb73f6a40b4ccfa8165792ac, type: 2}
+    dropChance: 0.4
+  - weapon: {fileID: 11400000, guid: 5a6ad0275859cb94496fdd329faecb52, type: 2}
+    dropChance: 0.45
+  - weapon: {fileID: 11400000, guid: 8d6b7d2b7d3786245b9923b7b3b2a8a2, type: 2}
     dropChance: 0.5
+  - weapon: {fileID: 11400000, guid: 4ba7b7771e1d024449098e0c370b7273, type: 2}
+    dropChance: 0.6
 --- !u!4 &1564294600
 Transform:
   m_ObjectHideFlags: 0
