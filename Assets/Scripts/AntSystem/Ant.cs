@@ -233,14 +233,14 @@ public class Ant : MonoBehaviour {
 
 	public void OnJump() {
 		if (canJump && canMove) {
-			ResetAnimation();
-			ChangeAnimation("Jumping");
 			canJump = false;
 			isJumping = true;
-
-
-			StartCoroutine(JumpDelay(0.2f));
-			StartCoroutine(LandDelay(0.5f));
+			ResetAnimation();
+			ChangeAnimation("Jumping");
+			Vector2 Force = new Vector2(0, antInfo.jumpHeight);
+			rb.AddForce(Force, ForceMode.Impulse);
+			StartCoroutine(JumpDelay(1));
+			StartCoroutine(LandDelay(1.4f));
 
 		}
 	}
@@ -285,7 +285,17 @@ public class Ant : MonoBehaviour {
     }
 
     private void OnCollisionEnter(Collision collision) {
-		if(Physics.Raycast(gameObject.transform.position, Vector3.down, out RaycastHit ray, 3.0f)) {
+		if(Physics.Raycast(gameObject.transform.position, Vector3.down, out RaycastHit ray, 1.5f) || Physics.Raycast(gameObject.transform.position+new Vector3(1.5f,0,0), Vector3.down, out ray, 1.5f) || Physics.Raycast(gameObject.transform.position + new Vector3(-1.5f, 0, 0), Vector3.down, out ray, 1.5f)) {
+			if (!isJumping) {
+				Debug.Log("test");
+				canJump = true;
+
+			}
+		}
+	}
+
+	private void OnCollisionStay(Collision collision) {
+		if (Physics.Raycast(gameObject.transform.position, Vector3.down, out RaycastHit ray, 1.5f) || Physics.Raycast(gameObject.transform.position + new Vector3(.5f, 0, 0), Vector3.down, out ray, 1.5f) || Physics.Raycast(gameObject.transform.position + new Vector3(-.5f, 0, 0), Vector3.down, out ray, 1.5f)) {
 			if (!isJumping) {
 				canJump = true;
 			}
@@ -328,21 +338,19 @@ public class Ant : MonoBehaviour {
 		animator.SetBool("Dying", false);
 		animator.SetBool("Standing", false);
 		animator.SetBool("Jumping", false);
-		animator.SetBool("Landing", false);
+		//animator.SetBool("Landing", false);
 		animator.SetBool("Flailing", false);
 	}
 
 	private IEnumerator JumpDelay(float delay) {
 		yield return new WaitForSeconds(delay);
-		Vector2 Force = new Vector2(0, antInfo.jumpHeight);
-		rb.AddForce(Force, ForceMode.Impulse);
+		isJumping = false;
 	}
 
 	private IEnumerator LandDelay(float delay) {
 		yield return new WaitForSeconds(delay);
-		isJumping = false;
+		
 		ResetAnimation();
-		ChangeAnimation("Landing");
 	}
 
 	private IEnumerator DeathDelay(int delay) {

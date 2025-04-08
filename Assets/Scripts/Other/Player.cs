@@ -192,8 +192,9 @@ public class Player : MonoBehaviour {
             }
         }
         else {
-            Debug.LogError("Isaac pls fix ty");
-            return null;
+            Debug.LogError("Isaac pls fix ty"); 
+            Debug.LogError("Mate, what's the error here? I have never seen this debug lol");
+			return null;
         }
     }
 

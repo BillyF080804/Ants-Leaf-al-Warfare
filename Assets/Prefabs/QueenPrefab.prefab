@@ -639,6 +639,7 @@ MonoBehaviour:
   hasStatDrop: 0
   statDrops: 
   isDrowning: 0
+  isCrushed: 0
   animator: {fileID: 4887961280869991879}
   healthFadeScript: {fileID: 6478637886980624727}
   healthChangeText: {fileID: 8684394791276165452}
