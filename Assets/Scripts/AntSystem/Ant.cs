@@ -150,12 +150,12 @@ public class Ant : MonoBehaviour {
 			ResetAnimation();
 			ChangeAnimation("Flailing");
 			FindFirstObjectByType<CameraSystem>().AddNewCameraTarget(transform);
-			DeathDelay(2);
-			CameraSystem.onIterationFinished += DestroyAnt;
+            StartCoroutine(DeathDelay(2));
+            CameraSystem.onIterationFinished += DestroyAnt;
         }
 		else {
-			DeathDelay(2);
-			Destroy(antInfo.IsQueen, player);
+            StartCoroutine(DeathDelay(2));
+            Destroy(antInfo.IsQueen, player);
 		}
     }
 
@@ -271,8 +271,7 @@ public class Ant : MonoBehaviour {
 					}
 					transform.Translate(antInfo.moveSpeed * Time.deltaTime * moveVector * percentage, Space.World);
 
-				} else {
-					
+				} else {					
 					transform.Translate(antInfo.moveSpeed * Time.deltaTime * moveVector, Space.World);
 				}
 
@@ -302,24 +301,24 @@ public class Ant : MonoBehaviour {
 		}
 	}
 
-	public bool canInteract;
-	public Interactable interactable;
-	private void OnTriggerEnter(Collider other) {
-		Debug.Log("Entered");
-		if (other.GetComponent<Interactable>() != null) {
-			interactable = other.GetComponent<Interactable>();
-			canInteract = true;
-		}
-	}
+	public bool canInteract; //Could be removed?
+	public Interactable interactable; //Could be removed?
+	//private void OnTriggerEnter(Collider other) {
+	//	Debug.Log("Entered");
+	//	if (other.GetComponent<Interactable>() != null) {
+	//		interactable = other.GetComponent<Interactable>();
+	//		canInteract = true;
+	//	}
+	//}
 
-	private void OnTriggerExit(Collider other) {
-		Debug.Log("Exited");
-		if (other.GetComponent<Interactable>() != null) {
-			interactable = null;
-			canInteract = false;
-		}
-	}
-	
+	//private void OnTriggerExit(Collider other) {
+	//	Debug.Log("Exited");
+	//	if (other.GetComponent<Interactable>() != null) {
+	//		interactable = null;
+	//		canInteract = false;
+	//	}
+	//}
+
 	public void ApplyEffects() {
 		if (effects.Count > 0) {
 			for (int i = 0; i < effects.Count; i++) {

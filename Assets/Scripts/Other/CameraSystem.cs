@@ -279,7 +279,9 @@ public class CameraSystem : MonoBehaviour {
     }
 
     public void AddNewCameraTarget(Transform newTarget) {
-        targets.Add(newTarget);
+        if (!targets.Contains(newTarget)) {
+            targets.Add(newTarget);
+        }
     }
 
     public void IterateCameraTargets(float holdDelay) {

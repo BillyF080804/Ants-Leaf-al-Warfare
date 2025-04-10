@@ -202,7 +202,10 @@ public class Player : MonoBehaviour {
         for (int i = 0; i < AntList.Count; i++) {
             AntList[i].GetComponent<Ant>().hasHadTurn = false;
         }
-		QueenAnt.GetComponent<Ant>().hasHadTurn = false;
+
+        if (QueenAnt != null) {
+            QueenAnt.GetComponent<Ant>().hasHadTurn = false;
+        }
 	}
 
     public void ResetFreeCamSetting() {
