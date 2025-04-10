@@ -2,7 +2,10 @@ using System.Linq;
 using UnityEngine;
 
 public class WeaponDrop : MonoBehaviour {
-    private string dropType = string.Empty;
+    [Header("Settings")]
+    [SerializeField] private GameObject crate;
+    [SerializeField] private GameObject medkit;
+
     private int medkitHealth = 0;
     private BaseWeaponSO weapon;
     private TurnManager turnManager;
@@ -18,12 +21,14 @@ public class WeaponDrop : MonoBehaviour {
     }
 
     public void SetDropMedkit(int medkitHealthToHeal) {
-        dropType = "Medkit";
+        crate.SetActive(false);
+        medkit.SetActive(true);
         medkitHealth = medkitHealthToHeal;
     }
 
     public void SetDropWeapon(BaseWeaponSO _weapon) {
-        dropType = "Weapon";
+        crate.SetActive(true);
+        medkit.SetActive(false);
         weapon = _weapon;
     }
 

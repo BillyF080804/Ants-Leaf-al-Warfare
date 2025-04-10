@@ -103,11 +103,11 @@ public class WeaponManager : MonoBehaviour {
     }
 
     private void OnShoot(BaseWeaponSO weaponInfo, Transform playerPosition) {
-        Vector3 spawnPos = new Vector3(playerPosition.position.x, playerPosition.position.y + 1, 0); //Also change the z on this to be the same as comment below.
+        Vector3 spawnPos = new Vector3(playerPosition.position.x, playerPosition.position.y + 1, 0);
         GameObject newWeapon = Instantiate(weaponInfo.weaponPrefab, spawnPos, Quaternion.identity);
         Rigidbody rb = newWeapon.GetComponent<Rigidbody>();
         WeaponScript weaponScript = newWeapon.GetComponent<WeaponScript>();
-        Vector3 aimPos = new Vector3(aimPosition.x, aimPosition.y, 0); //Update the z value to be assigned from the inspector in a game manager script, with a z offset variable.
+        Vector3 aimPos = new Vector3(aimPosition.x, aimPosition.y, 0);
 
         if (weaponInfo.weaponRandomisation == true) {
             aimPos.y *= Random.Range(weaponInfo.minimumRandomness, weaponInfo.maximumRandomness);
@@ -253,8 +253,9 @@ public class WeaponManager : MonoBehaviour {
 
         if (aimPosition.x < turnManager.CurrentAntTurn.transform.position.x) {
             Vector3 arrowPos = turnManager.CurrentAntTurn.transform.position;
-            arrowPos.x -= 1;
+            arrowPos.x -= 1.5f;
             aimArrow.anchoredPosition = arrowPos;
+            turnManager.CurrentAntTurn.RotateAnt(Vector2.left);
 
             if (aimingLeft == false) {
                 aimingLeft = true;
@@ -272,8 +273,9 @@ public class WeaponManager : MonoBehaviour {
         }
         else {
             Vector3 arrowPos = turnManager.CurrentAntTurn.transform.position;
-            arrowPos.x += 1;
+            arrowPos.x += 1.5f;
             aimArrow.anchoredPosition = arrowPos;
+            turnManager.CurrentAntTurn.RotateAnt(Vector2.right);
 
             if (aimingLeft == true) {
                 aimingLeft = false;
@@ -323,10 +325,12 @@ public class WeaponManager : MonoBehaviour {
         canAim = true;
 
         Vector3 arrowPos = turnManager.CurrentAntTurn.transform.position;
-        arrowPos.x += 1;
+        arrowPos.x += 1.5f;
         aimArrow.anchoredPosition = arrowPos;
         aimArrow.localScale = new Vector3(1, 1, 1);
         aimStrength = 0.1f;
+
+        turnManager.CurrentAntTurn.RotateAnt(Vector2.right);
     }
 
     private void UpdateArrowSize() {
@@ -341,6 +345,7 @@ public class WeaponManager : MonoBehaviour {
             aimArrow.gameObject.SetActive(false);
             onCloseWeaponsMenu?.Invoke();
             RemoveWorldWeapon();
+            turnManager.CurrentAntTurn.ResetAnimation();
             turnManager.FireWeaponText.GetComponent<FadeScript>().FadeOutUI(1.0f);
             turnManager.WeaponMenuText.GetComponent<FadeScript>().FadeInUI(1.0f);
         }
@@ -475,6 +480,9 @@ public class WeaponManager : MonoBehaviour {
             worldWeapon.transform.localScale *= weapon.worldWeaponScale;
             worldWeapon.transform.localPosition = weapon.worldWeaponLocalPos;
             worldWeapon.transform.localEulerAngles = weapon.worldWeaponRotation;
+
+            turnManager.CurrentAntTurn.ResetAnimation();
+            turnManager.CurrentAntTurn.ChangeAnimation("UsingBackWeapon");
         }
 
         turnManager.FireWeaponText.GetComponent<FadeScript>().FadeInUI(1.0f);

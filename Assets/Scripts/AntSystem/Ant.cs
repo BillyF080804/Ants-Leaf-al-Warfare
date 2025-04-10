@@ -92,21 +92,32 @@ public class Ant : MonoBehaviour {
     public void OnMove(InputValue value) {
 		Vector2 movement = value.Get<Vector2>();
 		moveVector = new Vector3(movement.x, 0, 0);
-		Transform model = transform.GetChild(1).transform;
-		if (movement.x < 0) {
+
+        if (movement.x < 0) {
 			ResetAnimation();
 			ChangeAnimation("Walking");
-			transform.rotation = Quaternion.Euler(0, 90, 0);
-			healthTextBackground.transform.parent.rotation = Quaternion.Euler(0, 0, 0);
-		} else if (movement.x > 0) {
+			RotateAnt(movement);
+		} 
+		else if (movement.x > 0) {
 			ResetAnimation();
 			ChangeAnimation("Walking");
-			transform.rotation = Quaternion.Euler(0, -90, 0);
-			healthTextBackground.transform.parent.rotation = Quaternion.Euler(0, 0, 0);
-		} else {
+			RotateAnt(movement);
+		} 
+		else {
 			ResetAnimation();
 		}
-	}
+    }
+
+	public void RotateAnt(Vector2 vector) {
+        if (vector.x < 0) {
+            transform.rotation = Quaternion.Euler(0, 90, 0);
+        }
+        else if (vector.x > 0) {
+            transform.rotation = Quaternion.Euler(0, -90, 0);
+        }
+
+        healthTextBackground.transform.parent.rotation = Quaternion.Euler(0, 0, 0);
+    }
 
 	public void TakeDamage(int damage) {
 		if (hasStatDrop) {
@@ -199,12 +210,12 @@ public class Ant : MonoBehaviour {
 				GameOverScript.winningPlayerNumber = player.playerInfo.playerNum;
                 turnManager.GameOver();
             }
-            else if (turnManager.PlayerList.Count == 2 && amount - 1 == 0) {
+            else if (turnManager.PlayerList.Count == 2 && amount == 0) {
 				GameOverScript.winningPlayerNumber = player.playerInfo.playerNum;
 				turnManager.GameOver();
             }
             else if (turnManager.PlayerList.Count == 3 || turnManager.PlayerList.Count == 4) {
-                if (antsRemaining.Where(x => x.Value > 0).Count() == 2 && amount - 1 == 0) {
+                if (antsRemaining.Where(x => x.Value > 0).Count() == 2 && amount == 0) {
 					GameOverScript.winningPlayerNumber = player.playerInfo.playerNum;
 					turnManager.GameOver();
                 }
