@@ -6,7 +6,14 @@ public class BaseWeaponSO : ScriptableObject {
     [Header("Weapon Info")]
     public string weaponName;
     public string weaponDescription;
+    public KnockbackLevels knockbackLevel;
     public bool unlimitedUses = true;
+
+    public enum KnockbackLevels {
+        Low,
+        Medium,
+        High
+    }
 
     [Header("Weapon Cosmetics")]
     public bool useAutomaticRotation = true;

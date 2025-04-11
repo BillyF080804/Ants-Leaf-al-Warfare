@@ -469,7 +469,14 @@ public class WeaponManager : MonoBehaviour {
 
     public void UpdateWeaponInfo(BaseWeaponSO weapon) {
         weaponNameText.text = weapon.weaponName;
-        weaponDescriptionText.text = weapon.weaponDescription;
+
+        string knockbackLevel = weapon.knockbackLevel.ToString();
+
+        if (knockbackLevel == "Medium") {
+            knockbackLevel = "Med.";
+        }
+
+        weaponDescriptionText.text = "Type: " + (weapon.isMelee ? "Melee" : "Ranged") + "\nDamage: " + weapon.baseDamage + "\nKnockback: " + knockbackLevel + "\n\n" + weapon.weaponDescription;
     }
 
     public void SetSelectedWeapon(BaseWeaponSO weapon) {
