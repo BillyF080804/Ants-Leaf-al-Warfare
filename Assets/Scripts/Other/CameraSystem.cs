@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class CameraSystem : MonoBehaviour {
     [Header("Camera Follow Settings")]
-    [SerializeField] private float yOffset = 2.5f;
-    [SerializeField] private float zOffset = -10.0f;
+    [SerializeField] private float yOffset = 5f;
+    [SerializeField] private float zOffset = -15.0f;
     [SerializeField] private float smoothTime = 0.3f;
 
     [Header("Zoom Settings")]
@@ -46,6 +46,8 @@ public class CameraSystem : MonoBehaviour {
     private Coroutine cameraZoomCoroutine;
     private List<Transform> targets = new List<Transform>();
 
+    private WeaponManager weaponManager;
+
     public delegate void OnIterationFinished(Transform target);
     public static OnIterationFinished onIterationFinished;
 
@@ -57,6 +59,8 @@ public class CameraSystem : MonoBehaviour {
         cameraObj = gameObject;
         cameraComp = GetComponentInChildren<Camera>();
         overviewPosition = cameraObj.transform.position;
+
+        weaponManager = FindFirstObjectByType<WeaponManager>();
     }
 
     private void LateUpdate() {
@@ -103,6 +107,15 @@ public class CameraSystem : MonoBehaviour {
 
     private void SetCameraPos() {
         Vector3 tempTargetPos = Vector3.zero;
+
+        if (weaponManager.WeaponSelected != null) {
+            zOffset = -30.0f;
+            yOffset = 10.0f;
+        }
+        else {
+            zOffset = -15.0f;
+            yOffset = 5.0f;
+        }
 
         if (CameraTarget == null && targetPos != Vector3.zero) {
             targetPos.z += cameraZoom;
