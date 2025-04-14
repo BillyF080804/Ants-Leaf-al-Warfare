@@ -95,10 +95,6 @@ public class WeaponManager : MonoBehaviour {
             }
         }
 
-        if (weaponInfo.unlimitedUses == false) {
-            turnManager.CurrentPlayerTurn.RemoveWeapon(weaponInfo);
-        }
-
         WaitTillWeaponsFinished();
     }
 
@@ -226,6 +222,11 @@ public class WeaponManager : MonoBehaviour {
         WeaponsActive = false;
         activeWeapons.Clear();
         RemoveWorldWeapon();
+
+        if (WeaponSelected.unlimitedUses == false) {
+            turnManager.CurrentPlayerTurn.RemoveWeapon(WeaponSelected);
+        }
+
         turnManager.EndTurn();
     }
 

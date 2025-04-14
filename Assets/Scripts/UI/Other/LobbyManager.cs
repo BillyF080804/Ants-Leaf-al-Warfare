@@ -16,25 +16,16 @@ public class LobbyManager : MonoBehaviour {
 
     [Header("Other UI")]
     [SerializeField] private TMP_Text playersJoinedText;
-    [SerializeField] private TMP_Dropdown gamemodeDropdown;
     [SerializeField] private LoadingUI loadingUIPrefab;
 
     [Header("Scene Info")]
-    [SerializeField] private List<string> availableScenes = new List<string>();
-    [SerializeField] private TMP_Dropdown sceneDropdown;
+    [SerializeField] private string sceneToLoad = string.Empty;
 
-    private string sceneToLoad;
     private int numOfAnts = 2;
     private bool loadingUISpawned = false;
 
     private Coroutine readyCountdownCoroutine = null;
     private List<Player> playerList = new List<Player>();
-
-    private void Start() {
-        sceneDropdown.AddOptions(availableScenes);
-
-        UpdateSceneToLoad(0);
-    }
 
     //Called when a player presses the join button on their controller
     public void OnPlayerJoined(PlayerInput input) {
@@ -76,23 +67,6 @@ public class LobbyManager : MonoBehaviour {
                 playersJoinedText.text = "Waiting On Players To Ready Up . . .";
             }
         }
-    }
-
-    public void UpdateAntCount(int _numOfAnts) {
-        switch (_numOfAnts) {
-            case 0: {
-                numOfAnts = 2;
-                break;
-            }
-            case 1: {
-                numOfAnts = 4;
-                break;
-            }
-        }
-    }
-
-    public void UpdateSceneToLoad(int _sceneToLoad) {
-        sceneToLoad = sceneDropdown.options[_sceneToLoad].text;
     }
 
     private IEnumerator StartGameCoroutine() {
@@ -207,8 +181,6 @@ public class LobbyManager : MonoBehaviour {
             }
         }
     }
-
-
 
     public void ChangeQueenSpecialism(string queenType, PlayerCardInfo playerCard, Player player) {
         AntSO currentAnt = null;

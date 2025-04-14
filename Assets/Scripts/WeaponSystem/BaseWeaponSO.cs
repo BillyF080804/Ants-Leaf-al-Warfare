@@ -52,6 +52,7 @@ public class BaseWeaponSO : ScriptableObject {
     [HideInInspector] public float explosionRange = 5.0f;
     [HideInInspector] public float explosionPower = 5.0f;
     [HideInInspector] public float fuseTimer = 5.0f;
+    [HideInInspector] public int maxNumOfBounces = 3;
 
     [HideInInspector] public float vfxSize = 1.0f;
     [HideInInspector] public float vfxDuration = 2.5f;
@@ -102,6 +103,11 @@ public class BaseWeaponSOEditor : Editor {
             if (!baseWeapon.explodeOnImpact) {
                 baseWeapon.fuseTimer = EditorGUILayout.FloatField("Fuse Timer", baseWeapon.fuseTimer);
             }
+        }
+        else {
+            EditorGUILayout.Space(15);
+            EditorGUILayout.LabelField("Collision Settings", EditorStyles.boldLabel);
+            baseWeapon.maxNumOfBounces = EditorGUILayout.IntField("Max Num Of Bounces", baseWeapon.maxNumOfBounces);
         }
 
         if (baseWeapon.hasVFX == true) {

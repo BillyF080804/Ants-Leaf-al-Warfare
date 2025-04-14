@@ -6,6 +6,7 @@ using UnityEngine;
 public class WeaponScript : MonoBehaviour {
     public BaseWeaponSO weaponInfo;
     private CameraSystem cameraSystem;
+    private int numOfBounces = 0;
 
     private void Awake() {
         cameraSystem = FindFirstObjectByType<CameraSystem>();
@@ -40,6 +41,17 @@ public class WeaponScript : MonoBehaviour {
             }
 
             Destroy(gameObject);
+        }
+        else if (weaponInfo.explosive == false) {
+            numOfBounces++;
+
+            if (weaponInfo.cameraShakeOnImpact) {
+                cameraSystem.StartCameraShake(weaponInfo.cameraShakeDuration, weaponInfo.cameraShakeIntensity);
+            }
+
+            if (numOfBounces > weaponInfo.maxNumOfBounces) {
+                Destroy(gameObject);
+            }
         }
     }
 
