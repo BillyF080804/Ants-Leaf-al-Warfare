@@ -1,4 +1,5 @@
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class WeaponDrop : MonoBehaviour {
@@ -9,9 +10,11 @@ public class WeaponDrop : MonoBehaviour {
     private int medkitHealth = 0;
     private BaseWeaponSO weapon;
     private TurnManager turnManager;
+    private WeaponDropSystem weaponDropSystem;
 
     private void Awake() {
         turnManager = FindFirstObjectByType<TurnManager>();
+        weaponDropSystem = FindFirstObjectByType<WeaponDropSystem>();
     }
 
     private void OnCollisionEnter(Collision collision) {
@@ -35,14 +38,16 @@ public class WeaponDrop : MonoBehaviour {
     private void CollectDrop(Ant ant) {
         int playerNum = int.Parse(ant.ownedPlayer.ToString().Last().ToString());
         Player player = turnManager.PlayerList.Where(x => x.playerInfo.playerNum == playerNum).First();
+        TMP_Text pickupText = Instantiate(weaponDropSystem.PickupTextPrefab, turnManager.MainCanvas.transform);
 
         if (weapon != null) {
             player.AddNewWeapon(weapon);
-            Debug.Log("Added weapon " + weapon);
+            pickupText.text = "+1 " + weapon.weaponName;
         }
         else {
             ant.HealDamage(medkitHealth);
-            Debug.Log("Healed ant for " + medkitHealth);
+            pickupText.text = "+" + medkitHealth + " Health";
+            pickupText.color = Color.green;
         }
 
         Destroy(gameObject);

@@ -223,7 +223,7 @@ public class WeaponManager : MonoBehaviour {
         activeWeapons.Clear();
         RemoveWorldWeapon();
 
-        if (WeaponSelected.unlimitedUses == false) {
+        if (WeaponSelected != null && WeaponSelected.unlimitedUses == false) {
             turnManager.CurrentPlayerTurn.RemoveWeapon(WeaponSelected);
         }
 

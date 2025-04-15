@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -16,6 +17,9 @@ public class WeaponDropSystem : MonoBehaviour {
 
     [Header("Drop Prefab")]
     [SerializeField] private WeaponDrop dropPrefab;
+
+    [field: Header("Drop Pickup Text Prefab")]
+    [field: SerializeField] public TMP_Text PickupTextPrefab { get; private set; }
 
     [Header("Drop Chances")]
     [SerializeField] private List<DropChances> dropChances = new List<DropChances>();

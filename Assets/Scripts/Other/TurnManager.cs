@@ -38,8 +38,8 @@ public class TurnManager : MonoBehaviour {
     [SerializeField] private TMP_Text turnTimeText;
     [SerializeField] private TMP_Text playerTurnText;
 
-    [Header("UI")]
-    [SerializeField] private Canvas mainCanvas;
+    [field: Header("UI")]
+    [field: SerializeField] public Canvas MainCanvas { get; private set; }
     [SerializeField] private TMP_Text roundNumText;
     [SerializeField] private GameObject blackscreen;
     [SerializeField] private GameObject levelNameText;
