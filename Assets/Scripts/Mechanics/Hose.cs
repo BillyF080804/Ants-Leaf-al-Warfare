@@ -39,7 +39,9 @@ public class Hose : MonoBehaviour {
         Destroy(waterParticle, 2.5f);
 
         foreach (Rigidbody ant in ants) {
-            ant.AddExplosionForce(explosionForce, new Vector3(ant.transform.position.x + 3.0f, ant.transform.position.y, 0), 10.0f, 1);
+            if (ant != null) {
+                ant.AddExplosionForce(explosionForce, new Vector3(ant.transform.position.x + 3.0f, ant.transform.position.y, 0), 10.0f, 1);
+            }
         }
 
         yield return new WaitForSeconds(2.5f);

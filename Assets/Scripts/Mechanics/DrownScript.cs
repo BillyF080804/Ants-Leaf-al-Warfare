@@ -43,7 +43,7 @@ public class DrownScript : MonoBehaviour {
         yield return new WaitUntil(() => antTransform.position == drownPos);
 
         drownPos.y -= 2.5f;
-        StartCoroutine(Lerp(antTransform.position, drownPos, 1.5f, antTransform));
+        StartCoroutine(Lerp(antTransform.position, drownPos, 2.5f, antTransform));
         yield return new WaitUntil(() => antTransform.position == drownPos);
 
         cameraSystem.SetCameraLookAtTarget(null);
