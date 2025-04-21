@@ -102,7 +102,7 @@ Material:
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
     - _GlossMapScale: 1
-    - _Glossiness: 0.5
+    - _Glossiness: -3.3
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
@@ -113,7 +113,7 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _RimAmount: 1
-    - _RimThreshold: 0.622
+    - _RimThreshold: 1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -126,14 +126,14 @@ Material:
     - _ZWrite: 1
     - _ZWriteControl: 0
     m_Colors:
-    - _AmbColours: {r: 0.735849, g: 0.735849, b: 0.735849, a: 0}
+    - _AmbColours: {r: 0.5457247, g: 0.52711535, b: 0.52711535, a: 0}
     - _BaseColor: {r: 1, g: 0.99781936, b: 0.860052, a: 1}
     - _Color: {r: 1, g: 0.99781936, b: 0.860052, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
-    - _MainColours: {r: 1, g: 1, b: 1, a: 0}
-    - _RimColour: {r: 2, g: 2, b: 2, a: 0}
+    - _MainColours: {r: 0.5471698, g: 0.52910286, b: 0.52910286, a: 0}
+    - _RimColour: {r: 0.5457247, g: 0.52711535, b: 0.52711535, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _SpecularColour: {r: 1, g: 1, b: 1, a: 0}
+    - _SpecularColour: {r: 0.5457247, g: 0.52711535, b: 0.52711535, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &2846297227212943020
 MonoBehaviour:
