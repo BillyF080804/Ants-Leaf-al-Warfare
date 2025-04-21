@@ -30717,12 +30717,12 @@ MonoBehaviour:
   m_Name: RecorderClip
   m_EditorClassIdentifier: 
   enabled: 1
-  take: 2
+  take: 3
   captureEveryNthFrame: 1
   fileNameGenerator:
     m_Path:
-      m_Root: 0
-      m_Leaf: Recordings
+      m_Root: 1
+      m_Leaf: /Scenes/Cutscenes/Assets/Recorder Clips
       m_ForceAssetFolder: 0
       m_AbsolutePath: 
     m_FileName: Trailer Part 3
