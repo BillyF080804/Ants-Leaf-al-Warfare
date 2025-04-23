@@ -43,6 +43,7 @@ public class WeaponManager : MonoBehaviour {
     public bool UIMoving { get; private set; } = false;
     public bool WeaponMenuOpen { get; private set; } = false;
     public bool WeaponsActive { get; private set; } = false;
+    public bool HasFiredWeapon { get; private set; } = false;
     public BaseWeaponSO WeaponSelected { get; private set; }
 
     private CameraSystem cameraSystem;
@@ -126,6 +127,8 @@ public class WeaponManager : MonoBehaviour {
         weaponScript.SetupWeapon(weaponInfo, playerPosition.GetComponent<Collider>());
         activeWeapons.Add(newWeapon);
         WeaponsActive = true;
+        HasFiredWeapon = true;
+        turnManager.CurrentAntTurn.SetCanMove(!HasFiredWeapon);
         cameraSystem.ResetCamera();
         turnManager.CurrentPlayerTurn.ResetFreeCamSetting();
         cameraSystem.SetCameraTarget(newWeapon.transform);
@@ -144,6 +147,8 @@ public class WeaponManager : MonoBehaviour {
         if (canFireWeapon) {
             canFireWeapon = false;
             canAim = false;
+            HasFiredWeapon = true;
+            turnManager.CurrentAntTurn.SetCanMove(!HasFiredWeapon);
 
             Ray ray = new Ray(aimArrow.anchoredPosition, aimArrow.up * 5);
             aimPosition = ray.GetPoint(2.5f);
@@ -202,6 +207,8 @@ public class WeaponManager : MonoBehaviour {
 
             activeWeapons.Add(sprayArea);
             WeaponsActive = true;
+            HasFiredWeapon = true;
+            turnManager.CurrentAntTurn.SetCanMove(!HasFiredWeapon);
             cameraSystem.ResetCamera();
             turnManager.CurrentPlayerTurn.ResetFreeCamSetting();
             cameraSystem.CameraDelay(weaponInfo.cameraDelay);
@@ -354,7 +361,7 @@ public class WeaponManager : MonoBehaviour {
             UIMoving = true;
             StartCoroutine(CloseWeaponMenuCoroutine(true));
         }
-        else if (WeaponMenuOpen == false && UIMoving == false) {
+        else if (WeaponMenuOpen == false && UIMoving == false && HasFiredWeapon == false) {
             UIMoving = true;
             WeaponMenuOpen = true;
             turnManager.CurrentAntTurn.StopMovement();
@@ -368,6 +375,11 @@ public class WeaponManager : MonoBehaviour {
         aimStrength = 0.0f;
         aimValue = Vector2.zero;
         aimArrow.gameObject.SetActive(false);
+        HasFiredWeapon = false;
+
+        if (turnManager.CurrentAntTurn != null) {
+            turnManager.CurrentAntTurn.SetCanMove(!HasFiredWeapon);
+        }
 
         turnManager.WeaponMenuText.GetComponent<FadeScript>().FadeInUI(1.0f);
         turnManager.FireWeaponText.GetComponent<FadeScript>().FadeOutUI(1.0f);

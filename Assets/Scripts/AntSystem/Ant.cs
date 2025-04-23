@@ -138,10 +138,12 @@ public class Ant : MonoBehaviour {
 			health -= damage;
 		}
 
-		healthChangeText.color = Color.red;
-		healthChangeText.text = "- " + damage;
-		healthChangeText.gameObject.SetActive(true);
-		healthChangeText.GetComponent<FadeScript>().FadeOutUI(2.0f);
+		if (damage > 0) {
+            healthChangeText.color = Color.red;
+            healthChangeText.text = "- " + damage;
+            healthChangeText.gameObject.SetActive(true);
+            healthChangeText.GetComponent<FadeScript>().FadeOutUI(2.0f);
+        }
 
 		healthText.text = health.ToString();
 
