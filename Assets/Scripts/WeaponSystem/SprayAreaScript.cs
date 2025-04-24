@@ -22,6 +22,7 @@ public class SprayAreaScript : MonoBehaviour {
             ant.TakeDamage(weaponInfo.baseDamage);
 
             if (weaponInfo.sprayMover == true) {
+                ant.UnFreezeMovement();
                 ant.GetComponent<Rigidbody>().AddExplosionForce(weaponInfo.sprayStrength, turnManager.CurrentAntTurn.transform.position, weaponInfo.sprayLength, 2f);
             }
 

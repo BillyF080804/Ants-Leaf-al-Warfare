@@ -152,6 +152,12 @@ public class TurnManager : MonoBehaviour {
                 currentTurnEnded = false;
                 CurrentPlayerTurn = player;
 
+                foreach (Player players in PlayerList) {
+                    foreach (GameObject ant in players.AntList) {
+                        ant.GetComponent<Ant>().FreezeMovement();
+                    }
+                }
+
                 startTurnEvent.Invoke();
                 yield return new WaitUntil(() => bbqScript.IsBurning == false && hose.IsSpraying == false);
 
@@ -193,6 +199,8 @@ public class TurnManager : MonoBehaviour {
                 player.ResetFreeCamSetting();
                 cameraSystem.ResetCamera();
                 cameraSystem.SetCameraTarget(CurrentAntTurn.transform);
+
+                CurrentAntTurn.UnFreezeMovement();
 
                 yield return new WaitUntil(() => currentTurnEnded == true);
             }
@@ -291,7 +299,6 @@ public class TurnManager : MonoBehaviour {
         onTurnEnded?.Invoke();
         yield return new WaitUntil(() => weaponManager.WeaponMenuOpen == false);
 
-
         if (allAntsMoved) {
 
             for (int i = 0; i < PlayerList.Count; i++) {
@@ -303,6 +310,12 @@ public class TurnManager : MonoBehaviour {
 
             CurrentRound++;
             yield return new WaitUntil(() => dropSystem.IsDropping == false);
+        }
+
+        foreach (Player player in PlayerList) {
+            foreach (GameObject ant in player.AntList) {
+                ant.GetComponent<Ant>().FreezeMovement();
+            }
         }
 
         currentTurnEnded = true;

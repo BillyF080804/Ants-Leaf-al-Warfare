@@ -26,6 +26,7 @@ public class WeaponScript : MonoBehaviour {
             Explode();
         }
         else if (collision.gameObject.CompareTag("Player") && weaponInfo.explosive == false) {
+            collision.gameObject.GetComponent<Ant>().UnFreezeMovement();
             collision.gameObject.GetComponent<Ant>().TakeDamage(weaponInfo.baseDamage);
 
             if (weaponInfo.hasVFX == true && weaponInfo.vfxObject != null) {
@@ -76,6 +77,7 @@ public class WeaponScript : MonoBehaviour {
 
         foreach (Collider collider in collidersOne) {
             collider.GetComponent<Ant>().TakeDamage(weaponInfo.baseDamage);
+            collider.GetComponent<Ant>().UnFreezeMovement();
             collider.GetComponent<Rigidbody>().AddExplosionForce(weaponInfo.explosionPower, transform.position, weaponInfo.explosionRange, weaponInfo.upwardsModifier, ForceMode.Impulse);
 
             if (weaponInfo.weaponEffect != null) {
@@ -86,6 +88,7 @@ public class WeaponScript : MonoBehaviour {
         foreach (Collider collider in collidersTwo) {
             if (!collidersOne.Contains(collider)) {
                 collider.GetComponent<Ant>().TakeDamage(Mathf.FloorToInt(weaponInfo.baseDamage * 0.5f));
+                collider.GetComponent<Ant>().UnFreezeMovement();
                 collider.GetComponent<Rigidbody>().AddExplosionForce(weaponInfo.explosionPower * 0.5f, transform.position, weaponInfo.explosionRange, weaponInfo.upwardsModifier, ForceMode.Impulse);
 
                 if (weaponInfo.weaponEffect != null) {

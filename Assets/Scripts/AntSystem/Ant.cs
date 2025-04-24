@@ -370,4 +370,15 @@ public class Ant : MonoBehaviour {
 		ResetAnimation();
 		ChangeAnimation("Dying");
 	}
+
+	public void FreezeMovement() {
+        rb.constraints = RigidbodyConstraints.FreezePositionX;
+        rb.constraints = RigidbodyConstraints.FreezePositionZ;
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
+    }
+
+	public void UnFreezeMovement() {
+		rb.constraints = RigidbodyConstraints.None;
+		rb.constraints = RigidbodyConstraints.FreezeRotation;
+	}
 }
