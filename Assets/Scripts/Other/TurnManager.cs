@@ -75,6 +75,7 @@ public class TurnManager : MonoBehaviour {
     private WeaponDropSystem dropSystem;
     private BBQScript bbqScript;
     private Hose hose;
+    private EnterObjectManager enterObjectManager;
 
     private void Start() {
         numOfAnts = LoadingData.numOfAnts;
@@ -85,6 +86,7 @@ public class TurnManager : MonoBehaviour {
         antSpawner = FindFirstObjectByType<AntSpawner>();
         bbqScript = FindFirstObjectByType<BBQScript>();
         hose = FindFirstObjectByType<Hose>();
+        enterObjectManager = FindFirstObjectByType<EnterObjectManager>();
 
         currentTurnTime = maxTurnTime;
         StartCoroutine(StartLevelCoroutine());
@@ -117,6 +119,8 @@ public class TurnManager : MonoBehaviour {
 
             SpawnQueen(i);
         }
+
+        enterObjectManager.OnAllAntsSpawned();
     }
 
     private void SpawnQueen(int playerNum) {
@@ -199,6 +203,8 @@ public class TurnManager : MonoBehaviour {
                 player.ResetFreeCamSetting();
                 cameraSystem.ResetCamera();
                 cameraSystem.SetCameraTarget(CurrentAntTurn.transform);
+
+                enterObjectManager.StartTurnEvent();
 
                 CurrentAntTurn.UnFreezeMovement();
 

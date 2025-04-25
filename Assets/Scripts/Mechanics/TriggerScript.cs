@@ -12,30 +12,49 @@ public class TriggerScript : MonoBehaviour {
         Right 
     };
 
-    private void Start() {
+    private void Awake() {
         cameraSystem = FindFirstObjectByType<CameraSystem>();
         turnManager = FindFirstObjectByType<TurnManager>();
+
+        if (triggerType == TriggerType.Left) {
+            manager.SetTrigger(true, transform);
+        }
+        else {
+            manager.SetTrigger(false, transform);
+        }
     }
 
     private void OnTriggerEnter(Collider other) {
         if (other.TryGetComponent<Ant>(out Ant ant) && turnManager.CurrentAntTurn == ant) {
-            cameraSystem.SetCameraLookAtTarget(ant.transform);
-            cameraSystem.SetCameraTarget(manager.CameraTargetPos, 0, 0);
+            AddAnt(ant);
         }
     }
 
     private void OnTriggerExit(Collider other) {
         if (other.TryGetComponent<Ant>(out Ant ant) && turnManager.CurrentAntTurn == ant) {
             if (triggerType == TriggerType.Left && ant.transform.position.x < transform.position.x) {
-                ResetCamera();
+                RemoveAnt(ant);
+            }
+            else if (triggerType == TriggerType.Left && ant.transform.position.x > transform.position.x) {
+                AddAnt(ant);
             }
             else if (triggerType == TriggerType.Right && ant.transform.position.x > transform.position.x) {
-                ResetCamera();
+                RemoveAnt(ant);
+            }
+            else if (triggerType == TriggerType.Right && ant.transform.position.x < transform.position.x) {
+                AddAnt(ant);
             }
         }
     }
 
-    private void ResetCamera() {
+    private void AddAnt(Ant ant) {
+        manager.AddAnt(ant);
+        cameraSystem.SetCameraLookAtTarget(ant.transform);
+        cameraSystem.SetCameraTarget(manager.CameraTargetPos, 0, 0);
+    }
+
+    private void RemoveAnt(Ant ant) {
+        manager.RemoveAnt(ant);
         cameraSystem.ResetCameraToFollowAnt();
     }
 }

@@ -767,7 +767,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 74097672}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48ff5efed7e1b35409437edc305e2c3b, type: 3}
   m_Name: 
@@ -791,7 +791,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -7016,7 +7016,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d163301bfa6e5f4ab4ba04190c9a513, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <CameraTargetPos>k__BackingField: {x: 23.5, y: -2, z: -15}
+  <CameraTargetPos>k__BackingField: {x: 23.5, y: 6, z: -15}
 --- !u!1001 &1111308365
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11077,7 +11077,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &1918769418
 Canvas:
   m_ObjectHideFlags: 0
@@ -11328,7 +11328,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1923960551}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48ff5efed7e1b35409437edc305e2c3b, type: 3}
   m_Name: 
@@ -11352,7 +11352,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
