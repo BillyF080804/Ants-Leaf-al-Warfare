@@ -288,7 +288,7 @@ public class TurnManager : MonoBehaviour {
             }
 
             if (CurrentAntTurn.antInfo.IsQueen == true) {
-                QueenAttackText.GetComponent<FadeScript>().FadeOutUI(1.0f);
+                QueenAttackText.GetComponent<FadeScript>().FadeOutUI(0.5f);
             }
         }
 

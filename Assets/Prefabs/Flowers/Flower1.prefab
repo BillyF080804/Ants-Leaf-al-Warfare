@@ -83,9 +83,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 5490461055a1e654794ab656173141e2, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 5490461055a1e654794ab656173141e2, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: b00804528d792c24aa00620c15ffa90a, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 5490461055a1e654794ab656173141e2, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: ca42aa070cfca5a4394288d63fc8124a, type: 2}
     - target: {fileID: 919132149155446097, guid: 5490461055a1e654794ab656173141e2, type: 3}
       propertyPath: m_Name
       value: FlowerPetal1
@@ -149,9 +157,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 41d7c847612492a49a77bf50f813d886, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 41d7c847612492a49a77bf50f813d886, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 454243013318817448ac76f0d7dd1d59, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 41d7c847612492a49a77bf50f813d886, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: ca42aa070cfca5a4394288d63fc8124a, type: 2}
     - target: {fileID: 919132149155446097, guid: 41d7c847612492a49a77bf50f813d886, type: 3}
       propertyPath: m_Name
       value: FlowerPollen1
@@ -215,9 +231,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 3e46cfecd699f4046a5470830a66124b, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 3e46cfecd699f4046a5470830a66124b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: f62a312c049aca94bab0b33e9eac63c9, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 3e46cfecd699f4046a5470830a66124b, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: ca42aa070cfca5a4394288d63fc8124a, type: 2}
     - target: {fileID: 919132149155446097, guid: 3e46cfecd699f4046a5470830a66124b, type: 3}
       propertyPath: m_Name
       value: FlowerStem1

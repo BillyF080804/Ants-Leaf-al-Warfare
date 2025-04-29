@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 921441234066270189}
   - component: {fileID: 3827225320921517852}
   m_Layer: 0
-  m_Name: Cylinder
+  m_Name: BushTrunk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -261,7 +261,7 @@ GameObject:
   - component: {fileID: 4643477313293780943}
   - component: {fileID: 6263782944125343941}
   m_Layer: 0
-  m_Name: Plane.002
+  m_Name: BushFoliage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -311,6 +311,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: b60e0a01e82c3884791eeddcbfe31592, type: 2}
+  - {fileID: 2100000, guid: ca42aa070cfca5a4394288d63fc8124a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
