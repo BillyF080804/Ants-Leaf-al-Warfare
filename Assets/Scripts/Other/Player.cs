@@ -29,6 +29,10 @@ public class Player : MonoBehaviour {
         lobbyManager = FindFirstObjectByType<LobbyManager>();
         SceneManager.activeSceneChanged += ActiveSceneChanged;
 
+        GetComponent<PlayerInput>().actions.FindAction("SkipTurn").started += OnSkipTurnStarted;
+        GetComponent<PlayerInput>().actions.FindAction("SkipTurn").canceled += OnSkipTurnCancelled;
+        GetComponent<PlayerInput>().actions.FindAction("SkipTurn").performed += OnSkipTurnPerformed;
+
         DontDestroyOnLoad(gameObject);
     }
 
@@ -71,10 +75,24 @@ public class Player : MonoBehaviour {
         }
     }
 
-    //Skip turn function
-    private void OnSkipTurn() {
+    private void OnSkipTurnStarted(InputAction.CallbackContext ctx) {
+        if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false && weaponManager.WeaponsActive == false) {
+            cameraSystem.ZoomCameraFOVIn(1.5f);
+            turnManager.ShowSkippingTurnText();
+        }
+    }
+
+    private void OnSkipTurnCancelled(InputAction.CallbackContext ctx) {
+        if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false && weaponManager.WeaponsActive == false) {
+            cameraSystem.ZoomCameraFOVOut(0.75f);
+            turnManager.HideSkippingTurnText();
+        }
+    }
+
+    private void OnSkipTurnPerformed(InputAction.CallbackContext ctx) {
         if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false && weaponManager.WeaponsActive == false) {
             turnManager.EndTurn();
+            cameraSystem.ZoomCameraFOVOut(0.5f);
         }
     }
 
@@ -166,7 +184,7 @@ public class Player : MonoBehaviour {
 
     public Ant GetAnt(Ant currentAnt) {
         if (currentAnt != null) {
-            currentAnt.moveVector = Vector3.zero;
+            currentAnt.StopMovement();
         }
 
         List<Ant> possibleAnts = new List<Ant>();
@@ -192,8 +210,7 @@ public class Player : MonoBehaviour {
             }
         }
         else {
-            Debug.LogError("Isaac pls fix ty"); 
-            Debug.LogError("Mate, what's the error here? I have never seen this debug lol");
+            Debug.LogError("If called probably worth checking if not ignore");
 			return null;
         }
     }
@@ -292,19 +309,8 @@ public class Player : MonoBehaviour {
         }
     }
 
-
-    private void OnInteract() {
-        if (CheckActionIsValid() && turnManager.CurrentAntTurn.canInteract) { 
-            Debug.Log("ButtonPress");
-            turnManager.CurrentAntTurn.interactable.Interaction();
-        }
-    }
-
-
-
-    [Header("Debug Thing: Please ignore. no")]
-    [SerializeField]
-    EffectScript EffectScript;
+    [Header("Debug Thing: Please ignore.")]
+    [SerializeField] private EffectScript EffectScript;
     private void OnEffectTest() {
         for(int i = 0; i < AntList.Count; i++) {
             EffectScript.AddEffect(AntList[i].GetComponent<Ant>());

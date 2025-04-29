@@ -43,8 +43,7 @@ public class TurnManager : MonoBehaviour {
     [SerializeField] private TMP_Text roundNumText;
     [SerializeField] private GameObject blackscreen;
     [SerializeField] private GameObject levelNameText;
-    [SerializeField] private GameObject queenHealthUIPrefab;
-    [SerializeField] private List<Sprite> queenAntHealthUIVariants;
+    [SerializeField] private GameObject skippingTurnText;
 
     [field: Header("Text Hints")]
     [field: SerializeField] public FadeScript TextHintFadeScript { get; private set; }
@@ -292,14 +291,16 @@ public class TurnManager : MonoBehaviour {
             }
         }
 
+        cameraSystem.SetCameraLookAtTarget(null);
         cameraSystem.IterateCameraTargets(1.0f);
+        yield return new WaitUntil(() => cameraSystem.CameraDelayActive == false);
+
         dropSystem.CheckDrop();
         yield return new WaitUntil(() => cameraSystem.CameraDelayActive == false);
 
         CheckIfAllAntsMoved();
         CurrentPlayerTurn = null;
-        cameraSystem.SetCameraTarget(null);
-        cameraSystem.SetCameraLookAtTarget(null);
+        cameraSystem.SetCameraTarget(null);        
         weaponManager.EndTurn();
         endTurnEvent.Invoke();
         onTurnEnded?.Invoke();
@@ -409,5 +410,13 @@ public class TurnManager : MonoBehaviour {
 
     public void ShowRoundNumber(float duration) {
         roundNumText.GetComponent<FadeScript>().FadeInUI(duration);
+    }
+
+    public void ShowSkippingTurnText() {
+        skippingTurnText.SetActive(true);
+    }
+
+    public void HideSkippingTurnText() {
+        skippingTurnText.SetActive(false);
     }
 }

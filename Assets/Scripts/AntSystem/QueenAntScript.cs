@@ -6,8 +6,8 @@ public class QueenBaseAntScript : Ant {
 
 	[Header("Queen Info")]
 	[SerializeField] private LayerMask queenLayerMask;
-	public int attackLevel = 1;
-	bool usedAttack = false;
+	private int attackLevel = 1;
+	private bool usedAttack = false;
 
     [Header("Queen Ant Settings")]
     [SerializeField] private SkinnedMeshRenderer hat;

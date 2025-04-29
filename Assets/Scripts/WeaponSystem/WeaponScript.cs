@@ -41,6 +41,10 @@ public class WeaponScript : MonoBehaviour {
                 cameraSystem.StartCameraShake(weaponInfo.cameraShakeDuration, weaponInfo.cameraShakeIntensity);
             }
 
+            if (weaponInfo.hasKnockback) {
+                DealKnockback(collision.gameObject);
+            }
+
             Destroy(gameObject);
         }
         else if (weaponInfo.explosive == false) {
@@ -106,6 +110,10 @@ public class WeaponScript : MonoBehaviour {
         }
 
         Destroy(gameObject);
+    }
+
+    private void DealKnockback(GameObject objectToKnockback) {
+        objectToKnockback.GetComponent<Rigidbody>().AddExplosionForce(weaponInfo.knockbackStrength, transform.position, 0, weaponInfo.upwardsModifier, ForceMode.Impulse);
     }
 
     public void CreateVFX() {

@@ -28,10 +28,11 @@ public class BaseWeaponSO : ScriptableObject {
 
     [Header("Weapon Settings")]
     public int baseDamage = 20;
-    public float weaponSpeed = 25.0f;
+    public float weaponSpeed = 20.0f;
     public bool useGravity = true;
     [Tooltip("This will add some variance onto the speed & aim of the weapon when shot.")] public bool weaponRandomisation = false;
     public bool explosive = false;
+    public bool hasKnockback = false;
     public bool isMelee = false;
     public bool isMultiShot = false;
     public bool isSpray = false;
@@ -50,7 +51,7 @@ public class BaseWeaponSO : ScriptableObject {
 
     [HideInInspector] public bool explodeOnImpact = true;
     [HideInInspector] public float explosionRange = 5.0f;
-    [HideInInspector] public float explosionPower = 5.0f;
+    [HideInInspector] public float explosionPower = 10.0f;
     [HideInInspector] public float fuseTimer = 5.0f;
     [HideInInspector] public int maxNumOfBounces = 3;
 
@@ -58,8 +59,8 @@ public class BaseWeaponSO : ScriptableObject {
     [HideInInspector] public float vfxDuration = 2.5f;
     [HideInInspector] public GameObject vfxObject = null;
 
-    [HideInInspector] public float knockbackStrength = 2.0f;
-    [HideInInspector] public float upwardsModifier = 4.0f;
+    [HideInInspector] public float knockbackStrength = 10.0f;
+    [HideInInspector] public float upwardsModifier = 3.0f;
 
     [HideInInspector] public int numOfShots = 2;
     [HideInInspector] public float delayBetweenShots = 0.5f;
@@ -92,7 +93,16 @@ public class BaseWeaponSOEditor : Editor {
 
         BaseWeaponSO baseWeapon = (BaseWeaponSO)target;
 
-        if (baseWeapon.explosive) {
+        if (baseWeapon.explosive == true) {
+            if (baseWeapon.hasKnockback == true) {
+                baseWeapon.hasKnockback = false;
+                Debug.Log("Disabled Knockback. Weapon Cannot Have Knockback and Explosive enabled at the same time.\nExplosive weapons have their own knockback settings.");
+            }
+            else if (baseWeapon.isSpray == true) {
+                baseWeapon.isSpray = false;
+                Debug.Log("Disabled Spray. Weapon Cannot Have Spray and Explosive enabled at the same time.\nSpray weapons have their own knockback settings.");
+            }
+
             EditorGUILayout.Space(15);
             EditorGUILayout.LabelField("Explosion Settings", EditorStyles.boldLabel);
             baseWeapon.explosionRange = EditorGUILayout.FloatField("Explosion Range", baseWeapon.explosionRange);
@@ -110,19 +120,24 @@ public class BaseWeaponSOEditor : Editor {
             baseWeapon.maxNumOfBounces = EditorGUILayout.IntField("Max Num Of Bounces", baseWeapon.maxNumOfBounces);
         }
 
+        if (baseWeapon.hasKnockback == true || baseWeapon.isMelee == true) {
+            if (baseWeapon.isSpray == true && baseWeapon.hasKnockback == true) {
+                baseWeapon.isSpray = false;
+                Debug.Log("Disabled Spray. Weapon Cannot Have Spray and Knockback enabled at the same time.\nSpray weapons have their own knockback settings.");
+            }
+
+            EditorGUILayout.Space(15);
+            EditorGUILayout.LabelField("Knockback Settings", EditorStyles.boldLabel);
+            baseWeapon.knockbackStrength = EditorGUILayout.FloatField("Knockback Strength", baseWeapon.knockbackStrength);
+            baseWeapon.upwardsModifier = EditorGUILayout.FloatField("Updwards Modifier", baseWeapon.upwardsModifier);
+        }
+
         if (baseWeapon.hasVFX == true) {
             EditorGUILayout.Space(15);
             EditorGUILayout.LabelField("VFX Settings", EditorStyles.boldLabel);
             baseWeapon.vfxObject = (GameObject)EditorGUILayout.ObjectField("VFX", baseWeapon.vfxObject, typeof(GameObject), true);
             baseWeapon.vfxSize = EditorGUILayout.FloatField("VFX Size", baseWeapon.vfxSize);
             baseWeapon.vfxDuration = EditorGUILayout.FloatField("VFX Duration", baseWeapon.vfxDuration);
-        }
-
-        if (baseWeapon.isMelee == true) {
-            EditorGUILayout.Space(15);
-            EditorGUILayout.LabelField("Melee Settings", EditorStyles.boldLabel);
-            baseWeapon.knockbackStrength = EditorGUILayout.FloatField("Knockback Strength", baseWeapon.knockbackStrength);
-            baseWeapon.upwardsModifier = EditorGUILayout.FloatField("Updwards Modifier", baseWeapon.upwardsModifier);
         }
 
         if (baseWeapon.isMultiShot == true) {

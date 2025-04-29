@@ -18,8 +18,8 @@ public class Ant : MonoBehaviour {
 
 	public bool hasHadTurn = false;
 	public PlayerList ownedPlayer;
-	public Vector3 moveVector = Vector3.zero;
-	public bool canJump = true;
+	private Vector3 moveVector = Vector3.zero;
+	private bool canJump = true;
 
 	public List<EffectScript> effects;
 	public bool hasLifeSteal;
@@ -313,24 +313,6 @@ public class Ant : MonoBehaviour {
 			}
 		}
 	}
-
-	public bool canInteract; //Could be removed?
-	public Interactable interactable; //Could be removed?
-	//private void OnTriggerEnter(Collider other) {
-	//	Debug.Log("Entered");
-	//	if (other.GetComponent<Interactable>() != null) {
-	//		interactable = other.GetComponent<Interactable>();
-	//		canInteract = true;
-	//	}
-	//}
-
-	//private void OnTriggerExit(Collider other) {
-	//	Debug.Log("Exited");
-	//	if (other.GetComponent<Interactable>() != null) {
-	//		interactable = null;
-	//		canInteract = false;
-	//	}
-	//}
 
 	public void ApplyEffects() {
 		if (effects.Count > 0) {

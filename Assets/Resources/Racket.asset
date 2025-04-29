@@ -28,6 +28,7 @@ MonoBehaviour:
   useGravity: 1
   weaponRandomisation: 0
   explosive: 0
+  hasKnockback: 0
   isMelee: 1
   isMultiShot: 0
   isSpray: 0
