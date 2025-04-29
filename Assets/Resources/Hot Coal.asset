@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Hot Coal
   weaponDescription: 'Fresh Smoking Coal from the Barbecue, light em up! '
-  knockbackLevel: 0
+  knockbackLevel: 1
   unlimitedUses: 0
   useAutomaticRotation: 1
   weaponIcon: {fileID: 21300000, guid: 13d40f18c62e735468857f28505cb458, type: 3}
