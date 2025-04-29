@@ -96,11 +96,11 @@ public class BaseWeaponSOEditor : Editor {
         if (baseWeapon.explosive == true) {
             if (baseWeapon.hasKnockback == true) {
                 baseWeapon.hasKnockback = false;
-                Debug.Log("Disabled Knockback. Weapon Cannot Have Knockback and Explosive enabled at the same time.\nExplosive weapons have their own knockback settings.");
+                Debug.LogWarning("Disabled Knockback. Weapon Cannot Have Knockback and Explosive enabled at the same time.\nExplosive weapons have their own knockback settings.");
             }
             else if (baseWeapon.isSpray == true) {
                 baseWeapon.isSpray = false;
-                Debug.Log("Disabled Spray. Weapon Cannot Have Spray and Explosive enabled at the same time.\nSpray weapons have their own knockback settings.");
+                Debug.LogWarning("Disabled Spray. Weapon Cannot Have Spray and Explosive enabled at the same time.\nSpray weapons have their own knockback settings.");
             }
 
             EditorGUILayout.Space(15);
@@ -123,7 +123,7 @@ public class BaseWeaponSOEditor : Editor {
         if (baseWeapon.hasKnockback == true || baseWeapon.isMelee == true) {
             if (baseWeapon.isSpray == true && baseWeapon.hasKnockback == true) {
                 baseWeapon.isSpray = false;
-                Debug.Log("Disabled Spray. Weapon Cannot Have Spray and Knockback enabled at the same time.\nSpray weapons have their own knockback settings.");
+                Debug.LogWarning("Disabled Spray. Weapon Cannot Have Spray and Knockback enabled at the same time.\nSpray weapons have their own knockback settings.");
             }
 
             EditorGUILayout.Space(15);
