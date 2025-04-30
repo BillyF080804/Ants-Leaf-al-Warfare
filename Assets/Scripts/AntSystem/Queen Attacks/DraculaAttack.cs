@@ -29,4 +29,10 @@ public class DraculaAttack : QueenAttack {
 			
 		}
 	}
+
+	public override void InitialiseValues(GameObject attackInfo) {
+		effect = attackInfo.GetComponent<DraculaAttack>().effect;
+		percentages = attackInfo.GetComponent<DraculaAttack>().percentages;
+
+	}
 }

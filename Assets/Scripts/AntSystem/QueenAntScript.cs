@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class QueenBaseAntScript : Ant {
@@ -15,9 +16,33 @@ public class QueenBaseAntScript : Ant {
 
 	private CameraSystem cameraSystem;
 
+	[SerializeField] private QueenAttack AttackScript;
+
     private void Start() {
         cameraSystem = FindFirstObjectByType<CameraSystem>();
-    }
+		InitialiseQueenAttack();
+
+	}
+
+	void InitialiseQueenAttack() {
+		QueenAttack tempAttack = Instantiate(antInfo.queenAttack);
+		if (tempAttack.gameObject.GetComponent<BeeAttack>() != null) {
+			AttackScript = this.AddComponent<BeeAttack>();
+		} else if (tempAttack.gameObject.GetComponent<BulletAttack>() != null) {
+			AttackScript = this.AddComponent<BulletAttack>();
+		} else if (tempAttack.gameObject.GetComponent<DraculaAttack>() != null) {
+			AttackScript = this.AddComponent<DraculaAttack>();
+		} else if (tempAttack.gameObject.GetComponent<IceAttack>() != null) {
+			AttackScript = this.AddComponent<IceAttack>();
+		} else if (tempAttack.gameObject.GetComponent<PharaohAttack>() != null) {
+			AttackScript = this.AddComponent<PharaohAttack>();
+		} else if (tempAttack.gameObject.GetComponent<WeaverAttack>() != null) {
+			AttackScript = this.AddComponent<WeaverAttack>();
+		}
+		
+		AttackScript.InitialiseValues(tempAttack.gameObject);
+		Destroy(tempAttack.gameObject);
+	}
 
     public void CheckAttackTurn() {
 		if (!usedAttack) {
@@ -32,11 +57,11 @@ public class QueenBaseAntScript : Ant {
 	public void SpecialAttack() {
 		if(attackLevel != 0) {
 			if(antInfo.queenType == AntSO.QueenType.Dracula) {
-				antInfo.queenAttack.ActivateAttack(attackLevel, this);
+				AttackScript.ActivateAttack(attackLevel, this);
 			} else if (antInfo.queenType == AntSO.QueenType.Pharaoh) {
-				antInfo.queenAttack.ActivateAttack(attackLevel, this, transform.position, turnManager);
+				AttackScript.ActivateAttack(attackLevel, this, transform.position, turnManager);
 			} else {
-				antInfo.queenAttack.ActivateAttack(attackLevel, this, transform.position);
+				AttackScript.ActivateAttack(attackLevel, this, transform.position);
 			}
 
 			if (antInfo.queenType == AntSO.QueenType.Bullet) {

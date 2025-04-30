@@ -14,4 +14,8 @@ public class BeeAttack : QueenAttack {
 		}
 
 	}
+
+	public override void InitialiseValues(GameObject attackInfo) {
+		beeSummon = attackInfo.GetComponent<BeeAttack>().beeSummon;
+	}
 }

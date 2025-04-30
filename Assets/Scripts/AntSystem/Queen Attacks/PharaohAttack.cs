@@ -34,4 +34,11 @@ public class PharaohAttack : QueenAttack {
 			}
 		}
 	}
+
+	public override void InitialiseValues(GameObject attackInfo) {
+		mummySummon = attackInfo.GetComponent<PharaohAttack>().mummySummon;
+		mummyEffect = attackInfo.GetComponent<PharaohAttack>().mummyEffect;
+		baseHealth = attackInfo.GetComponent<PharaohAttack>().baseHealth;
+		healthPerLevel = attackInfo.GetComponent<PharaohAttack>().healthPerLevel;
+	}
 }

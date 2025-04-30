@@ -15,6 +15,8 @@ public class QueenAttack : MonoBehaviour {
 		Debug.Log("Not Updated");
 	}
 
+	public virtual void InitialiseValues(GameObject attackInfo) {
 
+	}
 	
 }

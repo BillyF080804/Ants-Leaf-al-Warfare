@@ -4,4 +4,8 @@ using UnityEngine;
 
 public class IceAttack : QueenAttack {
 
+
+	public override void InitialiseValues(GameObject attackInfo) {
+
+	}
 }

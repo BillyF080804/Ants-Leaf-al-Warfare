@@ -43,4 +43,12 @@ public class WeaverAttack : QueenAttack {
 		}
 		return spawnPos;
 	}
+
+	public override void InitialiseValues(GameObject attackInfo) {
+		areaToSpawn = attackInfo.GetComponent<WeaverAttack>().areaToSpawn;
+		effectToAdd = attackInfo.GetComponent<WeaverAttack>().effectToAdd;
+		mapMinX = attackInfo.GetComponent<WeaverAttack>().mapMinX;
+		mapMaxX = attackInfo.GetComponent<WeaverAttack>().mapMaxX;
+		safeRadius = attackInfo.GetComponent<WeaverAttack>().safeRadius;
+	}
 }

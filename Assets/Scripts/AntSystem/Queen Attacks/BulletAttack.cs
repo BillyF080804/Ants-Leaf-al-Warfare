@@ -37,4 +37,16 @@ public class BulletAttack : QueenAttack {
 
 		return tempX;
 	}
+
+	public override void InitialiseValues(GameObject attackInfo) {
+		bulletSpeed = attackInfo.GetComponent<BulletAttack>().bulletSpeed;
+		bulletPrefab = attackInfo.GetComponent<BulletAttack>().bulletPrefab;
+		weaponType = attackInfo.GetComponent<BulletAttack>().weaponType;
+		amountOfBulletsPerLevel = attackInfo.GetComponent<BulletAttack>().amountOfBulletsPerLevel;
+		mapMaxX = attackInfo.GetComponent<BulletAttack>().mapMaxX;
+		mapMinX = attackInfo.GetComponent<BulletAttack>().mapMinX;
+		YPos = attackInfo.GetComponent<BulletAttack>().YPos;
+		safeRadius = attackInfo.GetComponent<BulletAttack>().safeRadius;
+
+	}
 }
