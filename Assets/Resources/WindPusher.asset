@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: AirBlower
   weaponDescription: Blow your foes away!
-  knockbackLevel: 2
+  knockbackLevel: 0
   unlimitedUses: 0
   useAutomaticRotation: 0
   weaponIcon: {fileID: 21300000, guid: 54d4a534567a1f4439a208ed01f34fdc, type: 3}
@@ -28,10 +28,10 @@ MonoBehaviour:
   useGravity: 1
   weaponRandomisation: 0
   explosive: 0
-  hasKnockback: 0
+  hasKnockback: 1
   isMelee: 0
   isMultiShot: 0
-  isSpray: 1
+  isSpray: 0
   weaponEffect: {fileID: 0}
   cameraDelay: 4
   cameraShakeOnFire: 0
@@ -46,8 +46,8 @@ MonoBehaviour:
   vfxSize: 1
   vfxDuration: 2.5
   vfxObject: {fileID: 0}
-  knockbackStrength: 2
-  upwardsModifier: 4
+  knockbackStrength: 5
+  upwardsModifier: 1
   numOfShots: 2
   delayBetweenShots: 0.5
   minimumRandomness: 0.8

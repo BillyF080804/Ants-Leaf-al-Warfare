@@ -40,14 +40,14 @@ MonoBehaviour:
   hasSounds: 0
   explodeOnImpact: 0
   explosionRange: 5
-  explosionPower: 5
+  explosionPower: 8
   fuseTimer: 5
   maxNumOfBounces: 3
   vfxSize: 1
   vfxDuration: 2.5
   vfxObject: {fileID: 2169185026088089853, guid: b22ffd9e1b7000c4daadabd9b6b95113, type: 3}
-  knockbackStrength: 2
-  upwardsModifier: 4
+  knockbackStrength: 8
+  upwardsModifier: 8
   numOfShots: 2
   delayBetweenShots: 0.5
   minimumRandomness: 0.8

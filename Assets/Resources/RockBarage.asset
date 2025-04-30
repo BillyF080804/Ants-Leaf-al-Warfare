@@ -28,6 +28,7 @@ MonoBehaviour:
   useGravity: 1
   weaponRandomisation: 0
   explosive: 0
+  hasKnockback: 1
   isMelee: 0
   isMultiShot: 1
   isSpray: 0
@@ -45,8 +46,8 @@ MonoBehaviour:
   vfxSize: 1
   vfxDuration: 2.5
   vfxObject: {fileID: 0}
-  knockbackStrength: 2
-  upwardsModifier: 4
+  knockbackStrength: 8
+  upwardsModifier: 6
   numOfShots: 3
   delayBetweenShots: 0.25
   minimumRandomness: 0.8

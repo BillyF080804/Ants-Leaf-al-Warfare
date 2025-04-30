@@ -28,6 +28,7 @@ MonoBehaviour:
   useGravity: 1
   weaponRandomisation: 1
   explosive: 1
+  hasKnockback: 0
   isMelee: 0
   isMultiShot: 0
   isSpray: 0
@@ -39,14 +40,14 @@ MonoBehaviour:
   hasSounds: 0
   explodeOnImpact: 1
   explosionRange: 10
-  explosionPower: 8
+  explosionPower: 12
   fuseTimer: 5
   maxNumOfBounces: 3
   vfxSize: 2
   vfxDuration: 2.5
   vfxObject: {fileID: 2169185026088089853, guid: b22ffd9e1b7000c4daadabd9b6b95113, type: 3}
   knockbackStrength: 2
-  upwardsModifier: 4
+  upwardsModifier: 10
   numOfShots: 2
   delayBetweenShots: 0.5
   minimumRandomness: 0.8
