@@ -1,19 +1,34 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BeeAttack : QueenAttack {
-	[SerializeField]
-	GameObject beeSummon;
+	[Header("Settings")]
+	[SerializeField] private GameObject beeSummon;
 
-	public override void ActivateAttack(int attackLevel, Ant antInfoScript, Vector3 position) {
-		for (int i = 0; i < attackLevel; i++) {
-			BeeScript beeScript = Instantiate(beeSummon, position, Quaternion.identity).GetComponent<BeeScript>();
-			beeScript.InitialiseValues(antInfoScript, attackLevel);
-			
-		}
+	private CameraSystem cameraSystem;
 
+    private void Start() {
+		cameraSystem = FindFirstObjectByType<CameraSystem>();
+    }
+
+    public override void ActivateAttack(int attackLevel, Ant antInfoScript, Vector3 position) {
+		StartCoroutine(AttackCoroutine(attackLevel, antInfoScript, position));
 	}
+
+	private IEnumerator AttackCoroutine(int attackLevel, Ant antInfoScript, Vector3 position) {
+        Transform focusObject = null;
+        cameraSystem.CameraDelayActive = true;
+
+        for (int i = 0; i < attackLevel; i++) {
+            BeeScript beeScript = Instantiate(beeSummon, position, Quaternion.identity).GetComponent<BeeScript>();
+            beeScript.InitialiseValues(antInfoScript, attackLevel);
+            focusObject = beeScript.transform;
+            cameraSystem.SetCameraTarget(focusObject);
+        }
+
+        yield return new WaitUntil(() => focusObject == null);
+        cameraSystem.CameraDelayActive = false;
+    }
 
 	public override void InitialiseValues(GameObject attackInfo) {
 		beeSummon = attackInfo.GetComponent<BeeAttack>().beeSummon;

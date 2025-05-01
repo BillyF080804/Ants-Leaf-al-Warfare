@@ -19,6 +19,7 @@ public class Player : MonoBehaviour {
     private WeaponManager weaponManager;
     private QueenBaseAntScript queenBaseAntScript;
 
+    public bool hasSkippedTurn = false;
     private bool freeCamEnabled = false;
 
     public GameObject QueenAnt { get; private set; } = null;
@@ -76,21 +77,22 @@ public class Player : MonoBehaviour {
     }
 
     private void OnSkipTurnStarted(InputAction.CallbackContext ctx) {
-        if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false && weaponManager.WeaponsActive == false) {
+        if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false && weaponManager.WeaponsActive == false && hasSkippedTurn == false) {
             cameraSystem.ZoomCameraFOVIn(1.5f);
             turnManager.ShowSkippingTurnText();
         }
     }
 
     private void OnSkipTurnCancelled(InputAction.CallbackContext ctx) {
-        if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false && weaponManager.WeaponsActive == false) {
+        if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false && weaponManager.WeaponsActive == false && hasSkippedTurn == false) {
             cameraSystem.ZoomCameraFOVOut(0.75f);
             turnManager.HideSkippingTurnText();
         }
     }
 
     private void OnSkipTurnPerformed(InputAction.CallbackContext ctx) {
-        if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false && weaponManager.WeaponsActive == false) {
+        if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false && weaponManager.WeaponsActive == false && hasSkippedTurn == false) {
+            hasSkippedTurn = true;
             turnManager.EndTurn();
             cameraSystem.ZoomCameraFOVOut(0.5f);
             turnManager.HideSkippingTurnText();

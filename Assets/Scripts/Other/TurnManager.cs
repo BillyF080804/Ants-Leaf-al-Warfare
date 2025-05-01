@@ -195,6 +195,7 @@ public class TurnManager : MonoBehaviour {
                         QueenAttackText.text = player.GetKeybindForAction("QueenAttack") + " - Queen Attack";
                     }
 
+                    ShowMainUI();
                     QueenAttackText.GetComponent<FadeScript>().FadeInUI(1.0f);
                 }
                 else {
@@ -204,6 +205,7 @@ public class TurnManager : MonoBehaviour {
                 player.ResetFreeCamSetting();
                 cameraSystem.ResetCamera();
                 cameraSystem.SetCameraTarget(CurrentAntTurn.transform);
+                CurrentPlayerTurn.hasSkippedTurn = false;
 
                 enterObjectManager.StartTurnEvent();
 

@@ -55,7 +55,7 @@ public class CameraSystem : MonoBehaviour {
     public static OnIterationFinished onIterationFinished;
 
     public bool IsFOVZoomingOut { get; private set; } = false;
-    public bool CameraDelayActive { get; private set; } = false;
+    public bool CameraDelayActive { get; set; } = false;
     public Transform CameraTarget { get; private set; }
 
     private void Awake() {
