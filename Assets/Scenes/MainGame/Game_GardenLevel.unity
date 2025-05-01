@@ -2501,6 +2501,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 73029478af7edfb4f96cec8b1ddceea3, type: 2}
   - {fileID: 11400000, guid: 8286ba19baf6f9642b2965225b02bf8c, type: 2}
   - {fileID: 11400000, guid: d1c6c5eb52cecf44ba3ab99b5c72b3d8, type: 2}
+  - {fileID: 11400000, guid: 9175b6a20c8a8f540b1923b5d876a9fa, type: 2}
   - {fileID: 11400000, guid: 072bff5ac5fcb534b81c014d3e66fef1, type: 2}
   baseAntPrefab: {fileID: 7419841320288824830, guid: d3f6b0f801636df4fa3ef21689ebf309, type: 3}
   queenPrefab: {fileID: 7419841320288824830, guid: 5e540e095b19d444c81e243088e9388d, type: 3}

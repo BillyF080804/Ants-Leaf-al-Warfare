@@ -21,6 +21,6 @@ MonoBehaviour:
   IsQueen: 1
   queenType: 0
   damage: 1
-  queenAttack: {fileID: 0}
+  queenAttack: {fileID: 3695045914574614986, guid: 169b6f0ee73fe4f40943d476b89cc8e0, type: 3}
   queenArchetype: Damage
   description: Freeze your enemies in their tracks!
