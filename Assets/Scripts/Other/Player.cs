@@ -93,6 +93,7 @@ public class Player : MonoBehaviour {
         if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false && weaponManager.WeaponsActive == false) {
             turnManager.EndTurn();
             cameraSystem.ZoomCameraFOVOut(0.5f);
+            turnManager.HideSkippingTurnText();
         }
     }
 

@@ -462,6 +462,7 @@ GameObject:
   - component: {fileID: 7815361698783976868}
   - component: {fileID: 3819734831331521921}
   - component: {fileID: 8076562337474096267}
+  - component: {fileID: 4949661714067778093}
   m_Layer: 0
   m_Name: BBQ Tray
   m_TagString: Untagged
@@ -534,6 +535,28 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &4949661714067778093
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4003266279792926838}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -3348328201362562604, guid: ba0601e46d01dcf43b41695e1c4736fa, type: 3}
 --- !u!1 &4824381475675066389
 GameObject:
   m_ObjectHideFlags: 0
@@ -757,7 +780,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 5
   collapseParticles: {fileID: 2844274899529545235, guid: e4bf2845e4a231241b58b0fc7be196f4, type: 3}
-  burnChancePerTurn: 1
+  burnChancePerTurn: 0.15
   burnDamage: 10
   fireParticlePrefab: {fileID: 582649436412377959, guid: 3eaeccd2c2257824aa39e156541a4864, type: 3}
   burnTransforms:

@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
+using static UnityEngine.Rendering.DebugUI;
 
 public class CameraSystem : MonoBehaviour {
     [Header("Camera Follow Settings")]
@@ -46,6 +49,7 @@ public class CameraSystem : MonoBehaviour {
     private List<Transform> targets = new List<Transform>();
 
     private WeaponManager weaponManager;
+    private VolumeProfile volumeProfile;
 
     public delegate void OnIterationFinished(Transform target);
     public static OnIterationFinished onIterationFinished;
@@ -60,6 +64,7 @@ public class CameraSystem : MonoBehaviour {
         overviewPosition = cameraObj.transform.position;
 
         weaponManager = FindFirstObjectByType<WeaponManager>();
+        volumeProfile = FindFirstObjectByType<Volume>().profile;
     }
 
     private void LateUpdate() {
@@ -117,14 +122,17 @@ public class CameraSystem : MonoBehaviour {
         }
 
         if (CameraTarget == null && targetPos != Vector3.zero) {
+            ChangeBlur(60);
             targetPos.z += cameraZoom;
             cameraObj.transform.position = Vector3.SmoothDamp(cameraObj.transform.position, targetPos, ref velocity, smoothTime);
         }
         else {
             if (CameraTarget != null && targetPos == Vector3.zero) {
+                ChangeBlur(60);
                 tempTargetPos = new Vector3(CameraTarget.position.x, CameraTarget.position.y + yOffset, zOffset);
             }
             else if (CameraTarget == null && targetPos == Vector3.zero) {
+                ChangeBlur(175);
                 tempTargetPos = new Vector3(overviewPosition.x, overviewPosition.y + yOffset, overviewPosition.z);
             }
 
@@ -229,14 +237,29 @@ public class CameraSystem : MonoBehaviour {
     private IEnumerator CameraFOVZoom(bool zoomIn, float zoomDuration) {
         float timeElapsed = 0.0f;
         float startingZoom = cameraComp.fieldOfView;
+        float startingVignette = 0.0f;
+        Vignette vignette = null;
         IsFOVZoomingOut = !zoomIn;
+
+        if (volumeProfile.TryGet(out Vignette newVignette)) {
+            startingVignette = newVignette.intensity.value;
+            vignette = newVignette;
+        }
 
         while (timeElapsed < zoomDuration) {
             if (zoomIn == true) {
                 cameraComp.fieldOfView = Mathf.Lerp(startingZoom, 30, timeElapsed / zoomDuration);
+
+                if (vignette != null) {
+                    vignette.intensity.Override(Mathf.Lerp(startingVignette, 1.0f, timeElapsed / zoomDuration));
+                }
             }
             else {
                 cameraComp.fieldOfView = Mathf.Lerp(startingZoom, 60, timeElapsed / zoomDuration);
+
+                if (vignette != null) {
+                    vignette.intensity.Override(Mathf.Lerp(startingVignette, 0.1f, timeElapsed / zoomDuration));
+                }
             }
 
             timeElapsed += Time.deltaTime;
@@ -349,5 +372,11 @@ public class CameraSystem : MonoBehaviour {
         ResetCamera();
         SetCameraTarget(FindFirstObjectByType<TurnManager>().CurrentAntTurn.transform);
         SetCameraLookAtTarget(null);
+    }
+
+    private void ChangeBlur(float value) {
+        if (volumeProfile.TryGet(out DepthOfField depthOfField)) {
+            depthOfField.gaussianStart.Override(value);
+        }
     }
 }

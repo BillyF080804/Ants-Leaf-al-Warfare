@@ -143,8 +143,7 @@ public class TurnManager : MonoBehaviour {
         ShowRoundNumber();
         yield return new WaitForSeconds(2.5f);
         HideRoundNumber();
-        mainGameUIMoveScript.StartMoveUI(LerpType.Out, new Vector2(0, 250), Vector2.zero, 1.0f);
-        TextHintFadeScript.FadeInUI(1.0f);
+        ShowMainUI();
 
         int prevRoud = 0;
         for (int i = 0; i < 1000; i++) {
@@ -198,6 +197,9 @@ public class TurnManager : MonoBehaviour {
 
                     QueenAttackText.GetComponent<FadeScript>().FadeInUI(1.0f);
                 }
+                else {
+                    QueenAttackText.GetComponent<FadeScript>().FadeOutUI(0.5f);
+                }
 
                 player.ResetFreeCamSetting();
                 cameraSystem.ResetCamera();
@@ -220,13 +222,11 @@ public class TurnManager : MonoBehaviour {
                 cameraSystem.ResetCamera();
                 cameraSystem.SetCameraTarget(null);
 
-                mainGameUIMoveScript.StartMoveUI(LerpType.In, Vector2.zero, new Vector2(0, 250), 1.0f);
-                TextHintFadeScript.FadeOutUI(1.0f);
+                HideMainUI();
                 ShowRoundNumber();
                 yield return new WaitForSeconds(2.5f);
                 HideRoundNumber();
-                mainGameUIMoveScript.StartMoveUI(LerpType.Out, new Vector2(0, 250), Vector2.zero, 1.0f);
-                TextHintFadeScript.FadeInUI(1.0f);
+                ShowMainUI();
 
                 startRoundEvent.Invoke();
 
@@ -274,6 +274,7 @@ public class TurnManager : MonoBehaviour {
         StopCoroutine(turnTimerCoroutine);
 
         yield return new WaitUntil(() => gameOver == false);
+        yield return new WaitUntil(() => cameraSystem.CameraDelayActive == false);
 
         if (CurrentAntTurn != null) {
             CurrentAntTurn.ApplyEffects();
@@ -418,5 +419,15 @@ public class TurnManager : MonoBehaviour {
 
     public void HideSkippingTurnText() {
         skippingTurnText.SetActive(false);
+    }
+
+    public void HideMainUI() {
+        mainGameUIMoveScript.StartMoveUI(LerpType.In, Vector2.zero, new Vector2(0, 250), 1.0f);
+        TextHintFadeScript.FadeOutUI(1.0f);
+    }
+
+    public void ShowMainUI() {
+        mainGameUIMoveScript.StartMoveUI(LerpType.Out, new Vector2(0, 250), Vector2.zero, 1.0f);
+        TextHintFadeScript.FadeInUI(1.0f);
     }
 }

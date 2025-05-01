@@ -107,7 +107,7 @@ public class BaseWeaponSOEditor : Editor {
             EditorGUILayout.LabelField("Explosion Settings", EditorStyles.boldLabel);
             baseWeapon.explosionRange = EditorGUILayout.FloatField("Explosion Range", baseWeapon.explosionRange);
             baseWeapon.explosionPower = EditorGUILayout.FloatField("Explosion Power", baseWeapon.explosionPower);
-            baseWeapon.upwardsModifier = EditorGUILayout.FloatField("Updwards Modifier", baseWeapon.upwardsModifier);
+            baseWeapon.upwardsModifier = EditorGUILayout.FloatField("Upwards Modifier", baseWeapon.upwardsModifier);
             baseWeapon.explodeOnImpact = EditorGUILayout.Toggle("Explode On Impact", baseWeapon.explodeOnImpact);
 
             if (!baseWeapon.explodeOnImpact) {

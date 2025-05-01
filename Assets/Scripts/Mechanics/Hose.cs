@@ -5,7 +5,8 @@ using UnityEngine;
 public class Hose : MonoBehaviour {
     [Header("Settings")]
     [SerializeField][Range(0.0f, 1.0f)] private float chancePerTurn = 0.25f;
-    [SerializeField] private float explosionForce = 250.0f;
+    [SerializeField] private float explosionForce = 500.0f;
+    [SerializeField] private float upwardsModifier = 3;
     [SerializeField] private GameObject waterParticlePrefab = null;
 
     public bool IsSpraying { get; private set; } = false;
@@ -35,13 +36,15 @@ public class Hose : MonoBehaviour {
         IsSpraying = true;
         cameraSystem.SetCameraTarget(new Vector3(transform.position.x - 5, transform.position.y, transform.position.z), 5, 10);
 
+        yield return new WaitForSeconds(0.5f);
+
         GameObject waterParticle = Instantiate(waterParticlePrefab, transform);
         Destroy(waterParticle, 2.5f);
 
         foreach (Rigidbody ant in ants) {
             if (ant != null) {
                 ant.GetComponent<Ant>().UnFreezeMovement();
-                ant.AddExplosionForce(explosionForce, new Vector3(ant.transform.position.x + 3.0f, ant.transform.position.y, 0), 10.0f, 1);
+                ant.AddExplosionForce(explosionForce, new Vector3(ant.transform.position.x + 3.0f, ant.transform.position.y, 0), 10.0f, upwardsModifier);
             }
         }
 

@@ -382,8 +382,10 @@ public class WeaponManager : MonoBehaviour {
             turnManager.CurrentAntTurn.SetCanMove(!HasFiredWeapon);
         }
 
-        turnManager.WeaponMenuText.GetComponent<FadeScript>().FadeInUI(1.0f);
-        turnManager.FireWeaponText.GetComponent<FadeScript>().FadeOutUI(1.0f);
+        if (turnManager.WeaponMenuText.isActiveAndEnabled) {
+            turnManager.WeaponMenuText.GetComponent<FadeScript>().FadeInUI(1.0f);
+            turnManager.FireWeaponText.GetComponent<FadeScript>().FadeOutUI(1.0f);
+        }
 
         StartCoroutine(ForceCloseWeaponMenuCoroutine());
     }

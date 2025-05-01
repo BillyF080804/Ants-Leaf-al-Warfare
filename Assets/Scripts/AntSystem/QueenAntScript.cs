@@ -13,13 +13,9 @@ public class QueenBaseAntScript : Ant {
     [Header("Queen Ant Settings")]
     [SerializeField] private SkinnedMeshRenderer hat;
     [SerializeField] private SkinnedMeshRenderer leafWrap;
-
-	private CameraSystem cameraSystem;
-
 	[SerializeField] private QueenAttack AttackScript;
 
     private void Start() {
-        cameraSystem = FindFirstObjectByType<CameraSystem>();
 		InitialiseQueenAttack();
 
 	}
@@ -64,14 +60,10 @@ public class QueenBaseAntScript : Ant {
 				AttackScript.ActivateAttack(attackLevel, this, transform.position);
 			}
 
-			if (antInfo.queenType == AntSO.QueenType.Bullet) {
-				cameraSystem.SetCameraTarget(null);
-				cameraSystem.CameraDelay(3.0f);
-			}
-
-			attackLevel = 0;
+            attackLevel = 0;
 			usedAttack = true;
-			turnManager.EndTurn();
+            turnManager.HideMainUI();
+            turnManager.EndTurn();
 		}
 	}
 
