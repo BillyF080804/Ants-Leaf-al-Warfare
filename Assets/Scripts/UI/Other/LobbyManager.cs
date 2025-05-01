@@ -27,6 +27,11 @@ public class LobbyManager : MonoBehaviour {
     private Coroutine readyCountdownCoroutine = null;
     private List<Player> playerList = new List<Player>();
 
+    private void Start() {
+        LoadingUI loadingUI = FindFirstObjectByType<LoadingUI>();
+        loadingUI.OpenShutter();
+    }
+
     //Called when a player presses the join button on their controller
     public void OnPlayerJoined(PlayerInput input) {
         if (playerList.Count < 4) {
