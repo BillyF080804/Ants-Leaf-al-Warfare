@@ -92,6 +92,7 @@ public class Ant : MonoBehaviour {
     public void OnMove(InputValue value) {
 		Vector2 movement = value.Get<Vector2>();
 		moveVector = new Vector3(movement.x, 0, 0);
+		UnFreezeMovement();
 
         if (movement.x < 0) {
 			ResetAnimation();

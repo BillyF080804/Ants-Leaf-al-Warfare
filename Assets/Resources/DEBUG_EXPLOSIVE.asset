@@ -14,15 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: DEBUG EXPLOSIVE
   weaponDescription: Insta kill explosive weapon
+  knockbackLevel: 0
   unlimitedUses: 1
   useAutomaticRotation: 1
   weaponIcon: {fileID: 21300000, guid: fd880f5916529e94392384c73cc8f1b8, type: 3}
   weaponPrefab: {fileID: 2035224743872689002, guid: 48600db732ecebc49831131511799a3a, type: 3}
+  worldWeaponPrefab: {fileID: 0}
+  worldWeaponScale: 1
+  worldWeaponLocalPos: {x: 0, y: 0, z: 0}
+  worldWeaponRotation: {x: 0, y: 0, z: 0}
   baseDamage: 100
   weaponSpeed: 25
   useGravity: 1
   weaponRandomisation: 0
   explosive: 1
+  hasKnockback: 0
   isMelee: 0
   isMultiShot: 0
   isSpray: 0
@@ -31,11 +37,12 @@ MonoBehaviour:
   cameraShakeOnFire: 1
   cameraShakeOnImpact: 1
   hasVFX: 1
-  hasSounds: 0
+  hasSounds: 1
   explodeOnImpact: 1
   explosionRange: 10
   explosionPower: 5
   fuseTimer: 5
+  maxNumOfBounces: 3
   vfxSize: 1
   vfxDuration: 2.5
   vfxObject: {fileID: 2169185026088089853, guid: b22ffd9e1b7000c4daadabd9b6b95113, type: 3}
@@ -55,5 +62,5 @@ MonoBehaviour:
   sprayAreaVFX: {fileID: 0}
   cameraShakeDuration: 0.25
   cameraShakeIntensity: 1
-  shootSound: {fileID: 0}
+  shootSound: {fileID: 8300000, guid: 9cb615b4896d0f441a339ab09cf3a17e, type: 3}
   impactSound: {fileID: 0}

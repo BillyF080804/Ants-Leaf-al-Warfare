@@ -13,16 +13,22 @@ public class BBQScript : MonoBehaviour {
     [SerializeField] private GameObject fireParticlePrefab;
     [SerializeField] private List<Transform> burnTransforms = new List<Transform>();
 
+    [Header("Audio Settings")]
+    [SerializeField] private AudioClip collapseSound;
+    [SerializeField] private AudioClip burnSound;
+
     public bool IsBurning { get; private set; } = false;
     private bool hasCollapsed = false;
     private List<Ant> ants = new List<Ant>();
     private List<Ant> burnerAnts = new List<Ant>();
 
     private CameraSystem cameraSystem;
+    private AudioPlayer audioPlayer;
     private Animator animator;
 
     private void Start() {
         cameraSystem = FindFirstObjectByType<CameraSystem>();
+        audioPlayer = GetComponent<AudioPlayer>();
         animator = GetComponent<Animator>();
     }
 
@@ -65,7 +71,10 @@ public class BBQScript : MonoBehaviour {
         hasCollapsed = true;
         cameraSystem.StartCameraShake(3.0f, 3.0f);
         cameraSystem.SetCameraTarget(transform.position, 5.0f, 30.0f);
+        cameraSystem.CameraDelay(4.0f);
 
+        audioPlayer.ChangeClip(collapseSound);
+        audioPlayer.PlayClip();
         animator.SetTrigger("CollapseBBQ");
 
         foreach (Ant ant in ants) {
@@ -94,6 +103,8 @@ public class BBQScript : MonoBehaviour {
         IsBurning = true;
         cameraSystem.StartCameraShake(0.5f, 1.0f);
         cameraSystem.SetCameraTarget(burnTransforms[1].position, 5.0f, 30.0f);
+        audioPlayer.ChangeClip(burnSound);
+        audioPlayer.PlayClip();
 
         foreach (Transform transform in burnTransforms) {
             GameObject fire = Instantiate(fireParticlePrefab, transform);

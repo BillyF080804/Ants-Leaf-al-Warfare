@@ -28,6 +28,7 @@ public class DestructableBridge : MonoBehaviour {
         cameraSystem.SetCameraTarget(transform.position, 10.0f, 30.0f);
         cameraSystem.CameraDelay(5.0f);
 
+        GetComponent<AudioPlayer>().PlayClip();
         animator.SetTrigger("OnDestruct");
     }
 }

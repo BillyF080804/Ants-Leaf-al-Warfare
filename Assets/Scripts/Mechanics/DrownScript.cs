@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DrownScript : MonoBehaviour {
@@ -22,6 +20,7 @@ public class DrownScript : MonoBehaviour {
             cameraSystem.SetCameraLookAtTarget(other.transform);
             cameraSystem.SetCameraTarget(cameraOverviewPos, true);
             cameraSystem.CameraDelay(cameraDelay);
+            GetComponent<AudioPlayer>().PlayClip();
 
             ant.isDrowning = true;
             ant.SetCanMove(false);

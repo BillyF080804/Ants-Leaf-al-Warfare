@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Flamer
   weaponDescription: 'Short Range FlameThrower. FEEL THE BURN! '
+  knockbackLevel: 0
   unlimitedUses: 0
   useAutomaticRotation: 0
   weaponIcon: {fileID: 21300000, guid: 64e4c844c20f46249ab196ad9f7ceabd, type: 3}
@@ -27,6 +28,7 @@ MonoBehaviour:
   useGravity: 1
   weaponRandomisation: 0
   explosive: 0
+  hasKnockback: 0
   isMelee: 0
   isMultiShot: 0
   isSpray: 1
@@ -35,11 +37,12 @@ MonoBehaviour:
   cameraShakeOnFire: 0
   cameraShakeOnImpact: 0
   hasVFX: 0
-  hasSounds: 0
+  hasSounds: 1
   explodeOnImpact: 1
   explosionRange: 5
   explosionPower: 5
   fuseTimer: 5
+  maxNumOfBounces: 3
   vfxSize: 1
   vfxDuration: 2.5
   vfxObject: {fileID: 0}
@@ -59,5 +62,5 @@ MonoBehaviour:
   sprayAreaVFX: {fileID: 4215415592903712972, guid: b14710584a1d9914eaa828951e70e227, type: 3}
   cameraShakeDuration: 0.25
   cameraShakeIntensity: 1
-  shootSound: {fileID: 0}
+  shootSound: {fileID: 8300000, guid: c6df5115331f63247b2ade21a17c6630, type: 3}
   impactSound: {fileID: 0}

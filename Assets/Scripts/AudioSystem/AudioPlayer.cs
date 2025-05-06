@@ -1,22 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioPlayer : MonoBehaviour
-{
-	[SerializeField] AudioClip audioClip;
-	[SerializeField] AudioSource audioSource;
+[RequireComponent(typeof(AudioSource))]
+public class AudioPlayer : MonoBehaviour {
+	[Header("Settings")]
+	[SerializeField] private bool playOnAwake = false;
+	[SerializeField] private AudioClip audioClip;
+	private AudioSource audioSource;
 
 	private void Start() {
 		audioSource = GetComponent<AudioSource>();
 		audioSource.clip = audioClip;
-	}
+
+        audioSource.playOnAwake = playOnAwake;
+
+    }
 
 	public void PlayClip() {
 		audioSource.Play();
 	}
 
-	public void StopClip() { audioSource.Stop(); }
+	public void StopClip() { 
+		audioSource.Stop(); 
+	}
 
 	public void PauseClip(bool pause) {
 		if (pause) {

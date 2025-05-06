@@ -49,7 +49,7 @@ public class LobbyManager : MonoBehaviour {
             playerCard.waitingOnPlayerBackground.StartMoveUI(LerpType.In, Vector2.zero, new Vector2(0, 500), 1.0f, true);
             playerCard.mainBackground.SetActive(true);
 
-			ChangeQueenSpecialism("Bullet", playerCard, player);
+			ChangeQueenSpecialism("Bee", playerCard, player);
 
 			player.playerInfo.playerNum = playerNum;
             player.playerInfo.playerInput = input;

@@ -6,10 +6,12 @@ using UnityEngine;
 public class WeaponScript : MonoBehaviour {
     public BaseWeaponSO weaponInfo;
     private CameraSystem cameraSystem;
+    private WeaponManager weaponManager;
     private int numOfBounces = 0;
 
     private void Awake() {
         cameraSystem = FindFirstObjectByType<CameraSystem>();
+        weaponManager = FindFirstObjectByType<WeaponManager>();
     }
 
     public void SetupWeapon(BaseWeaponSO weapon, Collider objectCollider) {
@@ -41,6 +43,11 @@ public class WeaponScript : MonoBehaviour {
                 cameraSystem.StartCameraShake(weaponInfo.cameraShakeDuration, weaponInfo.cameraShakeIntensity);
             }
 
+            if (weaponInfo.hasSounds && weaponInfo.impactSound != null) {
+                weaponManager.AudioPlayer.ChangeClip(weaponInfo.impactSound);
+                weaponManager.AudioPlayer.PlayClip();
+            }
+
             if (weaponInfo.hasKnockback) {
                 DealKnockback(collision.gameObject);
             }
@@ -52,6 +59,11 @@ public class WeaponScript : MonoBehaviour {
 
             if (weaponInfo.cameraShakeOnImpact) {
                 cameraSystem.StartCameraShake(weaponInfo.cameraShakeDuration, weaponInfo.cameraShakeIntensity);
+            }
+
+            if (weaponInfo.hasSounds && weaponInfo.impactSound != null) {
+                weaponManager.AudioPlayer.ChangeClip(weaponInfo.impactSound);
+                weaponManager.AudioPlayer.PlayClip();
             }
 
             if (numOfBounces > weaponInfo.maxNumOfBounces) {
@@ -107,6 +119,11 @@ public class WeaponScript : MonoBehaviour {
 
         if (weaponInfo.cameraShakeOnImpact) {
             cameraSystem.StartCameraShake(weaponInfo.cameraShakeDuration, weaponInfo.cameraShakeIntensity);
+        }
+
+        if (weaponInfo.hasSounds && weaponInfo.impactSound != null) {
+            weaponManager.AudioPlayer.ChangeClip(weaponInfo.impactSound);
+            weaponManager.AudioPlayer.PlayClip();
         }
 
         Destroy(gameObject);

@@ -28,6 +28,7 @@ MonoBehaviour:
   useGravity: 1
   weaponRandomisation: 1
   explosive: 0
+  hasKnockback: 0
   isMelee: 0
   isMultiShot: 0
   isSpray: 0
@@ -36,7 +37,7 @@ MonoBehaviour:
   cameraShakeOnFire: 0
   cameraShakeOnImpact: 0
   hasVFX: 0
-  hasSounds: 0
+  hasSounds: 1
   explodeOnImpact: 1
   explosionRange: 5
   explosionPower: 5
@@ -61,5 +62,5 @@ MonoBehaviour:
   sprayAreaVFX: {fileID: 0}
   cameraShakeDuration: 0.25
   cameraShakeIntensity: 1
-  shootSound: {fileID: 0}
+  shootSound: {fileID: 8300000, guid: 9cb615b4896d0f441a339ab09cf3a17e, type: 3}
   impactSound: {fileID: 0}

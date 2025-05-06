@@ -312,9 +312,11 @@ public class TurnManager : MonoBehaviour {
         CurrentPlayerTurn = null;
         cameraSystem.SetCameraTarget(null);        
         weaponManager.EndTurn();
-        endTurnEvent.Invoke();
         onTurnEnded?.Invoke();
         yield return new WaitUntil(() => weaponManager.WeaponMenuOpen == false);
+
+        endTurnEvent.Invoke();
+        yield return new WaitUntil(() => cameraSystem.CameraDelayActive == false);
 
         if (allAntsMoved) {
 

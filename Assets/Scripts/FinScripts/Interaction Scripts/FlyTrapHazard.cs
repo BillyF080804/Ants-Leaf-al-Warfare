@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 public class FlyTrapHazard: MonoBehaviour
 {
     [Header("Variables for Attack")]
-    public Ant currentAnt;
+    private Ant currentAnt;
     [SerializeField] private int recoveryTurns;
     [SerializeField] private int dazeTurns;
     private List<Ant> antList = new List<Ant>();
@@ -21,10 +20,19 @@ public class FlyTrapHazard: MonoBehaviour
     [SerializeField] float timeToAttack;
     [SerializeField] private Animator animator;
 
+    [Header("Launch Settings")]
+    [SerializeField] private float minPower = 10;
+    [SerializeField] private float maxPower = 15;
+
     private bool chompedThisTurn;
     private int recoveryTurnsPassed = 0;
     private float timePassedForAttack;
 
+    private CameraSystem cameraSystem;
+
+    private void Start() {
+        cameraSystem = FindFirstObjectByType<CameraSystem>();   
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -61,10 +69,12 @@ public class FlyTrapHazard: MonoBehaviour
         }
     }
 
-    private void Attack()
-    {
-        foreach(Ant ant in antList)
-        {
+    private void Attack() {
+        cameraSystem.SetCameraLookAtTarget(null);
+        cameraSystem.SetCameraTarget(transform.position, 0, -10);
+        cameraSystem.CameraDelayActive = true;
+
+        foreach(Ant ant in antList) {
             ant.SetCanMove(false);
         }
         canvas.SetActive(false);
@@ -89,7 +99,7 @@ public class FlyTrapHazard: MonoBehaviour
     private void Recovery()
     {
         Debug.Log("Recovered");
-        recoveryTurns = 0;
+        recoveryTurnsPassed = 0;
         animator.SetBool(restingBool, false);
         chompedThisTurn = false;
     }
@@ -102,14 +112,31 @@ public class FlyTrapHazard: MonoBehaviour
         }
     }
 
-    public void AttackAnts()
-    {
-        foreach (Ant ant in antList)
-        {
-            Debug.Log(attackDamage);
+    public void AttackAnts() {
+        foreach (Ant ant in antList) {
+            float value = 0;
+
+            if (Random.value > 0.5) {
+                value = Random.Range(2.0f, 5.0f);
+            }
+            else {
+                value = Random.Range(-5.0f, -2.0f);
+            }
+
+
+            ant.UnFreezeMovement();
+            ant.GetComponent<Rigidbody>().AddExplosionForce(Random.Range(minPower, maxPower), new Vector3(ant.transform.position.x + value, ant.transform.position.y, ant.transform.position.z), 5.0f, 3, ForceMode.Impulse);
             ant.TakeDamage(attackDamage);
             ant.SetCanMove(true);
         }
+
+        StartCoroutine(AttackCoroutine());
+    }
+
+    private IEnumerator AttackCoroutine() {
+        yield return new WaitForSeconds(1.5f);
+        cameraSystem.SetCameraTarget(FindFirstObjectByType<TurnManager>().CurrentAntTurn.transform);
+        cameraSystem.CameraDelayActive = false;
     }
 
     public void backToIdle()

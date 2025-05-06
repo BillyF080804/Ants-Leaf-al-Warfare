@@ -45,9 +45,10 @@ public class WeaponManager : MonoBehaviour {
     public bool WeaponsActive { get; private set; } = false;
     public bool HasFiredWeapon { get; private set; } = false;
     public BaseWeaponSO WeaponSelected { get; private set; }
+    public AudioPlayer AudioPlayer { get; private set; }
 
     private CameraSystem cameraSystem;
-    private TurnManager turnManager;
+    private TurnManager turnManager;    
     private List<GameObject> activeWeapons = new List<GameObject>();
     private List<BaseWeaponSO> allWeapons = new List<BaseWeaponSO>();
     private List<WeaponMenuIconScript> weaponIcons = new List<WeaponMenuIconScript>();
@@ -55,6 +56,7 @@ public class WeaponManager : MonoBehaviour {
     private void Start() { 
         cameraSystem = FindFirstObjectByType<CameraSystem>();
         turnManager = FindFirstObjectByType<TurnManager>();
+        AudioPlayer = GetComponent<AudioPlayer>();
         allWeapons = Resources.LoadAll<BaseWeaponSO>("").ToList();
         aimArrowDefaultSize = aimArrow.localScale.x;
 
@@ -141,6 +143,11 @@ public class WeaponManager : MonoBehaviour {
         if (weaponInfo.cameraShakeOnFire) {
             cameraSystem.StartCameraShake(weaponInfo.cameraShakeDuration, weaponInfo.cameraShakeIntensity);
         }
+
+        if (weaponInfo.hasSounds && weaponInfo.shootSound != null) {
+            AudioPlayer.ChangeClip(weaponInfo.shootSound);
+            AudioPlayer.PlayClip();
+        }
     }
 
     public void UseMeleeWeapon(BaseWeaponSO weaponInfo, Transform playerPosition) {
@@ -167,6 +174,11 @@ public class WeaponManager : MonoBehaviour {
 
             if (weaponInfo.cameraShakeOnFire) {
                 cameraSystem.StartCameraShake(weaponInfo.cameraShakeDuration, weaponInfo.cameraShakeIntensity);
+            }
+
+            if (weaponInfo.hasSounds && weaponInfo.shootSound != null) {
+                AudioPlayer.ChangeClip(weaponInfo.shootSound);
+                AudioPlayer.PlayClip();
             }
 
             cameraSystem.CameraDelay(weaponInfo.cameraDelay);
@@ -204,6 +216,11 @@ public class WeaponManager : MonoBehaviour {
 
             if (weaponInfo.cameraShakeOnFire) {
                 cameraSystem.StartCameraShake(weaponInfo.cameraShakeDuration, weaponInfo.cameraShakeIntensity);
+            }
+
+            if (weaponInfo.hasSounds && weaponInfo.shootSound != null) {
+                AudioPlayer.ChangeClip(weaponInfo.shootSound);
+                AudioPlayer.PlayClip();
             }
 
             activeWeapons.Add(sprayArea);
