@@ -34,17 +34,19 @@ public class IceAttack : QueenAttack {
 
 	private IEnumerator AttackCoroutine(int attackLevel, Ant antInfoScript, Vector3 position) {
 		int amountOfSpikes = iceSpikeAmount;
-		cameraSystem.SetCameraTarget(null);
+		
 		cameraSystem.SetCameraLookAtTarget(null);
 		cameraSystem.CameraDelay(cameraDelay);
 
 		for (int i = 0; i < amountOfSpikes; i++) {
 			Vector2 spawnPos = new Vector2(CheckPos(), YPos);
+			cameraSystem.SetCameraTarget(spawnPos, 10, 10);
+			yield return new WaitForSeconds(1);
 
 			GameObject tempBullet = Instantiate(iceSpikePrefab, spawnPos, Quaternion.identity);
-			tempBullet.GetComponent<WeaponScript>().SetupWeapon(weaponType, null);
-			tempBullet.GetComponent<Rigidbody>().velocity = Vector3.down * iceSpikeSpeed;
-			yield return new WaitForSeconds(Random.Range(0.1f, 0.5f));
+			tempBullet.GetComponent<IceSpikeScript>().InitialiseValues(attackPerLevel, baseSlowEffect);
+			tempBullet.GetComponent<Rigidbody>().velocity = Vector3.up * iceSpikeSpeed;
+			yield return new WaitForSeconds(3);
 		}
 	}
 
@@ -59,6 +61,9 @@ public class IceAttack : QueenAttack {
 
 		return tempX;
 	}
+
+
+
 
 	public override void InitialiseValues(GameObject attackInfo) {
 		iceSpikeSpeed = attackInfo.GetComponent<IceAttack>().iceSpikeSpeed;

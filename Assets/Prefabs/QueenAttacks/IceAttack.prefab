@@ -51,6 +51,6 @@ MonoBehaviour:
   weaponType: {fileID: 11400000, guid: f46025caeba5dfe48aca1c0992f9184c, type: 2}
   iceSpikeAmount: 5
   iceSpikePrefab: {fileID: 180523026097332404, guid: f5ee292c0be2c844ea5739265c916baf, type: 3}
-  YPos: 100
+  YPos: -5
   safeRadius: 3
-  cameraDelay: 5
+  cameraDelay: 20

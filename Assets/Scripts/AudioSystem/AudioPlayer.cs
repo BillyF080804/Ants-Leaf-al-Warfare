@@ -25,4 +25,9 @@ public class AudioPlayer : MonoBehaviour
 			audioSource.UnPause();
 		}
 	}
+
+	public void ChangeClip(AudioClip newClip) {
+		audioClip = newClip;
+		audioSource.clip = audioClip;
+	}
 }
