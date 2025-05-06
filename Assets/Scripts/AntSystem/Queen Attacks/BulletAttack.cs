@@ -63,5 +63,6 @@ public class BulletAttack : QueenAttack {
 		amountOfBulletsPerLevel = attackInfo.GetComponent<BulletAttack>().amountOfBulletsPerLevel;
 		YPos = attackInfo.GetComponent<BulletAttack>().YPos;
 		safeRadius = attackInfo.GetComponent<BulletAttack>().safeRadius;
-	}
+        cameraDelay = attackInfo.GetComponent<BulletAttack>().cameraDelay;
+    }
 }

@@ -40,7 +40,7 @@ public class IceAttack : QueenAttack {
 
 		for (int i = 0; i < amountOfSpikes; i++) {
 			Vector2 spawnPos = new Vector2(CheckPos(), YPos);
-			cameraSystem.SetCameraTarget(spawnPos, 10, 10);
+			cameraSystem.SetCameraTarget(spawnPos, 10, 15);
 			yield return new WaitForSeconds(1);
 
 			GameObject tempBullet = Instantiate(iceSpikePrefab, spawnPos, Quaternion.identity);
@@ -62,9 +62,6 @@ public class IceAttack : QueenAttack {
 		return tempX;
 	}
 
-
-
-
 	public override void InitialiseValues(GameObject attackInfo) {
 		iceSpikeSpeed = attackInfo.GetComponent<IceAttack>().iceSpikeSpeed;
 		attackPerLevel = attackInfo.GetComponent<IceAttack>().attackPerLevel;
@@ -75,5 +72,6 @@ public class IceAttack : QueenAttack {
 		iceSpikePrefab = attackInfo.GetComponent<IceAttack>().iceSpikePrefab;
 		YPos = attackInfo.GetComponent<IceAttack>().YPos;
 		safeRadius = attackInfo.GetComponent<IceAttack>().safeRadius;
+		cameraDelay = attackInfo.GetComponent<IceAttack>().cameraDelay;
 	}
 }

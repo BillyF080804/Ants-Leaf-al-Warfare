@@ -282,12 +282,12 @@ public class Player : MonoBehaviour {
                 return uiSprites[7];
             case "L1":
                 return uiSprites[8];
-            //case "L1 Equivalent for xbox":
-            //    return uiSprites[8];
+            case "LB":
+                return uiSprites[8];
             case "R1":
                 return uiSprites[9];
-            //case "R1 Equivalent for xbox":
-            //    return uiSprites[9];
+            case "RB":
+                return uiSprites[9];
             case "Enter":
                 return uiSprites[10];
             case "F":
