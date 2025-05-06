@@ -387,6 +387,10 @@ public class WeaponManager : MonoBehaviour {
             turnManager.FireWeaponText.GetComponent<FadeScript>().FadeOutUI(1.0f);
         }
 
+        ForceCloseWeaponMenu();
+    }
+
+    public void ForceCloseWeaponMenu() {
         StartCoroutine(ForceCloseWeaponMenuCoroutine());
     }
 

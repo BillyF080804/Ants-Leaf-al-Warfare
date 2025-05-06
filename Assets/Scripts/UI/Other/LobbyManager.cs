@@ -29,7 +29,10 @@ public class LobbyManager : MonoBehaviour {
 
     private void Start() {
         LoadingUI loadingUI = FindFirstObjectByType<LoadingUI>();
-        loadingUI.OpenShutter();
+
+        if (loadingUI != null) {
+            loadingUI.OpenShutter();
+        }
     }
 
     //Called when a player presses the join button on their controller

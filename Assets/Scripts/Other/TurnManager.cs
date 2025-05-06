@@ -44,6 +44,7 @@ public class TurnManager : MonoBehaviour {
     [SerializeField] private GameObject blackscreen;
     [SerializeField] private GameObject levelNameText;
     [SerializeField] private GameObject skippingTurnText;
+    [SerializeField] private PauseMenuScript pauseMenu;
 
     [field: Header("Text Hints")]
     [field: SerializeField] public FadeScript TextHintFadeScript { get; private set; }
@@ -62,6 +63,8 @@ public class TurnManager : MonoBehaviour {
     public static OnTurnEnded onTurnEnded;
 
     public int CurrentRound { get; private set; } = 0;
+    public bool IsPaused { get; private set; } = false;
+    public bool PauseInProgress { get; private set; } = false;
     public Player CurrentPlayerTurn { get; private set; } = null;
     public Ant CurrentAntTurn { get; private set; } = null; //Tracks which ant's turn it currently is
     public List<GameObject> QueenHealthUI { get; private set; } = new List<GameObject>();
@@ -262,6 +265,10 @@ public class TurnManager : MonoBehaviour {
         StartCoroutine(PauseTurnTimerCoroutine(pauseDuration));
     }
 
+    public void SetPauseTurnTimer(bool _turnTimerPaused) {
+        turnTimerPaused = _turnTimerPaused;
+    }
+
     private IEnumerator PauseTurnTimerCoroutine(float pauseDuration) {
         turnTimerPaused = true;
         yield return new WaitForSeconds(pauseDuration);
@@ -431,5 +438,36 @@ public class TurnManager : MonoBehaviour {
     public void ShowMainUI() {
         mainGameUIMoveScript.StartMoveUI(LerpType.Out, new Vector2(0, 250), Vector2.zero, 1.0f);
         TextHintFadeScript.FadeInUI(1.0f);
+    }
+
+    public void PauseGame() {
+        PauseInProgress = true;
+        IsPaused = true;
+
+        weaponManager.ForceCloseWeaponMenu();
+        HideMainUI();
+        SetPauseTurnTimer(true);
+        pauseMenu.gameObject.SetActive(true);
+        pauseMenu.DisplayPauseMenu();
+        StartCoroutine(PauseInProgressCoroutine(false));
+    }
+
+    private IEnumerator PauseInProgressCoroutine(bool unPausing) {
+        yield return new WaitForSeconds(1.0f);
+        PauseInProgress = false;
+
+        if (unPausing) {
+            IsPaused = false;
+            pauseMenu.gameObject.SetActive(false);
+            SetPauseTurnTimer(false);
+        }
+    }
+
+    public void UnPauseGame() {
+        PauseInProgress = true;
+
+        pauseMenu.HidePauseMenu();
+        ShowMainUI();
+        StartCoroutine(PauseInProgressCoroutine(true));
     }
 }

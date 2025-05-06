@@ -176,6 +176,18 @@ public class Player : MonoBehaviour {
         }
     }
 
+    //Called when the player presses the pause button
+    private void OnPause() {
+        if (CheckActionIsValid() && turnManager.PauseInProgress == false) {
+            if (turnManager.IsPaused) {
+                turnManager.UnPauseGame();
+            }
+            else {
+                turnManager.PauseGame();
+            }
+        }
+    }
+
     private bool CheckActionIsValid() {
         if (turnManager != null && weaponManager != null && SceneManager.GetActiveScene().name.Contains("Game") && turnManager.CurrentPlayerTurn == this && turnManager.CurrentAntTurn != null) {
             return true;
