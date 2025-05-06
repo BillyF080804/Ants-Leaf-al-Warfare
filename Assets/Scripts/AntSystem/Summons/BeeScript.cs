@@ -15,6 +15,13 @@ public class BeeScript : MonoBehaviour
 	[SerializeField]
 	List<EffectScript> effects;
 
+	[SerializeField] AudioPlayer audioPlayer;
+
+	private void Start() {
+		audioPlayer = GetComponent<AudioPlayer>();
+	}
+
+
 	public void InitialiseValues(Ant antInfoScript, int attackLevel) {
 		ownedPlayer = antInfoScript.ownedPlayer;
 		damageToDeal = damageToDeal * attackLevel;
@@ -22,6 +29,7 @@ public class BeeScript : MonoBehaviour
 	}
 
 	public void Attack() {
+		audioPlayer.PlayClip();
 		antToAttack = ClosestAnt();
 		Vector3.MoveTowards(transform.position, antToAttack.transform.position, 1);
 	}

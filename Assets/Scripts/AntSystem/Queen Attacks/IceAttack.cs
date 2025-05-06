@@ -33,6 +33,7 @@ public class IceAttack : QueenAttack {
 	}
 
 	private IEnumerator AttackCoroutine(int attackLevel, Ant antInfoScript, Vector3 position) {
+		audioPlayer.PlayClip();
 		int amountOfSpikes = iceSpikeAmount;
 		
 		cameraSystem.SetCameraLookAtTarget(null);
@@ -44,7 +45,12 @@ public class IceAttack : QueenAttack {
 			yield return new WaitForSeconds(1);
 
 			GameObject tempBullet = Instantiate(iceSpikePrefab, spawnPos, Quaternion.identity);
-			tempBullet.GetComponent<IceSpikeScript>().InitialiseValues(attackPerLevel, baseSlowEffect);
+			if(attackLevel != 3) {
+				tempBullet.GetComponent<IceSpikeScript>().InitialiseValues(attackPerLevel, baseSlowEffect);
+			} else {
+				tempBullet.GetComponent<IceSpikeScript>().InitialiseValues(attackPerLevel, maxLevelSlowEffect);
+			}
+			
 			tempBullet.GetComponent<Rigidbody>().velocity = Vector3.up * iceSpikeSpeed;
 			yield return new WaitForSeconds(3);
 		}

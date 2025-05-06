@@ -18,6 +18,7 @@ public class WeaverAttack : QueenAttack {
 	int safeRadius = 5;
 
 	public override void ActivateAttack(int attackLevel, Ant antInfoScript, Vector3 position) {
+		audioPlayer.PlayClip();
 		for (int i = 0; i < attackLevel; i++) {
 			Vector3 tempPos = CheckArea();
 			GameObject tempArea = Instantiate(areaToSpawn, tempPos, Quaternion.identity);

@@ -18,6 +18,7 @@ public class PharaohAttack : QueenAttack {
     }
 
     public override void ActivateAttack(int attackLevel, Ant antInfoScript, Vector3 position, TurnManager turnManager) {
+		audioPlayer.PlayClip();
 		cameraSystem.SetCameraTarget(position, 5, 10);
 		cameraSystem.CameraDelay(3.0f);
 

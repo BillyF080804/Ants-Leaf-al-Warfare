@@ -10,6 +10,7 @@ public class DraculaAttack : QueenAttack {
 	public List<float> percentages;
 
 	public override void ActivateAttack(int attackLevel, Ant antInfoScript) {
+		audioPlayer.PlayClip();
 		Ant[] antList = FindObjectsOfType<Ant>();
 		List<Ant> antList2 = new List<Ant>();
 		for (int i = 0; i < antList.Length; i++) {

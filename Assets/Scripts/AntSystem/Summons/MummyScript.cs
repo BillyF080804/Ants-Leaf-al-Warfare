@@ -9,7 +9,11 @@ public class MummyScript : Ant
 
 	EffectScript effect;
 	public int attackDamage;
+	[SerializeField] AudioPlayer audioPlayer;
 
+	private void Start() {
+		audioPlayer = GetComponent<AudioPlayer>();
+	}
 
 	public void InitialiseMummy(EffectScript _effect, PlayerList _ownedPlayer) {
 		effect = _effect;
