@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c76268df7a3d27b4397d0d1e6cbf16c9, type: 3}
-  m_Name: nETTLE
+  m_Name: Nettle
   m_EditorClassIdentifier: 
-  weaponName: NettleStinger
+  weaponName: Nettle Stinger
   weaponDescription: 'Strike with a poisonous Nettle! '
   knockbackLevel: 0
   unlimitedUses: 0

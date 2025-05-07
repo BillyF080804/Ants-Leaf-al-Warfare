@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c76268df7a3d27b4397d0d1e6cbf16c9, type: 3}
   m_Name: RockBarage
   m_EditorClassIdentifier: 
-  weaponName: RockSlide
+  weaponName: Rock Slide
   weaponDescription: 'When one pebble isn''t enough! Launch 3 big pebbles! '
   knockbackLevel: 1
   unlimitedUses: 0

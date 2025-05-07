@@ -14,7 +14,12 @@ public class BridgeCollider : MonoBehaviour {
             bridge.TakeDamage(weaponScript.weaponInfo.baseDamage);
 
             if (weaponScript.weaponInfo.hasVFX == true && weaponScript.weaponInfo.vfxObject != null) {
-                weaponScript.CreateVFX();
+                if (weaponScript.weaponInfo.explosive && weaponScript.weaponInfo.explodeOnImpact) {
+                    weaponScript.CreateVFX();
+                }
+                else if (weaponScript.weaponInfo.explosive == false) {
+                    weaponScript.CreateVFX();
+                }                
             }
 
             cameraSystem.StartCameraShake(0.5f, 1.0f);

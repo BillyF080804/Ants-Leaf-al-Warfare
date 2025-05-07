@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c76268df7a3d27b4397d0d1e6cbf16c9, type: 3}
   m_Name: WindPusher
   m_EditorClassIdentifier: 
-  weaponName: AirBlower
+  weaponName: Air Blower
   weaponDescription: Blow your foes away!
   knockbackLevel: 2
   unlimitedUses: 1
