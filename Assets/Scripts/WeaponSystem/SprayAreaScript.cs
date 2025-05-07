@@ -19,11 +19,12 @@ public class SprayAreaScript : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject != turnManager.CurrentAntTurn.gameObject && other.TryGetComponent(out Ant ant)) {
+            Debug.Log("inside");
             ant.TakeDamage(weaponInfo.baseDamage);
 
             if (weaponInfo.sprayMover == true) {
                 ant.UnFreezeMovement();
-                ant.GetComponent<Rigidbody>().AddExplosionForce(weaponInfo.sprayStrength, turnManager.CurrentAntTurn.transform.position, weaponInfo.sprayLength, 2f);
+                ant.GetComponent<Rigidbody>().AddExplosionForce(weaponInfo.sprayStrength, turnManager.CurrentAntTurn.transform.position, weaponInfo.sprayLength, 2f, ForceMode.Impulse);
             }
 
             if (weaponInfo.weaponEffect != null) {

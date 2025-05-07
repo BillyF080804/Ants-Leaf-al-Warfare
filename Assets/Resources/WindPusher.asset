@@ -18,20 +18,20 @@ MonoBehaviour:
   unlimitedUses: 1
   useAutomaticRotation: 0
   weaponIcon: {fileID: 21300000, guid: 54d4a534567a1f4439a208ed01f34fdc, type: 3}
-  weaponPrefab: {fileID: 2035224743872689002, guid: 48600db732ecebc49831131511799a3a, type: 3}
+  weaponPrefab: {fileID: 4823009550829533390, guid: 3673142af910dd34f9467e7305110f6b, type: 3}
   worldWeaponPrefab: {fileID: 856419426147675465, guid: b8f205c911a98194d9dfba35675805a6, type: 3}
   worldWeaponScale: 0.5
   worldWeaponLocalPos: {x: 0, y: 0.264, z: -0.15}
   worldWeaponRotation: {x: 0, y: 90, z: -90}
   baseDamage: 0
   weaponSpeed: 25
-  useGravity: 1
+  useGravity: 0
   weaponRandomisation: 0
   explosive: 0
-  hasKnockback: 1
+  hasKnockback: 0
   isMelee: 0
   isMultiShot: 0
-  isSpray: 0
+  isSpray: 1
   weaponEffect: {fileID: 0}
   cameraDelay: 4
   cameraShakeOnFire: 0
@@ -45,7 +45,7 @@ MonoBehaviour:
   maxNumOfBounces: 3
   vfxSize: 1
   vfxDuration: 2.5
-  vfxObject: {fileID: 0}
+  vfxObject: {fileID: 5972204552708681510, guid: 272efd046b9099b4ea17d6d229e7f62e, type: 3}
   knockbackStrength: 5
   upwardsModifier: 1
   numOfShots: 2
@@ -53,7 +53,7 @@ MonoBehaviour:
   minimumRandomness: 0.8
   maximumRandomness: 1.2
   sprayMover: 1
-  sprayStrength: 25
+  sprayStrength: 100
   sprayLength: 3
   sprayHeight: 2
   sprayDuration: 2.5
