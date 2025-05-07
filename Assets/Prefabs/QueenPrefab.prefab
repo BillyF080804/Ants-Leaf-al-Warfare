@@ -356,7 +356,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 500
   m_TargetDisplay: 0
 --- !u!114 &7412700998030523922
 MonoBehaviour:
@@ -631,8 +631,6 @@ MonoBehaviour:
   antInfo: {fileID: 11400000, guid: 8286ba19baf6f9642b2965225b02bf8c, type: 2}
   hasHadTurn: 0
   ownedPlayer: 0
-  moveVector: {x: 0, y: 0, z: 0}
-  canJump: 1
   effects: []
   hasLifeSteal: 0
   lifeStealPercent: 0
@@ -646,14 +644,12 @@ MonoBehaviour:
   healthText: {fileID: 8572191964539648485}
   healthTextBackground: {fileID: 8527560696120339127}
   <WeaponTransform>k__BackingField: {fileID: 4368976359285142771}
-  canInteract: 0
-  interactable: {fileID: 0}
   queenLayerMask:
     serializedVersion: 2
     m_Bits: 0
-  attackLevel: 1
   hat: {fileID: 908107179074298843}
   leafWrap: {fileID: 4374586243239734346}
+  AttackScript: {fileID: 0}
 --- !u!1 &8054865428902753365
 GameObject:
   m_ObjectHideFlags: 0

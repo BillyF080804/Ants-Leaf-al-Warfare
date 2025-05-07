@@ -56,7 +56,7 @@ Material:
     - _QueueOffset: 0
     - _Strength: 0
     m_Colors:
-    - _CloudPeak: {r: 0.0729797, g: 0.24279103, b: 0.3773585, a: 0}
+    - _CloudPeak: {r: 1, g: 1, b: 1, a: 0}
     - _NoiseRemapper: {r: 1.05, g: 0.95, b: -0.53, a: 0.61}
     - _Rotate_Projection: {r: 1, g: 0, b: 0, a: 90}
     - _RotationAxis: {r: 1, g: 0, b: 0, a: 90}
