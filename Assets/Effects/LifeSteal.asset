@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: LifeSteal
   m_EditorClassIdentifier: 
   effectName: LifeSteal
+  effectType: 2
   multiTurn: 0
   amountOfTurns: 0
-  effectType: 2
   amountOfDamagePerTurn: 0
+  statDropType: 0
+  percentToDropBy: 0
+  particleEffect: {fileID: 0}

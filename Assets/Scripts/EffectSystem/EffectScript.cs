@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class EffectScript : MonoBehaviour {
@@ -8,7 +9,10 @@ public class EffectScript : MonoBehaviour {
 	int effectLevel;
 	float lifeStealPercent;
 
+	GameObject tempParticle;
+
 	private void Start() {
+
 		turnsLeft = effectInfo.amountOfTurns;
 	}
 
@@ -27,6 +31,7 @@ public class EffectScript : MonoBehaviour {
 				break;
 			}
 		}
+		DelayParticle(ant);
 	}
 
 	public void AddEffect(Ant ant) {
@@ -69,6 +74,7 @@ public class EffectScript : MonoBehaviour {
 				break;
 			}
 		}
+
 	}
 
 	void LifestealEffect(Ant ant) {
@@ -79,5 +85,16 @@ public class EffectScript : MonoBehaviour {
 		}
 		ant.hasLifeSteal = true;
 		ant.lifeStealPercent = lifeStealPercent;
+	}
+
+
+	public void DelayParticle(Ant ant) {
+		tempParticle = Instantiate(effectInfo.particleEffect.gameObject, ant.gameObject.transform.position, Quaternion.identity);
+
+		ant.StartCoroutine(ant.WaitForEffect(3, this));
+	}
+
+	public void DestroyEffect() {
+		Destroy(tempParticle);
 	}
 }

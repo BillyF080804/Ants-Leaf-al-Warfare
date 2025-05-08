@@ -364,4 +364,9 @@ public class Ant : MonoBehaviour {
 		rb.constraints = RigidbodyConstraints.None;
 		rb.constraints = RigidbodyConstraints.FreezeRotation;
 	}
+
+	public IEnumerator WaitForEffect(int time, EffectScript effect) {
+		yield return new WaitForSeconds(time);
+		effect.DestroyEffect();
+	}
 }

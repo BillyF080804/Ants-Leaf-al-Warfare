@@ -33,6 +33,7 @@ public class EffectSO : ScriptableObject {
 	[HideInInspector] public StatDropType statDropType;
 	[HideInInspector] public float percentToDropBy;
 
+	[SerializeField] public ParticleSystem particleEffect;
 }
 
 #if (UNITY_EDITOR)
