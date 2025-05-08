@@ -330,11 +330,12 @@ public class CameraSystem : MonoBehaviour {
 
         foreach (Transform target in targets) {
             SetCameraTarget(target.position, 2.0f, 7.5f);
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.75f);
             onIterationFinished?.Invoke(target);
             yield return new WaitForSeconds(delay);
         }
 
+        targets.Clear();
         CameraDelayActive = false;
     }
 

@@ -124,7 +124,6 @@ public class FlyTrapHazard: MonoBehaviour
             }
 
 
-            ant.UnFreezeMovement();
             ant.GetComponent<Rigidbody>().AddExplosionForce(Random.Range(minPower, maxPower), new Vector3(ant.transform.position.x + value, ant.transform.position.y, ant.transform.position.z), 5.0f, 3, ForceMode.Impulse);
             ant.TakeDamage(attackDamage);
             ant.SetCanMove(true);

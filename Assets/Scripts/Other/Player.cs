@@ -204,7 +204,7 @@ public class Player : MonoBehaviour {
 
         List<Ant> possibleAnts = new List<Ant>();
         for (int i = 0; i < AntList.Count; i++) {
-			Ant nextAnt = AntList[i].GetComponent<Ant>();
+            Ant nextAnt = AntList[i].GetComponent<Ant>();
             if (nextAnt.hasHadTurn == false) {
                 possibleAnts.Add(nextAnt);
             }

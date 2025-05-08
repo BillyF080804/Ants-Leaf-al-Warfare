@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class PauseMenuScript : MonoBehaviour {
@@ -14,9 +15,15 @@ public class PauseMenuScript : MonoBehaviour {
     [SerializeField] private GameObject howToPlayMenu;
     [SerializeField] private GameObject htpInfoPanel;
     [SerializeField] private GameObject htpControlsPanel;
+    [SerializeField] private GameObject pauseResumeButton;
 
     private GameObject panelToHide = null;
     private GameObject panelToShow = null;
+    private TurnManager turnManager;
+
+    private void OnEnable() {
+        turnManager = FindFirstObjectByType<TurnManager>();
+    }
 
     public void ChangePanels() {
         StartCoroutine(ChangePanelsCoroutine());
@@ -55,6 +62,8 @@ public class PauseMenuScript : MonoBehaviour {
         howToPlayMenu.SetActive(false);
         htpInfoPanel.SetActive(true);
         htpControlsPanel.SetActive(false);
+
+        SetCurrentSelectedButton(pauseResumeButton);
         mainBackgroundFadeScript.FadeInUI(1.0f);
     }
 
@@ -68,5 +77,9 @@ public class PauseMenuScript : MonoBehaviour {
         } 
 
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void SetCurrentSelectedButton(GameObject buttonToSelect) {
+        turnManager.CurrentPlayerTurn.GetEventSystem().SetSelectedGameObject(buttonToSelect);
     }
 }

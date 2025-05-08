@@ -115,8 +115,26 @@ public class TurnManager : MonoBehaviour {
             for (int j = 0; j < numOfAnts; j++) {
                 GameObject newAnt = antSpawner.SpawnAnt(baseAntPrefab);
                 PlayerList[i].AddNewAnt(newAnt);
-                newAnt.GetComponent<Ant>().ownedPlayer = (Ant.PlayerList)i;
                 newAnt.GetComponent<BaseAntScript>().ChangeAntColors(PlayerList[i].playerInfo.playerColor);
+
+                switch (i) {
+                    case 0:
+                        newAnt.GetComponent<Ant>().ownedPlayer = Ant.PlayerList.Player1;
+                        newAnt.GetComponent<Ant>().SetAntOwner(i + 1);
+                        break;
+                    case 1:
+                        newAnt.GetComponent<Ant>().ownedPlayer = Ant.PlayerList.Player2;
+                        newAnt.GetComponent<Ant>().SetAntOwner(i + 1);
+                        break;
+                    case 2:
+                        newAnt.GetComponent<Ant>().ownedPlayer = Ant.PlayerList.Player3;
+                        newAnt.GetComponent<Ant>().SetAntOwner(i + 1);
+                        break;
+                    case 3:
+                        newAnt.GetComponent<Ant>().ownedPlayer = Ant.PlayerList.Player4;
+                        newAnt.GetComponent<Ant>().SetAntOwner(i + 1);
+                        break;
+                }
             }
 
             SpawnQueen(i);
@@ -127,11 +145,29 @@ public class TurnManager : MonoBehaviour {
 
     private void SpawnQueen(int playerNum) {
         GameObject newQueen = antSpawner.SpawnAnt(queenPrefab);
-        newQueen.GetComponent<Ant>().ownedPlayer = (Ant.PlayerList)playerNum;
 
         newQueen.GetComponent<QueenBaseAntScript>().ChangeAntColors(PlayerList[playerNum].playerInfo.playerColor);
         ChangeQueenSpecialism(PlayerList[playerNum].playerInfo.queenType, newQueen.GetComponent<Ant>());
         PlayerList[playerNum].AddQueen(newQueen);
+
+        switch (playerNum) {
+            case 0:
+                newQueen.GetComponent<Ant>().ownedPlayer = Ant.PlayerList.Player1;
+                newQueen.GetComponent<Ant>().SetAntOwner(playerNum + 1);
+                break;
+            case 1:
+                newQueen.GetComponent<Ant>().ownedPlayer = Ant.PlayerList.Player2;
+                newQueen.GetComponent<Ant>().SetAntOwner(playerNum + 1);
+                break;
+            case 2:
+                newQueen.GetComponent<Ant>().ownedPlayer = Ant.PlayerList.Player3;
+                newQueen.GetComponent<Ant>().SetAntOwner(playerNum + 1);
+                break;
+            case 3:
+                newQueen.GetComponent<Ant>().ownedPlayer = Ant.PlayerList.Player4;
+                newQueen.GetComponent<Ant>().SetAntOwner(playerNum + 1);
+                break;
+        }
     }
 
     private IEnumerator LevelTextCoroutine() {
@@ -158,8 +194,11 @@ public class TurnManager : MonoBehaviour {
                 CurrentPlayerTurn = player;
 
                 foreach (Player players in PlayerList) {
-                    foreach (GameObject ant in players.AntList) {
-                        ant.GetComponent<Ant>().FreezeMovement();
+                    if (players == player) {
+                        players.GetEventSystem().enabled = true;
+                    }
+                    else {
+                        players.GetEventSystem().enabled = false;
                     }
                 }
 
@@ -211,8 +250,6 @@ public class TurnManager : MonoBehaviour {
                 CurrentPlayerTurn.hasSkippedTurn = false;
 
                 enterObjectManager.StartTurnEvent();
-
-                CurrentAntTurn.UnFreezeMovement();
 
                 yield return new WaitUntil(() => currentTurnEnded == true);
             }
@@ -305,6 +342,9 @@ public class TurnManager : MonoBehaviour {
         cameraSystem.IterateCameraTargets(1.0f);
         yield return new WaitUntil(() => cameraSystem.CameraDelayActive == false);
 
+        yield return null;
+        yield return new WaitUntil(() => gameOver == false);
+
         dropSystem.CheckDrop();
         yield return new WaitUntil(() => cameraSystem.CameraDelayActive == false);
 
@@ -331,12 +371,6 @@ public class TurnManager : MonoBehaviour {
             yield return new WaitUntil(() => dropSystem.IsDropping == false);
         }
 
-        foreach (Player player in PlayerList) {
-            foreach (GameObject ant in player.AntList) {
-                ant.GetComponent<Ant>().FreezeMovement();
-            }
-        }
-
         currentTurnEnded = true;
         currentTurnTime = maxTurnTime;
     }
@@ -346,11 +380,10 @@ public class TurnManager : MonoBehaviour {
     }
 
     private IEnumerator GameOverCoroutine() {
-        Debug.Log("Game Over!");
         gameOver = true;
         blackscreen.SetActive(true);
         blackscreen.GetComponent<CanvasGroup>().alpha = 0;
-        blackscreen.GetComponent<FadeScript>().FadeInUI(2.0f);
+        blackscreen.GetComponent<FadeScript>().FadeInUI(1.0f);
 
         yield return new WaitUntil(() => blackscreen.GetComponent<CanvasGroup>().alpha == 1);
         SceneManager.LoadScene("GameOverScene");
@@ -446,6 +479,7 @@ public class TurnManager : MonoBehaviour {
         PauseInProgress = true;
         IsPaused = true;
 
+        CurrentAntTurn.SetCanMove(false);
         weaponManager.ForceCloseWeaponMenu();
         HideMainUI();
         SetPauseTurnTimer(true);
@@ -462,6 +496,7 @@ public class TurnManager : MonoBehaviour {
             IsPaused = false;
             pauseMenu.gameObject.SetActive(false);
             SetPauseTurnTimer(false);
+            CurrentAntTurn.SetCanMove(true);
         }
     }
 

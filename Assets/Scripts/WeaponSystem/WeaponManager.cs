@@ -164,7 +164,6 @@ public class WeaponManager : MonoBehaviour {
 
             if (colliders.Length > 0) {
                 colliders.First().GetComponent<Ant>().TakeDamage(weaponInfo.baseDamage);
-                colliders.First().GetComponent<Ant>().UnFreezeMovement();
                 colliders.First().GetComponent<Rigidbody>().AddExplosionForce(weaponInfo.knockbackStrength, playerPosition.position, 0, weaponInfo.upwardsModifier, ForceMode.Impulse);
 
                 if (weaponInfo.weaponEffect != null) {

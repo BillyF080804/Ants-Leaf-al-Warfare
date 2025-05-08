@@ -18,9 +18,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MainGame/LoadingScene.unity
     guid: 24a17477dc6b09a40a2907400c40714e
   - enabled: 1
-    path: Assets/Scenes/MainGame/GameOverScene.unity
-    guid: 73cbc70c059819f4a96135cf9df357ed
-  - enabled: 1
     path: Assets/Scenes/MainGame/Game_GardenLevel.unity
     guid: ee4dd503d9b1032488ee063b06b69788
+  - enabled: 1
+    path: Assets/Scenes/MainGame/GameOverScene.unity
+    guid: 73cbc70c059819f4a96135cf9df357ed
   m_configObjects: {}

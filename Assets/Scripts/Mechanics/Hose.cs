@@ -43,7 +43,6 @@ public class Hose : MonoBehaviour {
 
         foreach (Rigidbody ant in ants) {
             if (ant != null) {
-                ant.GetComponent<Ant>().UnFreezeMovement();
                 ant.AddExplosionForce(explosionForce, new Vector3(ant.transform.position.x + 3.0f, ant.transform.position.y, 0), 10.0f, upwardsModifier, ForceMode.Impulse);
             }
         }

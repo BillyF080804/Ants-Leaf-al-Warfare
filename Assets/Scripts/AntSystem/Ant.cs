@@ -53,9 +53,6 @@ public class Ant : MonoBehaviour {
 		turnManager = FindFirstObjectByType<TurnManager>();
         rb = GetComponent<Rigidbody>();
 
-        int playerNum = int.Parse(ownedPlayer.ToString().Last().ToString());
-        player = turnManager.PlayerList.Where(x => x.playerInfo.playerNum == playerNum).First();
-
         TurnManager.onTurnEnded += FadeOutHealthUI;
 		WeaponManager.onOpenWeaponsMenu += FadeInHealthUI;
         WeaponManager.onCloseWeaponsMenu += FadeOutHealthUI;
@@ -69,6 +66,10 @@ public class Ant : MonoBehaviour {
 		else {
 			Debug.LogError("Ant does not have health text assigned.");
 		}
+    }
+
+	public void SetAntOwner(int playerNum) {
+		player = turnManager.PlayerList.Where(x => x.playerInfo.playerNum == playerNum).First();
     }
 
 	public void FadeInHealthUI() {
@@ -92,7 +93,6 @@ public class Ant : MonoBehaviour {
     public void OnMove(InputValue value) {
 		Vector2 movement = value.Get<Vector2>();
 		moveVector = new Vector3(movement.x, 0, 0);
-		UnFreezeMovement();
 
         if (movement.x < 0) {
 			ResetAnimation();
@@ -352,17 +352,6 @@ public class Ant : MonoBehaviour {
 		yield return new WaitForSeconds(delay);
 		ResetAnimation();
 		ChangeAnimation("Dying");
-	}
-
-	public void FreezeMovement() {
-        rb.constraints = RigidbodyConstraints.FreezePositionX;
-        rb.constraints = RigidbodyConstraints.FreezePositionZ;
-        rb.constraints = RigidbodyConstraints.FreezeRotation;
-    }
-
-	public void UnFreezeMovement() {
-		rb.constraints = RigidbodyConstraints.None;
-		rb.constraints = RigidbodyConstraints.FreezeRotation;
 	}
 
 	public IEnumerator WaitForEffect(int time, EffectScript effect) {
