@@ -19,3 +19,4 @@ MonoBehaviour:
   amountOfDamagePerTurn: 0
   statDropType: 0
   percentToDropBy: 0
+  particleEffect: {fileID: 5541049254049744896, guid: aab7cdebc49a726498879f7699acc460, type: 3}

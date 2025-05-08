@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: Burn
   m_EditorClassIdentifier: 
   effectName: Burn
+  effectType: 0
   multiTurn: 1
   amountOfTurns: 2
   amountOfDamagePerTurn: 5
+  statDropType: 0
+  percentToDropBy: 0
+  particleEffect: {fileID: 7986813422236217029, guid: f07cc0afb8b82d041849a991cb343585, type: 3}
