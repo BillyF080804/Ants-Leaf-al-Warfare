@@ -1024,6 +1024,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0fe78c5a951f2a4bb52f8aa89086ba8, type: 3}
+--- !u!1001 &2419077554109077702
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8431554350421032638, guid: 5cf48b6393cc5314f884e88298826742, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -8.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8431554350421032638, guid: 5cf48b6393cc5314f884e88298826742, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8431554350421032638, guid: 5cf48b6393cc5314f884e88298826742, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 8431554350421032638, guid: 5cf48b6393cc5314f884e88298826742, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.49023974
+      objectReference: {fileID: 0}
+    - target: {fileID: 8431554350421032638, guid: 5cf48b6393cc5314f884e88298826742, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.49023974
+      objectReference: {fileID: 0}
+    - target: {fileID: 8431554350421032638, guid: 5cf48b6393cc5314f884e88298826742, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.50957334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8431554350421032638, guid: 5cf48b6393cc5314f884e88298826742, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.50957334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8431554350421032638, guid: 5cf48b6393cc5314f884e88298826742, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 8431554350421032638, guid: 5cf48b6393cc5314f884e88298826742, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8431554350421032638, guid: 5cf48b6393cc5314f884e88298826742, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 92.216
+      objectReference: {fileID: 0}
+    - target: {fileID: 9099864647117235204, guid: 5cf48b6393cc5314f884e88298826742, type: 3}
+      propertyPath: m_Name
+      value: CrumpledPaper
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5cf48b6393cc5314f884e88298826742, type: 3}
 --- !u!1001 &3706748497296896231
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1386,6 +1443,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7767005062789824936, guid: 9b8956aaee87b4d43af03275febee2b2, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7767005062789824936, guid: 9b8956aaee87b4d43af03275febee2b2, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 643b8625447d49d419d215764d7b2e93, type: 2}
     - target: {fileID: 8127041864203247741, guid: 9b8956aaee87b4d43af03275febee2b2, type: 3}
       propertyPath: m_Name
       value: Grass Tuft
@@ -1628,3 +1693,4 @@ SceneRoots:
   - {fileID: 4545725555524023380}
   - {fileID: 4730373470380538339}
   - {fileID: 7010112423112878816}
+  - {fileID: 2419077554109077702}
