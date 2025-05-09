@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainGame/GameOverScene.unity
     guid: 73cbc70c059819f4a96135cf9df357ed
+  - enabled: 1
+    path: Assets/2D Top Down Simple Weapon System/Scenes/GameXSecretScene.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}

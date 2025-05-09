@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60dc6f8b37ed85342832871c57584d8f, type: 3}
+  m_Name: Automatic Gun
+  m_EditorClassIdentifier: 
+  gunName: Automatic Gun
+  useDelayBetweenShots: 1
+  useAmmoLimit: 1
+  useAudio: 0
+  weaponType: 1
+  burstCount: 3
+  timeBetweenShots: 0.1
+  maxClipSize: 30
+  reloadTime: 1.5
+  fireSound: {fileID: 0}
+  dryFireSound: {fileID: 0}
+  reloadSound: {fileID: 0}
+  explosionSound: {fileID: 0}
+  useSetReloadTime: 1
+  automaticReload: 1
+  bulletSettings:
+    bulletSpeed: 20
+    bulletDamage: 10
+    bulletLife: 2.5
+    explosiveBullets: 0
+    bulletPenetration: 1
+    impactParticlePrefab: {fileID: 71547486919439417, guid: ec855825fa66e7e4d8be23dab1d764d7, type: 3}
+    explosionParticlePrefab: {fileID: 0}
+    bulletPenetrationLevel: 4

@@ -69,4 +69,8 @@ public class MainMenuManager : MonoBehaviour {
     public void QuitGame() {
         Application.Quit();
     }
+
+    public void LoadGameXScene() {
+        SceneManager.LoadScene("GameXSecretScene");
+    }
 }
