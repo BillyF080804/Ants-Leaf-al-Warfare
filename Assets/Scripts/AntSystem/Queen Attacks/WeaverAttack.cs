@@ -1,30 +1,36 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaverAttack : QueenAttack {
+	[Header("Settings")]
+	[SerializeField] private GameObject areaToSpawn;
+	[SerializeField] private EffectScript effectToAdd;
+	[SerializeField] private int safeRadius = 5;
 
-	[SerializeField]
-	GameObject areaToSpawn;
+	private CameraSystem cameraSystem;
+	private TurnManager turnManager;
 
-	[SerializeField]
-	EffectScript effectToAdd;
+    private void Start() {
+        cameraSystem = FindFirstObjectByType<CameraSystem>();
+        turnManager = FindFirstObjectByType<TurnManager>();
+    }
 
-	[SerializeField]
-	int mapMinX;
-	[SerializeField]
-	int mapMaxX;
-	[SerializeField]
-	int safeRadius = 5;
-
-	public override void ActivateAttack(int attackLevel, Ant antInfoScript, Vector3 position) {
-		audioPlayer.PlayClip();
-		for (int i = 0; i < attackLevel; i++) {
-			Vector3 tempPos = CheckArea();
-			GameObject tempArea = Instantiate(areaToSpawn, tempPos, Quaternion.identity);
-
-		}
+    public override void ActivateAttack(int attackLevel, Ant antInfoScript, Vector3 position) {
+		StartCoroutine(AttackCoroutine(attackLevel, antInfoScript, position));
 	}
+
+	private IEnumerator AttackCoroutine(int attackLevel, Ant antInfoScript, Vector3 position) {
+		//audioPlayer.PlayClip();
+		cameraSystem.CameraDelay(attackLevel + 1);
+
+        for (int i = 0; i < attackLevel; i++) {
+            Vector3 tempPos = CheckArea();
+            GameObject tempArea = Instantiate(areaToSpawn, tempPos, Quaternion.identity);
+
+			cameraSystem.SetCameraTarget(tempArea.transform);
+			yield return new WaitForSeconds(1.0f);
+        }
+    }
 
 	public Vector3 CheckArea() {
 		Vector3 testArea = FindArea();
@@ -34,22 +40,22 @@ public class WeaverAttack : QueenAttack {
 		while (testArea.x > minSafe && testArea.x < maxSafe) {
 			testArea = FindArea();
 		}
+
 		return testArea;
 	}
 
 	public Vector3 FindArea() {
-		Vector3 spawnPos = new Vector3();
+		Vector3 spawnPos = new Vector3(Random.Range(turnManager.MapMinX, turnManager.MapMaxX), 30, 0);
 		if (Physics.Raycast(spawnPos, Vector3.down, out RaycastHit ray, 35.0f)) {
-			spawnPos = new Vector3(Random.Range(mapMinX, mapMaxX), ray.point.y + 0.5f, 0);
+			spawnPos = new Vector3(spawnPos.x, ray.point.y + 0.5f, 0);
 		}
+
 		return spawnPos;
 	}
 
 	public override void InitialiseValues(GameObject attackInfo) {
 		areaToSpawn = attackInfo.GetComponent<WeaverAttack>().areaToSpawn;
 		effectToAdd = attackInfo.GetComponent<WeaverAttack>().effectToAdd;
-		mapMinX = attackInfo.GetComponent<WeaverAttack>().mapMinX;
-		mapMaxX = attackInfo.GetComponent<WeaverAttack>().mapMaxX;
 		safeRadius = attackInfo.GetComponent<WeaverAttack>().safeRadius;
 	}
 }

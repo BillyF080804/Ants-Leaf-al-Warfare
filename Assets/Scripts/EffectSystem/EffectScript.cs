@@ -89,7 +89,12 @@ public class EffectScript : MonoBehaviour {
 
 
 	public void DelayParticle(Ant ant) {
-		tempParticle = Instantiate(effectInfo.particleEffect.gameObject, ant.gameObject.transform.position, Quaternion.identity);
+		if (effectInfo.particleEffect != null) {
+            tempParticle = Instantiate(effectInfo.particleEffect.gameObject, ant.gameObject.transform.position, Quaternion.identity);
+        }
+		else {
+			Debug.LogError("Please Assign A Particle System for the effect system.");
+		}
 
 		ant.StartCoroutine(ant.WaitForEffect(3, this));
 	}

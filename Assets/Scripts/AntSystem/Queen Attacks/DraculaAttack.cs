@@ -9,27 +9,41 @@ public class DraculaAttack : QueenAttack {
 	[Tooltip("Use decimal versions of the percentage you want")]
 	public List<float> percentages;
 
-	public override void ActivateAttack(int attackLevel, Ant antInfoScript) {
-		//audioPlayer.PlayClip();
-		Ant[] antList = FindObjectsOfType<Ant>();
-		List<Ant> antList2 = new List<Ant>();
-		for (int i = 0; i < antList.Length; i++) {
-			if (antList[i].ownedPlayer == antInfoScript.ownedPlayer) {
-				antList2.Add(antList[i]);
+    private CameraSystem cameraSystem;
 
-			}
+    private void Start() {
+        cameraSystem = FindFirstObjectByType<CameraSystem>();
+    }
 
-		}
-
-		int index = attackLevel - 1;
-		for (int i = 0; i < antList2.Count; i++) {
-			
-			if(attackLevel < percentages.Count) {
-				effect.AddEffect(antList2[i], percentages[index]);
-			}
-			
-		}
+    public override void ActivateAttack(int attackLevel, Ant antInfoScript) {
+        StartCoroutine(AttackCoroutine(attackLevel, antInfoScript));
 	}
+
+	private IEnumerator AttackCoroutine(int attackLevel, Ant antInfoScript) {
+        //audioPlayer.PlayClip();
+        cameraSystem.CameraDelay(5.0f);
+        Ant[] antList = FindObjectsOfType<Ant>();
+        List<Ant> antList2 = new List<Ant>();
+        for (int i = 0; i < antList.Length; i++) {
+            if (antList[i].ownedPlayer == antInfoScript.ownedPlayer) {
+                antList2.Add(antList[i]);
+
+            }
+
+        }
+
+        int index = attackLevel - 1;
+        for (int i = 0; i < antList2.Count; i++) {
+            if (attackLevel < percentages.Count) {
+                cameraSystem.SetCameraTarget(antList2[i].transform);
+                yield return new WaitForSeconds(0.5f);
+
+                effect.AddEffect(antList2[i], percentages[index]);
+                yield return new WaitForSeconds(1.0f);
+            }
+
+        }
+    }
 
 	public override void InitialiseValues(GameObject attackInfo) {
 		effect = attackInfo.GetComponent<DraculaAttack>().effect;

@@ -7,6 +7,9 @@ public class DestructableBridge : MonoBehaviour {
     [Header("Animator")]
     [SerializeField] private Animator animator;
 
+    [Header("Collider To Disable")]
+    [SerializeField] private GameObject colToDisable;
+
     public bool HasCollapsed { get; private set; } = false;
     private CameraSystem cameraSystem;
 
@@ -24,6 +27,7 @@ public class DestructableBridge : MonoBehaviour {
 
     private void CollapseBridge() {
         HasCollapsed = true;
+        colToDisable.SetActive(false);
         cameraSystem.StartCameraShake(2.0f, 2.0f);
         cameraSystem.SetCameraTarget(transform.position, 10.0f, 30.0f);
         cameraSystem.CameraDelay(5.0f);

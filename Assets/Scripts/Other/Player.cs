@@ -188,6 +188,13 @@ public class Player : MonoBehaviour {
         }
     }
 
+    //Called when the player presses the queen attack button
+    private void OnQueenAttack() {
+        if (CheckActionIsValid() && turnManager.CurrentAntTurn == queenBaseAntScript) {
+            queenBaseAntScript.SpecialAttack();
+        }
+    }
+
     private bool CheckActionIsValid() {
         if (turnManager != null && weaponManager != null && SceneManager.GetActiveScene().name.Contains("Game") && turnManager.CurrentPlayerTurn == this && turnManager.CurrentAntTurn != null) {
             return true;
@@ -312,15 +319,6 @@ public class Player : MonoBehaviour {
                 return uiSprites[14];
             default:
                 return null;
-        }
-    }
-
-    //Temporary Func/Keybind of Left Shift
-    private void OnQueenAttack() {
-        Debug.Log(GetKeybindForAction("QueenAttack"));
-
-        if (CheckActionIsValid() && turnManager.CurrentAntTurn == queenBaseAntScript) {
-			queenBaseAntScript.SpecialAttack();
         }
     }
 
