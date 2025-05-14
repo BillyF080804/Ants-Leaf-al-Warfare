@@ -27,7 +27,7 @@ public class TurnManager : MonoBehaviour {
     [SerializeField] private UnityEvent startRoundEvent;
 
     [Header("Queen Ant Specialisms")]
-    [SerializeField] private List<AntSO> queenAntSpecials = new List<AntSO>();
+    [SerializeField] private List<AntSO> queenAntSpecials = new List<AntSO>();    
 
     [Header("Ant Prefabs")]
     [SerializeField] private GameObject baseAntPrefab;
@@ -145,9 +145,10 @@ public class TurnManager : MonoBehaviour {
 
     private void SpawnQueen(int playerNum) {
         GameObject newQueen = antSpawner.SpawnAnt(queenPrefab);
-
-        newQueen.GetComponent<QueenBaseAntScript>().ChangeAntColors(PlayerList[playerNum].playerInfo.playerColor);
+        
         ChangeQueenSpecialism(PlayerList[playerNum].playerInfo.queenType, newQueen.GetComponent<Ant>());
+        newQueen.GetComponent<QueenBaseAntScript>().SetAntColor(PlayerList[playerNum].playerInfo.playerColor);
+        newQueen.GetComponent<QueenBaseAntScript>().ChangeQueenMesh(PlayerList[playerNum].playerInfo.queenType);        
         PlayerList[playerNum].AddQueen(newQueen);
 
         switch (playerNum) {

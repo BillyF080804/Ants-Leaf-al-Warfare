@@ -11,16 +11,20 @@ public class QueenBaseAntScript : Ant {
 	private bool usedAttack = false;
 
     [Header("Queen Ant Settings")]
-    [SerializeField] private SkinnedMeshRenderer hat;
-    [SerializeField] private SkinnedMeshRenderer leafWrap;
 	[SerializeField] private QueenAttack AttackScript;
+    [SerializeField] private List<GameObject> queenAntMeshes = new List<GameObject>();
 
-    private void Start() {
+	private Color queenColor;
+
+    private void Awake() {
 		InitialiseQueenAttack();
 
+		foreach (GameObject obj in queenAntMeshes) { 
+			obj.SetActive(false);
+		}
 	}
 
-	void InitialiseQueenAttack() {
+	private void InitialiseQueenAttack() {
 		QueenAttack tempAttack = Instantiate(antInfo.queenAttack);
 		if (tempAttack.gameObject.GetComponent<BeeAttack>() != null) {
 			AttackScript = this.AddComponent<BeeAttack>();
@@ -67,12 +71,61 @@ public class QueenBaseAntScript : Ant {
 		}
 	}
 
-    public void ChangeAntColors(Color newColor) {
-        hat.material.SetColor("_MainColours", newColor);
-        leafWrap.material.SetColor("_MainColours", newColor);
+    public void SetAntColor(Color newColor) {
+		queenColor = newColor;        
     }
 
     public LayerMask GetQueenLayerMask() {
 		return queenLayerMask;
 	}
+
+	public void ChangeQueenMesh(string queenType) {
+        switch (queenType) {
+            case "Bee":
+				queenAntMeshes[1].SetActive(true);
+				ChangeQueenColor(queenAntMeshes[1].transform);
+                break;
+            case "Bullet":
+                queenAntMeshes[2].SetActive(true);
+                ChangeQueenColor(queenAntMeshes[2].transform);
+                break;
+            case "Dracula":
+                queenAntMeshes[3].SetActive(true);
+                ChangeQueenColor(queenAntMeshes[3].transform);
+                break;
+            case "Ice":
+                queenAntMeshes[4].SetActive(true);
+                ChangeQueenColor(queenAntMeshes[4].transform);
+                break;
+            case "Pharaoh":
+                queenAntMeshes[5].SetActive(true);
+                ChangeQueenColor(queenAntMeshes[5].transform);
+                break;
+            case "Weaver":
+                queenAntMeshes[6].SetActive(true);
+                ChangeQueenColor(queenAntMeshes[6].transform);
+                break;
+            default:
+                Debug.LogError("Invalid Queen Ant - " + queenType);
+                queenAntMeshes[0].SetActive(true);
+                ChangeQueenColor(queenAntMeshes[0].transform);
+                break;
+        }
+    }
+
+	private void ChangeQueenColor(Transform transform) {
+		Transform crown = transform.Find("QueenCrown");
+        Transform leaf = transform.Find("QueenLeaf");
+
+		if (crown == null) {
+			crown = transform.GetChild(0).Find("QueenCrown");
+        }
+
+        if (leaf == null) {
+            leaf = transform.GetChild(0).Find("QueenLeaf");
+        }
+
+        crown.GetComponent<SkinnedMeshRenderer>().material.SetColor("_MainColours", queenColor);
+		leaf.GetComponent<SkinnedMeshRenderer>().material.SetColor("_MainColours", queenColor);
+    }
 }

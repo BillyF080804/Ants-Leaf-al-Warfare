@@ -69,6 +69,10 @@ public class Ant : MonoBehaviour {
     }
 
 	public void SetAntOwner(int playerNum) {
+		if (turnManager == null) {
+			turnManager = FindFirstObjectByType<TurnManager>(); //This has randomly decided to be an issue on the queen ants. It shouldn't. But it does.
+        }
+
 		player = turnManager.PlayerList.Where(x => x.playerInfo.playerNum == playerNum).First();
     }
 
