@@ -92,12 +92,21 @@ public class Player : MonoBehaviour {
 
     private void OnSkipTurnPerformed(InputAction.CallbackContext ctx) {
         if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false && weaponManager.WeaponsActive == false && hasSkippedTurn == false) {
-            hasSkippedTurn = true;
-            turnManager.EndTurn();
-            cameraSystem.ZoomCameraFOVOut(0.5f);
-            turnManager.HideSkippingTurnText();
-        }
+            //hasSkippedTurn = true;
+            //turnManager.EndTurn();
+            //cameraSystem.ZoomCameraFOVOut(0.5f);
+            //turnManager.HideSkippingTurnText();
+            SkipTurn();
+
+		}
     }
+
+    private void SkipTurn() {
+		hasSkippedTurn = true;
+		turnManager.EndTurn();
+		cameraSystem.ZoomCameraFOVOut(0.5f);
+		turnManager.HideSkippingTurnText();
+	}
 
     //Function called when the player presses the fire weapon button
     private void OnFireWeapon() {
@@ -232,7 +241,8 @@ public class Player : MonoBehaviour {
             }
         }
         else {
-            Debug.LogError("If called probably worth checking if not ignore");
+            //Debug.LogError("If called probably worth checking if not ignore");
+            SkipTurn();
 			return null;
         }
     }
