@@ -230,7 +230,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: AcornRocket
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 6799662342576615998, guid: 3f4c9235186a1064b968cd3c191dafa9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 4590482003090457940, guid: 3f4c9235186a1064b968cd3c191dafa9, type: 3}
+    - {fileID: 2501310755537746915, guid: 3f4c9235186a1064b968cd3c191dafa9, type: 3}
+    - {fileID: 5255517445233469926, guid: 3f4c9235186a1064b968cd3c191dafa9, type: 3}
     m_RemovedGameObjects:
     - {fileID: 3903824128651659046, guid: 3f4c9235186a1064b968cd3c191dafa9, type: 3}
     m_AddedGameObjects: []
@@ -322,6 +329,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7281431722094307728, guid: d3f6b0f801636df4fa3ef21689ebf309, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7281431722094307728, guid: d3f6b0f801636df4fa3ef21689ebf309, type: 3}
+      propertyPath: healthText
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -7281431722094307728, guid: d3f6b0f801636df4fa3ef21689ebf309, type: 3}
+      propertyPath: healthChangeText
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -7281431722094307728, guid: d3f6b0f801636df4fa3ef21689ebf309, type: 3}
+      propertyPath: healthFadeScript
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -7281431722094307728, guid: d3f6b0f801636df4fa3ef21689ebf309, type: 3}
+      propertyPath: healthTextBackground
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 559809522019695009, guid: d3f6b0f801636df4fa3ef21689ebf309, type: 3}
       propertyPath: m_LocalScale.x
       value: 4
@@ -382,7 +409,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: AntPrefab
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7419841320288824830, guid: d3f6b0f801636df4fa3ef21689ebf309, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8667107319572798907, guid: d3f6b0f801636df4fa3ef21689ebf309, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 464993771418036186, guid: d3f6b0f801636df4fa3ef21689ebf309, type: 3}
+    - {fileID: -7281431722094307728, guid: d3f6b0f801636df4fa3ef21689ebf309, type: 3}
     m_RemovedGameObjects:
     - {fileID: 3735502890833386761, guid: d3f6b0f801636df4fa3ef21689ebf309, type: 3}
     m_AddedGameObjects: []
@@ -528,6 +565,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 880017211400271267, guid: bc3c42a1cb6973849a5ae1feb035cd89, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2072072208878512668, guid: bc3c42a1cb6973849a5ae1feb035cd89, type: 3}
       propertyPath: m_LocalScale.x
       value: 5
@@ -588,7 +629,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: DropItem (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 5688451092057197031, guid: bc3c42a1cb6973849a5ae1feb035cd89, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5952809420806096037, guid: bc3c42a1cb6973849a5ae1feb035cd89, type: 3}
+    - {fileID: 5378733402456409617, guid: bc3c42a1cb6973849a5ae1feb035cd89, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1888,6 +1935,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PebbleBullet
       objectReference: {fileID: 0}
+    - target: {fileID: 3667148812617791359, guid: 7ef10ed28193d304687981aaf28c702a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7057416244131977694, guid: 7ef10ed28193d304687981aaf28c702a, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
@@ -1944,7 +1995,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2618365927379922087, guid: 7ef10ed28193d304687981aaf28c702a, type: 3}
+    - {fileID: 5984650288742711317, guid: 7ef10ed28193d304687981aaf28c702a, type: 3}
+    - {fileID: 5624824773759860386, guid: 7ef10ed28193d304687981aaf28c702a, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -3219,6 +3273,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CoalBullet
       objectReference: {fileID: 0}
+    - target: {fileID: 3667148812617791359, guid: da89128667cb022438fe87b594fb0fd3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7057416244131977694, guid: da89128667cb022438fe87b594fb0fd3, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
@@ -3275,7 +3333,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2618365927379922087, guid: da89128667cb022438fe87b594fb0fd3, type: 3}
+    - {fileID: 5984650288742711317, guid: da89128667cb022438fe87b594fb0fd3, type: 3}
+    - {fileID: 5624824773759860386, guid: da89128667cb022438fe87b594fb0fd3, type: 3}
     m_RemovedGameObjects:
     - {fileID: 6440453846984726992, guid: da89128667cb022438fe87b594fb0fd3, type: 3}
     m_AddedGameObjects: []
@@ -3492,6 +3553,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CoalBullet (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3667148812617791359, guid: da89128667cb022438fe87b594fb0fd3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7057416244131977694, guid: da89128667cb022438fe87b594fb0fd3, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
@@ -3548,7 +3613,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2618365927379922087, guid: da89128667cb022438fe87b594fb0fd3, type: 3}
+    - {fileID: 5984650288742711317, guid: da89128667cb022438fe87b594fb0fd3, type: 3}
+    - {fileID: 5624824773759860386, guid: da89128667cb022438fe87b594fb0fd3, type: 3}
     m_RemovedGameObjects:
     - {fileID: 6440453846984726992, guid: da89128667cb022438fe87b594fb0fd3, type: 3}
     m_AddedGameObjects: []
@@ -3599,6 +3667,10 @@ PrefabInstance:
     - target: {fileID: 2035224743872689002, guid: 799eae2705cc99044a954b6464641fc8, type: 3}
       propertyPath: m_Name
       value: AcornGrenade
+      objectReference: {fileID: 0}
+    - target: {fileID: 2035224743872689002, guid: 799eae2705cc99044a954b6464641fc8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5704438792896060875, guid: 799eae2705cc99044a954b6464641fc8, type: 3}
       propertyPath: m_LocalScale.x
@@ -3656,7 +3728,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9067850307777266688, guid: 799eae2705cc99044a954b6464641fc8, type: 3}
+    - {fileID: -2245710572500010313, guid: 799eae2705cc99044a954b6464641fc8, type: 3}
+    - {fileID: 760135841598056626, guid: 799eae2705cc99044a954b6464641fc8, type: 3}
     m_RemovedGameObjects:
     - {fileID: 8380910406412879474, guid: 799eae2705cc99044a954b6464641fc8, type: 3}
     m_AddedGameObjects: []
@@ -4981,6 +5056,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PebbleBullet (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3667148812617791359, guid: 7ef10ed28193d304687981aaf28c702a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7057416244131977694, guid: 7ef10ed28193d304687981aaf28c702a, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
@@ -5037,7 +5116,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5984650288742711317, guid: 7ef10ed28193d304687981aaf28c702a, type: 3}
+    - {fileID: 5624824773759860386, guid: 7ef10ed28193d304687981aaf28c702a, type: 3}
+    - {fileID: 2618365927379922087, guid: 7ef10ed28193d304687981aaf28c702a, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -5958,7 +6040,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: DirtBullet
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 5765959636588849732, guid: d804921c1b0783746a749e3be786225e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5095493292988903836, guid: d804921c1b0783746a749e3be786225e, type: 3}
+    - {fileID: 3597573930555579694, guid: d804921c1b0783746a749e3be786225e, type: 3}
+    - {fileID: 3238085398623134617, guid: d804921c1b0783746a749e3be786225e, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -6417,6 +6506,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 880017211400271267, guid: bc3c42a1cb6973849a5ae1feb035cd89, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2072072208878512668, guid: bc3c42a1cb6973849a5ae1feb035cd89, type: 3}
       propertyPath: m_LocalScale.x
       value: 5
@@ -6477,7 +6570,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: DropItem
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 5688451092057197031, guid: bc3c42a1cb6973849a5ae1feb035cd89, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5952809420806096037, guid: bc3c42a1cb6973849a5ae1feb035cd89, type: 3}
+    - {fileID: 5378733402456409617, guid: bc3c42a1cb6973849a5ae1feb035cd89, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -7480,6 +7579,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 880017211400271267, guid: bc3c42a1cb6973849a5ae1feb035cd89, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2072072208878512668, guid: bc3c42a1cb6973849a5ae1feb035cd89, type: 3}
       propertyPath: m_LocalScale.x
       value: 5
@@ -7540,7 +7643,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: DropItem (2)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 5688451092057197031, guid: bc3c42a1cb6973849a5ae1feb035cd89, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5952809420806096037, guid: bc3c42a1cb6973849a5ae1feb035cd89, type: 3}
+    - {fileID: 5378733402456409617, guid: bc3c42a1cb6973849a5ae1feb035cd89, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -8155,6 +8264,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BulletAnt
       objectReference: {fileID: 0}
+    - target: {fileID: 7229519875407399178, guid: 4b2bdeb079804194ea771e44e5d6f6e1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9029334633372168466, guid: 4b2bdeb079804194ea771e44e5d6f6e1, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -8188,7 +8301,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1733886317}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 0}
   m_CullingMode: 0
@@ -8548,6 +8661,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -7281431722094307728, guid: d3f6b0f801636df4fa3ef21689ebf309, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7281431722094307728, guid: d3f6b0f801636df4fa3ef21689ebf309, type: 3}
       propertyPath: healthText
       value: 
       objectReference: {fileID: 0}
@@ -8619,11 +8736,25 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3666135271846358711, guid: d3f6b0f801636df4fa3ef21689ebf309, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7419841320288824830, guid: d3f6b0f801636df4fa3ef21689ebf309, type: 3}
       propertyPath: m_Name
       value: AntPrefab (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7419841320288824830, guid: d3f6b0f801636df4fa3ef21689ebf309, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8667107319572798907, guid: d3f6b0f801636df4fa3ef21689ebf309, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 464993771418036186, guid: d3f6b0f801636df4fa3ef21689ebf309, type: 3}
+    - {fileID: -7281431722094307728, guid: d3f6b0f801636df4fa3ef21689ebf309, type: 3}
     m_RemovedGameObjects:
     - {fileID: 3735502890833386761, guid: d3f6b0f801636df4fa3ef21689ebf309, type: 3}
     m_AddedGameObjects: []
