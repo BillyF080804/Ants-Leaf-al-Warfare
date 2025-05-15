@@ -49,26 +49,27 @@ public class Ant : MonoBehaviour {
 	private bool canMove = true;
 	private bool isJumping = false;
 
-    private void Awake() {
-		turnManager = FindFirstObjectByType<TurnManager>();
+    private void OnEnable() {
+		Debug.Log("On Enable Called");
+        turnManager = FindFirstObjectByType<TurnManager>();
         rb = GetComponent<Rigidbody>();
 
         TurnManager.onTurnEnded += FadeOutHealthUI;
-		WeaponManager.onOpenWeaponsMenu += FadeInHealthUI;
+        WeaponManager.onOpenWeaponsMenu += FadeInHealthUI;
         WeaponManager.onCloseWeaponsMenu += FadeOutHealthUI;
 
-		health = antInfo.health;
+        health = antInfo.health;
 
-		if (healthText != null) {
+        if (healthText != null) {
             healthText.text = health.ToString();
             healthText.transform.parent.GetComponent<CanvasGroup>().alpha = 0;
         }
-		else {
-			Debug.LogError("Ant does not have health text assigned.");
-		}
+        else {
+            Debug.LogError("Ant does not have health text assigned.");
+        }
     }
 
-	public void SetAntOwner(int playerNum) {
+    public void SetAntOwner(int playerNum) {
 		if (turnManager == null) {
 			turnManager = FindFirstObjectByType<TurnManager>(); //This has randomly decided to be an issue on the queen ants. It shouldn't. But it does.
         }
