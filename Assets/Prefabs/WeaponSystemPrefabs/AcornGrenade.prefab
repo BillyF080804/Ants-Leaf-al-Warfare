@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 2035224743872689002}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1134, y: 540, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -66,6 +66,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: -6478536213147159724, guid: 5ed6365ca4036364384f47c6913d0573, type: 3}
+  - {fileID: 2100000, guid: ca42aa070cfca5a4394288d63fc8124a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -300,6 +301,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 711935460627131975}
     m_Modifications:
+    - target: {fileID: 973489081963335667, guid: 9ebda0d847d1b334ea30e84d113e266a, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: ca42aa070cfca5a4394288d63fc8124a, type: 2}
     - target: {fileID: 5007561994117814473, guid: 9ebda0d847d1b334ea30e84d113e266a, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.45921338
@@ -352,6 +357,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5590282695406294305, guid: 9ebda0d847d1b334ea30e84d113e266a, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: ca42aa070cfca5a4394288d63fc8124a, type: 2}
     - target: {fileID: 7537007760934948106, guid: 9ebda0d847d1b334ea30e84d113e266a, type: 3}
       propertyPath: m_Name
       value: Acorn

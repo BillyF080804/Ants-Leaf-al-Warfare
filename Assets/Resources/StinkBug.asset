@@ -19,10 +19,10 @@ MonoBehaviour:
   useAutomaticRotation: 0
   weaponIcon: {fileID: 21300000, guid: 300a1a274a7a93345befb64e12f89dd0, type: 3}
   weaponPrefab: {fileID: 2035224743872689002, guid: 48600db732ecebc49831131511799a3a, type: 3}
-  worldWeaponPrefab: {fileID: 0}
-  worldWeaponScale: 1
-  worldWeaponLocalPos: {x: 0, y: 0, z: 0}
-  worldWeaponRotation: {x: 0, y: 0, z: 0}
+  worldWeaponPrefab: {fileID: 3932025072290546400, guid: 3323d5d43e647ce4bbfb56f5b82c959e, type: 3}
+  worldWeaponScale: 0.2
+  worldWeaponLocalPos: {x: 0, y: 0.934, z: -0.074}
+  worldWeaponRotation: {x: -90, y: 0, z: 0}
   baseDamage: 20
   weaponSpeed: 12.5
   useGravity: 1
