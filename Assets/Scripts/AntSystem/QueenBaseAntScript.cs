@@ -93,22 +93,22 @@ public class QueenBaseAntScript : Ant {
                 break;
             case "Dracula":
                 queenAntMeshes[3].SetActive(true);
-                animator = queenAntMeshes[3].GetComponent<Animator>();
+                animator = queenAntMeshes[3].GetComponentInChildren<Animator>();
                 ChangeQueenColor(queenAntMeshes[3].transform);
                 break;
             case "Ice":
                 queenAntMeshes[4].SetActive(true);
-                animator = queenAntMeshes[4].GetComponent<Animator>();
+                animator = queenAntMeshes[4].GetComponentInChildren<Animator>();
                 ChangeQueenColor(queenAntMeshes[4].transform);
                 break;
             case "Pharaoh":
                 queenAntMeshes[5].SetActive(true);
-                animator = queenAntMeshes[5].GetComponent<Animator>();
+                animator = queenAntMeshes[5].GetComponentInChildren<Animator>();
                 ChangeQueenColor(queenAntMeshes[5].transform);
                 break;
             case "Weaver":
                 queenAntMeshes[6].SetActive(true);
-                animator = queenAntMeshes[6].GetComponent<Animator>();
+                animator = queenAntMeshes[6].GetComponentInChildren<Animator>();
                 ChangeQueenColor(queenAntMeshes[6].transform);
                 break;
             default:
