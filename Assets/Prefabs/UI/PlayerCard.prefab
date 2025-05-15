@@ -369,6 +369,13 @@ MonoBehaviour:
   queenDescriptionText: {fileID: 9010128395873517278}
   leftArrow: {fileID: 2387591823103514219}
   rightArrow: {fileID: 8250418116504602294}
+  queenSprites:
+  - {fileID: 21300000, guid: 7b7cc85b2995fcc4a8eab95575f7f468, type: 3}
+  - {fileID: 21300000, guid: 2876d501a66900549b2815dcd84c0220, type: 3}
+  - {fileID: 21300000, guid: 7eade0e347b3e304491584bd06a493cf, type: 3}
+  - {fileID: 21300000, guid: 03a43f57f0bbfb8459e465e0d5397649, type: 3}
+  - {fileID: 21300000, guid: 6bc69fc299554db4fab2eee92a7b7767, type: 3}
+  - {fileID: 21300000, guid: 3a68382d9d4ffdc438b1a87558ddb6a8, type: 3}
 --- !u!1 &1156605673500775330
 GameObject:
   m_ObjectHideFlags: 0
@@ -1350,7 +1357,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b93f59d39500c3f40a7e8b0111187885, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7b7cc85b2995fcc4a8eab95575f7f468, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

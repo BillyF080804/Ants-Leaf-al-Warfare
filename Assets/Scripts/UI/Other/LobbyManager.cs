@@ -150,20 +150,25 @@ public class LobbyManager : MonoBehaviour {
                 case "Bee":
                     playerCard.leftArrow.SetActive(true);
 				    ChangeQueenSpecialism("Dracula", playerCard, player);
-				    break;
+                    playerCard.queenImage.sprite = playerCard.queenSprites[1];
+                    break;
                 case "Dracula":
                     ChangeQueenSpecialism("Weaver", playerCard, player);
+                    playerCard.queenImage.sprite = playerCard.queenSprites[2];
                     break;
                 case "Weaver":
                     ChangeQueenSpecialism("Pharaoh", playerCard, player);
-				    break;
+                    playerCard.queenImage.sprite = playerCard.queenSprites[3];
+                    break;
                 case "Pharaoh":
 				    ChangeQueenSpecialism("Ice", playerCard, player);
-				    break;
+                    playerCard.queenImage.sprite = playerCard.queenSprites[4];
+                    break;
                 case "Ice":
                     playerCard.rightArrow.SetActive(false);
 				    ChangeQueenSpecialism("Bullet", playerCard, player);
-				    break;
+                    playerCard.queenImage.sprite = playerCard.queenSprites[5];
+                    break;
             }
         }
         else if (value < 0 && playerCard.isReady == false) {
@@ -171,21 +176,25 @@ public class LobbyManager : MonoBehaviour {
                 case "Bullet":
                     playerCard.rightArrow.SetActive(true);
 				    ChangeQueenSpecialism("Ice", playerCard, player);
-				    break;
+                    playerCard.queenImage.sprite = playerCard.queenSprites[4];
+                    break;
 				case "Ice":
 				    ChangeQueenSpecialism("Pharaoh", playerCard, player);
-				    break;
+                    playerCard.queenImage.sprite = playerCard.queenSprites[3];
+                    break;
                 case "Pharaoh":
 				    ChangeQueenSpecialism("Weaver", playerCard, player);
-				    break;
+                    playerCard.queenImage.sprite = playerCard.queenSprites[2];
+                    break;
                 case "Weaver":
                     ChangeQueenSpecialism("Dracula", playerCard, player);
+                    playerCard.queenImage.sprite = playerCard.queenSprites[1];
                     break;
                 case "Dracula":
                     playerCard.leftArrow.SetActive(false);
                     ChangeQueenSpecialism("Bee", playerCard, player);
-
-					break;
+                    playerCard.queenImage.sprite = playerCard.queenSprites[0];
+                    break;
             }
         }
     }

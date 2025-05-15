@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,4 +25,7 @@ public class PlayerCardInfo : MonoBehaviour {
 	public TextMeshProUGUI queenDescriptionText;
 	public GameObject leftArrow;
     public GameObject rightArrow;
+
+    [Header("Queen Sprites")]
+    public List<Sprite> queenSprites = new List<Sprite>();
 }
