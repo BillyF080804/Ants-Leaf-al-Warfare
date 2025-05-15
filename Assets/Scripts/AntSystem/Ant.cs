@@ -28,9 +28,7 @@ public class Ant : MonoBehaviour {
 	public List<EffectSO.StatDropType> statDrops;
 
 	public bool isDrowning = false;
-	public bool isCrushed = false;
-
-	[SerializeField] private Animator animator;
+	public bool isCrushed = false;	
 
 	[Header("UI Settings")]
 	[SerializeField] private FadeScript healthFadeScript;
@@ -41,18 +39,19 @@ public class Ant : MonoBehaviour {
 	[field : Header("Weapon Transform")]
 	[field : SerializeField] public Transform WeaponTransform { get; private set; }
 
-    private int health;
-	private Rigidbody rb;
+    private int health;    
+    private Rigidbody rb;
 	private Player player;
-	protected TurnManager turnManager;
+    protected Animator animator;
+    protected TurnManager turnManager;
 
 	private bool canMove = true;
 	private bool isJumping = false;
 
     private void OnEnable() {
-		Debug.Log("On Enable Called");
         turnManager = FindFirstObjectByType<TurnManager>();
         rb = GetComponent<Rigidbody>();
+		animator = GetComponentInChildren<Animator>();
 
         TurnManager.onTurnEnded += FadeOutHealthUI;
         WeaponManager.onOpenWeaponsMenu += FadeInHealthUI;

@@ -83,31 +83,38 @@ public class QueenBaseAntScript : Ant {
         switch (queenType) {
             case "Bee":
 				queenAntMeshes[1].SetActive(true);
+				animator = queenAntMeshes[1].GetComponent<Animator>();
 				ChangeQueenColor(queenAntMeshes[1].transform);
                 break;
             case "Bullet":
                 queenAntMeshes[2].SetActive(true);
+                animator = queenAntMeshes[2].GetComponent<Animator>();
                 ChangeQueenColor(queenAntMeshes[2].transform);
                 break;
             case "Dracula":
                 queenAntMeshes[3].SetActive(true);
+                animator = queenAntMeshes[3].GetComponent<Animator>();
                 ChangeQueenColor(queenAntMeshes[3].transform);
                 break;
             case "Ice":
                 queenAntMeshes[4].SetActive(true);
+                animator = queenAntMeshes[4].GetComponent<Animator>();
                 ChangeQueenColor(queenAntMeshes[4].transform);
                 break;
             case "Pharaoh":
                 queenAntMeshes[5].SetActive(true);
+                animator = queenAntMeshes[5].GetComponent<Animator>();
                 ChangeQueenColor(queenAntMeshes[5].transform);
                 break;
             case "Weaver":
                 queenAntMeshes[6].SetActive(true);
+                animator = queenAntMeshes[6].GetComponent<Animator>();
                 ChangeQueenColor(queenAntMeshes[6].transform);
                 break;
             default:
                 Debug.LogError("Invalid Queen Ant - " + queenType);
                 queenAntMeshes[0].SetActive(true);
+                animator = queenAntMeshes[0].GetComponent<Animator>();
                 ChangeQueenColor(queenAntMeshes[0].transform);
                 break;
         }
