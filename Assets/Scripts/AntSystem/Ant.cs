@@ -214,17 +214,17 @@ public class Ant : MonoBehaviour {
 
         if (antsRemaining.TryGetValue(player.playerInfo.playerNum, out int amount)) {
             if (turnManager.PlayerList.Count == 1 && amount - 1 == 0) {
-				GameOverScript.winningPlayerNumber = player.playerInfo.playerNum;
+				GameOverScript.winningPlayerNumber = antsRemaining.OrderByDescending(x => x.Value).First().Key;
                 turnManager.GameOver();
             }
             else if (turnManager.PlayerList.Count == 2 && amount == 0) {
-				GameOverScript.winningPlayerNumber = player.playerInfo.playerNum;
+				GameOverScript.winningPlayerNumber = antsRemaining.OrderByDescending(x => x.Value).First().Key;
 				turnManager.GameOver();
             }
             else if (turnManager.PlayerList.Count == 3 || turnManager.PlayerList.Count == 4) {
                 if (antsRemaining.Where(x => x.Value > 0).Count() == 2 && amount == 0) {
-					GameOverScript.winningPlayerNumber = player.playerInfo.playerNum;
-					turnManager.GameOver();
+					GameOverScript.winningPlayerNumber = antsRemaining.OrderByDescending(x => x.Value).First().Key;
+                    turnManager.GameOver();
                 }
             }
         }
@@ -304,7 +304,6 @@ public class Ant : MonoBehaviour {
     private void OnCollisionEnter(Collision collision) {
 		if(Physics.Raycast(gameObject.transform.position, Vector3.down, out RaycastHit ray, 1.5f) || Physics.Raycast(gameObject.transform.position+new Vector3(1.5f,0,0), Vector3.down, out ray, 1.5f) || Physics.Raycast(gameObject.transform.position + new Vector3(-1.5f, 0, 0), Vector3.down, out ray, 1.5f)) {
 			if (!isJumping) {
-				Debug.Log("test");
 				canJump = true;
 
 			}

@@ -193,6 +193,7 @@ public class TurnManager : MonoBehaviour {
             foreach (var player in PlayerList) {
                 currentTurnEnded = false;
                 CurrentPlayerTurn = player;
+                ShowMainUI();
 
                 foreach (Player players in PlayerList) {
                     if (players == player) {
@@ -319,6 +320,8 @@ public class TurnManager : MonoBehaviour {
 
     private IEnumerator EndTurnCoroutine() {
         StopCoroutine(turnTimerCoroutine);
+        HideMainUI(0.25f);
+        yield return new WaitForSeconds(0.25f);
 
         yield return new WaitUntil(() => gameOver == false);
         yield return new WaitUntil(() => cameraSystem.CameraDelayActive == false);
@@ -469,6 +472,11 @@ public class TurnManager : MonoBehaviour {
     public void HideMainUI() {
         mainGameUIMoveScript.StartMoveUI(LerpType.In, Vector2.zero, new Vector2(0, 250), 1.0f);
         TextHintFadeScript.FadeOutUI(1.0f);
+    }
+
+    public void HideMainUI(float time) {
+        mainGameUIMoveScript.StartMoveUI(LerpType.In, Vector2.zero, new Vector2(0, 250), time);
+        TextHintFadeScript.FadeOutUI(time);
     }
 
     public void ShowMainUI() {
