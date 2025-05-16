@@ -149,18 +149,18 @@ public class LobbyManager : MonoBehaviour {
             switch (player.playerInfo.queenType) {
                 case "Bee":
                     playerCard.leftArrow.SetActive(true);
-				    ChangeQueenSpecialism("Dracula", playerCard, player);
+				    ChangeQueenSpecialism("Pharaoh", playerCard, player);
                     playerCard.queenImage.sprite = playerCard.queenSprites[1];
                     break;
                 case "Dracula":
                     ChangeQueenSpecialism("Weaver", playerCard, player);
                     playerCard.queenImage.sprite = playerCard.queenSprites[2];
                     break;
-                case "Weaver":
-                    ChangeQueenSpecialism("Pharaoh", playerCard, player);
+                case "Pharaoh":
+                    ChangeQueenSpecialism("Dracula", playerCard, player);
                     playerCard.queenImage.sprite = playerCard.queenSprites[3];
                     break;
-                case "Pharaoh":
+                case "Weaver":
 				    ChangeQueenSpecialism("Ice", playerCard, player);
                     playerCard.queenImage.sprite = playerCard.queenSprites[4];
                     break;
@@ -179,18 +179,18 @@ public class LobbyManager : MonoBehaviour {
                     playerCard.queenImage.sprite = playerCard.queenSprites[4];
                     break;
 				case "Ice":
-				    ChangeQueenSpecialism("Pharaoh", playerCard, player);
-                    playerCard.queenImage.sprite = playerCard.queenSprites[3];
-                    break;
-                case "Pharaoh":
 				    ChangeQueenSpecialism("Weaver", playerCard, player);
                     playerCard.queenImage.sprite = playerCard.queenSprites[2];
                     break;
                 case "Weaver":
-                    ChangeQueenSpecialism("Dracula", playerCard, player);
-                    playerCard.queenImage.sprite = playerCard.queenSprites[1];
+				    ChangeQueenSpecialism("Dracula", playerCard, player);
+                    playerCard.queenImage.sprite = playerCard.queenSprites[3];
                     break;
                 case "Dracula":
+                    ChangeQueenSpecialism("Pharaoh", playerCard, player);
+                    playerCard.queenImage.sprite = playerCard.queenSprites[1];
+                    break;
+                case "Pharaoh":
                     playerCard.leftArrow.SetActive(false);
                     ChangeQueenSpecialism("Bee", playerCard, player);
                     playerCard.queenImage.sprite = playerCard.queenSprites[0];
