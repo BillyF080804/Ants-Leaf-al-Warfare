@@ -71,7 +71,7 @@ public class FlyTrapHazard: MonoBehaviour
 
     private void Attack() {
         cameraSystem.SetCameraLookAtTarget(null);
-        cameraSystem.SetCameraTarget(transform.position, 0, -10);
+        cameraSystem.SetCameraTarget(FindFirstObjectByType<TurnManager>().CurrentAntTurn.transform.position, 5, 15);
         cameraSystem.CameraDelayActive = true;
 
         foreach(Ant ant in antList) {

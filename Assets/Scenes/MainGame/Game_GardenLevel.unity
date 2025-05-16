@@ -13840,10 +13840,11 @@ Transform:
   m_GameObject: {fileID: 1357331656}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.14625572, z: 0, w: 0.9892469}
-  m_LocalPosition: {x: -6.18, y: 0.29, z: 2.29}
-  m_LocalScale: {x: 7.95, y: 6.45, z: 1.13}
+  m_LocalPosition: {x: -6, y: 0.29, z: 2.76}
+  m_LocalScale: {x: 6.36, y: 6.45, z: 1.13}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2013868331}
   m_Father: {fileID: 5747166400927482391}
   m_LocalEulerAnglesHint: {x: 0, y: -16.82, z: 0}
 --- !u!65 &1357331658
@@ -20511,6 +20512,59 @@ Transform:
   - {fileID: 1630067529}
   m_Father: {fileID: 1754538748}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2013868330
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2013868331}
+  - component: {fileID: 2013868332}
+  m_Layer: 0
+  m_Name: Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2013868331
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2013868330}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.0755008, z: 0, w: 0.9971458}
+  m_LocalPosition: {x: 0.526, y: 0, z: -0.3}
+  m_LocalScale: {x: 0.5, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1357331657}
+  m_LocalEulerAnglesHint: {x: 0, y: 8.66, z: 0}
+--- !u!65 &2013868332
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2013868330}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2048646452
 GameObject:
   m_ObjectHideFlags: 0
