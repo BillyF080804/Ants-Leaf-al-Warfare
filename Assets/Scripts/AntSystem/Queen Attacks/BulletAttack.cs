@@ -29,7 +29,7 @@ public class BulletAttack : QueenAttack {
     }
 
 	private IEnumerator AttackCoroutine(int attackLevel, Ant antInfoScript, Vector3 position) {
-		audioPlayer.PlayClip();
+		//audioPlayer.PlayClip();
 		int amountOfBullets = amountOfBulletsPerLevel[attackLevel - 1];
         cameraSystem.SetCameraTarget(null);
         cameraSystem.SetCameraLookAtTarget(null);

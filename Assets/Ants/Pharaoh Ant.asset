@@ -25,3 +25,4 @@ MonoBehaviour:
   queenArchetype: Summoner
   description: Revive additional fallen ants from battles long gone for a short period
     of time.
+  audioClip: {fileID: 8300000, guid: 7cd3972184b90f940893fb12f7eb81d0, type: 3}

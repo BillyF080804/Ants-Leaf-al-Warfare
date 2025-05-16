@@ -32,4 +32,5 @@ public class AntSO : ScriptableObject {
 	public QueenAttack queenAttack;
 	public string queenArchetype;
 	public string description;
+	[SerializeField] AudioClip audioClip;
 }

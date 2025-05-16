@@ -7,20 +7,41 @@ public class AudioPlayer : MonoBehaviour {
 	[SerializeField] private AudioClip audioClip;
 	private AudioSource audioSource;
 
+	public enum ObjectType {
+		Queen,
+		Ant,
+		Other
+	}
+
+	public ObjectType objectType;
+
 	private void Start() {
 		audioSource = GetComponent<AudioSource>();
-		audioSource.clip = audioClip;
+		switch (objectType) {
+			case ObjectType.Queen: {
 
-        audioSource.playOnAwake = playOnAwake;
+				break;
+			}
+			case ObjectType.Ant: {
+				break;
+			}
+			case ObjectType.Other: {
+				audioSource.clip = audioClip; 
+				break; 
+			}
+		}
 
-    }
+
+		audioSource.playOnAwake = playOnAwake;
+
+	}
 
 	public void PlayClip() {
 		audioSource.Play();
 	}
 
-	public void StopClip() { 
-		audioSource.Stop(); 
+	public void StopClip() {
+		audioSource.Stop();
 	}
 
 	public void PauseClip(bool pause) {
