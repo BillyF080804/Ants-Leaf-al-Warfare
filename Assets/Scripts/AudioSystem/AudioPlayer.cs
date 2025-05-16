@@ -40,11 +40,19 @@ public class AudioPlayer : MonoBehaviour {
 		audioSource.Play();
 	}
 
+	public void PlayClip(AudioSource _audioSource) {
+		_audioSource.Play();
+	}
+
 	public void StopClip() {
 		audioSource.Stop();
 	}
 
-	public void PauseClip(bool pause) {
+    public void StopClip(AudioSource _audioSource) {
+        _audioSource.Stop();
+    }
+
+    public void PauseClip(bool pause) {
 		if (pause) {
 			audioSource.Pause();
 		} else {
@@ -52,8 +60,21 @@ public class AudioPlayer : MonoBehaviour {
 		}
 	}
 
-	public void ChangeClip(AudioClip newClip) {
+    public void PauseClip(bool pause, AudioSource _audioSource) {
+        if (pause) {
+            _audioSource.Pause();
+        }
+        else {
+            _audioSource.UnPause();
+        }
+    }
+
+    public void ChangeClip(AudioClip newClip) {
 		audioClip = newClip;
 		audioSource.clip = audioClip;
 	}
+
+    public void ChangeClip(AudioClip newClip, AudioSource _audioSource) {
+        _audioSource.clip = newClip;
+    }
 }
