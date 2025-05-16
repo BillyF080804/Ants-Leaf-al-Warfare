@@ -639,6 +639,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playOnAwake: 0
   audioClip: {fileID: 0}
+  objectType: 0
 --- !u!1 &8054865428902753365
 GameObject:
   m_ObjectHideFlags: 0
@@ -1174,10 +1175,30 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 7affd508ea9a5634f824397091b9d7a2, type: 2}
+    - target: {fileID: -5169731159082748828, guid: adee804a3e2ee884c8a48cf08dd5218b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -2815113518054351838, guid: adee804a3e2ee884c8a48cf08dd5218b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 5ee7713f993819f4a94b05ecf95baab1, type: 2}
+    - target: {fileID: -2721130625384985819, guid: adee804a3e2ee884c8a48cf08dd5218b, type: 3}
+      propertyPath: m_Name
+      value: QueenCrown
+      objectReference: {fileID: 0}
+    - target: {fileID: -2721130625384985819, guid: adee804a3e2ee884c8a48cf08dd5218b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1750612299857177294, guid: adee804a3e2ee884c8a48cf08dd5218b, type: 3}
+      propertyPath: m_Name
+      value: QueenLeaf
+      objectReference: {fileID: 0}
+    - target: {fileID: -1750612299857177294, guid: adee804a3e2ee884c8a48cf08dd5218b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: adee804a3e2ee884c8a48cf08dd5218b, type: 3}
       propertyPath: m_Name
       value: BulletAnt
