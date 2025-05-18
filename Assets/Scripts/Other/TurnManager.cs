@@ -190,7 +190,7 @@ public class TurnManager : MonoBehaviour {
             cameraSystem.ResetCamera();
             cameraSystem.SetCameraTarget(null);
 
-            foreach (var player in PlayerList) {
+            foreach (Player player in PlayerList) {
                 currentTurnEnded = false;
                 CurrentPlayerTurn = player;
                 ShowMainUI();

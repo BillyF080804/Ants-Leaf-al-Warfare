@@ -1,8 +1,8 @@
+using System.Collections;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEditor;
 using UnityEngine.SceneManagement;
-using System.Collections;
 
 namespace WeaponSystem {
     [RequireComponent(typeof(PlayerInput))]

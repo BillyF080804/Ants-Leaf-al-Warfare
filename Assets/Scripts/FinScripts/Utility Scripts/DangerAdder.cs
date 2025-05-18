@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -34,7 +33,7 @@ public class DangerAdder : MonoBehaviour
 
     public void MoveAnts()
     {
-        foreach(var ant in antsInDanger)
+        foreach(Ant ant in antsInDanger)
         {
             bScript.Fall(ant);
         }

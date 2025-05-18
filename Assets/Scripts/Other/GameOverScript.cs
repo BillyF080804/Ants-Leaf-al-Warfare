@@ -14,7 +14,7 @@ public class GameOverScript : MonoBehaviour {
 	private void Start() {
         blackscreenFadeScript.FadeOutUI(1.0f);
 
-        foreach (var player in FindObjectsByType<Player>(FindObjectsInactive.Include, FindObjectsSortMode.None)) {
+        foreach (Player player in FindObjectsByType<Player>(FindObjectsInactive.Include, FindObjectsSortMode.None)) {
             Destroy(player.gameObject);
         }
 
