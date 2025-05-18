@@ -48,7 +48,7 @@ public class DrownScript : MonoBehaviour {
         cameraSystem.SetCameraLookAtTarget(null);
 		cameraSystem.SetCameraTarget(null);
 		antScript.TakeDamage(1000);
-        turnManager.EndTurn();
+        StartCoroutine(turnManager.EndTurnCoroutine());
     }
 
     private IEnumerator Lerp(Vector3 startPos, Vector3 endPos, float duration, Transform ant) {

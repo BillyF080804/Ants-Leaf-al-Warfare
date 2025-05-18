@@ -98,7 +98,7 @@ public class WeaponManager : MonoBehaviour {
             }
         }
 
-        WaitTillWeaponsFinished();
+        StartCoroutine(WaitTillWeaponsFinishedCoroutine());
     }
 
     private void OnShoot(BaseWeaponSO weaponInfo, Transform playerPosition) {
@@ -185,7 +185,7 @@ public class WeaponManager : MonoBehaviour {
             turnManager.CurrentPlayerTurn.ResetFreeCamSetting();
             cameraSystem.SetCameraTarget(playerPosition.position);
             cameraSystem.SetCameraZoomingBool(false);
-            WaitTillWeaponsFinished();
+            StartCoroutine(WaitTillWeaponsFinishedCoroutine());
         }
     }
 
@@ -231,15 +231,11 @@ public class WeaponManager : MonoBehaviour {
             cameraSystem.CameraDelay(weaponInfo.cameraDelay);
             cameraSystem.SetCameraTarget(playerPosition.position);
             cameraSystem.SetCameraZoomingBool(false);
-            WaitTillWeaponsFinished();
+            StartCoroutine(WaitTillWeaponsFinishedCoroutine());
         }
     }
 
-    public void WaitTillWeaponsFinished() {
-        StartCoroutine(WaitTillWeaponsFinishedCoroutine());
-    }
-
-    private IEnumerator WaitTillWeaponsFinishedCoroutine() {
+    public IEnumerator WaitTillWeaponsFinishedCoroutine() {
         aimArrow.gameObject.SetActive(false);
         yield return new WaitUntil(() => activeWeapons.Where(x => x != null).Count() == 0 && cameraSystem.CameraDelayActive == false);
         canFireWeapon = true;
@@ -251,7 +247,7 @@ public class WeaponManager : MonoBehaviour {
             turnManager.CurrentPlayerTurn.RemoveWeapon(WeaponSelected);
         }
 
-        turnManager.EndTurn();
+        StartCoroutine(turnManager.EndTurnCoroutine());
     }
 
     //Handles setting aimValue
@@ -403,15 +399,11 @@ public class WeaponManager : MonoBehaviour {
             turnManager.FireWeaponText.GetComponent<FadeScript>().FadeOutUI(1.0f);
         }
 
-        ForceCloseWeaponMenu();
-    }
-
-    public void ForceCloseWeaponMenu() {
         StartCoroutine(ForceCloseWeaponMenuCoroutine());
     }
 
     //Called at the end of a turn. Forces the weapon menu to close.
-    private IEnumerator ForceCloseWeaponMenuCoroutine() {
+    public IEnumerator ForceCloseWeaponMenuCoroutine() {
         if (UIMoving == true) {
             yield return new WaitUntil(() => UIMoving == false);
         }

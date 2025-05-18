@@ -58,8 +58,8 @@ public class MummyScript : Ant
 				}
 				
 			}
-			turnManager.EndTurn();
-		}
+            StartCoroutine(turnManager.EndTurnCoroutine());
+        }
 
 	}
 }

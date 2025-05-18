@@ -212,39 +212,7 @@ public class TurnManager : MonoBehaviour {
                 playerTurnText.text = "Player " + player.playerInfo.playerNum.ToString();
                 playerTurnText.color = player.playerInfo.playerColor;
 
-                WeaponMenuText.spriteAsset = player.GetSpriteFromAction("WeaponMenu");
-                FireWeaponText.spriteAsset = player.GetSpriteFromAction("FireWeapon");
-
-                if (WeaponMenuText.spriteAsset != null) {
-                    WeaponMenuText.text = "<sprite=0> - Weapons Menu";
-                }
-                else {
-                    WeaponMenuText.text = player.GetKeybindForAction("WeaponMenu") + " - Weapons Menu";
-                }
-
-                if (FireWeaponText.spriteAsset != null) {
-                    FireWeaponText.text = "<sprite=0> - Fire";
-                }
-                else {
-                    FireWeaponText.text = player.GetKeybindForAction("FireWeapon") + " - Fire";
-                }
-
-                if (CurrentAntTurn.antInfo.IsQueen == true) {
-                    QueenAttackText.spriteAsset = player.GetSpriteFromAction("QueenAttack");
-
-                    if (QueenAttackText.spriteAsset != null) {
-                        QueenAttackText.text = "<sprite=0> - Queen Attack";
-                    }
-                    else {
-                        QueenAttackText.text = player.GetKeybindForAction("QueenAttack") + " - Queen Attack";
-                    }
-
-                    ShowMainUI();
-                    QueenAttackText.GetComponent<FadeScript>().FadeInUI(1.0f);
-                }
-                else {
-                    QueenAttackText.GetComponent<FadeScript>().FadeOutUI(0.5f);
-                }
+                DisplayButtonHints(player);
 
                 player.ResetFreeCamSetting();
                 cameraSystem.ResetCamera();
@@ -258,7 +226,7 @@ public class TurnManager : MonoBehaviour {
                         
 
             if (CurrentRound == maxRounds) {
-				GameOver();
+                StartCoroutine(GameOverCoroutine());
 			} 
             else if(prevRoud != CurrentRound) {
                 roundNumText.text = "Current Round: " + (CurrentRound + 1);
@@ -279,6 +247,42 @@ public class TurnManager : MonoBehaviour {
         }       
     }
 
+    private void DisplayButtonHints(Player player) {
+        WeaponMenuText.spriteAsset = player.GetSpriteFromAction("WeaponMenu");
+        FireWeaponText.spriteAsset = player.GetSpriteFromAction("FireWeapon");
+
+        if (WeaponMenuText.spriteAsset != null) {
+            WeaponMenuText.text = "<sprite=0> - Weapons Menu";
+        }
+        else {
+            WeaponMenuText.text = player.GetKeybindForAction("WeaponMenu") + " - Weapons Menu";
+        }
+
+        if (FireWeaponText.spriteAsset != null) {
+            FireWeaponText.text = "<sprite=0> - Fire";
+        }
+        else {
+            FireWeaponText.text = player.GetKeybindForAction("FireWeapon") + " - Fire";
+        }
+
+        if (CurrentAntTurn.antInfo.IsQueen == true) {
+            QueenAttackText.spriteAsset = player.GetSpriteFromAction("QueenAttack");
+
+            if (QueenAttackText.spriteAsset != null) {
+                QueenAttackText.text = "<sprite=0> - Queen Attack";
+            }
+            else {
+                QueenAttackText.text = player.GetKeybindForAction("QueenAttack") + " - Queen Attack";
+            }
+
+            ShowMainUI();
+            QueenAttackText.GetComponent<FadeScript>().FadeInUI(1.0f);
+        }
+        else {
+            QueenAttackText.GetComponent<FadeScript>().FadeOutUI(0.5f);
+        }
+    }
+
     private IEnumerator TurnTimer() {
         PickAntTurn();
 
@@ -291,34 +295,26 @@ public class TurnManager : MonoBehaviour {
             yield return null;
         }
 
-        weaponManager.WaitTillWeaponsFinished();
+        StartCoroutine(weaponManager.WaitTillWeaponsFinishedCoroutine());
         yield return new WaitUntil(() => weaponManager.WeaponsActive == false && cameraSystem.CameraDelayActive == false);
-        EndTurn();
+        StartCoroutine(EndTurnCoroutine());
     }
 
     public void SetTurnTimerText(float time) {
         turnTimeText.text = "Time: " + TimeSpan.FromSeconds(time).ToString("ss");
     }
 
-    public void PauseTurnTimer(float pauseDuration) {
-        StartCoroutine(PauseTurnTimerCoroutine(pauseDuration));
-    }
-
     public void SetPauseTurnTimer(bool _turnTimerPaused) {
         turnTimerPaused = _turnTimerPaused;
     }
 
-    private IEnumerator PauseTurnTimerCoroutine(float pauseDuration) {
+    public IEnumerator PauseTurnTimerCoroutine(float pauseDuration) {
         turnTimerPaused = true;
         yield return new WaitForSeconds(pauseDuration);
         turnTimerPaused = false;
     }
 
-    public void EndTurn() {
-        StartCoroutine(EndTurnCoroutine());
-    }
-
-    private IEnumerator EndTurnCoroutine() {
+    public IEnumerator EndTurnCoroutine() {
         StopCoroutine(turnTimerCoroutine);
         HideMainUI(0.25f);
         yield return new WaitForSeconds(0.25f);
@@ -379,11 +375,7 @@ public class TurnManager : MonoBehaviour {
         currentTurnTime = maxTurnTime;
     }
 
-    public void GameOver() {
-        StartCoroutine(GameOverCoroutine());
-    }
-
-    private IEnumerator GameOverCoroutine() {
+    public IEnumerator GameOverCoroutine() {
         gameOver = true;
         blackscreen.SetActive(true);
         blackscreen.GetComponent<CanvasGroup>().alpha = 0;
@@ -489,7 +481,7 @@ public class TurnManager : MonoBehaviour {
         IsPaused = true;
 
         CurrentAntTurn.SetCanMove(false);
-        weaponManager.ForceCloseWeaponMenu();
+        StartCoroutine(weaponManager.ForceCloseWeaponMenuCoroutine());
         HideMainUI();
         SetPauseTurnTimer(true);
         pauseMenu.gameObject.SetActive(true);

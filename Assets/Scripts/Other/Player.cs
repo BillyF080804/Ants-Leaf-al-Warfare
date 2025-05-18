@@ -92,19 +92,14 @@ public class Player : MonoBehaviour {
 
     private void OnSkipTurnPerformed(InputAction.CallbackContext ctx) {
         if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false && weaponManager.WeaponsActive == false && hasSkippedTurn == false) {
-            //hasSkippedTurn = true;
-            //turnManager.EndTurn();
-            //cameraSystem.ZoomCameraFOVOut(0.5f);
-            //turnManager.HideSkippingTurnText();
             SkipTurn();
-
 		}
     }
 
     private void SkipTurn() {
 		hasSkippedTurn = true;
-		turnManager.EndTurn();
-		cameraSystem.ZoomCameraFOVOut(0.5f);
+        StartCoroutine(turnManager.EndTurnCoroutine());
+        cameraSystem.ZoomCameraFOVOut(0.5f);
 		turnManager.HideSkippingTurnText();
 	}
 
