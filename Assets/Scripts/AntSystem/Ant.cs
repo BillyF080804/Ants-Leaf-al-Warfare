@@ -16,7 +16,6 @@ public class Ant : MonoBehaviour {
     [Header("Ant Info")]
     public AntSO antInfo;
 
-    public bool hasHadTurn = false;
     public PlayerList ownedPlayer;
     private Vector3 moveVector = Vector3.zero;
     private bool canJump = true;

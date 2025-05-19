@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using Random = UnityEngine.Random;
 
 public class Player : MonoBehaviour {
     [Header("Player Info")]
@@ -205,50 +204,6 @@ public class Player : MonoBehaviour {
         }
         else {
             return false;
-        }
-    }
-
-    public Ant GetAnt(Ant currentAnt) {
-        if (currentAnt != null) {
-            currentAnt.StopMovement();
-        }
-
-        List<Ant> possibleAnts = new List<Ant>();
-        for (int i = 0; i < AntList.Count; i++) {
-            Ant nextAnt = AntList[i].GetComponent<Ant>();
-            if (nextAnt.hasHadTurn == false) {
-                possibleAnts.Add(nextAnt);
-            }
-        }
-
-        if (possibleAnts.Count > 0) {
-            int nextAntIndex = Random.Range(0, possibleAnts.Count);
-            return possibleAnts[nextAntIndex];
-        }
-        else if (QueenAnt != null) {
-            Ant testAnt = QueenAnt.GetComponent<Ant>();
-
-            if (testAnt.hasHadTurn) {
-                return null;
-            }
-            else {
-                return testAnt;
-            }
-        }
-        else {
-            //Debug.LogError("If called probably worth checking if not ignore");
-            SkipTurn();
-            return null;
-        }
-    }
-
-    public void ResetAnts() {
-        for (int i = 0; i < AntList.Count; i++) {
-            AntList[i].GetComponent<Ant>().hasHadTurn = false;
-        }
-
-        if (QueenAnt != null) {
-            QueenAnt.GetComponent<Ant>().hasHadTurn = false;
         }
     }
 
