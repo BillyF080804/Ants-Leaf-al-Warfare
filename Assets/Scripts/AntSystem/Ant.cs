@@ -152,6 +152,8 @@ public class Ant : MonoBehaviour {
         healthText.text = health.ToString();
 
         if (health <= 0) {
+            health = 0;
+            healthText.text = health.ToString();
             OnDeath();
         }
     }
