@@ -164,6 +164,8 @@ public class Ant : MonoBehaviour {
             }
         }
 
+		turnManager.RemoveAntFromDictionary(player.playerInfo.playerNum, this);
+
         if (isDrowning == false && isCrushed == false) {
 			ResetAnimation();
 			ChangeAnimation("Flailing");

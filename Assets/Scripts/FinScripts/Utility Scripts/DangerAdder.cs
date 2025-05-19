@@ -14,7 +14,7 @@ public class DangerAdder : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         currentAnt = other.GetComponent<Ant>();
-        if (currentAnt != null) 
+        if (currentAnt != null && currentAnt.GetHealth() > 0) 
         {
             antsInDanger.Add(currentAnt);
         }

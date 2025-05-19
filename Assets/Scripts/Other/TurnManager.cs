@@ -56,18 +56,15 @@ public class TurnManager : MonoBehaviour {
     private float currentTurnTime;
     private bool currentTurnEnded = false;
     private bool turnTimerPaused = false;
-    private bool allAntsMoved = false;
     private bool gameOver = false;
 
     public delegate void OnTurnEnded();
     public static OnTurnEnded onTurnEnded;
 
-    public int CurrentRound { get; private set; } = 0;
     public bool IsPaused { get; private set; } = false;
     public bool PauseInProgress { get; private set; } = false;
     public Player CurrentPlayerTurn { get; private set; } = null;
     public Ant CurrentAntTurn { get; private set; } = null; //Tracks which ant's turn it currently is
-    public List<GameObject> QueenHealthUI { get; private set; } = new List<GameObject>();
     public List<Player> PlayerList { get; private set; } = new List<Player>();
 
     private Coroutine turnTimerCoroutine;
@@ -78,6 +75,7 @@ public class TurnManager : MonoBehaviour {
     private BBQScript bbqScript;
     private Hose hose;
     private EnterObjectManager enterObjectManager;
+    private Dictionary<int, List<Ant>> antDictionary = new Dictionary<int, List<Ant>>();
 
     private void Start() {
         numOfAnts = LoadingData.numOfAnts;
@@ -107,7 +105,7 @@ public class TurnManager : MonoBehaviour {
         StartCoroutine(LevelTextCoroutine());
         yield return new WaitUntil(() => cameraSystem.CameraDelayActive == false);
 
-        StartCoroutine(StartGame());
+        StartCoroutine(RoundsCoroutine());
     }
 
     private void SpawnAllAnts() {
@@ -176,75 +174,84 @@ public class TurnManager : MonoBehaviour {
         levelNameText.GetComponent<FadeScript>().FadeOutUI(2.0f);
     }
 
-    private IEnumerator StartGame() {
-        roundNumText.text = "Current Round: 1";
-        cameraSystem.SetCameraTarget(null);
-
-        ShowRoundNumber();
-        yield return new WaitForSeconds(2.5f);
-        HideRoundNumber();
-        ShowMainUI();
-
-        int prevRoud = 0;
-        for (int i = 0; i < 1000; i++) {
+    private IEnumerator RoundsCoroutine() {
+        for (int roundCounter = 0; roundCounter < maxRounds; roundCounter++) {
+            roundNumText.text = "Current Round: " + (roundCounter + 1);
             cameraSystem.ResetCamera();
             cameraSystem.SetCameraTarget(null);
 
-            foreach (Player player in PlayerList) {
-                currentTurnEnded = false;
-                CurrentPlayerTurn = player;
-                ShowMainUI();
+            ShowRoundNumber();
+            yield return new WaitForSeconds(2.5f);
+            HideRoundNumber();
+            ShowMainUI();
 
-                foreach (Player players in PlayerList) {
-                    if (players == player) {
-                        players.GetEventSystem().enabled = true;
-                    }
-                    else {
-                        players.GetEventSystem().enabled = false;
-                    }
+            startRoundEvent.Invoke();
+
+            foreach (Player player in PlayerList) {
+                List<Ant> playerAnts = new List<Ant>();
+
+                foreach (GameObject ant in player.AntList) {
+                    playerAnts.Add(ant.GetComponent<Ant>());
                 }
 
-                startTurnEvent.Invoke();
-                yield return new WaitUntil(() => bbqScript.IsBurning == false && hose.IsSpraying == false);
+                if (player.QueenAnt != null) {
+                    playerAnts.Add(player.QueenAnt.GetComponent<Ant>());
+                }
 
-                cameraSystem.SetCameraZoomingBool(true);
-                turnTimerCoroutine = StartCoroutine(TurnTimer());
-                playerTurnText.text = "Player " + player.playerInfo.playerNum.ToString();
-                playerTurnText.color = player.playerInfo.playerColor;
-
-                DisplayButtonHints(player);
-
-                player.ResetFreeCamSetting();
-                cameraSystem.ResetCamera();
-                cameraSystem.SetCameraTarget(CurrentAntTurn.transform);
-                CurrentPlayerTurn.hasSkippedTurn = false;
-
-                enterObjectManager.StartTurnEvent();
-
-                yield return new WaitUntil(() => currentTurnEnded == true);
+                if (playerAnts.Count > 0) {
+                    antDictionary.Add(player.playerInfo.playerNum, playerAnts);
+                }                
             }
-                        
 
-            if (CurrentRound == maxRounds) {
-                StartCoroutine(GameOverCoroutine());
-			} 
-            else if(prevRoud != CurrentRound) {
-                roundNumText.text = "Current Round: " + (CurrentRound + 1);
+            while (antDictionary.Count > 0) {
+                foreach (Player player in PlayerList) {
+                    antDictionary.TryGetValue(player.playerInfo.playerNum, out List<Ant> antList);
 
-                cameraSystem.ResetCamera();
-                cameraSystem.SetCameraTarget(null);
+                    if (antList == null || antList.Count == 0) {
+                        continue;
+                    }
 
-                HideMainUI();
-                ShowRoundNumber();
-                yield return new WaitForSeconds(2.5f);
-                HideRoundNumber();
-                ShowMainUI();
+                    CurrentPlayerTurn = player;
+                    currentTurnEnded = false;
+                    CurrentAntTurn = antList[0];
+                    ShowMainUI();
 
-                startRoundEvent.Invoke();
+                    foreach (Player players in PlayerList) {
+                        if (players == player) {
+                            players.GetEventSystem().enabled = true;
+                        }
+                        else {
+                            players.GetEventSystem().enabled = false;
+                        }
+                    }
 
-                prevRoud++;
+                    startTurnEvent.Invoke();
+                    yield return new WaitUntil(() => bbqScript.IsBurning == false && hose.IsSpraying == false);
+
+                    StartTurnFunctionality(player);                    
+
+                    yield return new WaitUntil(() => currentTurnEnded == true);
+                }
             }
-        }       
+        }
+
+        StartCoroutine(GameOverCoroutine());
+    }
+
+    private void StartTurnFunctionality(Player player) {
+        cameraSystem.SetCameraZoomingBool(true);
+        turnTimerCoroutine = StartCoroutine(TurnTimer());
+        playerTurnText.text = "Player " + player.playerInfo.playerNum.ToString();
+        playerTurnText.color = player.playerInfo.playerColor;
+
+        DisplayButtonHints(player);
+
+        player.ResetFreeCamSetting();
+        cameraSystem.ResetCamera();
+        cameraSystem.SetCameraTarget(CurrentAntTurn.transform);
+        CurrentPlayerTurn.hasSkippedTurn = false;
+
+        enterObjectManager.StartTurnEvent();
     }
 
     private void DisplayButtonHints(Player player) {
@@ -284,8 +291,6 @@ public class TurnManager : MonoBehaviour {
     }
 
     private IEnumerator TurnTimer() {
-        PickAntTurn();
-
         while (currentTurnTime > 0) {
             if (turnTimerPaused == false) {
                 currentTurnTime -= Time.deltaTime;
@@ -323,10 +328,13 @@ public class TurnManager : MonoBehaviour {
         yield return new WaitUntil(() => cameraSystem.CameraDelayActive == false);
 
         if (CurrentAntTurn != null) {
-            CurrentAntTurn.ApplyEffects();
+            if (CurrentAntTurn.effects.Count > 0) {
+                CurrentAntTurn.ApplyEffects();
+                yield return new WaitForSeconds(1.0f);
+            }
 
             if (CurrentAntTurn.GetComponent<QueenBaseAntScript>() != null) {
-                CheckIfQueenAttacked();
+                CurrentAntTurn.GetComponent<QueenBaseAntScript>().CheckAttackTurn();
             }
 
             if (CurrentAntTurn.GetComponent<MummyScript>() != null) {
@@ -335,7 +343,7 @@ public class TurnManager : MonoBehaviour {
 
             if (CurrentAntTurn.antInfo.IsQueen == true) {
                 QueenAttackText.GetComponent<FadeScript>().FadeOutUI(0.5f);
-            }
+            }         
         }
 
         cameraSystem.SetCameraLookAtTarget(null);
@@ -348,31 +356,37 @@ public class TurnManager : MonoBehaviour {
         dropSystem.CheckDrop();
         yield return new WaitUntil(() => cameraSystem.CameraDelayActive == false);
 
-        CheckIfAllAntsMoved();
+        if (CurrentAntTurn != null) {
+            RemoveAntFromDictionary(CurrentPlayerTurn.playerInfo.playerNum, CurrentAntTurn);
+        }
+
         CurrentPlayerTurn = null;
-        cameraSystem.SetCameraTarget(null);        
+        cameraSystem.SetCameraTarget(null);
         weaponManager.EndTurn();
         onTurnEnded?.Invoke();
         yield return new WaitUntil(() => weaponManager.WeaponMenuOpen == false);
 
         endTurnEvent.Invoke();
         yield return new WaitUntil(() => cameraSystem.CameraDelayActive == false);
-
-        if (allAntsMoved) {
-
-            for (int i = 0; i < PlayerList.Count; i++) {
-                PlayerList[i].ResetAnts();// sets all the ants back to not having moved
-            }
-
-            allAntsMoved = false; // ensures the round doesnt end until all ants have moved
-
-
-            CurrentRound++;
-            yield return new WaitUntil(() => dropSystem.IsDropping == false);
-        }
+        yield return new WaitUntil(() => dropSystem.IsDropping == false);
 
         currentTurnEnded = true;
         currentTurnTime = maxTurnTime;
+    }
+
+    public void RemoveAntFromDictionary(int playerNum, Ant ant) {
+        antDictionary.TryGetValue(playerNum, out List<Ant> antList);
+        List<Ant> newAntList = antList;
+
+        if (newAntList.Contains(ant)) {
+            newAntList.Remove(ant);
+        }
+        
+        antDictionary.Remove(playerNum);
+
+        if (newAntList.Count > 0) {
+            antDictionary.Add(playerNum, newAntList);
+        }
     }
 
     public IEnumerator GameOverCoroutine() {
@@ -383,28 +397,6 @@ public class TurnManager : MonoBehaviour {
 
         yield return new WaitUntil(() => blackscreen.GetComponent<CanvasGroup>().alpha == 1);
         SceneManager.LoadScene("GameOverScene");
-    }
-
-    //Decides which ant to use
-    private void PickAntTurn() {
-        CurrentAntTurn = CurrentPlayerTurn.GetAnt(CurrentAntTurn);
-
-        if (CurrentAntTurn != null) {
-            CurrentAntTurn.hasHadTurn = true;
-        }
-    }
-
-    private void CheckIfAllAntsMoved() {
-        int playersFinishedRound = 0;
-        for (int i = 0; i < PlayerList.Count; i++) {
-            CurrentAntTurn = PlayerList[i].GetAnt(CurrentAntTurn);
-            if (CurrentAntTurn == null) {
-                playersFinishedRound++;
-            }
-        }
-        if (playersFinishedRound == PlayerList.Count) {
-            allAntsMoved = true;
-        }
     }
 
     public void ChangeQueenSpecialism(string queenType, Ant queenAnt) {
@@ -432,10 +424,6 @@ public class TurnManager : MonoBehaviour {
                 break;
         }
     }
-
-    private void CheckIfQueenAttacked() {
-		CurrentAntTurn.GetComponent<QueenBaseAntScript>().CheckAttackTurn();
-	}
 
     public void HideRoundNumber() {
         roundNumText.GetComponent<FadeScript>().FadeOutUI(1.0f);
