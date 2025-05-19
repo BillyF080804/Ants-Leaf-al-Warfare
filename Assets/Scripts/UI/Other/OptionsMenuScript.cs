@@ -21,7 +21,7 @@ public class OptionsMenuScript : MonoBehaviour {
         }
         else {
             Screen.fullScreenMode = FullScreenMode.Windowed;
-        }      
+        }
     }
 
     public void ChangeResolution(int selectedOption) {
@@ -29,7 +29,7 @@ public class OptionsMenuScript : MonoBehaviour {
         string width = resolutionDropdown.options[selectedOption].text.Substring(0, xIndex);
         string height = resolutionDropdown.options[selectedOption].text.Remove(0, xIndex + 1);
 
-        Screen.SetResolution(int.Parse(width), int.Parse(height), fullscreen);        
+        Screen.SetResolution(int.Parse(width), int.Parse(height), fullscreen);
     }
 
     public void SetVolume(float volume) {

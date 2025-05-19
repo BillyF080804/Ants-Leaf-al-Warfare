@@ -9,7 +9,7 @@ public class TriggerScript : MonoBehaviour {
 
     private enum TriggerType {
         Left,
-        Right 
+        Right
     };
 
     private void Awake() {

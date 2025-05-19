@@ -48,12 +48,12 @@ public class WeaponManager : MonoBehaviour {
     public AudioPlayer AudioPlayer { get; private set; }
 
     private CameraSystem cameraSystem;
-    private TurnManager turnManager;    
+    private TurnManager turnManager;
     private List<GameObject> activeWeapons = new List<GameObject>();
     private List<BaseWeaponSO> allWeapons = new List<BaseWeaponSO>();
     private List<WeaponMenuIconScript> weaponIcons = new List<WeaponMenuIconScript>();
 
-    private void Start() { 
+    private void Start() {
         cameraSystem = FindFirstObjectByType<CameraSystem>();
         turnManager = FindFirstObjectByType<TurnManager>();
         AudioPlayer = GetComponent<AudioPlayer>();
@@ -91,7 +91,7 @@ public class WeaponManager : MonoBehaviour {
         if (weaponInfo.isMultiShot == false) {
             OnShoot(weaponInfo, playerPosition);
         }
-        else if (weaponInfo.isMultiShot == true) { 
+        else if (weaponInfo.isMultiShot == true) {
             for (int i = 0; i < weaponInfo.numOfShots; i++) {
                 OnShoot(weaponInfo, playerPosition);
                 yield return new WaitForSeconds(weaponInfo.delayBetweenShots);
@@ -528,6 +528,6 @@ public class WeaponManager : MonoBehaviour {
     private void RemoveWorldWeapon() {
         if (turnManager.CurrentAntTurn != null && turnManager.CurrentAntTurn.WeaponTransform.childCount > 0 && turnManager.CurrentAntTurn.WeaponTransform.GetChild(0) != null) {
             Destroy(turnManager.CurrentAntTurn.WeaponTransform.GetChild(0).gameObject);
-        }    
+        }
     }
 }

@@ -27,7 +27,7 @@ public class TurnManager : MonoBehaviour {
     [SerializeField] private UnityEvent startRoundEvent;
 
     [Header("Queen Ant Specialisms")]
-    [SerializeField] private List<AntSO> queenAntSpecials = new List<AntSO>();    
+    [SerializeField] private List<AntSO> queenAntSpecials = new List<AntSO>();
 
     [Header("Ant Prefabs")]
     [SerializeField] private GameObject baseAntPrefab;
@@ -143,10 +143,10 @@ public class TurnManager : MonoBehaviour {
 
     private void SpawnQueen(int playerNum) {
         GameObject newQueen = antSpawner.SpawnAnt(queenPrefab);
-        
+
         ChangeQueenSpecialism(PlayerList[playerNum].playerInfo.queenType, newQueen.GetComponent<Ant>());
         newQueen.GetComponent<QueenBaseAntScript>().SetAntColor(PlayerList[playerNum].playerInfo.playerColor);
-        newQueen.GetComponent<QueenBaseAntScript>().ChangeQueenMesh(PlayerList[playerNum].playerInfo.queenType);        
+        newQueen.GetComponent<QueenBaseAntScript>().ChangeQueenMesh(PlayerList[playerNum].playerInfo.queenType);
         PlayerList[playerNum].AddQueen(newQueen);
 
         switch (playerNum) {
@@ -200,7 +200,7 @@ public class TurnManager : MonoBehaviour {
 
                 if (playerAnts.Count > 0) {
                     antDictionary.Add(player.playerInfo.playerNum, playerAnts);
-                }                
+                }
             }
 
             while (antDictionary.Count > 0) {
@@ -228,7 +228,7 @@ public class TurnManager : MonoBehaviour {
                     startTurnEvent.Invoke();
                     yield return new WaitUntil(() => bbqScript.IsBurning == false && hose.IsSpraying == false);
 
-                    StartTurnFunctionality(player);                    
+                    StartTurnFunctionality(player);
 
                     yield return new WaitUntil(() => currentTurnEnded == true);
                 }
@@ -343,7 +343,7 @@ public class TurnManager : MonoBehaviour {
 
             if (CurrentAntTurn.antInfo.IsQueen == true) {
                 QueenAttackText.GetComponent<FadeScript>().FadeOutUI(0.5f);
-            }         
+            }
         }
 
         cameraSystem.SetCameraLookAtTarget(null);
@@ -381,7 +381,7 @@ public class TurnManager : MonoBehaviour {
         if (newAntList.Contains(ant)) {
             newAntList.Remove(ant);
         }
-        
+
         antDictionary.Remove(playerNum);
 
         if (newAntList.Count > 0) {

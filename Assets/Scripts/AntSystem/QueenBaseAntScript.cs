@@ -4,86 +4,93 @@ using UnityEngine;
 
 public class QueenBaseAntScript : Ant {
 
-	[Header("Queen Info")]
-	[SerializeField] private LayerMask queenLayerMask;
-	private int attackLevel = 1;
-	private bool usedAttack = false;
+    [Header("Queen Info")]
+    [SerializeField] private LayerMask queenLayerMask;
+    private int attackLevel = 1;
+    private bool usedAttack = false;
 
     [Header("Queen Ant Settings")]
-	[SerializeField] private QueenAttack AttackScript;
+    [SerializeField] private QueenAttack AttackScript;
     [SerializeField] private List<GameObject> queenAntMeshes = new List<GameObject>();
 
-	private Color queenColor;
+    private Color queenColor;
 
     private void Awake() {
-		InitialiseQueenAttack();
+        InitialiseQueenAttack();
 
-		foreach (GameObject obj in queenAntMeshes) { 
-			obj.SetActive(false);
-		}
-	}
+        foreach (GameObject obj in queenAntMeshes) {
+            obj.SetActive(false);
+        }
+    }
 
-	private void InitialiseQueenAttack() {
-		QueenAttack tempAttack = Instantiate(antInfo.queenAttack);
-		if (tempAttack.gameObject.GetComponent<BeeAttack>() != null) {
-			AttackScript = this.AddComponent<BeeAttack>();
-		} else if (tempAttack.gameObject.GetComponent<BulletAttack>() != null) {
-			AttackScript = this.AddComponent<BulletAttack>();
-		} else if (tempAttack.gameObject.GetComponent<DraculaAttack>() != null) {
-			AttackScript = this.AddComponent<DraculaAttack>();
-		} else if (tempAttack.gameObject.GetComponent<IceAttack>() != null) {
-			AttackScript = this.AddComponent<IceAttack>();
-		} else if (tempAttack.gameObject.GetComponent<PharaohAttack>() != null) {
-			AttackScript = this.AddComponent<PharaohAttack>();
-		} else if (tempAttack.gameObject.GetComponent<WeaverAttack>() != null) {
-			AttackScript = this.AddComponent<WeaverAttack>();
-		}
-		
-		AttackScript.InitialiseValues(tempAttack.gameObject);
-		Destroy(tempAttack.gameObject);
-	}
+    private void InitialiseQueenAttack() {
+        QueenAttack tempAttack = Instantiate(antInfo.queenAttack);
+        if (tempAttack.gameObject.GetComponent<BeeAttack>() != null) {
+            AttackScript = this.AddComponent<BeeAttack>();
+        }
+        else if (tempAttack.gameObject.GetComponent<BulletAttack>() != null) {
+            AttackScript = this.AddComponent<BulletAttack>();
+        }
+        else if (tempAttack.gameObject.GetComponent<DraculaAttack>() != null) {
+            AttackScript = this.AddComponent<DraculaAttack>();
+        }
+        else if (tempAttack.gameObject.GetComponent<IceAttack>() != null) {
+            AttackScript = this.AddComponent<IceAttack>();
+        }
+        else if (tempAttack.gameObject.GetComponent<PharaohAttack>() != null) {
+            AttackScript = this.AddComponent<PharaohAttack>();
+        }
+        else if (tempAttack.gameObject.GetComponent<WeaverAttack>() != null) {
+            AttackScript = this.AddComponent<WeaverAttack>();
+        }
+
+        AttackScript.InitialiseValues(tempAttack.gameObject);
+        Destroy(tempAttack.gameObject);
+    }
 
     public void CheckAttackTurn() {
-		if (!usedAttack) {
-			if (attackLevel < 3) {
-				attackLevel++;
-			}			
-		}
+        if (!usedAttack) {
+            if (attackLevel < 3) {
+                attackLevel++;
+            }
+        }
 
-		usedAttack = false;
-	}
+        usedAttack = false;
+    }
 
-	public void SpecialAttack() {
-		if(attackLevel != 0) {
-			if(antInfo.queenType == AntSO.QueenType.Dracula) {
-				AttackScript.ActivateAttack(attackLevel, this);
-			} else if (antInfo.queenType == AntSO.QueenType.Pharaoh) {
-				AttackScript.ActivateAttack(attackLevel, this, transform.position, turnManager);
-			} else {
-				AttackScript.ActivateAttack(attackLevel, this, transform.position);
-			}
+    public void SpecialAttack() {
+        if (attackLevel != 0) {
+            if (antInfo.queenType == AntSO.QueenType.Dracula) {
+                AttackScript.ActivateAttack(attackLevel, this);
+            }
+            else if (antInfo.queenType == AntSO.QueenType.Pharaoh) {
+                AttackScript.ActivateAttack(attackLevel, this, transform.position, turnManager);
+            }
+            else {
+                AttackScript.ActivateAttack(attackLevel, this, transform.position);
+            }
 
             attackLevel = 0;
-			usedAttack = true;
+            usedAttack = true;
             turnManager.HideMainUI();
             StartCoroutine(turnManager.EndTurnCoroutine());
-		}
-	}
+        }
+    }
 
     public void SetAntColor(Color newColor) {
-		queenColor = newColor;        
+        queenColor = newColor;
     }
 
     public LayerMask GetQueenLayerMask() {
-		return queenLayerMask;
-	}
+        return queenLayerMask;
+    }
 
-	public void ChangeQueenMesh(string queenType) {
+    public void ChangeQueenMesh(string queenType) {
         switch (queenType) {
             case "Bee":
-				queenAntMeshes[1].SetActive(true);
-				animator = queenAntMeshes[1].GetComponent<Animator>();
-				ChangeQueenColor(queenAntMeshes[1].transform);
+                queenAntMeshes[1].SetActive(true);
+                animator = queenAntMeshes[1].GetComponent<Animator>();
+                ChangeQueenColor(queenAntMeshes[1].transform);
                 break;
             case "Bullet":
                 queenAntMeshes[2].SetActive(true);
@@ -119,12 +126,12 @@ public class QueenBaseAntScript : Ant {
         }
     }
 
-	private void ChangeQueenColor(Transform transform) {
-		Transform crown = transform.Find("QueenCrown");
+    private void ChangeQueenColor(Transform transform) {
+        Transform crown = transform.Find("QueenCrown");
         Transform leaf = transform.Find("QueenLeaf");
 
-		if (crown == null) {
-			crown = transform.GetChild(0).Find("QueenCrown");
+        if (crown == null) {
+            crown = transform.GetChild(0).Find("QueenCrown");
         }
 
         if (leaf == null) {
@@ -132,6 +139,6 @@ public class QueenBaseAntScript : Ant {
         }
 
         crown.GetComponent<SkinnedMeshRenderer>().material.SetColor("_MainColours", queenColor);
-		leaf.GetComponent<SkinnedMeshRenderer>().material.SetColor("_MainColours", queenColor);
+        leaf.GetComponent<SkinnedMeshRenderer>().material.SetColor("_MainColours", queenColor);
     }
 }

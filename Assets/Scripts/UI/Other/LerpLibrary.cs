@@ -166,7 +166,7 @@ public class LerpLibrary {
         }
         else if (t < 2 / b) {
             return a * (t -= 1.5f / b) * t + 0.75f;
-        } 
+        }
         else if (t < 2.5f / b) {
             return a * (t -= 2.25f / b) * t + 0.9375f;
         }
@@ -191,8 +191,8 @@ public class LerpLibrary {
     public static float OutElasticEase(float t) {
         const float a = (2 * Mathf.PI) / 3;
 
-        return t == 0 ? 0 
-            : t == 1 ? 1 
+        return t == 0 ? 0
+            : t == 1 ? 1
             : -Mathf.Pow(2, -10 * t) * Mathf.Sin((t * 10 - 0.75f) * a) + 1;
     }
 

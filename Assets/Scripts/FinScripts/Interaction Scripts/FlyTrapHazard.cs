@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class FlyTrapHazard: MonoBehaviour
-{
+public class FlyTrapHazard : MonoBehaviour {
     [Header("Variables for Attack")]
     private Ant currentAnt;
     [SerializeField] private int recoveryTurns;
@@ -31,39 +30,32 @@ public class FlyTrapHazard: MonoBehaviour
     private CameraSystem cameraSystem;
 
     private void Start() {
-        cameraSystem = FindFirstObjectByType<CameraSystem>();   
+        cameraSystem = FindFirstObjectByType<CameraSystem>();
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
+    private void OnTriggerEnter(Collider other) {
         other.TryGetComponent<Ant>(out currentAnt);
-        if (currentAnt != null)
-        {
+        if (currentAnt != null) {
             canvas.SetActive(true);
             antList.Add(currentAnt);
         }
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if(antList.Count > 0 && !chompedThisTurn)
-        {
+    private void OnTriggerStay(Collider other) {
+        if (antList.Count > 0 && !chompedThisTurn) {
             timePassedForAttack += Time.deltaTime;
         }
 
-        if (timePassedForAttack >= timeToAttack)
-        {
+        if (timePassedForAttack >= timeToAttack) {
             chompedThisTurn = true;
             Attack();
         }
     }
 
-    private void OnTriggerExit(Collider other)
-    {
+    private void OnTriggerExit(Collider other) {
         other.TryGetComponent<Ant>(out currentAnt);
         antList.Remove(currentAnt);
-        if(antList.Count == 0)
-        {
+        if (antList.Count == 0) {
             timePassedForAttack = 0;
             canvas.SetActive(false);
         }
@@ -74,7 +66,7 @@ public class FlyTrapHazard: MonoBehaviour
         cameraSystem.SetCameraTarget(FindFirstObjectByType<TurnManager>().CurrentAntTurn.transform.position, 5, 15);
         cameraSystem.CameraDelayActive = true;
 
-        foreach(Ant ant in antList) {
+        foreach (Ant ant in antList) {
             ant.SetCanMove(false);
         }
         canvas.SetActive(false);
@@ -83,31 +75,25 @@ public class FlyTrapHazard: MonoBehaviour
         timePassedForAttack = 0;
     }
 
-    public void endOfTurnRecover()
-    {
-        if(chompedThisTurn)
-        {
+    public void endOfTurnRecover() {
+        if (chompedThisTurn) {
             recoveryTurnsPassed = recoveryTurnsPassed + 1;
             Debug.Log("TurnsRecovered" + recoveryTurnsPassed);
-            if (recoveryTurnsPassed >= recoveryTurns)
-            {
+            if (recoveryTurnsPassed >= recoveryTurns) {
                 Recovery();
             }
         }
     }
 
-    private void Recovery()
-    {
+    private void Recovery() {
         Debug.Log("Recovered");
         recoveryTurnsPassed = 0;
         animator.SetBool(restingBool, false);
         chompedThisTurn = false;
     }
 
-    public void SpawnParticles()
-    {
-        if(crunchParticles != null)
-        {
+    public void SpawnParticles() {
+        if (crunchParticles != null) {
             Instantiate(crunchParticles, particleSpawn);
         }
     }
@@ -138,15 +124,12 @@ public class FlyTrapHazard: MonoBehaviour
         cameraSystem.CameraDelayActive = false;
     }
 
-    public void backToIdle()
-    {
+    public void backToIdle() {
         animator.Play("FlyTrapIdle");
     }
 
-    public void GetHit()
-    {
-        if (!chompedThisTurn)
-        {
+    public void GetHit() {
+        if (!chompedThisTurn) {
             chompedThisTurn = true;
             animator.SetTrigger(dazeHit);
             animator.SetBool(restingBool, true);

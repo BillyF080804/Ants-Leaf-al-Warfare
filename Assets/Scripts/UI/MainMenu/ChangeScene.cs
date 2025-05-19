@@ -1,14 +1,13 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ChangeScene : MonoBehaviour
-{
-	
-	public void ChangeCurrentScene(string sceneName) {
-		SceneManager.LoadScene(sceneName);
-	}
+public class ChangeScene : MonoBehaviour {
 
-	public void ChangeCurrentScene(int sceneIndex) {
-		SceneManager.LoadScene(sceneIndex);
-	}
+    public void ChangeCurrentScene(string sceneName) {
+        SceneManager.LoadScene(sceneName);
+    }
+
+    public void ChangeCurrentScene(int sceneIndex) {
+        SceneManager.LoadScene(sceneIndex);
+    }
 }

@@ -254,7 +254,7 @@ namespace WeaponSystem {
                             audioSource.clip = gunObject.fireSound;
                             audioSource.Play();
                         }
-                        
+
                         FireBullet();
                     }
 
@@ -326,29 +326,23 @@ namespace WeaponSystem {
     //Custom Editor
 #if (UNITY_EDITOR)
     [CustomEditor(typeof(GunScript))]
-    public class GunScriptEditor : Editor
-    {
+    public class GunScriptEditor : Editor {
         [InitializeOnEnterPlayMode]
-        public override void OnInspectorGUI()
-        {
+        public override void OnInspectorGUI() {
             base.OnInspectorGUI();
 
             GunScript gunScript = (GunScript)target;
 
-            if (gunScript.enableUI == true)
-            {
+            if (gunScript.enableUI == true) {
                 gunScript.ammoText = EditorGUILayout.ObjectField("Ammo Text", gunScript.ammoText, typeof(TMP_Text), true) as TMP_Text;
             }
 
-            if (gunScript.enableUI == true)
-            {
+            if (gunScript.enableUI == true) {
                 gunScript.gunName = EditorGUILayout.ObjectField("Gun Name", gunScript.gunName, typeof(TMP_Text), true) as TMP_Text;
             }
 
-            if (gunScript.gunObject != null)
-            {
-                if (gunScript.gunObject.useAudio == true)
-                {
+            if (gunScript.gunObject != null) {
+                if (gunScript.gunObject.useAudio == true) {
                     EditorGUILayout.Space(10);
                     EditorGUILayout.LabelField("Audio Source", EditorStyles.boldLabel);
 

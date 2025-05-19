@@ -151,7 +151,7 @@ namespace WeaponSystem {
 
             gunScript.TriggerWeapon(shootingGun);
         }
-         
+
         //Used for manual reloads
         private void OnReload() {
             gunScript.ManualReload();
@@ -159,7 +159,7 @@ namespace WeaponSystem {
 
         private void OnCollisionEnter2D(Collision2D collision) {
             if (collision.collider.CompareTag("Enemy")) {
-                isTouchingEnemy = true;                
+                isTouchingEnemy = true;
             }
         }
 
@@ -179,18 +179,15 @@ namespace WeaponSystem {
     //Custom editor
 #if (UNITY_EDITOR)
     [CustomEditor(typeof(PlayerMovementScript))]
-    public class PlayerMovementEditor : Editor
-    {
+    public class PlayerMovementEditor : Editor {
         [InitializeOnEnterPlayMode]
-        public override void OnInspectorGUI()
-        {
+        public override void OnInspectorGUI() {
             base.OnInspectorGUI();
 
             PlayerMovementScript movementScript = (PlayerMovementScript)target;
 
             //Only display field if required
-            if (movementScript.useCameraFollowScript == true)
-            {
+            if (movementScript.useCameraFollowScript == true) {
                 EditorGUILayout.Space(10);
                 EditorGUILayout.LabelField("Camera Follow Script", EditorStyles.boldLabel);
 
@@ -198,8 +195,7 @@ namespace WeaponSystem {
             }
 
             //Only display field if required
-            if (movementScript.useSprinting == true)
-            {
+            if (movementScript.useSprinting == true) {
                 EditorGUILayout.Space(10);
                 EditorGUILayout.LabelField("Sprint Settings", EditorStyles.boldLabel);
 
@@ -207,8 +203,7 @@ namespace WeaponSystem {
             }
 
             //Only display field if required
-            if (movementScript.useAiming == true)
-            {
+            if (movementScript.useAiming == true) {
                 EditorGUILayout.Space(10);
                 EditorGUILayout.LabelField("Aim Settings", EditorStyles.boldLabel);
 

@@ -21,9 +21,9 @@ public class PlayerCardInfo : MonoBehaviour {
     [Header("Queen UI")]
     public Image queenImage;
     public TMP_Text teamText;
-	public TextMeshProUGUI queenArchetypeText;
-	public TextMeshProUGUI queenDescriptionText;
-	public GameObject leftArrow;
+    public TextMeshProUGUI queenArchetypeText;
+    public TextMeshProUGUI queenDescriptionText;
+    public GameObject leftArrow;
     public GameObject rightArrow;
 
     [Header("Queen Sprites")]

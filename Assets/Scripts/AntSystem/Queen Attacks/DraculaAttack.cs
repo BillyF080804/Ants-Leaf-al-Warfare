@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class DraculaAttack : QueenAttack {
 
-	public EffectScript effect;
+    public EffectScript effect;
 
-	[Tooltip("Use decimal versions of the percentage you want")]
-	public List<float> percentages;
+    [Tooltip("Use decimal versions of the percentage you want")]
+    public List<float> percentages;
 
     private CameraSystem cameraSystem;
 
@@ -17,9 +17,9 @@ public class DraculaAttack : QueenAttack {
 
     public override void ActivateAttack(int attackLevel, Ant antInfoScript) {
         StartCoroutine(AttackCoroutine(attackLevel, antInfoScript));
-	}
+    }
 
-	private IEnumerator AttackCoroutine(int attackLevel, Ant antInfoScript) {
+    private IEnumerator AttackCoroutine(int attackLevel, Ant antInfoScript) {
         //audioPlayer.PlayClip();
         cameraSystem.CameraDelay(5.0f);
         Ant[] antList = FindObjectsOfType<Ant>();
@@ -45,9 +45,9 @@ public class DraculaAttack : QueenAttack {
         }
     }
 
-	public override void InitialiseValues(GameObject attackInfo) {
-		effect = attackInfo.GetComponent<DraculaAttack>().effect;
-		percentages = attackInfo.GetComponent<DraculaAttack>().percentages;
+    public override void InitialiseValues(GameObject attackInfo) {
+        effect = attackInfo.GetComponent<DraculaAttack>().effect;
+        percentages = attackInfo.GetComponent<DraculaAttack>().percentages;
 
-	}
+    }
 }

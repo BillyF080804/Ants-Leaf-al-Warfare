@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnterObjectManager : MonoBehaviour {
     [field: Header("Settings")]
-    [field : SerializeField] public Vector3 CameraTargetPos { get; private set; } = Vector3.zero;
+    [field: SerializeField] public Vector3 CameraTargetPos { get; private set; } = Vector3.zero;
 
     private Transform triggerLeft;
     private Transform triggerRight;
@@ -28,11 +28,11 @@ public class EnterObjectManager : MonoBehaviour {
     public void OnAllAntsSpawned() {
         foreach (Player player in turnManager.PlayerList) {
             foreach (GameObject ant in player.AntList) {
-                if (ant.transform.position.x > triggerLeft.position.x && ant.transform.position.x < triggerRight.position.x) { 
+                if (ant.transform.position.x > triggerLeft.position.x && ant.transform.position.x < triggerRight.position.x) {
                     ants.Add(ant.GetComponent<Ant>());
                 }
             }
-        }    
+        }
     }
 
     public void StartTurnEvent() {
@@ -48,7 +48,7 @@ public class EnterObjectManager : MonoBehaviour {
         }
     }
 
-    public void RemoveAnt(Ant ant) { 
+    public void RemoveAnt(Ant ant) {
         if (ants.Contains(ant)) {
             ants.Remove(ant);
         }

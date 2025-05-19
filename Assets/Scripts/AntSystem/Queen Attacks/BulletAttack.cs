@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BulletAttack : QueenAttack {
-	[Header("Attack Settings")]
+    [Header("Attack Settings")]
     [SerializeField] private int bulletSpeed = 1;
     [SerializeField] private GameObject bulletPrefab;
-	[SerializeField] private BaseWeaponSO weaponType;
-	[SerializeField] private List<int> amountOfBulletsPerLevel;
+    [SerializeField] private BaseWeaponSO weaponType;
+    [SerializeField] private List<int> amountOfBulletsPerLevel;
 
-	[Header("Spawning Settings")]
-	[SerializeField] private int YPos;
-	[SerializeField] private int safeRadius;
+    [Header("Spawning Settings")]
+    [SerializeField] private int YPos;
+    [SerializeField] private int safeRadius;
 
-	[Header("Camera Settings")]
-	[SerializeField] private float cameraDelay = 5.0f;
+    [Header("Camera Settings")]
+    [SerializeField] private float cameraDelay = 5.0f;
 
-	private CameraSystem cameraSystem;
-	private TurnManager turnManager;
+    private CameraSystem cameraSystem;
+    private TurnManager turnManager;
 
     private void Start() {
         cameraSystem = FindFirstObjectByType<CameraSystem>();
@@ -28,9 +28,9 @@ public class BulletAttack : QueenAttack {
         StartCoroutine(AttackCoroutine(attackLevel, antInfoScript, position));
     }
 
-	private IEnumerator AttackCoroutine(int attackLevel, Ant antInfoScript, Vector3 position) {
-		//audioPlayer.PlayClip();
-		int amountOfBullets = amountOfBulletsPerLevel[attackLevel - 1];
+    private IEnumerator AttackCoroutine(int attackLevel, Ant antInfoScript, Vector3 position) {
+        //audioPlayer.PlayClip();
+        int amountOfBullets = amountOfBulletsPerLevel[attackLevel - 1];
         cameraSystem.SetCameraTarget(null);
         cameraSystem.SetCameraLookAtTarget(null);
         cameraSystem.CameraDelay(cameraDelay);
@@ -41,29 +41,29 @@ public class BulletAttack : QueenAttack {
             GameObject tempBullet = Instantiate(bulletPrefab, spawnPos, Quaternion.identity);
             tempBullet.GetComponent<WeaponScript>().SetupWeapon(weaponType, null);
             tempBullet.GetComponent<Rigidbody>().velocity = Vector3.down * bulletSpeed;
-			yield return new WaitForSeconds(Random.Range(0.1f, 0.5f));
+            yield return new WaitForSeconds(Random.Range(0.1f, 0.5f));
         }
     }
 
-	private float CheckPos() {
-		float tempX = Random.Range(turnManager.MapMinX, turnManager.MapMaxX);
-		float maxSafe = transform.position.x + safeRadius;
-		float minSafe = transform.position.x - safeRadius;
+    private float CheckPos() {
+        float tempX = Random.Range(turnManager.MapMinX, turnManager.MapMaxX);
+        float maxSafe = transform.position.x + safeRadius;
+        float minSafe = transform.position.x - safeRadius;
 
-		while (tempX > minSafe && tempX < maxSafe) {
-			tempX = Random.Range(turnManager.MapMinX, turnManager.MapMaxX);
-		}
+        while (tempX > minSafe && tempX < maxSafe) {
+            tempX = Random.Range(turnManager.MapMinX, turnManager.MapMaxX);
+        }
 
-		return tempX;
-	}
+        return tempX;
+    }
 
-	public override void InitialiseValues(GameObject attackInfo) {
-		bulletSpeed = attackInfo.GetComponent<BulletAttack>().bulletSpeed;
-		bulletPrefab = attackInfo.GetComponent<BulletAttack>().bulletPrefab;
-		weaponType = attackInfo.GetComponent<BulletAttack>().weaponType;
-		amountOfBulletsPerLevel = attackInfo.GetComponent<BulletAttack>().amountOfBulletsPerLevel;
-		YPos = attackInfo.GetComponent<BulletAttack>().YPos;
-		safeRadius = attackInfo.GetComponent<BulletAttack>().safeRadius;
+    public override void InitialiseValues(GameObject attackInfo) {
+        bulletSpeed = attackInfo.GetComponent<BulletAttack>().bulletSpeed;
+        bulletPrefab = attackInfo.GetComponent<BulletAttack>().bulletPrefab;
+        weaponType = attackInfo.GetComponent<BulletAttack>().weaponType;
+        amountOfBulletsPerLevel = attackInfo.GetComponent<BulletAttack>().amountOfBulletsPerLevel;
+        YPos = attackInfo.GetComponent<BulletAttack>().YPos;
+        safeRadius = attackInfo.GetComponent<BulletAttack>().safeRadius;
         cameraDelay = attackInfo.GetComponent<BulletAttack>().cameraDelay;
     }
 }

@@ -1,8 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class WaterDrown : MonoBehaviour
-{
+public class WaterDrown : MonoBehaviour {
     [Header("Attributes")]
     [SerializeField] float minDistance;
     [SerializeField] Transform riseSpot;
@@ -17,7 +16,7 @@ public class WaterDrown : MonoBehaviour
     Ant antScript;
     Rigidbody currentRb;
     Transform antSform;
-    
+
     private bool impacted;
     private bool floatedUp;
     private bool shiftedOnce;
@@ -26,16 +25,13 @@ public class WaterDrown : MonoBehaviour
     private bool hasSetOldPos = false;
 
 
-    private void OnTriggerEnter(Collider other)
-    {
+    private void OnTriggerEnter(Collider other) {
 
         antScript = other.GetComponent<Ant>();
-        if (antScript != null)
-        {
+        if (antScript != null) {
             currentRb = antScript.GetComponent<Rigidbody>();
-            if (currentRb != null)
-            {
-                antScript.SetCanMove( false );
+            if (currentRb != null) {
+                antScript.SetCanMove(false);
                 Instantiate(waterRippleParticle, antScript.transform);
                 Debug.Log("ReachedMove");
                 currentRb.useGravity = false;
@@ -47,47 +43,37 @@ public class WaterDrown : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-        if(antSform != null)
-        {
+    private void FixedUpdate() {
+        if (antSform != null) {
             AntDistanceChecks();
         }
     }
 
-    private void AntDistanceChecks()
-    {
-        if (impacted)
-        {
-            if(!hasSetOldPos)
-            {
+    private void AntDistanceChecks() {
+        if (impacted) {
+            if (!hasSetOldPos) {
                 oldPos = antSform.position;
                 hasSetOldPos = true;
             }
             StartCoroutine(MoveDelay());
 
         }
-        else if (floatedUp)
-        {
-            if (!hasSetOldPos)
-            {
+        else if (floatedUp) {
+            if (!hasSetOldPos) {
                 oldPos = antSform.position;
                 hasSetOldPos = true;
             }
             MoveTo1();
         }
-        else if (shiftedOnce)
-        {
-            if (!hasSetOldPos)
-            {
+        else if (shiftedOnce) {
+            if (!hasSetOldPos) {
                 oldPos = antSform.position;
                 hasSetOldPos = true;
             }
             MoveTo2();
         }
 
-        else if (shiftedTwice)
-        {
+        else if (shiftedTwice) {
             antScript.OnDeath();
             antSform = null;
             currentRb = null;
@@ -95,25 +81,23 @@ public class WaterDrown : MonoBehaviour
         }
     }
 
-	private void MoveTo1() {
-		Debug.Log("Moving one");
-		antSform.transform.position = Vector3.Lerp(oldPos, floatAway1.position, riseSpeed);
-		currentDistance = Vector3.Distance(antSform.position, floatAway1.position);
-		if (minDistance >= currentDistance) {
-			floatedUp = false;
-			shiftedOnce = true;
-			currentDistance = 0;
-			hasSetOldPos = false;
-		}
-	}
+    private void MoveTo1() {
+        Debug.Log("Moving one");
+        antSform.transform.position = Vector3.Lerp(oldPos, floatAway1.position, riseSpeed);
+        currentDistance = Vector3.Distance(antSform.position, floatAway1.position);
+        if (minDistance >= currentDistance) {
+            floatedUp = false;
+            shiftedOnce = true;
+            currentDistance = 0;
+            hasSetOldPos = false;
+        }
+    }
 
-	private void MoveTo2()
-    {
+    private void MoveTo2() {
         Debug.Log("Moving two");
         antSform.transform.position = Vector3.Lerp(oldPos, floatAway2.position, riseSpeed);
         currentDistance = Vector3.Distance(antSform.position, floatAway2.position);
-        if (minDistance >= currentDistance)
-        {
+        if (minDistance >= currentDistance) {
             shiftedOnce = false;
             shiftedTwice = true;
             currentDistance = 0;
@@ -123,15 +107,13 @@ public class WaterDrown : MonoBehaviour
 
 
 
-    private IEnumerator MoveDelay()
-    {
+    private IEnumerator MoveDelay() {
         Debug.Log("Moving");
         yield return new WaitForSeconds(timeBeforeRise);
         currentRb.velocity = Vector3.zero;
         antSform.transform.position = Vector3.Lerp(oldPos, riseSpot.transform.position, riseSpeed);
         currentDistance = Vector3.Distance(antSform.position, riseSpot.position);
-        if (minDistance >= currentDistance)
-        {
+        if (minDistance >= currentDistance) {
             impacted = false;
             floatedUp = true;
             currentDistance = 0;

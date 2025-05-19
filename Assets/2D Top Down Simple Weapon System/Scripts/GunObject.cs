@@ -38,8 +38,7 @@ namespace WeaponSystem {
         public BulletSettings bulletSettings;
 
         [Serializable]
-        public class BulletSettings
-        {
+        public class BulletSettings {
             public float bulletSpeed = 20f;
             public int bulletDamage = 10;
             public float bulletLife = 2.5f;
@@ -50,8 +49,7 @@ namespace WeaponSystem {
             [HideInInspector] public GameObject explosionParticlePrefab;
             [HideInInspector] public BulletPenetrationLevel bulletPenetrationLevel;
 
-            public enum BulletPenetrationLevel
-            {
+            public enum BulletPenetrationLevel {
                 VeryLow,
                 Low,
                 Medium,
@@ -64,18 +62,15 @@ namespace WeaponSystem {
     //Custom editor
 #if (UNITY_EDITOR)
     [CustomEditor(typeof(GunObject))]
-    public class GunObjectEditor : Editor
-    {
+    public class GunObjectEditor : Editor {
         [InitializeOnEnterPlayMode]
-        public override void OnInspectorGUI()
-        {
+        public override void OnInspectorGUI() {
             base.OnInspectorGUI();
 
             GunObject gunObject = (GunObject)target;
 
             //Only display burstCount field if the weaponType is burst
-            if (gunObject.weaponType == WeaponType.Burst)
-            {
+            if (gunObject.weaponType == WeaponType.Burst) {
                 EditorGUILayout.Space(15);
                 EditorGUILayout.LabelField("Burst Count", EditorStyles.boldLabel);
 
@@ -83,16 +78,14 @@ namespace WeaponSystem {
             }
 
             //Only display timeBetweenShots field if useDelayBetweenShots is true
-            if (gunObject.useDelayBetweenShots == true)
-            {
+            if (gunObject.useDelayBetweenShots == true) {
                 EditorGUILayout.Space(5);
                 EditorGUILayout.LabelField("Time Between Shots", EditorStyles.boldLabel);
                 gunObject.timeBetweenShots = EditorGUILayout.FloatField("Time Between Shots", gunObject.timeBetweenShots);
             }
 
             //Only display maxClipSize field if useAmmo is true
-            if (gunObject.useAmmoLimit == true)
-            {
+            if (gunObject.useAmmoLimit == true) {
                 EditorGUILayout.Space(15);
                 EditorGUILayout.LabelField("Ammo Settings", EditorStyles.boldLabel);
 
@@ -102,15 +95,13 @@ namespace WeaponSystem {
                 gunObject.maxClipSize = EditorGUILayout.IntField("Max Clip Size", gunObject.maxClipSize);
 
                 //Only display reloadTime field if useSetReloadTime is true
-                if (gunObject.useSetReloadTime == true)
-                {
+                if (gunObject.useSetReloadTime == true) {
                     gunObject.reloadTime = EditorGUILayout.FloatField("Reload Time", gunObject.reloadTime);
                 }
             }
 
             //Only display audio clips if useAudio is true
-            if (gunObject.useAudio == true)
-            {
+            if (gunObject.useAudio == true) {
                 EditorGUILayout.Space(15);
                 EditorGUILayout.LabelField("Audio", EditorStyles.boldLabel);
 
@@ -130,13 +121,11 @@ namespace WeaponSystem {
 
             gunObject.bulletSettings.impactParticlePrefab = EditorGUILayout.ObjectField("Bullet Impact Particle Prefab", gunObject.bulletSettings.impactParticlePrefab, typeof(GameObject), false) as GameObject;
 
-            if (gunObject.bulletSettings.explosiveBullets == true)
-            {
+            if (gunObject.bulletSettings.explosiveBullets == true) {
                 gunObject.bulletSettings.explosionParticlePrefab = EditorGUILayout.ObjectField("Explosion Particle Prefab", gunObject.bulletSettings.explosionParticlePrefab, typeof(GameObject), false) as GameObject;
             }
 
-            if (gunObject.bulletSettings.bulletPenetration == true)
-            {
+            if (gunObject.bulletSettings.bulletPenetration == true) {
                 gunObject.bulletSettings.bulletPenetrationLevel = (BulletSettings.BulletPenetrationLevel)EditorGUILayout.EnumPopup("Bullet Penetration Level", gunObject.bulletSettings.bulletPenetrationLevel);
             }
         }

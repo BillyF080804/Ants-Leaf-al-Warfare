@@ -19,7 +19,7 @@ public class BridgeCollider : MonoBehaviour {
                 }
                 else if (weaponScript.weaponInfo.explosive == false) {
                     weaponScript.CreateVFX();
-                }                
+                }
             }
 
             cameraSystem.StartCameraShake(0.5f, 1.0f);

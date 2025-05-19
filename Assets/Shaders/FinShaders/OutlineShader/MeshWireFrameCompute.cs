@@ -2,11 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter))]
-public class MeshWireFrameCompute : MonoBehaviour
-{
+public class MeshWireFrameCompute : MonoBehaviour {
 
-    private void Start()
-    {
+    private void Start() {
         UpdateMesh();
     }
 
@@ -18,16 +16,14 @@ public class MeshWireFrameCompute : MonoBehaviour
         };
 
 #if UNITY_EDITOR
-    private void OnValidate()
-    {
+    private void OnValidate() {
         // (called whenever the object is updated)
         UpdateMesh();
     }
 #endif
 
     [ContextMenu("Update Mesh")]
-    public void UpdateMesh()
-    {
+    public void UpdateMesh() {
         if (!gameObject.activeSelf || !GetComponent<MeshRenderer>().enabled)
             return;
 
@@ -42,17 +38,14 @@ public class MeshWireFrameCompute : MonoBehaviour
             m.SetColors(colours);
     }
 
-    private Color[] _SortedColoring(Mesh mesh)
-    {
+    private Color[] _SortedColoring(Mesh mesh) {
         int n = mesh.vertexCount;
         int[] labels = new int[n];
 
         List<int[]> triangles = _GetSortedTriangles(mesh.triangles);
-        triangles.Sort((int[] t1, int[] t2) =>
-        {
+        triangles.Sort((int[] t1, int[] t2) => {
             int i = 0;
-            while (i < t1.Length && i < t2.Length)
-            {
+            while (i < t1.Length && i < t2.Length) {
                 if (t1[i] < t2[i]) return -1;
                 if (t1[i] > t2[i]) return 1;
                 i += 1;
@@ -62,20 +55,15 @@ public class MeshWireFrameCompute : MonoBehaviour
             return 0;
         });
 
-        foreach (int[] triangle in triangles)
-        {
+        foreach (int[] triangle in triangles) {
             List<int> availableLabels = new List<int>() { 1, 2, 3 };
-            foreach (int vertexIndex in triangle)
-            {
+            foreach (int vertexIndex in triangle) {
                 if (availableLabels.Contains(labels[vertexIndex]))
                     availableLabels.Remove(labels[vertexIndex]);
             }
-            foreach (int vertexIndex in triangle)
-            {
-                if (labels[vertexIndex] == 0)
-                {
-                    if (availableLabels.Count == 0)
-                    {
+            foreach (int vertexIndex in triangle) {
+                if (labels[vertexIndex] == 0) {
+                    if (availableLabels.Count == 0) {
                         Debug.LogError("Could not find color");
                         return null;
                     }
@@ -92,11 +80,9 @@ public class MeshWireFrameCompute : MonoBehaviour
         return colors;
     }
 
-    private List<int[]> _GetSortedTriangles(int[] triangles)
-    {
+    private List<int[]> _GetSortedTriangles(int[] triangles) {
         List<int[]> result = new List<int[]>();
-        for (int i = 0; i < triangles.Length; i += 3)
-        {
+        for (int i = 0; i < triangles.Length; i += 3) {
             List<int> t = new List<int> { triangles[i], triangles[i + 1], triangles[i + 2] };
             t.Sort();
             result.Add(t.ToArray());

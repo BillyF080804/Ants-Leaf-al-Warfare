@@ -1,15 +1,12 @@
 using UnityEngine;
 
-public class ParticleDeleter : MonoBehaviour
-{
+public class ParticleDeleter : MonoBehaviour {
     [SerializeField] private float particleLifetime;
     private float timePassed = 0;
 
-    private void Update()
-    {
+    private void Update() {
         timePassed = Time.deltaTime;
-        if(timePassed >= particleLifetime)
-        {
+        if (timePassed >= particleLifetime) {
             Destroy(gameObject);
         }
     }

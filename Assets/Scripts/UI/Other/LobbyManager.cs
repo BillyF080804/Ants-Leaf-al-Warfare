@@ -49,9 +49,9 @@ public class LobbyManager : MonoBehaviour {
             playerCard.waitingOnPlayerBackground.StartMoveUI(LerpType.In, Vector2.zero, new Vector2(0, 500), 1.0f, true);
             playerCard.mainBackground.SetActive(true);
 
-			ChangeQueenSpecialism("Bee", playerCard, player);
+            ChangeQueenSpecialism("Bee", playerCard, player);
 
-			player.playerInfo.playerNum = playerNum;
+            player.playerInfo.playerNum = playerNum;
             player.playerInfo.playerInput = input;
             playerCard.playerJoined = true;
             player.playerInfo.playerColor = playerCards.Where(x => x.playerNum == playerNum).First().colorBand.color;
@@ -143,13 +143,13 @@ public class LobbyManager : MonoBehaviour {
 
     public void ChangeQueenSpecialism(int playerNum, float value) {
         Player player = playerList.Where(x => x.playerInfo.playerNum == playerNum).First();
-        PlayerCardInfo playerCard = playerCards.Where(x => x.playerNum == playerNum).First(); 
+        PlayerCardInfo playerCard = playerCards.Where(x => x.playerNum == playerNum).First();
 
         if (value > 0 && playerCard.isReady == false) {
             switch (player.playerInfo.queenType) {
                 case "Bee":
                     playerCard.leftArrow.SetActive(true);
-				    ChangeQueenSpecialism("Pharaoh", playerCard, player);
+                    ChangeQueenSpecialism("Pharaoh", playerCard, player);
                     playerCard.queenImage.sprite = playerCard.queenSprites[1];
                     break;
                 case "Dracula":
@@ -161,12 +161,12 @@ public class LobbyManager : MonoBehaviour {
                     playerCard.queenImage.sprite = playerCard.queenSprites[3];
                     break;
                 case "Weaver":
-				    ChangeQueenSpecialism("Ice", playerCard, player);
+                    ChangeQueenSpecialism("Ice", playerCard, player);
                     playerCard.queenImage.sprite = playerCard.queenSprites[4];
                     break;
                 case "Ice":
                     playerCard.rightArrow.SetActive(false);
-				    ChangeQueenSpecialism("Bullet", playerCard, player);
+                    ChangeQueenSpecialism("Bullet", playerCard, player);
                     playerCard.queenImage.sprite = playerCard.queenSprites[5];
                     break;
             }
@@ -175,15 +175,15 @@ public class LobbyManager : MonoBehaviour {
             switch (player.playerInfo.queenType) {
                 case "Bullet":
                     playerCard.rightArrow.SetActive(true);
-				    ChangeQueenSpecialism("Ice", playerCard, player);
+                    ChangeQueenSpecialism("Ice", playerCard, player);
                     playerCard.queenImage.sprite = playerCard.queenSprites[4];
                     break;
-				case "Ice":
-				    ChangeQueenSpecialism("Weaver", playerCard, player);
+                case "Ice":
+                    ChangeQueenSpecialism("Weaver", playerCard, player);
                     playerCard.queenImage.sprite = playerCard.queenSprites[2];
                     break;
                 case "Weaver":
-				    ChangeQueenSpecialism("Dracula", playerCard, player);
+                    ChangeQueenSpecialism("Dracula", playerCard, player);
                     playerCard.queenImage.sprite = playerCard.queenSprites[3];
                     break;
                 case "Dracula":
@@ -203,57 +203,57 @@ public class LobbyManager : MonoBehaviour {
         AntSO currentAnt = null;
         switch (queenType) {
             case "Bullet": {
-                currentAnt = antInformation.Where(x => x.queenType == AntSO.QueenType.Bullet).First();
-                player.playerInfo.queenType = queenType;
-                playerCard.teamText.text = queenType + " Ant";
-                playerCard.queenArchetypeText.text = "Type: " + currentAnt.queenArchetype;
-				playerCard.queenDescriptionText.text = "Description: " + currentAnt.description;
-                break;
-            }
+                    currentAnt = antInformation.Where(x => x.queenType == AntSO.QueenType.Bullet).First();
+                    player.playerInfo.queenType = queenType;
+                    playerCard.teamText.text = queenType + " Ant";
+                    playerCard.queenArchetypeText.text = "Type: " + currentAnt.queenArchetype;
+                    playerCard.queenDescriptionText.text = "Description: " + currentAnt.description;
+                    break;
+                }
             case "Bee": {
-                currentAnt = antInformation.Where(x => x.queenType == AntSO.QueenType.Bee).First();
-                player.playerInfo.queenType = queenType;
-                playerCard.teamText.text = queenType + " Ant";
-                playerCard.queenArchetypeText.text = "Type: " + currentAnt.queenArchetype;
-				playerCard.queenDescriptionText.text = "Description: " + currentAnt.description;
-				break;
-            }
+                    currentAnt = antInformation.Where(x => x.queenType == AntSO.QueenType.Bee).First();
+                    player.playerInfo.queenType = queenType;
+                    playerCard.teamText.text = queenType + " Ant";
+                    playerCard.queenArchetypeText.text = "Type: " + currentAnt.queenArchetype;
+                    playerCard.queenDescriptionText.text = "Description: " + currentAnt.description;
+                    break;
+                }
             case "Weaver": {
-                currentAnt = antInformation.Where(x => x.queenType == AntSO.QueenType.Weaver).First();
-                player.playerInfo.queenType = queenType;
-                playerCard.teamText.text = queenType + " Ant";
-                playerCard.queenArchetypeText.text = "Type: " + currentAnt.queenArchetype;
-				playerCard.queenDescriptionText.text = "Description: " + currentAnt.description;
-				break;
-            }
+                    currentAnt = antInformation.Where(x => x.queenType == AntSO.QueenType.Weaver).First();
+                    player.playerInfo.queenType = queenType;
+                    playerCard.teamText.text = queenType + " Ant";
+                    playerCard.queenArchetypeText.text = "Type: " + currentAnt.queenArchetype;
+                    playerCard.queenDescriptionText.text = "Description: " + currentAnt.description;
+                    break;
+                }
             case "Ice": {
-                currentAnt = antInformation.Where(x => x.queenType == AntSO.QueenType.Ice).First();
-                player.playerInfo.queenType = queenType;
-                playerCard.teamText.text = queenType + " Ant";
-                playerCard.queenArchetypeText.text = "Type: " + currentAnt.queenArchetype;
-				playerCard.queenDescriptionText.text = "Description: " + currentAnt.description;
-				break;
-            }
+                    currentAnt = antInformation.Where(x => x.queenType == AntSO.QueenType.Ice).First();
+                    player.playerInfo.queenType = queenType;
+                    playerCard.teamText.text = queenType + " Ant";
+                    playerCard.queenArchetypeText.text = "Type: " + currentAnt.queenArchetype;
+                    playerCard.queenDescriptionText.text = "Description: " + currentAnt.description;
+                    break;
+                }
             case "Dracula": {
-                currentAnt = antInformation.Where(x => x.queenType == AntSO.QueenType.Dracula).First();
-                player.playerInfo.queenType = queenType;
-                playerCard.teamText.text = queenType + " Ant";
-                playerCard.queenArchetypeText.text = "Type: " + currentAnt.queenArchetype;
-			    playerCard.queenDescriptionText.text = "Description: " + currentAnt.description;
-				break;
-            }
+                    currentAnt = antInformation.Where(x => x.queenType == AntSO.QueenType.Dracula).First();
+                    player.playerInfo.queenType = queenType;
+                    playerCard.teamText.text = queenType + " Ant";
+                    playerCard.queenArchetypeText.text = "Type: " + currentAnt.queenArchetype;
+                    playerCard.queenDescriptionText.text = "Description: " + currentAnt.description;
+                    break;
+                }
             case "Pharaoh": {
-                currentAnt = antInformation.Where(x => x.queenType == AntSO.QueenType.Pharaoh).First();
-                player.playerInfo.queenType = queenType;
-                playerCard.teamText.text = queenType + " Ant";
-                playerCard.queenArchetypeText.text = "Type: " + currentAnt.queenArchetype;
-				playerCard.queenDescriptionText.text = "Description: " + currentAnt.description;
-				break;
-            }
+                    currentAnt = antInformation.Where(x => x.queenType == AntSO.QueenType.Pharaoh).First();
+                    player.playerInfo.queenType = queenType;
+                    playerCard.teamText.text = queenType + " Ant";
+                    playerCard.queenArchetypeText.text = "Type: " + currentAnt.queenArchetype;
+                    playerCard.queenDescriptionText.text = "Description: " + currentAnt.description;
+                    break;
+                }
             default: {
-                Debug.LogError("Invalid Queen Ant - " + queenType);
-                break;
-            }
+                    Debug.LogError("Invalid Queen Ant - " + queenType);
+                    break;
+                }
         }
     }
 }

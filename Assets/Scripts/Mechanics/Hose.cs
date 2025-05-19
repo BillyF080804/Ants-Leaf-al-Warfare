@@ -55,7 +55,7 @@ public class Hose : MonoBehaviour {
         ants.Add(rb);
     }
 
-    public void RemoveAnt(Rigidbody rb) { 
+    public void RemoveAnt(Rigidbody rb) {
         ants.Remove(rb);
     }
 }

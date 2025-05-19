@@ -29,7 +29,7 @@ namespace WeaponSystem {
             else {
                 FindFirstObjectByType<EnemySpawner>().RemoveEnemy(gameObject);
                 Destroy(gameObject);
-            }            
+            }
         }
     }
 }

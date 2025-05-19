@@ -46,8 +46,8 @@ public class DrownScript : MonoBehaviour {
         yield return new WaitUntil(() => antTransform.position == drownPos);
 
         cameraSystem.SetCameraLookAtTarget(null);
-		cameraSystem.SetCameraTarget(null);
-		antScript.TakeDamage(1000);
+        cameraSystem.SetCameraTarget(null);
+        antScript.TakeDamage(1000);
         StartCoroutine(turnManager.EndTurnCoroutine());
     }
 
@@ -61,7 +61,7 @@ public class DrownScript : MonoBehaviour {
         }
 
         if (ant != null) {
-			ant.transform.position = endPos;
-		}
+            ant.transform.position = endPos;
+        }
     }
 }

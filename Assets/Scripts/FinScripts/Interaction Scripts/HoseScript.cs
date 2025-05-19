@@ -1,12 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HoseScript : Interactable
-{
+public class HoseScript : Interactable {
     private Ant currentAnt;
     bool hasLaunchedThisTurn = false;
     private TurnManager turnM;
-    
+
     [Header("Assignments")]
     [SerializeField] private GameObject waterDrip;
     [SerializeField] private Transform dripPoint;
@@ -22,36 +21,28 @@ public class HoseScript : Interactable
 
     public float imageDistance;
 
-    private void Awake()
-    {
+    private void Awake() {
         turnM = FindObjectOfType<TurnManager>();
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.TryGetComponent<Ant>(out currentAnt) && !hasLaunchedThisTurn)
-        {
-            if(currentAnt = turnM.CurrentAntTurn)
-            {
+    private void OnTriggerEnter(Collider other) {
+        if (other.TryGetComponent<Ant>(out currentAnt) && !hasLaunchedThisTurn) {
+            if (currentAnt = turnM.CurrentAntTurn) {
                 Debug.Log("Activated");
                 uiHandler.ToggleTrigger(enterTriggerName);
             }
         }
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if(!hasLaunchedThisTurn && imageDistance >= 1.5)
-        {
+    private void OnTriggerStay(Collider other) {
+        if (!hasLaunchedThisTurn && imageDistance >= 1.5) {
             imageDistance = Vector2.Distance(promptImage.transform.position, currentAnt.transform.position);
             promptImage.transform.position = Vector2.MoveTowards(promptImage.transform.position, currentAnt.transform.position, 1 * Time.deltaTime);
         }
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.GetComponent<Ant>() == currentAnt)
-        {
+    private void OnTriggerExit(Collider other) {
+        if (other.GetComponent<Ant>() == currentAnt) {
             uiHandler.ToggleTrigger(exitTriggerName);
             Debug.Log("Deactivated");
             currentAnt = null;
@@ -59,31 +50,25 @@ public class HoseScript : Interactable
 
     }
 
-    public override void Interaction()
-    {
-        if (!hasLaunchedThisTurn)
-        {
+    public override void Interaction() {
+        if (!hasLaunchedThisTurn) {
             WaterSpray();
         }
     }
 
-    public void HoseReset()
-    {
+    public void HoseReset() {
         hasLaunchedThisTurn = false;
-        if (waterDrip != null)
-        {
+        if (waterDrip != null) {
             waterDrip.SetActive(true);
         }
     }
 
-    private void WaterSpray()
-    {
+    private void WaterSpray() {
         uiHandler.ToggleTrigger(exitTriggerName);
         waterSpray.Play();
         hasLaunchedThisTurn = true;
         animHandler.ToggleTrigger(animName);
-        if(waterDrip != null)
-        {
+        if (waterDrip != null) {
             waterDrip.SetActive(false);
         }
     }

@@ -11,7 +11,7 @@ public class GameOverScript : MonoBehaviour {
     [SerializeField] private FadeScript blackscreenFadeScript;
     public static int winningPlayerNumber;
 
-	private void Start() {
+    private void Start() {
         blackscreenFadeScript.FadeOutUI(1.0f);
 
         foreach (Player player in FindObjectsByType<Player>(FindObjectsInactive.Include, FindObjectsSortMode.None)) {
@@ -19,10 +19,10 @@ public class GameOverScript : MonoBehaviour {
         }
 
         EventSystem.current.SetSelectedGameObject(mainMenuButton);
-		SetWinText();
-	}
+        SetWinText();
+    }
 
-	public void ReturnToMainMenu() {
+    public void ReturnToMainMenu() {
         StartCoroutine(ReturnToMainMenuCoroutine());
     }
 
@@ -36,5 +36,5 @@ public class GameOverScript : MonoBehaviour {
 
     public void SetWinText() {
         winText.text = "Player " + winningPlayerNumber + " wins!";
-	}
+    }
 }

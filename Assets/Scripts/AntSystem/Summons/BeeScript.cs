@@ -1,75 +1,73 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BeeScript : MonoBehaviour
-{
-	public Ant.PlayerList ownedPlayer;
-	public Ant antToAttack;
-	[SerializeField]
-	int damageToDeal;
-	[SerializeField]
-	int speed = 5;
+public class BeeScript : MonoBehaviour {
+    public Ant.PlayerList ownedPlayer;
+    public Ant antToAttack;
+    [SerializeField]
+    int damageToDeal;
+    [SerializeField]
+    int speed = 5;
 
-	[SerializeField]
-	List<EffectScript> effects;
+    [SerializeField]
+    List<EffectScript> effects;
 
-	[SerializeField] AudioPlayer audioPlayer;
+    [SerializeField] AudioPlayer audioPlayer;
 
-	private void Start() {
-		audioPlayer = GetComponent<AudioPlayer>();
-	}
+    private void Start() {
+        audioPlayer = GetComponent<AudioPlayer>();
+    }
 
 
-	public void InitialiseValues(Ant antInfoScript, int attackLevel) {
-		ownedPlayer = antInfoScript.ownedPlayer;
-		damageToDeal = damageToDeal * attackLevel;
-		Attack();
-	}
+    public void InitialiseValues(Ant antInfoScript, int attackLevel) {
+        ownedPlayer = antInfoScript.ownedPlayer;
+        damageToDeal = damageToDeal * attackLevel;
+        Attack();
+    }
 
-	public void Attack() {
-		audioPlayer.PlayClip();
-		antToAttack = ClosestAnt();
-		Vector3.MoveTowards(transform.position, antToAttack.transform.position, 1);
-	}
+    public void Attack() {
+        audioPlayer.PlayClip();
+        antToAttack = ClosestAnt();
+        Vector3.MoveTowards(transform.position, antToAttack.transform.position, 1);
+    }
 
-	Ant ClosestAnt() {
-		Ant[] antList = GameObject.FindObjectsOfType<Ant>();
-		float currentDistance = Mathf.Infinity;
-		Ant closestAnt = null;
-		foreach (Ant ant in antList) {
-			float tempDist = Distance(ant);
-            if (tempDist < currentDistance)
-            {
-                if(ant.ownedPlayer != ownedPlayer) {
-					currentDistance = tempDist;
-					closestAnt = ant;
-				}
+    Ant ClosestAnt() {
+        Ant[] antList = GameObject.FindObjectsOfType<Ant>();
+        float currentDistance = Mathf.Infinity;
+        Ant closestAnt = null;
+        foreach (Ant ant in antList) {
+            float tempDist = Distance(ant);
+            if (tempDist < currentDistance) {
+                if (ant.ownedPlayer != ownedPlayer) {
+                    currentDistance = tempDist;
+                    closestAnt = ant;
+                }
             }
         }
-		return closestAnt;
-	}
+        return closestAnt;
+    }
 
-	float Distance(Ant ant) {
-		return Vector3.Magnitude(ant.transform.position - transform.position);
-	}
+    float Distance(Ant ant) {
+        return Vector3.Magnitude(ant.transform.position - transform.position);
+    }
 
-	private void OnTriggerEnter(Collider other) {
-		if (other.gameObject.GetComponent<Ant>() == antToAttack) {
-			antToAttack.TakeDamage(damageToDeal);
-			for(int i = 0; i<effects.Count; i++) {
-				effects[i].AddEffect(antToAttack);
-				if (effects[i].effectInfo.effectType == EffectSO.EffectType.StatDrop) {
-					effects[i].ApplyEffect(antToAttack);
-				}
-			}
-			Destroy(gameObject);
-		}
-	}
+    private void OnTriggerEnter(Collider other) {
+        if (other.gameObject.GetComponent<Ant>() == antToAttack) {
+            antToAttack.TakeDamage(damageToDeal);
+            for (int i = 0; i < effects.Count; i++) {
+                effects[i].AddEffect(antToAttack);
+                if (effects[i].effectInfo.effectType == EffectSO.EffectType.StatDrop) {
+                    effects[i].ApplyEffect(antToAttack);
+                }
+            }
+            Destroy(gameObject);
+        }
+    }
 
-	private void Update() {
-		float step = speed * Time.deltaTime;
-		transform.position = Vector3.MoveTowards(transform.position, antToAttack.transform.position, step);
-		
-	}
+    private void Update() {
+        float step = speed * Time.deltaTime;
+        transform.position = Vector3.MoveTowards(transform.position, antToAttack.transform.position, step);
+
+    }
 }
 

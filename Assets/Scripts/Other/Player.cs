@@ -93,15 +93,15 @@ public class Player : MonoBehaviour {
     private void OnSkipTurnPerformed(InputAction.CallbackContext ctx) {
         if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false && weaponManager.WeaponsActive == false && hasSkippedTurn == false) {
             SkipTurn();
-		}
+        }
     }
 
     private void SkipTurn() {
-		hasSkippedTurn = true;
+        hasSkippedTurn = true;
         StartCoroutine(turnManager.EndTurnCoroutine());
         cameraSystem.ZoomCameraFOVOut(0.5f);
-		turnManager.HideSkippingTurnText();
-	}
+        turnManager.HideSkippingTurnText();
+    }
 
     //Function called when the player presses the fire weapon button
     private void OnFireWeapon() {
@@ -115,10 +115,10 @@ public class Player : MonoBehaviour {
             else {
                 weaponManager.FireWeapon(weaponManager.WeaponSelected, turnManager.CurrentAntTurn.transform);
             }
-        } 
+        }
         else if (CheckActionIsValid() && turnManager.CurrentAntTurn.GetComponent<MummyScript>() != null) {
             turnManager.CurrentAntTurn.GetComponent<MummyScript>().Attack();
-		}
+        }
     }
 
     //Function called when the player presses the move button
@@ -126,7 +126,7 @@ public class Player : MonoBehaviour {
         if (CheckActionIsValid() && weaponManager.WeaponMenuOpen == false && weaponManager.WeaponSelected == null) {
             if (turnManager.CurrentAntTurn != null) {
                 turnManager.CurrentAntTurn.OnMove(value);
-			} 
+            }
         }
     }
 
@@ -238,7 +238,7 @@ public class Player : MonoBehaviour {
         else {
             //Debug.LogError("If called probably worth checking if not ignore");
             SkipTurn();
-			return null;
+            return null;
         }
     }
 
@@ -250,7 +250,7 @@ public class Player : MonoBehaviour {
         if (QueenAnt != null) {
             QueenAnt.GetComponent<Ant>().hasHadTurn = false;
         }
-	}
+    }
 
     public void ResetFreeCamSetting() {
         freeCamEnabled = false;
@@ -330,12 +330,12 @@ public class Player : MonoBehaviour {
     [Header("Debug Thing: Please ignore.")]
     [SerializeField] private EffectScript EffectScript;
     private void OnEffectTest() {
-        for(int i = 0; i < AntList.Count; i++) {
+        for (int i = 0; i < AntList.Count; i++) {
             EffectScript.AddEffect(AntList[i].GetComponent<Ant>());
             EffectScript.ApplyEffect(AntList[i].GetComponent<Ant>());
 
         }
-		EffectScript.AddEffect(queenBaseAntScript);
-		EffectScript.ApplyEffect(queenBaseAntScript);
-	}
+        EffectScript.AddEffect(queenBaseAntScript);
+        EffectScript.ApplyEffect(queenBaseAntScript);
+    }
 }

@@ -22,7 +22,7 @@ namespace WeaponSystem {
             High,
             VeryHigh
         }
-        
+
         private void Awake() {
             //Set values for rigidbody
             rb = GetComponent<Rigidbody2D>();

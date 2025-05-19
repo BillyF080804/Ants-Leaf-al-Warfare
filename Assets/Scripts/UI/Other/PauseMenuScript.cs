@@ -73,7 +73,7 @@ public class PauseMenuScript : MonoBehaviour {
     public void QuitGame() {
         foreach (Player player in FindFirstObjectByType<TurnManager>().PlayerList) {
             Destroy(player.gameObject);
-        } 
+        }
 
         SceneManager.LoadScene("MainMenu");
     }

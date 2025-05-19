@@ -1,8 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class BreakableObject : MonoBehaviour
-{
+public class BreakableObject : MonoBehaviour {
     [Header("Assignments")]
     [SerializeField] private GameObject fixedObj;
     [SerializeField] private GameObject brokenObj;
@@ -15,24 +14,19 @@ public class BreakableObject : MonoBehaviour
     public UnityEvent breakEvent;
 
 
-    private void Awake()
-    {
+    private void Awake() {
         colliderSelf = GetComponent<Collider>();
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
+    private void OnCollisionEnter(Collision collision) {
         damageHit = collision.gameObject.GetComponent<WeaponScript>();
-        if(damageHit != null)
-        {
+        if (damageHit != null) {
             colliderSelf.enabled = false;
             Debug.Log("Break");
-            if(isRbody)
-            {
+            if (isRbody) {
                 CollisionBreak();
             }
-            else
-            {
+            else {
                 breakEvent.Invoke();
             }
 
@@ -40,12 +34,10 @@ public class BreakableObject : MonoBehaviour
         damageHit = null;
     }
 
-    private void CollisionBreak()
-    {
+    private void CollisionBreak() {
         fixedObj.SetActive(false);
         brokenObj.SetActive(true);
-        foreach(Transform child in brokenObj.transform)
-        {
+        foreach (Transform child in brokenObj.transform) {
             child.GetComponent<Rigidbody>().velocity += launchSpeed;
         }
         Destroy(brokenObj, 5f);

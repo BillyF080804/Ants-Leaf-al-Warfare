@@ -70,7 +70,7 @@ public class FadeScript : MonoBehaviour {
             else {
                 objCanvasGroup.alpha = Mathf.Lerp(1, 0, timeElapsed / fadeDuration);
             }
-            
+
             timeElapsed += Time.deltaTime;
             yield return null;
         }

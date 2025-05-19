@@ -1,7 +1,6 @@
 using UnityEngine;
 
-public class BarbecueScript : MonoBehaviour
-{
+public class BarbecueScript : MonoBehaviour {
     private bool isFallen = false;
     private bool onFire = false;
     private DangerAdder adder;
@@ -21,60 +20,49 @@ public class BarbecueScript : MonoBehaviour
     [SerializeField] Transform dangerSpot;
 
 
-    private void Awake()
-    {
+    private void Awake() {
         adder = GetComponentInChildren<DangerAdder>();
     }
 
-    private void Start()
-    {
-        
+    private void Start() {
+
     }
-    public Ant Fall(Ant ant)
-    {
+    public Ant Fall(Ant ant) {
         // Moves the ant that is currently in danger off to safety when barbecue falls, used in a Foreach in a different function.
-            Rigidbody currentAntRB = ant.GetComponent<Rigidbody>();
-            ant.transform.position = dangerSpot.position;
-            currentAntRB.velocity = Vector3.zero;
-            currentAntRB.velocity = new Vector3(Random.Range(knockBackMin.x, knockBackMax.x), Random.Range(knockBackMin.y, knockBackMax.y), Random.Range(knockBackMin.z, knockBackMax.z));
+        Rigidbody currentAntRB = ant.GetComponent<Rigidbody>();
+        ant.transform.position = dangerSpot.position;
+        currentAntRB.velocity = Vector3.zero;
+        currentAntRB.velocity = new Vector3(Random.Range(knockBackMin.x, knockBackMax.x), Random.Range(knockBackMin.y, knockBackMax.y), Random.Range(knockBackMin.z, knockBackMax.z));
 
         //Method to publically set whether the Barbecue has fallen or not, used when the animation is triggered to knock Barbecue down
         isFallen = true;
         return ant;
     }
 
-    public void HitTheBBQ()
-    {
+    public void HitTheBBQ() {
         adder.MoveAnts();
     }
 
-    public void CheckForFire()
-    {
+    public void CheckForFire() {
         // performs a random calculation whether or not the Barbecue will set on fire this turn
-        if(isFallen)
-        {
-            if (!onFire)
-            {
+        if (isFallen) {
+            if (!onFire) {
                 float lightUp = Random.Range(0f, 1f);
-                if (lightUp < igniteChance)
-                {
+                if (lightUp < igniteChance) {
                     Debug.Log(lightUp);
                     SetFire();
                 }
             }
-            else
-            {
+            else {
                 Extinguish();
             }
         }
     }
 
-    public void SetFire()
-    {
+    public void SetFire() {
         onFire = true;
         fireArea.SetActive(true);
-        if (igniteFx != null)
-        {
+        if (igniteFx != null) {
             Debug.Log("On fire");
             GameObject ignition = Instantiate(igniteFx, fxSpawnPoint);
             Debug.Log(ignition.name);
@@ -82,13 +70,11 @@ public class BarbecueScript : MonoBehaviour
         }
     }
 
-    private void Extinguish()
-    {
+    private void Extinguish() {
         Debug.Log("Extinguished");
         onFire = false;
         fireArea.SetActive(false);
-        if(extinguishFx != null)
-        {
+        if (extinguishFx != null) {
             GameObject extinguish = Instantiate(extinguishFx, fxSpawnPoint);
             Destroy(extinguish, 2f);
         }

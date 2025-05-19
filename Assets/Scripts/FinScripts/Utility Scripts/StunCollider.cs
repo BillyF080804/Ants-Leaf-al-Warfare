@@ -1,7 +1,6 @@
 using UnityEngine;
 
-public class StunCollider : MonoBehaviour
-{
+public class StunCollider : MonoBehaviour {
     [SerializeField] private FlyTrapHazard trapHazard;
 
 

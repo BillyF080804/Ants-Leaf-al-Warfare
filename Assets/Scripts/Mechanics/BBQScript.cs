@@ -8,7 +8,7 @@ public class BBQScript : MonoBehaviour {
     [SerializeField] private GameObject collapseParticles;
 
     [Header("Burner Settings")]
-    [SerializeField] [Range(0.0f, 1.0f)] private float burnChancePerTurn = 0.25f;
+    [SerializeField][Range(0.0f, 1.0f)] private float burnChancePerTurn = 0.25f;
     [SerializeField] private int burnDamage = 10;
     [SerializeField] private GameObject fireParticlePrefab;
     [SerializeField] private List<Transform> burnTransforms = new List<Transform>();

@@ -2,20 +2,20 @@ using System.Collections;
 using UnityEngine;
 
 public class BeeAttack : QueenAttack {
-	[Header("Settings")]
-	[SerializeField] private GameObject beeSummon;
+    [Header("Settings")]
+    [SerializeField] private GameObject beeSummon;
 
-	private CameraSystem cameraSystem;
+    private CameraSystem cameraSystem;
 
     private void Start() {
-		cameraSystem = FindFirstObjectByType<CameraSystem>();
+        cameraSystem = FindFirstObjectByType<CameraSystem>();
     }
 
     public override void ActivateAttack(int attackLevel, Ant antInfoScript, Vector3 position) {
-		StartCoroutine(AttackCoroutine(attackLevel, antInfoScript, position));
-	}
+        StartCoroutine(AttackCoroutine(attackLevel, antInfoScript, position));
+    }
 
-	private IEnumerator AttackCoroutine(int attackLevel, Ant antInfoScript, Vector3 position) {
+    private IEnumerator AttackCoroutine(int attackLevel, Ant antInfoScript, Vector3 position) {
         //audioPlayer.PlayClip();
         Transform focusObject = null;
         cameraSystem.CameraDelayActive = true;
@@ -31,7 +31,7 @@ public class BeeAttack : QueenAttack {
         cameraSystem.CameraDelayActive = false;
     }
 
-	public override void InitialiseValues(GameObject attackInfo) {
-		beeSummon = attackInfo.GetComponent<BeeAttack>().beeSummon;
-	}
+    public override void InitialiseValues(GameObject attackInfo) {
+        beeSummon = attackInfo.GetComponent<BeeAttack>().beeSummon;
+    }
 }
