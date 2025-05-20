@@ -145,6 +145,7 @@ public class TurnManager : MonoBehaviour {
         GameObject newQueen = antSpawner.SpawnAnt(queenPrefab);
 
         ChangeQueenSpecialism(PlayerList[playerNum].playerInfo.queenType, newQueen.GetComponent<Ant>());
+        newQueen.GetComponent<QueenBaseAntScript>().InitialiseQueenAttack();
         newQueen.GetComponent<QueenBaseAntScript>().SetAntColor(PlayerList[playerNum].playerInfo.playerColor);
         newQueen.GetComponent<QueenBaseAntScript>().ChangeQueenMesh(PlayerList[playerNum].playerInfo.queenType);
         PlayerList[playerNum].AddQueen(newQueen);

@@ -16,14 +16,12 @@ public class QueenBaseAntScript : Ant {
     private Color queenColor;
 
     private void Awake() {
-        InitialiseQueenAttack();
-
         foreach (GameObject obj in queenAntMeshes) {
             obj.SetActive(false);
         }
     }
 
-    private void InitialiseQueenAttack() {
+    public void InitialiseQueenAttack() {
         QueenAttack tempAttack = Instantiate(antInfo.queenAttack);
         if (tempAttack.gameObject.GetComponent<BeeAttack>() != null) {
             AttackScript = this.AddComponent<BeeAttack>();
