@@ -74,6 +74,7 @@ public class WeaponManager : MonoBehaviour {
             tempPlayerPosition = playerPosition;
             cameraSystem.ResetCamera();
             turnManager.CurrentPlayerTurn.ResetFreeCamSetting();
+            turnManager.HideMainUI();
 
             Ray ray = new Ray(aimArrow.anchoredPosition, aimArrow.up * 5);
             aimPosition = ray.GetPoint(5.0f);
@@ -156,6 +157,7 @@ public class WeaponManager : MonoBehaviour {
             canAim = false;
             HasFiredWeapon = true;
             turnManager.CurrentAntTurn.SetCanMove(!HasFiredWeapon);
+            turnManager.HideMainUI();
 
             Ray ray = new Ray(aimArrow.anchoredPosition, aimArrow.up * 5);
             aimPosition = ray.GetPoint(2.5f);
@@ -193,6 +195,7 @@ public class WeaponManager : MonoBehaviour {
         if (canFireWeapon) {
             canFireWeapon = false;
             canAim = false;
+            turnManager.HideMainUI();
 
             Ray ray = new Ray(aimArrow.anchoredPosition, aimArrow.up * 5);
             aimPosition = ray.GetPoint(2.5f);

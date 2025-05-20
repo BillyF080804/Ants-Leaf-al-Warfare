@@ -102,7 +102,7 @@ public class CameraSystem : MonoBehaviour {
 
         freeCamPos.x = clampedX;
         freeCamPos.y = clampedY;
-        freeCamPos.z = -10.0f;
+        freeCamPos.z = -30.0f;
         freeCamPos.z += cameraZoom;
 
         cameraObj.transform.position = Vector3.SmoothDamp(cameraObj.transform.position, freeCamPos, ref velocity, smoothTime);
@@ -112,12 +112,12 @@ public class CameraSystem : MonoBehaviour {
         Vector3 tempTargetPos = Vector3.zero;
 
         if (weaponManager.WeaponSelected != null) {
-            zOffset = -30.0f;
-            yOffset = 10.0f;
+            zOffset = -40.0f;
+            yOffset = 15.0f;
         }
         else {
-            zOffset = -15.0f;
-            yOffset = 5.0f;
+            zOffset = -20.0f;
+            yOffset = 7.5f;
         }
 
         if (CameraTarget == null && targetPos != Vector3.zero) {
@@ -293,6 +293,8 @@ public class CameraSystem : MonoBehaviour {
             timeElapsed += Time.deltaTime;
             yield return null;
         }
+
+        cameraComp.transform.localEulerAngles = new Vector3(0, 0, 0);
     }
 
     public void SetCameraZoom(float _cameraZoom) {

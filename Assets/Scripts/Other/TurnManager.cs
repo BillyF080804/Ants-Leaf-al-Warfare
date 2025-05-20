@@ -214,8 +214,7 @@ public class TurnManager : MonoBehaviour {
 
                     CurrentPlayerTurn = player;
                     currentTurnEnded = false;
-                    CurrentAntTurn = antList[0];
-                    ShowMainUI();
+                    CurrentAntTurn = antList[0];                    
 
                     foreach (Player players in PlayerList) {
                         if (players == player) {
@@ -245,11 +244,13 @@ public class TurnManager : MonoBehaviour {
         playerTurnText.text = "Player " + player.playerInfo.playerNum.ToString();
         playerTurnText.color = player.playerInfo.playerColor;
 
+        ShowMainUI();
         DisplayButtonHints(player);
 
         player.ResetFreeCamSetting();
         cameraSystem.ResetCamera();
         cameraSystem.SetCameraTarget(CurrentAntTurn.transform);
+        CurrentAntTurn.SetCanMove(true);
         CurrentPlayerTurn.hasSkippedTurn = false;
 
         enterObjectManager.StartTurnEvent();
@@ -272,6 +273,9 @@ public class TurnManager : MonoBehaviour {
         else {
             FireWeaponText.text = player.GetKeybindForAction("FireWeapon") + " - Fire";
         }
+
+        FireWeaponText.GetComponent<FadeScript>().FadeOutUI(0.25f);
+        WeaponMenuText.GetComponent<FadeScript>().FadeInUI(0.25f);
 
         if (CurrentAntTurn.antInfo.IsQueen == true) {
             QueenAttackText.spriteAsset = player.GetSpriteFromAction("QueenAttack");
@@ -323,6 +327,7 @@ public class TurnManager : MonoBehaviour {
     public IEnumerator EndTurnCoroutine() {
         StopCoroutine(turnTimerCoroutine);
         HideMainUI(0.25f);
+        CurrentAntTurn.SetCanMove(false);
         yield return new WaitForSeconds(0.25f);
 
         yield return new WaitUntil(() => gameOver == false);
@@ -346,7 +351,7 @@ public class TurnManager : MonoBehaviour {
                 QueenAttackText.GetComponent<FadeScript>().FadeOutUI(0.5f);
             }
         }
-
+        
         cameraSystem.SetCameraLookAtTarget(null);
         cameraSystem.IterateCameraTargets(1.0f);
         yield return new WaitUntil(() => cameraSystem.CameraDelayActive == false);
@@ -451,13 +456,17 @@ public class TurnManager : MonoBehaviour {
     }
 
     public void HideMainUI() {
-        mainGameUIMoveScript.StartMoveUI(LerpType.In, Vector2.zero, new Vector2(0, 250), 1.0f);
-        TextHintFadeScript.FadeOutUI(1.0f);
+        if (mainGameUIMoveScript.GetComponent<RectTransform>().anchoredPosition.y < 5) {
+            mainGameUIMoveScript.StartMoveUI(LerpType.In, Vector2.zero, new Vector2(0, 250), 1.0f);
+            TextHintFadeScript.FadeOutUI(1.0f);
+        }
     }
 
     public void HideMainUI(float time) {
-        mainGameUIMoveScript.StartMoveUI(LerpType.In, Vector2.zero, new Vector2(0, 250), time);
-        TextHintFadeScript.FadeOutUI(time);
+        if (mainGameUIMoveScript.GetComponent<RectTransform>().anchoredPosition.y < 5) {
+            mainGameUIMoveScript.StartMoveUI(LerpType.In, Vector2.zero, new Vector2(0, 250), time);
+            TextHintFadeScript.FadeOutUI(time);
+        }
     }
 
     public void ShowMainUI() {
