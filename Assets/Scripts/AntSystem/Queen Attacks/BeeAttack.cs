@@ -16,7 +16,7 @@ public class BeeAttack : QueenAttack {
     }
 
     private IEnumerator AttackCoroutine(int attackLevel, Ant antInfoScript, Vector3 position) {
-        //audioPlayer.PlayClip();
+        audioPlayer.PlayClip(audioSource);
         Transform focusObject = null;
         cameraSystem.CameraDelayActive = true;
 

@@ -44,5 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13329a3ed7b5c21458887f43e04e4af5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioPlayer: {fileID: 0}
+  audioSource: {fileID: 0}
+  audioClip: {fileID: 8300000, guid: 7cd3972184b90f940893fb12f7eb81d0, type: 3}
   mummySummon: {fileID: 1565004422933082672, guid: 481959af795dfaf41bd68aeb3f92ff0f, type: 3}
   mummyEffect: {fileID: 5701415912331228771, guid: cf3cb2a039e565045923c38ed21e9e68, type: 3}
+  baseHealth: 50
+  healthPerLevel: 15

@@ -44,6 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4177469f41b4b7e4da2ccaa9a24eaee7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioPlayer: {fileID: 0}
+  audioSource: {fileID: 0}
+  audioClip: {fileID: 8300000, guid: 5ea219f7b8e9e6d4ea1c6a3fa23f5f32, type: 3}
   bulletSpeed: 1
   bulletPrefab: {fileID: 3667148812617791359, guid: 7ef10ed28193d304687981aaf28c702a, type: 3}
   weaponType: {fileID: 11400000, guid: e9e01b0e7a1f1fd469d962765e4e850c, type: 2}

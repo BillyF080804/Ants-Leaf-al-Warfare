@@ -33,8 +33,8 @@ public class IceAttack : QueenAttack {
     }
 
     private IEnumerator AttackCoroutine(int attackLevel, Ant antInfoScript, Vector3 position) {
-        //audioPlayer.PlayClip();
-        int amountOfSpikes = iceSpikeAmount;
+		audioPlayer.PlayClip(audioSource);
+		int amountOfSpikes = iceSpikeAmount;
 
         cameraSystem.SetCameraLookAtTarget(null);
         cameraSystem.CameraDelay(cameraDelay);

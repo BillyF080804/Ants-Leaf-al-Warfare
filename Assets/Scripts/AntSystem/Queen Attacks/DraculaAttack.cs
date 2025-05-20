@@ -20,8 +20,8 @@ public class DraculaAttack : QueenAttack {
     }
 
     private IEnumerator AttackCoroutine(int attackLevel, Ant antInfoScript) {
-        //audioPlayer.PlayClip();
-        cameraSystem.CameraDelay(5.0f);
+		audioPlayer.PlayClip(audioSource);
+		cameraSystem.CameraDelay(5.0f);
         Ant[] antList = FindObjectsOfType<Ant>();
         List<Ant> antList2 = new List<Ant>();
         for (int i = 0; i < antList.Length; i++) {

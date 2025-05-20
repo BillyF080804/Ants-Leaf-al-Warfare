@@ -1,17 +1,26 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 public class OptionsMenuScript : MonoBehaviour {
     [Header("UI")]
     [SerializeField] private TMP_Dropdown resolutionDropdown;
     [SerializeField] private TMP_Text volumeText;
+	private AudioManager audioManager;
+    [SerializeField]
+    private Slider volumeSlider;
 
-    private bool fullscreen = true;
+	private bool fullscreen = true;
 
     private void Awake() {
-        Screen.SetResolution(Screen.width, Screen.height, true);
-        SetVolume(0.5f);
-    }
+		audioManager = FindFirstObjectByType<AudioManager>();
+		Screen.SetResolution(Screen.width, Screen.height, true);
+        InitaliseVolume();
+
+
+
+	}
 
     public void ChangeFullscreen(bool _fullscreen) {
         fullscreen = _fullscreen;
@@ -34,8 +43,14 @@ public class OptionsMenuScript : MonoBehaviour {
 
     public void SetVolume(float volume) {
         PlayerPrefs.SetFloat("Volume", volume);
-        volumeText.text = (volume * 100).ToString("F0") + "%";
+		audioManager.UpdateVolume();
+		volumeText.text = (volume * 100).ToString("F0") + "%";
     }
+
+    public void InitaliseVolume() {
+		volumeSlider.value = PlayerPrefsScript.GetVolume();
+		volumeText.text = (volumeSlider.value * 100).ToString("F0") + "%";
+	}
 
     public float GetVolume() {
         return PlayerPrefs.GetFloat("Volume");

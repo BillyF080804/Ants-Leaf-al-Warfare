@@ -47,12 +47,22 @@ public class Ant : MonoBehaviour {
     private bool canMove = true;
     private bool isJumping = false;
 
+    [Header("Audio Clips")]
+    [SerializeField]
+    private AudioManager audioManager;
+    private AudioSource audioSource;
+
+
+
     private void OnEnable() {
         turnManager = FindFirstObjectByType<TurnManager>();
-        rb = GetComponent<Rigidbody>();
+		audioManager = FindFirstObjectByType<AudioManager>();
+		rb = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
+		audioSource = GetComponent<AudioSource>();
 
-        TurnManager.onTurnEnded += FadeOutHealthUI;
+
+		TurnManager.onTurnEnded += FadeOutHealthUI;
         WeaponManager.onOpenWeaponsMenu += FadeInHealthUI;
         WeaponManager.onCloseWeaponsMenu += FadeOutHealthUI;
 

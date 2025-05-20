@@ -20,8 +20,8 @@ public class WeaverAttack : QueenAttack {
     }
 
     private IEnumerator AttackCoroutine(int attackLevel, Ant antInfoScript, Vector3 position) {
-        //audioPlayer.PlayClip();
-        cameraSystem.CameraDelay(attackLevel + 1);
+        audioPlayer.PlayClip(audioSource);
+		cameraSystem.CameraDelay(attackLevel + 1);
 
         for (int i = 0; i < attackLevel; i++) {
             Vector3 tempPos = CheckArea();

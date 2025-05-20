@@ -18121,6 +18121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resolutionDropdown: {fileID: 1774216043}
   volumeText: {fileID: 1774216042}
+  volumeSlider: {fileID: 0}
 --- !u!1001 &1796692096
 PrefabInstance:
   m_ObjectHideFlags: 0

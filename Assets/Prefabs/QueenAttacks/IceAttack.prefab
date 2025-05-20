@@ -44,6 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb3d2f2cdc8cdd44da1d47cf7ae4684e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioPlayer: {fileID: 0}
+  audioSource: {fileID: 0}
+  audioClip: {fileID: 8300000, guid: fbc649d4132cbc042bb61ad65afd1387, type: 3}
   iceSpikeSpeed: 1
   attackPerLevel: 10
   baseSlowEffect: {fileID: 5701415912331228771, guid: 4ee10e588bac67441b96e856d4177636, type: 3}

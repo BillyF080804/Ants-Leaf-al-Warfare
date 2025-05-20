@@ -90,7 +90,10 @@ public class LobbyManager : MonoBehaviour {
         }
 
         yield return new WaitForSeconds(1.0f);
-        SceneManager.LoadScene("LoadingScene");
+        AudioManager audioManager = FindFirstObjectByType<AudioManager>();
+        audioManager.SwitchMusic(true);
+
+		SceneManager.LoadScene("LoadingScene");
     }
 
     public void ReadyUp(int playerNum) {
