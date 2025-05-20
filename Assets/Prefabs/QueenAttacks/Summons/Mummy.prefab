@@ -71,7 +71,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   antInfo: {fileID: 11400000, guid: ebf9fd71cb265ae4f93c7254b789876a, type: 2}
-  hasHadTurn: 1
   ownedPlayer: 0
   effects: []
   hasLifeSteal: 0
@@ -768,10 +767,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3109170504779723566, guid: 90534b4108512f34cbd88a7c5aa4a1d7, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 995328061a8b9d345be77e834e8dae16, type: 2}
+    - target: {fileID: 4406956640674334759, guid: 90534b4108512f34cbd88a7c5aa4a1d7, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 995328061a8b9d345be77e834e8dae16, type: 2}
+    - target: {fileID: 6092551247850716347, guid: 90534b4108512f34cbd88a7c5aa4a1d7, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 995328061a8b9d345be77e834e8dae16, type: 2}
     - target: {fileID: 6214409021987229707, guid: 90534b4108512f34cbd88a7c5aa4a1d7, type: 3}
       propertyPath: m_Name
       value: MummySold_Prefab
       objectReference: {fileID: 0}
+    - target: {fileID: 7084826932804620879, guid: 90534b4108512f34cbd88a7c5aa4a1d7, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 995328061a8b9d345be77e834e8dae16, type: 2}
+    - target: {fileID: 8388727894947227921, guid: 90534b4108512f34cbd88a7c5aa4a1d7, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 995328061a8b9d345be77e834e8dae16, type: 2}
+    - target: {fileID: 8662710685874280805, guid: 90534b4108512f34cbd88a7c5aa4a1d7, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 995328061a8b9d345be77e834e8dae16, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
