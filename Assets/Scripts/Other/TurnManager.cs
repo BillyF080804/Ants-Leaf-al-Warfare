@@ -363,6 +363,7 @@ public class TurnManager : MonoBehaviour {
         yield return new WaitUntil(() => cameraSystem.CameraDelayActive == false);
 
         if (CurrentAntTurn != null) {
+            CurrentAntTurn.ResetAnimation();
             RemoveAntFromDictionary(CurrentPlayerTurn.playerInfo.playerNum, CurrentAntTurn);
         }
 

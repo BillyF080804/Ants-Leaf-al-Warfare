@@ -23,7 +23,7 @@ MonoBehaviour:
   worldWeaponScale: 0.002
   worldWeaponLocalPos: {x: 0, y: 0, z: 0}
   worldWeaponRotation: {x: 0, y: 0, z: 0}
-  baseDamage: 20
+  baseDamage: 30
   weaponSpeed: 20
   useGravity: 1
   weaponRandomisation: 0

@@ -23,7 +23,7 @@ MonoBehaviour:
   worldWeaponScale: 0.5
   worldWeaponLocalPos: {x: 0, y: 0.264, z: 0.216}
   worldWeaponRotation: {x: 270, y: 0, z: 0}
-  baseDamage: 15
+  baseDamage: 25
   weaponSpeed: 25
   useGravity: 1
   weaponRandomisation: 0
@@ -52,8 +52,8 @@ MonoBehaviour:
   delayBetweenShots: 0.5
   minimumRandomness: 0.8
   maximumRandomness: 1.2
-  sprayMover: 0
-  sprayStrength: 25
+  sprayMover: 1
+  sprayStrength: 10
   sprayLength: 3
   sprayHeight: 2
   sprayDuration: 2.5
