@@ -114,6 +114,7 @@ public class TurnManager : MonoBehaviour {
                 GameObject newAnt = antSpawner.SpawnAnt(baseAntPrefab);
                 PlayerList[i].AddNewAnt(newAnt);
                 newAnt.GetComponent<BaseAntScript>().ChangeAntColors(PlayerList[i].playerInfo.playerColor);
+                newAnt.GetComponent<Ant>().SetHealthTextColor(PlayerList[i].playerInfo.playerColor);
 
                 switch (i) {
                     case 0:
@@ -147,6 +148,7 @@ public class TurnManager : MonoBehaviour {
         ChangeQueenSpecialism(PlayerList[playerNum].playerInfo.queenType, newQueen.GetComponent<Ant>());
         newQueen.GetComponent<QueenBaseAntScript>().InitialiseQueenAttack();
         newQueen.GetComponent<QueenBaseAntScript>().SetAntColor(PlayerList[playerNum].playerInfo.playerColor);
+        newQueen.GetComponent<Ant>().SetHealthTextColor(PlayerList[playerNum].playerInfo.playerColor);
         newQueen.GetComponent<QueenBaseAntScript>().ChangeQueenMesh(PlayerList[playerNum].playerInfo.queenType);
         PlayerList[playerNum].AddQueen(newQueen);
 

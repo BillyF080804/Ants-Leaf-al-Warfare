@@ -19565,7 +19565,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraDelay: 10
-  cameraOverviewPos: {x: -60, y: 2.5, z: -15}
+  cameraOverviewPos: {x: -165, y: 2.5, z: -15}
   rippleParticle: {fileID: 5162574933475786806, guid: 12f64d27fbcaba84daf8dd60a76f22b7, type: 3}
 --- !u!64 &1941158411
 MeshCollider:

@@ -171,7 +171,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: 1.5}
   m_SizeDelta: {x: 1200, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &4619033984802668080
@@ -365,7 +365,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   antInfo: {fileID: 11400000, guid: ebf9fd71cb265ae4f93c7254b789876a, type: 2}
-  hasHadTurn: 0
   ownedPlayer: 0
   effects: []
   hasLifeSteal: 0
@@ -374,12 +373,12 @@ MonoBehaviour:
   statDrops: 
   isDrowning: 0
   isCrushed: 0
-  animator: {fileID: 3666135271846358711}
   healthFadeScript: {fileID: 3712256010529605187}
   healthChangeText: {fileID: 6592297603296863701}
   healthText: {fileID: 8572191964539648485}
   healthTextBackground: {fileID: 8527560696120339127}
   <WeaponTransform>k__BackingField: {fileID: 185552780971005863}
+  audioManager: {fileID: 0}
   hat: {fileID: 4103092626613141247}
   leafWrap: {fileID: 4537810194138686510}
 --- !u!1 &8527560696120339127

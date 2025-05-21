@@ -61,7 +61,6 @@ public class Ant : MonoBehaviour {
         animator = GetComponentInChildren<Animator>();
 		audioSource = GetComponent<AudioSource>();
 
-
 		TurnManager.onTurnEnded += FadeOutHealthUI;
         WeaponManager.onOpenWeaponsMenu += FadeInHealthUI;
         WeaponManager.onCloseWeaponsMenu += FadeOutHealthUI;
@@ -83,6 +82,10 @@ public class Ant : MonoBehaviour {
         }
 
         player = turnManager.PlayerList.Where(x => x.playerInfo.playerNum == playerNum).First();
+    }
+
+    public void SetHealthTextColor(Color newColor) {
+        healthText.color = newColor;
     }
 
     public void FadeInHealthUI() {

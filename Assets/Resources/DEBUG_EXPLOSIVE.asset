@@ -63,4 +63,4 @@ MonoBehaviour:
   cameraShakeDuration: 0.25
   cameraShakeIntensity: 1
   shootSound: {fileID: 8300000, guid: 9cb615b4896d0f441a339ab09cf3a17e, type: 3}
-  impactSound: {fileID: 0}
+  impactSound: {fileID: 8300000, guid: ba8f3f27b4fda7d409c96cb876ff7d76, type: 3}
