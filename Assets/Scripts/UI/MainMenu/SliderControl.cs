@@ -18,7 +18,7 @@ public class SliderControl : MonoBehaviour {
         switch (playerPref) {
             case PlayerPrefsScript.PlayerPrefSliderList.Volume: {
                 PlayerPrefsScript.SetVolume(slider.value);
-                audioManager.UpdateVolume();
+                //audioManager.UpdateVolume();
 
                 text.text = "" + slider.value;
                 break;

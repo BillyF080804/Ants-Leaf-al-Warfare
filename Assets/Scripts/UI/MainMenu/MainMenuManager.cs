@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class MainMenuManager : MonoBehaviour {
     [Header("UI")]
     [SerializeField] private FadeScript blackscreenFadeScript;
+    [SerializeField] private AudioManager audioManagerPrefab;
 
     [Header("Loading UI")]
     [SerializeField] private LoadingUI loadingUIPrefab;
@@ -14,7 +15,12 @@ public class MainMenuManager : MonoBehaviour {
     private GameObject panelToHide = null;
 
     private void Start() {
+        AudioManager audioManager = FindFirstObjectByType<AudioManager>();
         blackscreenFadeScript.FadeOutUI(1.0f);
+
+        if (audioManager == null) {
+            Instantiate(audioManagerPrefab);
+        }
     }
 
     public void PlayGameButton() {

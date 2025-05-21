@@ -1026,6 +1026,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9175b6a20c8a8f540b1923b5d876a9fa, type: 2}
   - {fileID: 11400000, guid: 8286ba19baf6f9642b2965225b02bf8c, type: 2}
   - {fileID: 11400000, guid: d1c6c5eb52cecf44ba3ab99b5c72b3d8, type: 2}
+  audioManagerPrefab: {fileID: 2928446410030079406, guid: d0ed1a1063d95994da6362010f98fba9, type: 3}
   playerCards:
   - {fileID: 1366821911}
   - {fileID: 296281296}

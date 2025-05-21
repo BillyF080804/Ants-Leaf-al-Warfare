@@ -401,9 +401,6 @@ public class TurnManager : MonoBehaviour {
         blackscreen.SetActive(true);
         blackscreen.GetComponent<CanvasGroup>().alpha = 0;
         blackscreen.GetComponent<FadeScript>().FadeInUI(1.0f);
-		AudioManager audioManager = FindFirstObjectByType<AudioManager>();
-		audioManager.SwitchMusic(false);
-
 
 		yield return new WaitUntil(() => blackscreen.GetComponent<CanvasGroup>().alpha == 1);
         SceneManager.LoadScene("GameOverScene");

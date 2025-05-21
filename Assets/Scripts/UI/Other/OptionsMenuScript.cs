@@ -1,26 +1,27 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class OptionsMenuScript : MonoBehaviour {
     [Header("UI")]
     [SerializeField] private TMP_Dropdown resolutionDropdown;
-    [SerializeField] private TMP_Text volumeText;
-	private AudioManager audioManager;
-    [SerializeField]
-    private Slider volumeSlider;
+    [SerializeField] private Slider masterVolumeSlider;
+    [SerializeField] private TMP_Text masterVolumeSliderText;
+    [SerializeField] private Slider musicVolumeSlider;
+    [SerializeField] private TMP_Text musicVolumeSliderText;
+    [SerializeField] private Slider sfxVolumeSlider;
+    [SerializeField] private TMP_Text sfxVolumeSliderText;
 
-	private bool fullscreen = true;
+    private bool fullscreen = true;
+    private AudioManager audioManager;
 
     private void Awake() {
 		audioManager = FindFirstObjectByType<AudioManager>();
 		Screen.SetResolution(Screen.width, Screen.height, true);
-        InitaliseVolume();
-
-
-
-	}
+        masterVolumeSlider.value = PlayerPrefs.HasKey("MasterVolume") ? PlayerPrefs.GetFloat("MasterVolume") : 1.0f;
+        musicVolumeSlider.value = PlayerPrefs.HasKey("MusicVolume") ? (PlayerPrefs.GetFloat("MusicVolume") * (PlayerPrefs.HasKey("MasterVolume") ? PlayerPrefs.GetFloat("MasterVolume") : 1.0f / 100)) / 100 : 0.5f;
+        sfxVolumeSlider.value = PlayerPrefs.HasKey("SFXVolume") ? (PlayerPrefs.GetFloat("SFXVolume") * (PlayerPrefs.HasKey("MasterVolume") ? PlayerPrefs.GetFloat("MasterVolume") : 1.0f / 100)) / 100 : 0.5f;
+    }
 
     public void ChangeFullscreen(bool _fullscreen) {
         fullscreen = _fullscreen;
@@ -41,16 +42,29 @@ public class OptionsMenuScript : MonoBehaviour {
         Screen.SetResolution(int.Parse(width), int.Parse(height), fullscreen);
     }
 
-    public void SetVolume(float volume) {
-        PlayerPrefs.SetFloat("Volume", volume);
-		audioManager.UpdateVolume();
-		volumeText.text = (volume * 100).ToString("F0") + "%";
+    //Function for changing the master volume
+    public void MasterSliderChanged(float value) {
+        masterVolumeSliderText.text = value.ToString() + "%";
+        PlayerPrefs.SetFloat("MasterVolume", value);
+
+        audioManager.UpdateMasterVolume();
     }
 
-    public void InitaliseVolume() {
-		volumeSlider.value = PlayerPrefsScript.GetVolume();
-		volumeText.text = (volumeSlider.value * 100).ToString("F0") + "%";
-	}
+    //Function for changing the music volume
+    public void MusicSliderChanged(float value) {
+        musicVolumeSliderText.text = value.ToString() + "%";
+        PlayerPrefs.SetFloat("MusicVolume", value);
+
+        audioManager.UpdateMusicVolume();
+    }
+
+    //Function for changing the SFX volume
+    public void SFXSliderChanged(float value) {
+        sfxVolumeSliderText.text = value.ToString() + "%";
+        PlayerPrefs.SetFloat("SFXVolume", value);
+
+        audioManager.UpdateSFXVolume();
+    }
 
     public float GetVolume() {
         return PlayerPrefs.GetFloat("Volume");

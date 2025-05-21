@@ -10,6 +10,7 @@ public class LobbyManager : MonoBehaviour {
     [Header("Settings")]
     [SerializeField] private PlayerInputManager inputManager;
     [SerializeField] private List<AntSO> antInformation; //Used to change the text that shows for the archetype and description for each queen
+    [SerializeField] private AudioManager audioManagerPrefab;
 
     [Header("Player Cards")]
     [SerializeField] private List<PlayerCardInfo> playerCards;
@@ -29,9 +30,14 @@ public class LobbyManager : MonoBehaviour {
 
     private void Start() {
         LoadingUI loadingUI = FindFirstObjectByType<LoadingUI>();
+        AudioManager audioManager = FindFirstObjectByType<AudioManager>();
 
         if (loadingUI != null) {
             loadingUI.OpenShutter();
+        }
+
+        if (audioManager == null) {
+            Instantiate(audioManagerPrefab);
         }
     }
 
@@ -90,9 +96,6 @@ public class LobbyManager : MonoBehaviour {
         }
 
         yield return new WaitForSeconds(1.0f);
-        AudioManager audioManager = FindFirstObjectByType<AudioManager>();
-        audioManager.SwitchMusic(true);
-
 		SceneManager.LoadScene("LoadingScene");
     }
 
