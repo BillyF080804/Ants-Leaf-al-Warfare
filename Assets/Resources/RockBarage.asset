@@ -23,10 +23,10 @@ MonoBehaviour:
   worldWeaponScale: 0.2
   worldWeaponLocalPos: {x: 0, y: 0.934, z: -0.074}
   worldWeaponRotation: {x: -90, y: 0, z: 0}
-  baseDamage: 20
+  baseDamage: 15
   weaponSpeed: 20
   useGravity: 1
-  weaponRandomisation: 0
+  weaponRandomisation: 1
   explosive: 0
   hasKnockback: 1
   isMelee: 0
@@ -46,8 +46,8 @@ MonoBehaviour:
   vfxSize: 1
   vfxDuration: 2.5
   vfxObject: {fileID: 0}
-  knockbackStrength: 8
-  upwardsModifier: 6
+  knockbackStrength: 15
+  upwardsModifier: 3
   numOfShots: 3
   delayBetweenShots: 0.25
   minimumRandomness: 0.8

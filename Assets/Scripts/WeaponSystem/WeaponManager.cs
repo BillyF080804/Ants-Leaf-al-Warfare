@@ -185,7 +185,8 @@ public class WeaponManager : MonoBehaviour {
             cameraSystem.CameraDelay(weaponInfo.cameraDelay);
             cameraSystem.ResetCamera();
             turnManager.CurrentPlayerTurn.ResetFreeCamSetting();
-            cameraSystem.SetCameraTarget(playerPosition.position);
+            cameraSystem.SetCameraTarget(colliders.First().transform);
+            cameraSystem.SetCameraLookAtTarget(null);
             cameraSystem.SetCameraZoomingBool(false);
             StartCoroutine(WaitTillWeaponsFinishedCoroutine());
         }

@@ -237,7 +237,7 @@ public class TurnManager : MonoBehaviour {
             }
         }
 
-        StartCoroutine(GameOverCoroutine());
+        GameOver();
     }
 
     private void StartTurnFunctionality(Player player) {
@@ -398,13 +398,17 @@ public class TurnManager : MonoBehaviour {
         }
     }
 
-    public IEnumerator GameOverCoroutine() {
+    public void GameOver() {
+        StartCoroutine(GameOverCoroutine());
+    }
+
+    private IEnumerator GameOverCoroutine() {
         gameOver = true;
         blackscreen.SetActive(true);
         blackscreen.GetComponent<CanvasGroup>().alpha = 0;
         blackscreen.GetComponent<FadeScript>().FadeInUI(1.0f);
 
-		yield return new WaitUntil(() => blackscreen.GetComponent<CanvasGroup>().alpha == 1);
+		yield return new WaitForSeconds(1.0f);
         SceneManager.LoadScene("GameOverScene");
     }
 

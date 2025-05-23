@@ -231,16 +231,16 @@ public class Ant : MonoBehaviour {
         if (antsRemaining.TryGetValue(player.playerInfo.playerNum, out int amount)) {
             if (turnManager.PlayerList.Count == 1 && amount - 1 == 0) {
                 GameOverScript.winningPlayerNumber = antsRemaining.OrderByDescending(x => x.Value).First().Key;
-                StartCoroutine(turnManager.GameOverCoroutine());
+                turnManager.GameOver();
             }
             else if (turnManager.PlayerList.Count == 2 && amount == 0) {
                 GameOverScript.winningPlayerNumber = antsRemaining.OrderByDescending(x => x.Value).First().Key;
-                StartCoroutine(turnManager.GameOverCoroutine());
+                turnManager.GameOver();
             }
             else if (turnManager.PlayerList.Count == 3 || turnManager.PlayerList.Count == 4) {
                 if (antsRemaining.Where(x => x.Value > 0).Count() == 2 && amount == 0) {
                     GameOverScript.winningPlayerNumber = antsRemaining.OrderByDescending(x => x.Value).First().Key;
-                    StartCoroutine(turnManager.GameOverCoroutine());
+                    turnManager.GameOver();
                 }
             }
         }

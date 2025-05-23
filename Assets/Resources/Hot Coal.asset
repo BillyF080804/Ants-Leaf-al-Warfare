@@ -46,7 +46,7 @@ MonoBehaviour:
   vfxSize: 1
   vfxDuration: 2.5
   vfxObject: {fileID: 0}
-  knockbackStrength: 10
+  knockbackStrength: 15
   upwardsModifier: 4
   numOfShots: 2
   delayBetweenShots: 0.5
