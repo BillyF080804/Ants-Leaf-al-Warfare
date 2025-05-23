@@ -16,7 +16,7 @@ MonoBehaviour:
   weaponDescription: Blow your foes away!
   knockbackLevel: 2
   unlimitedUses: 1
-  useAutomaticRotation: 0
+  useAutomaticRotation: 1
   weaponIcon: {fileID: 21300000, guid: 54d4a534567a1f4439a208ed01f34fdc, type: 3}
   weaponPrefab: {fileID: 4823009550829533390, guid: 3673142af910dd34f9467e7305110f6b, type: 3}
   worldWeaponPrefab: {fileID: 856419426147675465, guid: b8f205c911a98194d9dfba35675805a6, type: 3}
@@ -53,7 +53,7 @@ MonoBehaviour:
   minimumRandomness: 0.8
   maximumRandomness: 1.2
   sprayMover: 1
-  sprayStrength: 100
+  sprayStrength: 50
   sprayLength: 3
   sprayHeight: 2
   sprayDuration: 2.5
