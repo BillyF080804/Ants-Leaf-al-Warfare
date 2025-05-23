@@ -15,7 +15,7 @@ public class OptionsMenuScript : MonoBehaviour {
     private bool fullscreen = true;
     private AudioManager audioManager;
 
-    private void Awake() {
+    private void Start() {
 		audioManager = FindFirstObjectByType<AudioManager>();
 		Screen.SetResolution(Screen.width, Screen.height, true);
         masterVolumeSlider.value = PlayerPrefs.HasKey("MasterVolume") ? PlayerPrefs.GetFloat("MasterVolume") : 1.0f;

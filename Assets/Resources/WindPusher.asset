@@ -37,7 +37,7 @@ MonoBehaviour:
   cameraShakeOnFire: 0
   cameraShakeOnImpact: 0
   hasVFX: 0
-  hasSounds: 0
+  hasSounds: 1
   explodeOnImpact: 1
   explosionRange: 5
   explosionPower: 5

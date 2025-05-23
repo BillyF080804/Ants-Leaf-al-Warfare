@@ -42,7 +42,7 @@ public class WeaponDrop : MonoBehaviour {
 
         if (weapon != null) {
             player.AddNewWeapon(weapon);
-            pickupText.text = "+1 " + weapon.weaponName;
+            pickupText.text = "+1 " + GetWeaponSpriteIcon(weapon.weaponName);
         }
         else {
             ant.HealDamage(medkitHealth);
@@ -51,5 +51,38 @@ public class WeaponDrop : MonoBehaviour {
         }
 
         Destroy(gameObject);
+    }
+
+    private string GetWeaponSpriteIcon(string weaponName) {
+        switch (weaponName) {
+            case "Dirt Shot":
+                return "<sprite=0>";
+            case "Slingshot":
+                return "<sprite=1>";
+            case "Acorn Grenade":
+                return "<sprite=2>";
+            case "Racket Hit":
+                return "<sprite=3>";
+            case "DEBUG EXPLOSIVE":
+                return "<sprite=4>";
+            case "Rock Slide":
+                return "<sprite=5>";
+            case "Acorn Rocket":
+                return "<sprite=6>";
+            case "Flamer":
+                return "<sprite=7>";
+            case "Stink Bug":
+                return "<sprite=8>";
+            case "Vine Spring":
+                return "<sprite=9>";
+            case "Hot Coal":
+                return "<sprite=10>";
+            case "Nettle Stinger":
+                return "<sprite=12>";
+            case "Air Blower":
+                return "<sprite=13>";
+            default:
+                return "NULL";
+        }
     }
 }
