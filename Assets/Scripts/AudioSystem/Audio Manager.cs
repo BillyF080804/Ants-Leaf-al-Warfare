@@ -58,7 +58,7 @@ public class AudioManager : MonoBehaviour {
         if (nextScene.name.Contains("Game")) {
             StartCoroutine(SwitchMusicCoroutine(1));
         }
-        else if (!nextScene.name.Contains("Game") && !nextScene.name.Contains("Loading")) {
+        else if (!nextScene.name.Contains("Game") && !nextScene.name.Contains("Loading") && musicSource.clip != musicClips[0]) {
             StartCoroutine(SwitchMusicCoroutine(0));
         }
     }

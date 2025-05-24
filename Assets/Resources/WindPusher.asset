@@ -62,5 +62,5 @@ MonoBehaviour:
   sprayAreaVFX: {fileID: 5972204552708681510, guid: 272efd046b9099b4ea17d6d229e7f62e, type: 3}
   cameraShakeDuration: 0.25
   cameraShakeIntensity: 1
-  shootSound: {fileID: 0}
+  shootSound: {fileID: 8300000, guid: 62744570e3fcd6a43bcd7674fafde41f, type: 3}
   impactSound: {fileID: 0}

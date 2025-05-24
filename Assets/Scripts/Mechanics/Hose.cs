@@ -8,6 +8,7 @@ public class Hose : MonoBehaviour {
     [SerializeField] private float explosionForce = 500.0f;
     [SerializeField] private float upwardsModifier = 3;
     [SerializeField] private GameObject waterParticlePrefab = null;
+    [SerializeField] private AudioSource audioSource;
 
     public bool IsSpraying { get; private set; } = false;
     private bool isFirstTurn = true;
@@ -16,6 +17,8 @@ public class Hose : MonoBehaviour {
     private CameraSystem cameraSystem;
 
     private void Start() {
+        audioSource.playOnAwake = false;
+        audioSource.loop = false;
         cameraSystem = FindFirstObjectByType<CameraSystem>();
     }
 
@@ -40,6 +43,10 @@ public class Hose : MonoBehaviour {
 
         GameObject waterParticle = Instantiate(waterParticlePrefab, transform);
         Destroy(waterParticle, 2.5f);
+
+        if (audioSource != null && audioSource.clip != null) {
+            audioSource.Play();
+        }
 
         foreach (Rigidbody ant in ants) {
             if (ant != null) {

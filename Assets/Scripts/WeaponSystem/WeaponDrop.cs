@@ -5,16 +5,21 @@ using UnityEngine;
 public class WeaponDrop : MonoBehaviour {
     [Header("Settings")]
     [SerializeField] private GameObject crate;
-    [SerializeField] private GameObject medkit;
+    [SerializeField] private GameObject medkit;    
 
     private int medkitHealth = 0;
     private BaseWeaponSO weapon;
     private TurnManager turnManager;
     private WeaponDropSystem weaponDropSystem;
+    private AudioSource audioSource;
 
     private void Awake() {
         turnManager = FindFirstObjectByType<TurnManager>();
         weaponDropSystem = FindFirstObjectByType<WeaponDropSystem>();
+        audioSource = weaponDropSystem.GetComponent<AudioSource>();
+
+        audioSource.playOnAwake = false;
+        audioSource.loop = false;
     }
 
     private void OnCollisionEnter(Collision collision) {
@@ -39,6 +44,10 @@ public class WeaponDrop : MonoBehaviour {
         int playerNum = int.Parse(ant.ownedPlayer.ToString().Last().ToString());
         Player player = turnManager.PlayerList.Where(x => x.playerInfo.playerNum == playerNum).First();
         TMP_Text pickupText = Instantiate(weaponDropSystem.PickupTextPrefab, turnManager.MainCanvas.transform);
+
+        if (audioSource != null && audioSource.clip != null) {
+            audioSource.Play();
+        }
 
         if (weapon != null) {
             player.AddNewWeapon(weapon);

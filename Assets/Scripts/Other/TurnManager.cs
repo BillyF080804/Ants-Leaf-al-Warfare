@@ -68,6 +68,7 @@ public class TurnManager : MonoBehaviour {
     public List<Player> PlayerList { get; private set; } = new List<Player>();
 
     private Coroutine turnTimerCoroutine;
+    private AudioSource audioSource;
     private AntSpawner antSpawner;
     private CameraSystem cameraSystem;
     private WeaponManager weaponManager;
@@ -87,6 +88,7 @@ public class TurnManager : MonoBehaviour {
         bbqScript = FindFirstObjectByType<BBQScript>();
         hose = FindFirstObjectByType<Hose>();
         enterObjectManager = FindFirstObjectByType<EnterObjectManager>();
+        audioSource = GetComponent<AudioSource>();
 
         currentTurnTime = maxTurnTime;
         StartCoroutine(StartLevelCoroutine());
@@ -298,10 +300,17 @@ public class TurnManager : MonoBehaviour {
     }
 
     private IEnumerator TurnTimer() {
+        bool countdownStarted = false;
+
         while (currentTurnTime > 0) {
             if (turnTimerPaused == false) {
                 currentTurnTime -= Time.deltaTime;
                 SetTurnTimerText(currentTurnTime);
+            }
+
+            if (currentTurnTime <= 11 && countdownStarted == false) {
+                countdownStarted = true;
+                audioSource.Play();
             }
 
             yield return null;
@@ -328,6 +337,11 @@ public class TurnManager : MonoBehaviour {
 
     public IEnumerator EndTurnCoroutine() {
         StopCoroutine(turnTimerCoroutine);
+
+        if (audioSource.isPlaying) { 
+            audioSource.Stop();
+        }
+
         HideMainUI(0.25f);
         CurrentAntTurn.SetCanMove(false);
         yield return new WaitForSeconds(0.25f);

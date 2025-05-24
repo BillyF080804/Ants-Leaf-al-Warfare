@@ -23,6 +23,9 @@ public class FlyTrapHazard : MonoBehaviour {
     [SerializeField] private float minPower = 10;
     [SerializeField] private float maxPower = 15;
 
+    [Header("Audio Settings")]
+    [SerializeField] private AudioSource audioSource;
+
     private bool chompedThisTurn;
     private int recoveryTurnsPassed = 0;
     private float timePassedForAttack;
@@ -30,6 +33,8 @@ public class FlyTrapHazard : MonoBehaviour {
     private CameraSystem cameraSystem;
 
     private void Start() {
+        audioSource.playOnAwake = false;
+        audioSource.loop = false;
         cameraSystem = FindFirstObjectByType<CameraSystem>();
     }
 
@@ -65,6 +70,10 @@ public class FlyTrapHazard : MonoBehaviour {
         cameraSystem.SetCameraLookAtTarget(null);
         cameraSystem.SetCameraTarget(FindFirstObjectByType<TurnManager>().CurrentAntTurn.transform.position, 5, 15);
         cameraSystem.CameraDelayActive = true;
+
+        if (audioSource != null && audioSource.clip != null) {
+            audioSource.Play();
+        }
 
         foreach (Ant ant in antList) {
             ant.SetCanMove(false);
