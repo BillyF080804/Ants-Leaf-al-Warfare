@@ -111,14 +111,18 @@ public class Ant : MonoBehaviour {
         moveVector = new Vector3(movement.x, 0, 0);
 
         if (movement.x < 0) {
-            ResetAnimation();
-            ChangeAnimation("Walking");
+            if (!isJumping) {
+				ResetAnimation();
+				ChangeAnimation("Walking");
+			}
             RotateAnt(movement);
         }
         else if (movement.x > 0) {
-            ResetAnimation();
-            ChangeAnimation("Walking");
-            RotateAnt(movement);
+			if (!isJumping) {
+				ResetAnimation();
+				ChangeAnimation("Walking");
+			}
+			RotateAnt(movement);
         }
         else {
             ResetAnimation();
@@ -273,8 +277,8 @@ public class Ant : MonoBehaviour {
             ChangeAnimation("Jumping");
             Vector2 Force = new Vector2(0, antInfo.jumpHeight);
             rb.AddForce(Force, ForceMode.Impulse);
-            StartCoroutine(JumpDelay(1));
-            StartCoroutine(LandDelay(1.4f));
+            StartCoroutine(JumpDelay(1.25f));
+            StartCoroutine(LandDelay(1.25f));
 
         }
     }
@@ -323,9 +327,13 @@ public class Ant : MonoBehaviour {
         if (Physics.Raycast(gameObject.transform.position, Vector3.down, out RaycastHit ray, 1.5f) || Physics.Raycast(gameObject.transform.position + new Vector3(1.5f, 0, 0), Vector3.down, out ray, 1.5f) || Physics.Raycast(gameObject.transform.position + new Vector3(-1.5f, 0, 0), Vector3.down, out ray, 1.5f)) {
             if (!isJumping) {
                 canJump = true;
+				if (moveVector.x != 0) {
+					ChangeAnimation("Walking");
 
-            }
-        }
+				}
+			}
+			
+		}
     }
 
     private void OnCollisionStay(Collision collision) {
@@ -333,10 +341,7 @@ public class Ant : MonoBehaviour {
             if (!isJumping) {
                 canJump = true;
             }
-            if(moveVector.x != 0) {
-                ChangeAnimation("Walking");
 
-			}
         }
     }
 
