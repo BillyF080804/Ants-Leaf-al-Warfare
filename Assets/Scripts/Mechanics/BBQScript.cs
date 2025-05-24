@@ -42,7 +42,7 @@ public class BBQScript : MonoBehaviour {
 
             cameraSystem.StartCameraShake(0.5f, 1.0f);
         }
-        else if (collision.gameObject.TryGetComponent(out Ant antScript)) {
+        else if (collision.gameObject.TryGetComponent(out Ant antScript) && hasCollapsed == true) {
             antScript.TakeDamage(1000);
         }
     }

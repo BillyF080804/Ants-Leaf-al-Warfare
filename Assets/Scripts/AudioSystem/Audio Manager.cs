@@ -55,6 +55,10 @@ public class AudioManager : MonoBehaviour {
             }
         }
 
+        foreach (var sfxAudio in sfxSources) {
+            sfxAudio.volume = (sfxVolume * (masterVolume / 100)) / 100;
+        }
+
         if (nextScene.name.Contains("Game")) {
             StartCoroutine(SwitchMusicCoroutine(1));
         }
