@@ -333,6 +333,10 @@ public class Ant : MonoBehaviour {
             if (!isJumping) {
                 canJump = true;
             }
+            if(moveVector.x != 0) {
+                ChangeAnimation("Walking");
+
+			}
         }
     }
 
