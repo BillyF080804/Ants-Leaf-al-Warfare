@@ -10,7 +10,7 @@ using UnityEngine.SceneManagement;
 public class TurnManager : MonoBehaviour {
     [Header("Settings")]
     [SerializeField] private string levelName;
-    [SerializeField] private int maxRounds = 10;4r
+    [SerializeField] private int maxRounds = 10;
     [SerializeField] private int maxTurnTime = 20;
 
     [field: Header("Ant Spawning Settings")]
