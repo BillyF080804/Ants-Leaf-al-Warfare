@@ -26,6 +26,7 @@ public class BeeScript : MonoBehaviour {
     }
 
     public void Attack() {
+        audioPlayer = GetComponent<AudioPlayer>();
         audioPlayer.PlayClip();
         antToAttack = ClosestAnt();
         Vector3.MoveTowards(transform.position, antToAttack.transform.position, 1);

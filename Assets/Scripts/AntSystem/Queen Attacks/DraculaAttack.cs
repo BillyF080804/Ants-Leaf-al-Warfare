@@ -13,6 +13,8 @@ public class DraculaAttack : QueenAttack {
 
     private void Start() {
         cameraSystem = FindFirstObjectByType<CameraSystem>();
+        audioPlayer = GetComponent<AudioPlayer>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     public override void ActivateAttack(int attackLevel, Ant antInfoScript) {

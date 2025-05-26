@@ -22,6 +22,8 @@ public class BulletAttack : QueenAttack {
     private void Start() {
         cameraSystem = FindFirstObjectByType<CameraSystem>();
         turnManager = FindFirstObjectByType<TurnManager>();
+        audioPlayer = GetComponent<AudioPlayer>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     public override void ActivateAttack(int attackLevel, Ant antInfoScript, Vector3 position) {

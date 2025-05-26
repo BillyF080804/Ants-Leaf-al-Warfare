@@ -37,6 +37,10 @@ public class AudioPlayer : MonoBehaviour {
     }
 
     public void PlayClip() {
+        if (audioSource == null) {
+            audioSource = GetComponent<AudioSource>();
+        }
+
         if (audioSource.clip != null) {
             audioSource.Play();
         }        
