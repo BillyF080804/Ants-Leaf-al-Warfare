@@ -84,17 +84,18 @@ public class WeaponManager : MonoBehaviour {
         }
     }
 
+    //Called when a weapon is fired
     private IEnumerator FireWeaponCoroutine(BaseWeaponSO weaponInfo, Transform playerPosition) {
         fireHeld = false;
         tempWeaponInfo = null;
         tempPlayerPosition = null;
 
         if (weaponInfo.isMultiShot == false) {
-            OnShoot(weaponInfo, playerPosition);
+            OnShoot(weaponInfo, playerPosition); //Fire single weapon
         }
         else if (weaponInfo.isMultiShot == true) {
             for (int i = 0; i < weaponInfo.numOfShots; i++) {
-                OnShoot(weaponInfo, playerPosition);
+                OnShoot(weaponInfo, playerPosition); //Multi shot
                 yield return new WaitForSeconds(weaponInfo.delayBetweenShots);
             }
         }
@@ -102,6 +103,7 @@ public class WeaponManager : MonoBehaviour {
         StartCoroutine(WaitTillWeaponsFinishedCoroutine());
     }
 
+    //Called when a weapon is fired
     private void OnShoot(BaseWeaponSO weaponInfo, Transform playerPosition) {
         Vector3 spawnPos = new Vector3(playerPosition.position.x, playerPosition.position.y + 1, 0);
         GameObject newWeapon = Instantiate(weaponInfo.weaponPrefab, spawnPos, Quaternion.identity);
@@ -138,19 +140,20 @@ public class WeaponManager : MonoBehaviour {
         cameraSystem.SetCameraZoomingBool(false);
 
         if (weaponInfo.explosive && !weaponInfo.explodeOnImpact) {
-            weaponScript.StartFuse();
+            weaponScript.StartFuse(); //Weapon explosive fuse
         }
 
         if (weaponInfo.cameraShakeOnFire) {
-            cameraSystem.StartCameraShake(weaponInfo.cameraShakeDuration, weaponInfo.cameraShakeIntensity);
+            cameraSystem.StartCameraShake(weaponInfo.cameraShakeDuration, weaponInfo.cameraShakeIntensity); //Camera shake
         }
 
         if (weaponInfo.hasSounds && weaponInfo.shootSound != null) {
-            AudioPlayer.ChangeClip(weaponInfo.shootSound);
+            AudioPlayer.ChangeClip(weaponInfo.shootSound); //Shoot sound sfx
             AudioPlayer.PlayClip();
         }
     }
 
+    //Called when a melee weapon is used
     public void UseMeleeWeapon(BaseWeaponSO weaponInfo, Transform playerPosition) {
         if (canFireWeapon) {
             canFireWeapon = false;
@@ -165,8 +168,8 @@ public class WeaponManager : MonoBehaviour {
             Collider[] colliders = Physics.OverlapSphere(aimPosition, 2.5f).Where(x => x.CompareTag("Player") && x.gameObject != turnManager.CurrentAntTurn.gameObject).ToArray();
 
             if (colliders.Length > 0) {
-                colliders.First().GetComponent<Ant>().TakeDamage(weaponInfo.baseDamage);
-                colliders.First().GetComponent<Rigidbody>().AddExplosionForce(weaponInfo.knockbackStrength, playerPosition.position, 0, weaponInfo.upwardsModifier, ForceMode.Impulse);
+                colliders.First().GetComponent<Ant>().TakeDamage(weaponInfo.baseDamage); //deal damage
+                colliders.First().GetComponent<Rigidbody>().AddExplosionForce(weaponInfo.knockbackStrength, playerPosition.position, 0, weaponInfo.upwardsModifier, ForceMode.Impulse); //move ant
 
                 if (weaponInfo.weaponEffect != null) {
                     weaponInfo.weaponEffect.GetComponent<EffectScript>().AddEffect(colliders.First().GetComponent<Ant>());
@@ -174,11 +177,11 @@ public class WeaponManager : MonoBehaviour {
             }
 
             if (weaponInfo.cameraShakeOnFire) {
-                cameraSystem.StartCameraShake(weaponInfo.cameraShakeDuration, weaponInfo.cameraShakeIntensity);
+                cameraSystem.StartCameraShake(weaponInfo.cameraShakeDuration, weaponInfo.cameraShakeIntensity); //camera shake
             }
 
             if (weaponInfo.hasSounds && weaponInfo.shootSound != null) {
-                AudioPlayer.ChangeClip(weaponInfo.shootSound);
+                AudioPlayer.ChangeClip(weaponInfo.shootSound); //play sfx
                 AudioPlayer.PlayClip();
             }
 
@@ -192,6 +195,7 @@ public class WeaponManager : MonoBehaviour {
         }
     }
 
+    //Called when a spray weapon is used
     public void UseSprayWeapon(BaseWeaponSO weaponInfo, Transform playerPosition) {
         if (canFireWeapon) {
             canFireWeapon = false;
@@ -218,11 +222,11 @@ public class WeaponManager : MonoBehaviour {
             sprayArea.GetComponent<SprayAreaScript>().Setup(weaponInfo, turnManager);
 
             if (weaponInfo.cameraShakeOnFire) {
-                cameraSystem.StartCameraShake(weaponInfo.cameraShakeDuration, weaponInfo.cameraShakeIntensity);
+                cameraSystem.StartCameraShake(weaponInfo.cameraShakeDuration, weaponInfo.cameraShakeIntensity); //camera shake
             }
 
             if (weaponInfo.hasSounds && weaponInfo.shootSound != null) {
-                AudioPlayer.ChangeClip(weaponInfo.shootSound);
+                AudioPlayer.ChangeClip(weaponInfo.shootSound); //sound sfx
                 AudioPlayer.PlayClip();
             }
 
@@ -239,6 +243,7 @@ public class WeaponManager : MonoBehaviour {
         }
     }
 
+    //Used to wait until weapons have finished/despawned
     public IEnumerator WaitTillWeaponsFinishedCoroutine() {
         aimArrow.gameObject.SetActive(false);
         yield return new WaitUntil(() => activeWeapons.Where(x => x != null).Count() == 0 && cameraSystem.CameraDelayActive == false);
@@ -259,6 +264,7 @@ public class WeaponManager : MonoBehaviour {
         aimValue = inputValue.Get<Vector2>();
     }
 
+    //Used for rotating aim arrow
     private void ArrowAim() {
         if (aimValue.x < -0.25f) {
             aimPosition.x = turnManager.CurrentAntTurn.transform.position.x - 5;
@@ -318,13 +324,14 @@ public class WeaponManager : MonoBehaviour {
         }
     }
 
+    //Used for changing strength of weapon
     private void ArrowStrength() {
         aimStrength += 0.5f * Time.deltaTime;
 
         if (aimStrength >= 2.0f) {
             fireHeld = false;
             aimStrength = 2.0f;
-            StartCoroutine(FireWeaponCoroutine(tempWeaponInfo, tempPlayerPosition));
+            StartCoroutine(FireWeaponCoroutine(tempWeaponInfo, tempPlayerPosition)); //Auto fire weapon once strength maxes out
         }
     }
 
@@ -448,6 +455,7 @@ public class WeaponManager : MonoBehaviour {
         UIMoving = false;
     }
 
+    //Update weapon menu with all icons
     private void FillWeaponMenu() {
         foreach (BaseWeaponSO weapon in allWeapons) {
             WeaponMenuIconScript newIcon = Instantiate(weaponIconPrefab, weaponMenuUIGridArea);
@@ -464,6 +472,7 @@ public class WeaponManager : MonoBehaviour {
         }
     }
 
+    //Check if icons should be visible or not
     private void CheckAllIcons() {
         foreach (WeaponMenuIconScript icon in weaponIcons) {
             if (turnManager.CurrentPlayerTurn != null) {
@@ -511,6 +520,7 @@ public class WeaponManager : MonoBehaviour {
         weaponDescriptionText.text = "Type: " + (weapon.isMelee ? "Melee" : "Ranged") + "\nDamage: " + weapon.baseDamage + "\nKnockback: " + knockbackLevel + "\n\n" + weapon.weaponDescription;
     }
 
+    //Called when player selects weapon to choose
     public void SetSelectedWeapon(BaseWeaponSO weapon) {
         WeaponSelected = weapon;
 

@@ -83,6 +83,7 @@ public class CameraSystem : MonoBehaviour {
         CheckLookAtTarget();
     }
 
+    //Change camera zoom
     private void SetCameraZoom() {
         if (cameraZoomingEnabled == true) {
             cameraZoom += cameraZoomValue * cameraZoomSpeed;
@@ -94,6 +95,7 @@ public class CameraSystem : MonoBehaviour {
         cameraZoomingEnabled = isEnabled;
     }
 
+    //Free cam movement
     private void SetFreeCam() {
         freeCamPos += (Vector3)freeCamValue * freeCamSpeed;
 
@@ -108,9 +110,11 @@ public class CameraSystem : MonoBehaviour {
         cameraObj.transform.position = Vector3.SmoothDamp(cameraObj.transform.position, freeCamPos, ref velocity, smoothTime);
     }
 
+    //Move camera position
     private void SetCameraPos() {
         Vector3 tempTargetPos = Vector3.zero;
 
+        //Camera zooms out when weapon selected
         if (weaponManager.WeaponSelected != null) {
             zOffset = -40.0f;
             yOffset = 15.0f;
@@ -140,6 +144,7 @@ public class CameraSystem : MonoBehaviour {
         }
     }
 
+    //Point camera at target
     private void CheckLookAtTarget() {
         if (lookAtTarget != null) {
             cameraObj.transform.LookAt(lookAtTarget);
@@ -233,6 +238,7 @@ public class CameraSystem : MonoBehaviour {
         cameraZoomCoroutine = StartCoroutine(CameraFOVZoom(false, zoomDuration));
     }
 
+    //Camera zoom using FOV
     private IEnumerator CameraFOVZoom(bool zoomIn, float zoomDuration) {
         float timeElapsed = 0.0f;
         float startingZoom = cameraComp.fieldOfView;
@@ -279,6 +285,7 @@ public class CameraSystem : MonoBehaviour {
         StartCoroutine(CameraShakeCoroutine(shakeDuration, shakeIntensity));
     }
 
+    //Shake the camera
     private IEnumerator CameraShakeCoroutine(float duration, float strength) {
         float timeElapsed = 0.0f;
         Vector3 originalEulerAngles = cameraComp.transform.localEulerAngles;
@@ -326,6 +333,7 @@ public class CameraSystem : MonoBehaviour {
         }
     }
 
+    //Loop through all camera targets
     private IEnumerator IterateTargetsCoroutine(float delay) {
         CameraDelayActive = true;
 
@@ -344,6 +352,7 @@ public class CameraSystem : MonoBehaviour {
         StartCoroutine(CameraPanCoroutine());
     }
 
+    //Pan the camera across the screen
     private IEnumerator CameraPanCoroutine() {
         CameraDelayActive = true;
 
@@ -376,6 +385,7 @@ public class CameraSystem : MonoBehaviour {
         SetCameraLookAtTarget(null);
     }
 
+    //Change blur
     private void ChangeBlur(float value) {
         if (volumeProfile.TryGet(out DepthOfField depthOfField)) {
             depthOfField.gaussianStart.Override(value);

@@ -28,18 +28,21 @@ public class WeaponDrop : MonoBehaviour {
         }
     }
 
+    //Change drop to medkit
     public void SetDropMedkit(int medkitHealthToHeal) {
         crate.SetActive(false);
         medkit.SetActive(true);
         medkitHealth = medkitHealthToHeal;
     }
 
+    //Change drop to weapon
     public void SetDropWeapon(BaseWeaponSO _weapon) {
         crate.SetActive(true);
         medkit.SetActive(false);
         weapon = _weapon;
     }
 
+    //Called when player collides with drop
     private void CollectDrop(Ant ant) {
         int playerNum = int.Parse(ant.ownedPlayer.ToString().Last().ToString());
         Player player = turnManager.PlayerList.Where(x => x.playerInfo.playerNum == playerNum).First();
@@ -50,11 +53,11 @@ public class WeaponDrop : MonoBehaviour {
         }
 
         if (weapon != null) {
-            player.AddNewWeapon(weapon);
+            player.AddNewWeapon(weapon); //Collect weapon
             pickupText.text = "+1 " + GetWeaponSpriteIcon(weapon.weaponName);
         }
         else {
-            ant.HealDamage(medkitHealth);
+            ant.HealDamage(medkitHealth); //Add health
             pickupText.text = "+" + medkitHealth + " Health";
             pickupText.color = Color.green;
         }

@@ -10,7 +10,7 @@ using UnityEngine.SceneManagement;
 public class TurnManager : MonoBehaviour {
     [Header("Settings")]
     [SerializeField] private string levelName;
-    [SerializeField] private int maxRounds = 10;
+    [SerializeField] private int maxRounds = 10;4r
     [SerializeField] private int maxTurnTime = 20;
 
     [field: Header("Ant Spawning Settings")]
@@ -94,6 +94,7 @@ public class TurnManager : MonoBehaviour {
         StartCoroutine(StartLevelCoroutine());
     }
 
+    //Called at the start of the level - camera pan & level name text
     private IEnumerator StartLevelCoroutine() {
         levelNameText.GetComponent<TMP_Text>().text = levelName;
         SpawnAllAnts();
@@ -110,6 +111,7 @@ public class TurnManager : MonoBehaviour {
         StartCoroutine(RoundsCoroutine());
     }
 
+    //Spawn in all ants
     private void SpawnAllAnts() {
         for (int i = 0; i < PlayerList.Count; i++) {
             for (int j = 0; j < numOfAnts; j++) {
@@ -138,12 +140,13 @@ public class TurnManager : MonoBehaviour {
                 }
             }
 
-            SpawnQueen(i);
+            SpawnQueen(i); //Spawn queen ant
         }
 
         enterObjectManager.OnAllAntsSpawned();
     }
 
+    //Spawn queen ant
     private void SpawnQueen(int playerNum) {
         GameObject newQueen = antSpawner.SpawnAnt(queenPrefab);
 
@@ -179,6 +182,7 @@ public class TurnManager : MonoBehaviour {
         levelNameText.GetComponent<FadeScript>().FadeOutUI(2.0f);
     }
 
+    //Used for handling all turn logic
     private IEnumerator RoundsCoroutine() {
         for (int roundCounter = 0; roundCounter < maxRounds; roundCounter++) {
             roundNumText.text = "Current Round: " + (roundCounter + 1);
@@ -190,8 +194,9 @@ public class TurnManager : MonoBehaviour {
             HideRoundNumber();
             ShowMainUI();
 
-            startRoundEvent.Invoke();
+            startRoundEvent.Invoke(); //Start of round events
 
+            //Start of round get all ants by player
             foreach (Player player in PlayerList) {
                 List<Ant> playerAnts = new List<Ant>();
 
@@ -208,6 +213,7 @@ public class TurnManager : MonoBehaviour {
                 }
             }
 
+            //Keep looping through ants till all ants have had a turn
             while (antDictionary.Count > 0) {
                 foreach (Player player in PlayerList) {
                     antDictionary.TryGetValue(player.playerInfo.playerNum, out List<Ant> antList);
@@ -229,7 +235,7 @@ public class TurnManager : MonoBehaviour {
                         }
                     }
 
-                    startTurnEvent.Invoke();
+                    startTurnEvent.Invoke(); //Start of turn events
                     yield return new WaitUntil(() => bbqScript.IsBurning == false && hose.IsSpraying == false);
 
                     StartTurnFunctionality(player);
@@ -239,9 +245,10 @@ public class TurnManager : MonoBehaviour {
             }
         }
 
-        GameOver();
+        GameOver(); //Game ends if all rounds are complete
     }
 
+    //Set up functionality called at start of turn
     private void StartTurnFunctionality(Player player) {
         cameraSystem.SetCameraZoomingBool(true);
         turnTimerCoroutine = StartCoroutine(TurnTimer());
@@ -260,6 +267,7 @@ public class TurnManager : MonoBehaviour {
         enterObjectManager.StartTurnEvent();
     }
 
+    //Display correct hints to the player
     private void DisplayButtonHints(Player player) {
         WeaponMenuText.spriteAsset = player.GetSpriteFromAction("WeaponMenu");
         FireWeaponText.spriteAsset = player.GetSpriteFromAction("FireWeapon");
@@ -299,6 +307,7 @@ public class TurnManager : MonoBehaviour {
         }
     }
 
+    //Timer for turns
     private IEnumerator TurnTimer() {
         bool countdownStarted = false;
 
@@ -335,6 +344,7 @@ public class TurnManager : MonoBehaviour {
         turnTimerPaused = false;
     }
 
+    //Called when a turn ends
     public IEnumerator EndTurnCoroutine() {
         StopCoroutine(turnTimerCoroutine);
 
@@ -380,7 +390,7 @@ public class TurnManager : MonoBehaviour {
 
         if (CurrentAntTurn != null) {
             CurrentAntTurn.ResetAnimation();
-            RemoveAntFromDictionary(CurrentPlayerTurn.playerInfo.playerNum, CurrentAntTurn);
+            RemoveAntFromDictionary(CurrentPlayerTurn.playerInfo.playerNum, CurrentAntTurn); //Remove ant from list of available ants
         }
 
         CurrentPlayerTurn = null;
@@ -416,6 +426,7 @@ public class TurnManager : MonoBehaviour {
         StartCoroutine(GameOverCoroutine());
     }
 
+    //Called when the game ends
     private IEnumerator GameOverCoroutine() {
         gameOver = true;
         blackscreen.SetActive(true);
@@ -495,6 +506,7 @@ public class TurnManager : MonoBehaviour {
         TextHintFadeScript.FadeInUI(1.0f);
     }
 
+    //Called when the game is paused
     public void PauseGame() {
         PauseInProgress = true;
         IsPaused = true;

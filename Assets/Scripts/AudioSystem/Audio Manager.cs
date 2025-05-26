@@ -23,7 +23,7 @@ public class AudioManager : MonoBehaviour {
 
         foreach (AudioSource sfxSource in FindObjectsByType<AudioSource>(FindObjectsSortMode.None)) { 
             if (sfxSource != musicSource) {
-                sfxSources.Add(sfxSource);
+                sfxSources.Add(sfxSource); //Gets all non-music audio sources
             }
         }
 
@@ -46,24 +46,25 @@ public class AudioManager : MonoBehaviour {
 		DontDestroyOnLoad(gameObject);
 	}
 
+    //Called when the scene changes
     private void ActiveSceneChanged(Scene currentScene, Scene nextScene) {
         sfxSources.Clear();
 
         foreach (AudioSource sfxSource in FindObjectsByType<AudioSource>(FindObjectsSortMode.None)) {
             if (sfxSource != musicSource) {
-                sfxSources.Add(sfxSource);
+                sfxSources.Add(sfxSource); //Gets all non-music audio sources
             }
         }
 
         foreach (var sfxAudio in sfxSources) {
-            sfxAudio.volume = (sfxVolume * (masterVolume / 100)) / 100;
+            sfxAudio.volume = (sfxVolume * (masterVolume / 100)) / 100; //sets sfx volume
         }
 
         if (nextScene.name.Contains("Game")) {
-            StartCoroutine(SwitchMusicCoroutine(1));
+            StartCoroutine(SwitchMusicCoroutine(1)); //switch to game music
         }
         else if (!nextScene.name.Contains("Game") && !nextScene.name.Contains("Loading") && musicSource.clip != musicClips[0]) {
-            StartCoroutine(SwitchMusicCoroutine(0));
+            StartCoroutine(SwitchMusicCoroutine(0)); //switch to menu music
         }
     }
 

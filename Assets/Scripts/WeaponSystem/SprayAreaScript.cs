@@ -17,6 +17,7 @@ public class SprayAreaScript : MonoBehaviour {
         Destroy(gameObject, weaponInfo.sprayDuration);
     }
 
+    //Called when ant is inside the spray area
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject != turnManager.CurrentAntTurn.gameObject && other.TryGetComponent(out Ant ant)) {
             ant.TakeDamage(weaponInfo.baseDamage);

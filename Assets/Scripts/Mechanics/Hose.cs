@@ -22,9 +22,10 @@ public class Hose : MonoBehaviour {
         cameraSystem = FindFirstObjectByType<CameraSystem>();
     }
 
+    //Dont spray hose at start of first turn
     public void StartHose() {
         if (!isFirstTurn) {
-            float value = Random.value;
+            float value = Random.value; //random spray chance
 
             if (value < chancePerTurn) {
                 StartCoroutine(SprayWaterCoroutine());
@@ -35,6 +36,7 @@ public class Hose : MonoBehaviour {
         }
     }
 
+    //Spray water and move ants
     private IEnumerator SprayWaterCoroutine() {
         IsSpraying = true;
         cameraSystem.SetCameraTarget(new Vector3(transform.position.x - 5, transform.position.y, transform.position.z), 5, 10);

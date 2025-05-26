@@ -15,6 +15,7 @@ public class OptionsMenuScript : MonoBehaviour {
     private bool fullscreen = true;
     private AudioManager audioManager;
 
+    //Set default settings
     private void Start() {
 		audioManager = FindFirstObjectByType<AudioManager>();
 		Screen.SetResolution(Screen.width, Screen.height, true);
@@ -23,6 +24,7 @@ public class OptionsMenuScript : MonoBehaviour {
         sfxVolumeSlider.value = PlayerPrefs.HasKey("SFXVolume") ? (PlayerPrefs.GetFloat("SFXVolume") * (PlayerPrefs.HasKey("MasterVolume") ? PlayerPrefs.GetFloat("MasterVolume") : 1.0f / 100)) / 100 : 0.5f;
     }
 
+    //Change fullscreen mode
     public void ChangeFullscreen(bool _fullscreen) {
         fullscreen = _fullscreen;
 
@@ -34,6 +36,7 @@ public class OptionsMenuScript : MonoBehaviour {
         }
     }
 
+    //Change screen resolution
     public void ChangeResolution(int selectedOption) {
         int xIndex = resolutionDropdown.options[selectedOption].text.IndexOf("x");
         string width = resolutionDropdown.options[selectedOption].text.Substring(0, xIndex);

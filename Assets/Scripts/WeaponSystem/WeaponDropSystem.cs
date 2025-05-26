@@ -40,6 +40,7 @@ public class WeaponDropSystem : MonoBehaviour {
         }
     }
 
+    //Check drop chance
     public void CheckDrop() {
         float randomNum = Random.value;
 
@@ -48,6 +49,7 @@ public class WeaponDropSystem : MonoBehaviour {
         }
     }
 
+    //Spawn in random num of drops
     private IEnumerator CheckDropCoroutine() {
         IsDropping = true;
         cameraSystem.CameraDelay(dropOverviewDuration);
@@ -62,6 +64,7 @@ public class WeaponDropSystem : MonoBehaviour {
         IsDropping = false;
     }
 
+    //Create a new drop
     private void CreateNewDrop(float medkitChance) {
         Vector3 randomSpawnPos = new Vector3(Random.Range(turnManager.MapMinX, turnManager.MapMaxX), 30, 0);
         WeaponDrop newDrop = Instantiate(dropPrefab, randomSpawnPos, Quaternion.identity);
@@ -76,6 +79,7 @@ public class WeaponDropSystem : MonoBehaviour {
         }
     }
 
+    //Check if drop should be medkit
     private bool GetRandomDrop(float medkitChance) {
         if (Random.value <= medkitChance) {
             return true;
@@ -85,6 +89,7 @@ public class WeaponDropSystem : MonoBehaviour {
         }
     }
 
+    //Spawn a random weapon
     private BaseWeaponSO GetRandomWeapon() {
         foreach (DropChances weaponDrop in dropChances) {
             if (Random.value <= weaponDrop.dropChance) {

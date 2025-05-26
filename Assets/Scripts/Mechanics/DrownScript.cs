@@ -14,7 +14,8 @@ public class DrownScript : MonoBehaviour {
         cameraSystem = FindFirstObjectByType<CameraSystem>();
         turnManager = FindFirstObjectByType<TurnManager>();
     }
-
+    
+    //Called when ants enter water
     private void OnTriggerEnter(Collider other) {
         if (other.TryGetComponent<Ant>(out Ant ant)) {
             cameraSystem.SetCameraLookAtTarget(other.transform);
@@ -30,6 +31,7 @@ public class DrownScript : MonoBehaviour {
         }
     }
 
+    //Bob ant up and down then kill ant
     private IEnumerator DrownCoroutine(Transform antTransform, Ant antScript) {
         Vector3 drownPos = antTransform.position;
 

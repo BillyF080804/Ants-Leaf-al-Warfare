@@ -9,6 +9,7 @@ public class BridgeCollider : MonoBehaviour {
         cameraSystem = FindFirstObjectByType<CameraSystem>();
     }
 
+    //Deal damage to the bridge
     private void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.TryGetComponent(out WeaponScript weaponScript) && bridge.HasCollapsed == false) {
             bridge.TakeDamage(weaponScript.weaponInfo.baseDamage);

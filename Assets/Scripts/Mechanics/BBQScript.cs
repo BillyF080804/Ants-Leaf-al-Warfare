@@ -34,7 +34,7 @@ public class BBQScript : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.TryGetComponent(out WeaponScript weaponScript) && hasCollapsed == false) {
-            TakeDamage(weaponScript.weaponInfo.baseDamage);
+            TakeDamage(weaponScript.weaponInfo.baseDamage); //deal damage to bbq
 
             if (weaponScript.weaponInfo.hasVFX == true && weaponScript.weaponInfo.vfxObject != null) {
                 weaponScript.CreateVFX();
@@ -43,7 +43,7 @@ public class BBQScript : MonoBehaviour {
             cameraSystem.StartCameraShake(0.5f, 1.0f);
         }
         else if (collision.gameObject.TryGetComponent(out Ant antScript) && hasCollapsed == true) {
-            antScript.TakeDamage(1000);
+            antScript.TakeDamage(1000); //Crush ants
         }
     }
 
@@ -67,6 +67,7 @@ public class BBQScript : MonoBehaviour {
         }
     }
 
+    //Called when bbq collapses
     private void CollapseBBQ() {
         hasCollapsed = true;
         cameraSystem.StartCameraShake(3.0f, 3.0f);
@@ -83,6 +84,7 @@ public class BBQScript : MonoBehaviour {
         }
     }
 
+    //Random chance for ants to burn
     public void BurnChance() {
         float value = Random.value;
 
@@ -99,6 +101,7 @@ public class BBQScript : MonoBehaviour {
         burnerAnts.Remove(ant);
     }
 
+    //Ignite the burners
     private IEnumerator IgniteBurnersCoroutine() {
         IsBurning = true;
         cameraSystem.StartCameraShake(0.5f, 1.0f);

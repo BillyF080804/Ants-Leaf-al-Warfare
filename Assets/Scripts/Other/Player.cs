@@ -36,6 +36,7 @@ public class Player : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
     }
 
+    //Called when the scene changes
     private void ActiveSceneChanged(Scene currentScene, Scene nextScene) {
         if (nextScene.name.Contains("Game")) {
             turnManager = FindFirstObjectByType<TurnManager>();

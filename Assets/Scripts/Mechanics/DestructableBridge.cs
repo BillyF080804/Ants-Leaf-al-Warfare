@@ -25,6 +25,7 @@ public class DestructableBridge : MonoBehaviour {
         }
     }
 
+    //Called when the bridge collapses
     private void CollapseBridge() {
         HasCollapsed = true;
         colToDisable.SetActive(false);

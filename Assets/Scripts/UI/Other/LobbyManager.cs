@@ -83,6 +83,7 @@ public class LobbyManager : MonoBehaviour {
         }
     }
 
+    //Load into level
     private IEnumerator StartGameCoroutine() {
         LoadingData.sceneToLoad = sceneToLoad;
         LoadingData.playerList = playerList;
@@ -99,6 +100,7 @@ public class LobbyManager : MonoBehaviour {
 		SceneManager.LoadScene("LoadingScene");
     }
 
+    //Called when a player presses the ready up button
     public void ReadyUp(int playerNum) {
         PlayerCardInfo playerCard = playerCards.Where(x => x.playerNum == playerNum).First();
         Player player = playerList.Where(x => x.playerInfo.playerNum == playerNum).First();
@@ -147,6 +149,7 @@ public class LobbyManager : MonoBehaviour {
         StartCoroutine(StartGameCoroutine());
     }
 
+    //Called when a player changes their queen specialism
     public void ChangeQueenSpecialism(int playerNum, float value) {
         Player player = playerList.Where(x => x.playerInfo.playerNum == playerNum).First();
         PlayerCardInfo playerCard = playerCards.Where(x => x.playerNum == playerNum).First();

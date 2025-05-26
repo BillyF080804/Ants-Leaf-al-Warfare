@@ -28,6 +28,7 @@ public class PauseMenuScript : MonoBehaviour {
         StartCoroutine(ChangePanelsCoroutine());
     }
 
+    //Switch panels
     private IEnumerator ChangePanelsCoroutine() {
         if (panelToHide == null) {
             Debug.LogError("Please Assign The Panel To Hide.");
@@ -55,6 +56,7 @@ public class PauseMenuScript : MonoBehaviour {
         panelToShow = _panelToShow;
     }
 
+    //Display pause menu
     public void DisplayPauseMenu() {
         mainPauseMenu.SetActive(true);
         optionsMenu.SetActive(false);
@@ -70,6 +72,7 @@ public class PauseMenuScript : MonoBehaviour {
         mainBackgroundFadeScript.FadeOutUI(1.0f);
     }
 
+    //Quit game
     public void QuitGame() {
         foreach (Player player in FindFirstObjectByType<TurnManager>().PlayerList) {
             Destroy(player.gameObject);
