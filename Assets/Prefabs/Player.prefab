@@ -90,7 +90,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 91b9e7f43a2aec14cb2b1163cee3897b, type: 2}
   - {fileID: 11400000, guid: ebff57ae722499b44a077de9b36ccd6a, type: 2}
   - {fileID: 11400000, guid: faf567607973dc74fbde211c82a868e7, type: 2}
-  - {fileID: 11400000, guid: 2c8e9ff6b9e367a4c86d34d05d84f80b, type: 2}
+  - {fileID: 11400000, guid: 4d5feb2582317884583a2cba5eb064d6, type: 2}
   - {fileID: 11400000, guid: 9b4a4db3f55c81f44ba46e1a1aec350b, type: 2}
   - {fileID: 11400000, guid: 68a77e25879831a4b9387ae26fd8535c, type: 2}
   - {fileID: 11400000, guid: a7c7d79b40bdb4e4795c5e73f525cbb4, type: 2}
@@ -98,6 +98,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4ea097d87cc6e084ea66129219e53a66, type: 2}
   - {fileID: 11400000, guid: 711026ba94786f945b4054b22f497d3e, type: 2}
   - {fileID: 11400000, guid: 63ded984a45aa17439c963dc3d69ca5c, type: 2}
+  hasSkippedTurn: 0
   EffectScript: {fileID: 5701415912331228771, guid: 4ee10e588bac67441b96e856d4177636, type: 3}
 --- !u!114 &7135399526886834650
 MonoBehaviour:
