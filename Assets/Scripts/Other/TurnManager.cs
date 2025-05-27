@@ -66,6 +66,7 @@ public class TurnManager : MonoBehaviour {
     public Player CurrentPlayerTurn { get; private set; } = null;
     public Ant CurrentAntTurn { get; private set; } = null; //Tracks which ant's turn it currently is
     public List<Player> PlayerList { get; private set; } = new List<Player>();
+    public List<Ant> MovingAnts { get; private set; } = new List<Ant>();
 
     private Coroutine turnTimerCoroutine;
     private AudioSource audioSource;
@@ -358,6 +359,7 @@ public class TurnManager : MonoBehaviour {
 
         yield return new WaitUntil(() => gameOver == false);
         yield return new WaitUntil(() => cameraSystem.CameraDelayActive == false);
+        yield return new WaitUntil(() => MovingAnts.Count == 0);
 
         if (CurrentAntTurn != null) {
             if (CurrentAntTurn.effects.Count > 0) {
@@ -538,5 +540,18 @@ public class TurnManager : MonoBehaviour {
         pauseMenu.HidePauseMenu();
         ShowMainUI();
         StartCoroutine(PauseInProgressCoroutine(true));
+    }
+
+    public void AddMovingAnt(Ant ant) {
+        StartCoroutine(AddMovingAntCoroutine(ant));
+    }
+
+    private IEnumerator AddMovingAntCoroutine(Ant ant) {
+        yield return new WaitForSeconds(0.25f);
+        MovingAnts.Add(ant);
+    }
+
+    public void RemoveMovingAnt(Ant ant) { 
+        MovingAnts.Remove(ant);
     }
 }

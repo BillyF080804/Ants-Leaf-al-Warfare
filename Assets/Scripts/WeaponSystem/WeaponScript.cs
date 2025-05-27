@@ -7,11 +7,13 @@ public class WeaponScript : MonoBehaviour {
     public BaseWeaponSO weaponInfo;
     private CameraSystem cameraSystem;
     private WeaponManager weaponManager;
+    private TurnManager turnManager;
     private int numOfBounces = 0;
 
     private void Awake() {
         cameraSystem = FindFirstObjectByType<CameraSystem>();
         weaponManager = FindFirstObjectByType<WeaponManager>();
+        turnManager = FindFirstObjectByType<TurnManager>();
     }
 
     //Called when weapon is created
@@ -96,6 +98,7 @@ public class WeaponScript : MonoBehaviour {
         foreach (Collider collider in collidersOne) {
             collider.GetComponent<Ant>().TakeDamage(weaponInfo.baseDamage); //deal damage
             collider.GetComponent<Rigidbody>().AddExplosionForce(weaponInfo.explosionPower, transform.position, weaponInfo.explosionRange, weaponInfo.upwardsModifier, ForceMode.Impulse); //weapon knockback
+            turnManager.AddMovingAnt(collider.GetComponent<Ant>());
 
             if (weaponInfo.weaponEffect != null) {
                 weaponInfo.weaponEffect.GetComponent<EffectScript>().AddEffect(collider.GetComponent<Ant>()); //Add effect to ants
@@ -106,6 +109,7 @@ public class WeaponScript : MonoBehaviour {
             if (!collidersOne.Contains(collider)) {
                 collider.GetComponent<Ant>().TakeDamage(Mathf.FloorToInt(weaponInfo.baseDamage * 0.5f)); //deal damage to ants - weaker cause further from explosion
                 collider.GetComponent<Rigidbody>().AddExplosionForce(weaponInfo.explosionPower * 0.5f, transform.position, weaponInfo.explosionRange, weaponInfo.upwardsModifier, ForceMode.Impulse); //deal knockback to ants - weaker cause further from explosion
+                turnManager.AddMovingAnt(collider.GetComponent<Ant>());
 
                 if (weaponInfo.weaponEffect != null) {
                     weaponInfo.weaponEffect.GetComponent<EffectScript>().AddEffect(collider.GetComponent<Ant>()); //Add effect to ants
@@ -131,6 +135,7 @@ public class WeaponScript : MonoBehaviour {
 
     private void DealKnockback(GameObject objectToKnockback) {
         objectToKnockback.GetComponent<Rigidbody>().AddExplosionForce(weaponInfo.knockbackStrength, transform.position, 0, weaponInfo.upwardsModifier, ForceMode.Impulse); //knockback for ants
+        turnManager.AddMovingAnt(objectToKnockback.GetComponent<Ant>());
     }
 
     public void CreateVFX() {

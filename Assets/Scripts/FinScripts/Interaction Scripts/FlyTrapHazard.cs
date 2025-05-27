@@ -40,9 +40,12 @@ public class FlyTrapHazard : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
         other.TryGetComponent<Ant>(out currentAnt);
-        if (currentAnt != null) {
-            canvas.SetActive(true);
+        if (currentAnt != null) {            
             antList.Add(currentAnt);
+
+            if (!chompedThisTurn) {
+                canvas.SetActive(true);
+            }
         }
     }
 

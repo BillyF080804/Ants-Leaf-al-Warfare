@@ -16,7 +16,7 @@ MonoBehaviour:
   antColor: {r: 0, g: 0, b: 0, a: 1}
   antName: Weaver
   moveSpeed: 4
-  jumpHeight: 5
+  jumpHeight: 7
   health: 100
   IsQueen: 1
   queenType: 3
@@ -25,3 +25,4 @@ MonoBehaviour:
   queenArchetype: Support
   description: Fill the battlefield with sticky webbing, slowing down all ants caught
     in your trap!
+  audioClip: {fileID: 0}

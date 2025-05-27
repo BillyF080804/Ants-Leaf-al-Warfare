@@ -16,9 +16,12 @@ MonoBehaviour:
   antColor: {r: 0, g: 0, b: 0, a: 1}
   antName: Worker
   moveSpeed: 5
-  jumpHeight: 6
+  jumpHeight: 7
   health: 100
   IsQueen: 0
   queenType: 0
   damage: 1
   queenAttack: {fileID: 0}
+  queenArchetype: 
+  description: 
+  audioClip: {fileID: 0}

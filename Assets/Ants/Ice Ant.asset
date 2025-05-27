@@ -16,7 +16,7 @@ MonoBehaviour:
   antColor: {r: 0, g: 0, b: 0, a: 1}
   antName: Ice
   moveSpeed: 4
-  jumpHeight: 5
+  jumpHeight: 7
   health: 100
   IsQueen: 1
   queenType: 0
@@ -24,3 +24,4 @@ MonoBehaviour:
   queenAttack: {fileID: 3695045914574614986, guid: 169b6f0ee73fe4f40943d476b89cc8e0, type: 3}
   queenArchetype: Damage
   description: Freeze your enemies in their tracks!
+  audioClip: {fileID: 0}

@@ -323,6 +323,12 @@ public class Ant : MonoBehaviour {
         transform.position = new Vector3(transform.position.x, transform.position.y, 0.0f);
     }
 
+    private void FixedUpdate() {
+        if (turnManager.MovingAnts.Contains(this) && rb.velocity.magnitude < 0.1f) {
+            turnManager.RemoveMovingAnt(this);
+        }
+    }
+
     private void OnCollisionEnter(Collision collision) {
         if (Physics.Raycast(gameObject.transform.position, Vector3.down, out RaycastHit ray, 1.5f) || Physics.Raycast(gameObject.transform.position + new Vector3(1.5f, 0, 0), Vector3.down, out ray, 1.5f) || Physics.Raycast(gameObject.transform.position + new Vector3(-1.5f, 0, 0), Vector3.down, out ray, 1.5f)) {
             if (!isJumping) {

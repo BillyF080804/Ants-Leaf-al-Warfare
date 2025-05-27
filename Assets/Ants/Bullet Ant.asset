@@ -16,7 +16,7 @@ MonoBehaviour:
   antColor: {r: 0, g: 0, b: 0, a: 1}
   antName: Bullet
   moveSpeed: 4
-  jumpHeight: 5
+  jumpHeight: 7
   health: 100
   IsQueen: 1
   queenType: 5
@@ -24,3 +24,4 @@ MonoBehaviour:
   queenAttack: {fileID: 8343384262659365228, guid: bb60bcfb06696634385b534d9f8459a1, type: 3}
   queenArchetype: Damage
   description: What's that sound? Its a Bullet Ant air strike! Take cover!
+  audioClip: {fileID: 0}

@@ -24,6 +24,7 @@ public class SprayAreaScript : MonoBehaviour {
 
             if (weaponInfo.sprayMover == true) {
                 ant.GetComponent<Rigidbody>().AddExplosionForce(weaponInfo.sprayStrength, turnManager.CurrentAntTurn.transform.position, weaponInfo.sprayLength, 3f, ForceMode.Impulse);
+                turnManager.AddMovingAnt(ant);
             }
 
             if (weaponInfo.weaponEffect != null) {

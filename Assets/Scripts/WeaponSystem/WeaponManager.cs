@@ -170,6 +170,7 @@ public class WeaponManager : MonoBehaviour {
             if (colliders.Length > 0) {
                 colliders.First().GetComponent<Ant>().TakeDamage(weaponInfo.baseDamage); //deal damage
                 colliders.First().GetComponent<Rigidbody>().AddExplosionForce(weaponInfo.knockbackStrength, playerPosition.position, 0, weaponInfo.upwardsModifier, ForceMode.Impulse); //move ant
+                turnManager.AddMovingAnt(colliders.First().GetComponent<Ant>());
 
                 if (weaponInfo.weaponEffect != null) {
                     weaponInfo.weaponEffect.GetComponent<EffectScript>().AddEffect(colliders.First().GetComponent<Ant>());

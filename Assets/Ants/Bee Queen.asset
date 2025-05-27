@@ -16,7 +16,7 @@ MonoBehaviour:
   antColor: {r: 0, g: 0, b: 0, a: 1}
   antName: Beekeeper
   moveSpeed: 4
-  jumpHeight: 5
+  jumpHeight: 7
   health: 100
   IsQueen: 1
   queenType: 1
@@ -24,3 +24,4 @@ MonoBehaviour:
   queenAttack: {fileID: 879326333907927122, guid: cbabe4859a011a740a24b0376a5d72a6, type: 3}
   queenArchetype: Summoner
   description: Summon Bee-Ants to sting your enemies!
+  audioClip: {fileID: 0}
