@@ -45,6 +45,10 @@ public class EffectScript : MonoBehaviour {
 
     public void RemoveEffect(Ant ant) {
         ant.effects.Remove(this);
+        if(effectInfo.effectType == EffectSO.EffectType.StatDrop){
+            ant.hasStatDrop = false;
+			ant.statDrops.Remove(EffectSO.StatDropType.Speed);
+		}
     }
 
 
