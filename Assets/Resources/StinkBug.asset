@@ -34,8 +34,8 @@ MonoBehaviour:
   isSpray: 0
   weaponEffect: {fileID: 2799710843058185519, guid: 352b10a6707b74243a2fd7f1f4757ba9, type: 3}
   cameraDelay: 4
-  cameraShakeOnFire: 0
-  cameraShakeOnImpact: 0
+  cameraShakeOnFire: 1
+  cameraShakeOnImpact: 1
   hasVFX: 1
   hasSounds: 1
   explodeOnImpact: 1

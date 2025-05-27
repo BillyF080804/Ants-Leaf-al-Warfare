@@ -63,6 +63,10 @@ public class WeaponScript : MonoBehaviour {
                 cameraSystem.StartCameraShake(weaponInfo.cameraShakeDuration, weaponInfo.cameraShakeIntensity); //camera shake
             }
 
+            if (weaponInfo.hasVFX == true && weaponInfo.vfxObject != null) {
+                CreateVFX();
+            }
+
             if (weaponInfo.hasSounds && weaponInfo.impactSound != null) {
                 weaponManager.AudioPlayer.ChangeClip(weaponInfo.impactSound); //create sfx
                 weaponManager.AudioPlayer.PlayClip();

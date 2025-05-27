@@ -34,9 +34,9 @@ MonoBehaviour:
   isSpray: 0
   weaponEffect: {fileID: 2799710843058185519, guid: 352b10a6707b74243a2fd7f1f4757ba9, type: 3}
   cameraDelay: 4
-  cameraShakeOnFire: 0
+  cameraShakeOnFire: 1
   cameraShakeOnImpact: 1
-  hasVFX: 0
+  hasVFX: 1
   hasSounds: 1
   explodeOnImpact: 1
   explosionRange: 5
@@ -44,8 +44,8 @@ MonoBehaviour:
   fuseTimer: 5
   maxNumOfBounces: 3
   vfxSize: 1
-  vfxDuration: 2.5
-  vfxObject: {fileID: 0}
+  vfxDuration: 1
+  vfxObject: {fileID: 2844274899529545235, guid: 9c2c0634a65f1ef4ea60dd56fc8cb42a, type: 3}
   knockbackStrength: 5
   upwardsModifier: 4
   numOfShots: 2
