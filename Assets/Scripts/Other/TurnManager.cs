@@ -225,9 +225,14 @@ public class TurnManager : MonoBehaviour {
 
                     CurrentPlayerTurn = player;
                     currentTurnEnded = false;
-                    CurrentAntTurn = antList[0];                    
+                    CurrentAntTurn = antList[0];
 
-                    foreach (Player players in PlayerList) {
+					if (CurrentAntTurn.effects.Count > 0) {
+						CurrentAntTurn.ApplyEffects();
+						yield return new WaitForSeconds(1.0f);
+					}
+
+					foreach (Player players in PlayerList) {
                         if (players == player) {
                             players.GetEventSystem().enabled = true;
                         }
@@ -362,10 +367,7 @@ public class TurnManager : MonoBehaviour {
         yield return new WaitUntil(() => MovingAnts.Count == 0);
 
         if (CurrentAntTurn != null) {
-            if (CurrentAntTurn.effects.Count > 0) {
-                CurrentAntTurn.ApplyEffects();
-                yield return new WaitForSeconds(1.0f);
-            }
+
 
             if (CurrentAntTurn.GetComponent<QueenBaseAntScript>() != null) {
                 CurrentAntTurn.GetComponent<QueenBaseAntScript>().CheckAttackTurn();
