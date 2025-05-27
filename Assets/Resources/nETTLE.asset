@@ -18,18 +18,18 @@ MonoBehaviour:
   unlimitedUses: 0
   useAutomaticRotation: 1
   weaponIcon: {fileID: 21300000, guid: 2e1ede3d254c293458ab418999f11ec8, type: 3}
-  weaponPrefab: {fileID: 2035224743872689002, guid: 48600db732ecebc49831131511799a3a, type: 3}
-  worldWeaponPrefab: {fileID: 0}
-  worldWeaponScale: 1
-  worldWeaponLocalPos: {x: 0, y: 0, z: 0}
-  worldWeaponRotation: {x: 0, y: 0, z: 0}
+  weaponPrefab: {fileID: 5494822381804573462, guid: 123a736beb4657a46b3aa035ae28f3c6, type: 3}
+  worldWeaponPrefab: {fileID: 3932025072290546400, guid: 3323d5d43e647ce4bbfb56f5b82c959e, type: 3}
+  worldWeaponScale: 0.2
+  worldWeaponLocalPos: {x: 0, y: 0.934, z: -0.074}
+  worldWeaponRotation: {x: -90, y: 0, z: 0}
   baseDamage: 15
   weaponSpeed: 25
   useGravity: 1
   weaponRandomisation: 0
   explosive: 0
   hasKnockback: 0
-  isMelee: 1
+  isMelee: 0
   isMultiShot: 0
   isSpray: 0
   weaponEffect: {fileID: 2799710843058185519, guid: 352b10a6707b74243a2fd7f1f4757ba9, type: 3}
